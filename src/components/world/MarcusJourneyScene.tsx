@@ -1,0 +1,8 @@
+"use client";
+import { useFrame, useThree } from "@react-three/fiber";
+import { Environment as DreiEnvironment, Stars } from "@react-three/drei";
+import { useRef } from "react";import * as THREE from "three";
+import Car from "./Car";import Road,{routeCurve} from "./Road";import WorldEnvironment from "./Environment";import { useJourneyStore } from "@/stores/journeyStore";
+export default function MarcusJourneyScene(){const car=useRef<THREE.Group>(null);const {camera}=useThree();const progress=useJourneyStore(s=>s.progress);const quality=useJourneyStore(s=>s.quality);useFrame((_,delta)=>{if(!car.current)return;const p=Math.min(.995,progress);const point=routeCurve.getPointAt(p);const tangent=routeCurve.getTangentAt(p);car.current.position.lerp(point,Math.min(1,delta*5));car.current.rotation.y=Math.atan2(tangent.x,tangent.z);const target=point.clone().add(new THREE.Vector3(7,8,10));camera.position.lerp(target,Math.min(1,delta*2.4));camera.lookAt(point.x,point.y,point.z-2)});return <>
+ <color attach="background" args={["#07141b"]}/><fog attach="fog" args={["#07141b",14,44]}/><ambientLight intensity={1.25}/><directionalLight position={[8,14,6]} intensity={2.2} castShadow={quality==="high"}/>{quality==="high"&&<Stars radius={55} depth={25} count={900} factor={2}/>}<DreiEnvironment preset="warehouse" environmentIntensity={.25}/><Road/><WorldEnvironment/><Car groupRef={car}/>
+ </>}
