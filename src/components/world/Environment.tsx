@@ -1,9 +1,11 @@
 "use client";
 import { milestones } from "@/data/milestones";
 import Milestone from "./Milestone";
+import JourneyLandmarks from "./JourneyLandmarks";
 export default function Environment() {
   return (
     <>
+      <JourneyLandmarks />
       {milestones.map((m, i) => (
         <Milestone key={m.id} data={m} index={i} />
       ))}

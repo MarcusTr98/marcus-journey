@@ -1,142 +1,25 @@
 "use client";
-import type { ThreeElements } from "@react-three/fiber";
-import type { RefObject } from "react";
-import type * as THREE from "three";
-import { useJourneyStore } from "@/stores/journeyStore";
-export default function Car({
-  groupRef,
-  ...props
-}: ThreeElements["group"] & { groupRef: RefObject<THREE.Group | null> }) {
-  const progress = useJourneyStore((s) => s.progress);
-  return (
-    <group ref={groupRef} {...props}>
-      <mesh position={[0, 0.55, 0]} castShadow>
-        <boxGeometry args={[1.4, 0.38, 2.3]} />
-        <meshStandardMaterial
-          color="#F46300"
-          roughness={0.38}
-          metalness={0.15}
-        />
-      </mesh>
-      <mesh position={[0, 0.94, -0.18]} castShadow>
-        <boxGeometry args={[1.15, 0.45, 1.15]} />
-        <meshStandardMaterial
-          color="#d8e5e9"
-          roughness={0.2}
-          metalness={0.35}
-        />
-      </mesh>
-      <mesh position={[0, 0.95, 0.42]} rotation={[Math.PI / 2.85, 0, 0]}>
-        <boxGeometry args={[1.02, 0.035, 0.5]} />
-        <meshStandardMaterial
-          color="#123440"
-          metalness={0.7}
-          roughness={0.12}
-        />
-      </mesh>
-      <mesh position={[0, 0.61, 1.18]}>
-        <boxGeometry args={[1.3, 0.16, 0.09]} />
-        <meshStandardMaterial color="#162127" metalness={0.7} />
-      </mesh>
-      {[-0.43, 0.43].map((x) => (
-        <mesh key={`lamp-${x}`} position={[x, 0.68, 1.235]}>
-          <boxGeometry args={[0.28, 0.13, 0.04]} />
-          <meshStandardMaterial
-            color="#fff6c5"
-            emissive="#ffd96a"
-            emissiveIntensity={3}
-          />
-        </mesh>
-      ))}
-      {[-0.45, 0.45].map((x) => (
-        <mesh key={`tail-${x}`} position={[x, 0.65, -1.19]}>
-          <boxGeometry args={[0.23, 0.12, 0.04]} />
-          <meshStandardMaterial
-            color="#ff2e20"
-            emissive="#ff1608"
-            emissiveIntensity={2}
-          />
-        </mesh>
-      ))}
-      <mesh position={[0, 1.17, -0.16]}>
-        <boxGeometry args={[0.72, 0.06, 0.55]} />
-        <meshStandardMaterial
-          color="#07141b"
-          emissive="#005EB8"
-          emissiveIntensity={progress > 0.35 ? 2 : 0.1}
-        />
-      </mesh>
-      {[-0.72, 0.72].flatMap((x) =>
-        [-0.72, 0.72].map((z) => (
-          <mesh
-            key={`${x}${z}`}
-            position={[x, 0.38, z]}
-            rotation={[0, 0, Math.PI / 2]}
-            castShadow
-          >
-            <cylinderGeometry args={[0.28, 0.28, 0.22, 12]} />
-            <meshStandardMaterial color="#101418" />
-          </mesh>
-        )),
-      )}
-      {progress > 0.48 && (
-        <mesh position={[0, 1.25, 0]}>
-          <sphereGeometry
-            args={[1.05, 20, 12, 0, Math.PI * 2, 0, Math.PI / 2]}
-          />
-          <meshStandardMaterial
-            color="#005EB8"
-            transparent
-            opacity={0.18}
-            emissive="#005EB8"
-            emissiveIntensity={0.8}
-          />
-        </mesh>
-      )}
-      {progress > 0.2 && (
-        <group position={[0, 1.31, -0.18]}>
-          <mesh>
-            <boxGeometry args={[1.12, 0.05, 1.28]} />
-            <meshStandardMaterial color="#17252b" metalness={0.75} />
-          </mesh>
-          <mesh position={[-0.34, 0.17, 0]}>
-            <boxGeometry args={[0.5, 0.3, 0.72]} />
-            <meshStandardMaterial color="#8d5a2b" roughness={0.8} />
-          </mesh>
-          <mesh position={[0.32, 0.12, 0.12]}>
-            <boxGeometry args={[0.42, 0.22, 0.52]} />
-            <meshStandardMaterial color="#005EB8" roughness={0.55} />
-          </mesh>
-        </group>
-      )}
-      {progress > 0.62 && (
-        <group position={[0, 0.93, -1.22]}>
-          <mesh position={[0, 0, 0]}>
-            <boxGeometry args={[1.25, 0.08, 0.35]} />
-            <meshStandardMaterial color="#121c20" metalness={0.75} />
-          </mesh>
-          <mesh position={[-0.52, 0.2, 0]}>
-            <boxGeometry args={[0.06, 0.4, 0.08]} />
-            <meshStandardMaterial color="#121c20" />
-          </mesh>
-          <mesh position={[0.52, 0.2, 0]}>
-            <boxGeometry args={[0.06, 0.4, 0.08]} />
-            <meshStandardMaterial color="#121c20" />
-          </mesh>
-        </group>
-      )}
-      {progress > 0.78 && (
-        <group position={[0, 1.75, 0]}>
-          <mesh>
-            <sphereGeometry args={[0.15, 12, 8]} />
-            <meshStandardMaterial color="#00A859" emissive="#00A859" />
-          </mesh>
-          <mesh position={[0, -0.25, 0]}>
-            <cylinderGeometry args={[0.015, 0.015, 0.5]} />
-            <meshStandardMaterial color="#86ffc0" />
-          </mesh>
-        </group>
-      )}
-    </group>
-  );
-}
+import type {ThreeElements} from "@react-three/fiber";import type {RefObject} from "react";import type * as THREE from "three";import {RoundedBox} from "@react-three/drei";import {useJourneyStore} from "@/stores/journeyStore";import {milestones} from "@/data/milestones";
+function Wheel({x,z,upgraded}:{x:number;z:number;upgraded:boolean}){return <group position={[x,.38,z]} rotation={[0,0,Math.PI/2]}><mesh castShadow><cylinderGeometry args={[upgraded ? .34 : .27,upgraded ? .34 : .27,.24,16]}/><meshStandardMaterial color="#0a0d0f" roughness={.88}/></mesh><mesh position={[0,.125,0]}><cylinderGeometry args={[upgraded ? .2 : .15,upgraded ? .2 : .15,.018,12]}/><meshStandardMaterial color={upgraded?"#c8d2d1":"#596367"} metalness={.85} roughness={.2}/></mesh><mesh position={[0,.14,0]}><cylinderGeometry args={[.065,.065,.025,10]}/><meshStandardMaterial color="#F46300" emissive="#F46300" emissiveIntensity={.35}/></mesh></group>}
+function RoofLoad(){return <group position={[0,1.35,-.18]}><mesh><boxGeometry args={[1.18,.055,1.35]}/><meshStandardMaterial color="#111a1e" metalness={.75}/></mesh>{[-.48,.48].map(x=><mesh key={x} position={[x,.13,0]}><boxGeometry args={[.045,.28,1.2]}/><meshStandardMaterial color="#28343a" metalness={.7}/></mesh>)}<RoundedBox args={[.58,.34,.75]} radius={.08} smoothness={2} position={[-.28,.23,.08]}><meshStandardMaterial color="#9c5d29" roughness={.72}/></RoundedBox><RoundedBox args={[.42,.27,.55]} radius={.06} smoothness={2} position={[.35,.19,-.05]}><meshStandardMaterial color="#005EB8" roughness={.5}/></RoundedBox></group>}
+function Drone(){return <group position={[0,2.05,-.05]}><mesh><sphereGeometry args={[.16,14,10]}/><meshStandardMaterial color="#00A859" emissive="#00A859" emissiveIntensity={2}/></mesh>{[-1,1].map(x=><group key={x}><mesh position={[x*.33,0,0]}><boxGeometry args={[.5,.035,.035]}/><meshStandardMaterial color="#bcd0d2" metalness={.8}/></mesh><mesh position={[x*.57,0,0]} rotation={[Math.PI/2,0,0]}><torusGeometry args={[.16,.018,6,16]}/><meshStandardMaterial color="#82ffd0" emissive="#00A859" emissiveIntensity={1.2}/></mesh></group>)}<pointLight color="#00A859" intensity={1.3} distance={2.5}/></group>}
+export default function Car({groupRef,...props}:ThreeElements["group"]&{groupRef:RefObject<THREE.Group|null>}){const progress=useJourneyStore(s=>s.progress),stage=Math.min(milestones.length,Math.floor(progress*milestones.length)+1),body=stage<2?"#9b6545":stage<7?"#F46300":"#ed4e16";return <group ref={groupRef} {...props}>
+ <RoundedBox args={[1.55,.38,2.48]} radius={.13} smoothness={3} position={[0,.61,0]} castShadow><meshStandardMaterial color={body} roughness={stage>6?.25:.52} metalness={stage>6?.42:.14}/></RoundedBox>
+ <RoundedBox args={[1.22,.58,1.25]} radius={.16} smoothness={3} position={[0,1.02,-.2]} castShadow><meshStandardMaterial color={stage<2?"#aeb8b5":"#c9e3e9"} roughness={.15} metalness={.5}/></RoundedBox>
+ <mesh position={[0,1.08,.41]} rotation={[Math.PI/2.8,0,0]}><boxGeometry args={[1.04,.035,.53]}/><meshPhysicalMaterial color="#0b2d3b" metalness={.45} roughness={.08} transmission={.2}/></mesh>
+ {[-.615,.615].map(x=><mesh key={`sideglass-${x}`} position={[x,1.06,-.25]} rotation={[0,Math.PI/2,0]}><boxGeometry args={[.74,.32,.026]}/><meshStandardMaterial color="#123c4b" metalness={.55} roughness={.12}/></mesh>)}
+ <RoundedBox args={[1.42,.18,.72]} radius={.08} smoothness={2} position={[0,.76,.91]}><meshStandardMaterial color={body} roughness={.3} metalness={.3}/></RoundedBox>
+ <mesh position={[0,.57,1.27]}><boxGeometry args={[1.3,.16,.08]}/><meshStandardMaterial color="#10171a" metalness={.78}/></mesh>
+ <mesh position={[0,.72,1.29]}><boxGeometry args={[.48,.15,.035]}/><meshStandardMaterial color="#1c262a" metalness={.8}/></mesh>
+ {[-.43,.43].map(x=><group key={`head-${x}`} position={[x,.78,1.305]}><mesh><boxGeometry args={[.3,.14,.035]}/><meshStandardMaterial color="#fff4bd" emissive="#ffd55e" emissiveIntensity={stage>4?4:1.5}/></mesh>{stage>4&&<pointLight color="#ffd77a" intensity={.7} distance={3}/>}</group>)}
+ {[-.47,.47].map(x=><mesh key={`tail-${x}`} position={[x,.69,-1.255]}><boxGeometry args={[.24,.13,.035]}/><meshStandardMaterial color="#ff2418" emissive="#ff1608" emissiveIntensity={2.5}/></mesh>)}
+ {[-.78,.78].flatMap(x=>[-.77,.77].map(z=><Wheel key={`${x}-${z}`} x={x} z={z} upgraded={stage>1}/>))}
+ {stage>2&&<mesh position={[0,1.29,.04]}><boxGeometry args={[.78,.055,.55]}/><meshStandardMaterial color="#07141b" emissive="#005EB8" emissiveIntensity={1.5}/></mesh>}
+ {stage>3&&<RoofLoad/>}
+ {stage>5&&<group position={[0,.58,-1.28]}><mesh><boxGeometry args={[1.42,.12,.22]}/><meshStandardMaterial color="#182328" metalness={.85}/></mesh>{[-.58,.58].map(x=><mesh key={x} position={[x,.16,0]}><cylinderGeometry args={[.055,.055,.32,10]}/><meshStandardMaterial color="#cbd3d3" metalness={.9}/></mesh>)}</group>}
+ {stage>6&&<mesh position={[0,1.15,0]}><sphereGeometry args={[1.18,24,14,0,Math.PI*2,0,Math.PI/2]}/><meshPhysicalMaterial color="#005EB8" transparent opacity={.16} roughness={.05} transmission={.45} emissive="#005EB8" emissiveIntensity={.75}/></mesh>}
+ {stage>7&&<>{[-.82,.82].map(x=><mesh key={`skirt-${x}`} position={[x,.55,0]}><boxGeometry args={[.09,.15,2.05]}/><meshStandardMaterial color="#172227" metalness={.82}/></mesh>)}</>}
+ {stage>8&&<group position={[0,.97,-1.23]}><mesh><boxGeometry args={[1.28,.08,.42]}/><meshStandardMaterial color="#10191d" metalness={.88}/></mesh>{[-.52,.52].map(x=><mesh key={x} position={[x,-.18,0]}><boxGeometry args={[.06,.4,.08]}/><meshStandardMaterial color="#10191d"/></mesh>)}</group>}
+ {stage>9&&<Drone/>}
+ {stage>10&&<><mesh position={[0,.34,1.22]}><boxGeometry args={[1.48,.06,.32]}/><meshStandardMaterial color="#00A859" emissive="#00A859" emissiveIntensity={1.1}/></mesh><pointLight position={[0,.55,0]} color="#F46300" intensity={1.2} distance={3}/></>}
+ </group>}

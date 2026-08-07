@@ -28,4 +28,5 @@ const zh:L[]=[
 ["生产 × 质量 × 软件 × AI","长期目标是把生产现场知识、改善、质量数据、软件自动化与负责任的AI融合为提升运营并赋能人员的系统。",["生产与质量流程数字化","数据驱动改善与自动化","运营/培训中的负责任AI","以人为本的技术应用"]]
 ];
 const upgrades={vi:["Bánh xe công nghiệp & bộ công cụ Kaizen","Khoang lái số","Giá nóc năng lực lãnh đạo","Hệ thống truyền thông đa phương tiện","Màn hình điều hành nhiệm vụ","Lá chắn bảo mật zero-trust","Động cơ thanh toán & bộ thân xe số","Hệ thống chia sẻ tri thức","Mô-đun điều hành trưởng nhóm","AI copilot & huy hiệu giảng viên","Hệ thống nhà máy thông minh hoàn chỉnh"],zh:["工业车轮与改善工具箱","数字驾驶舱","领导力车顶架","多媒体通信系统","任务控制显示器","零信任安全护盾","支付引擎与数字车身套件","知识共享系统","团队领导指挥模块","AI协作无人机与讲师徽章","完整智慧工厂系统"]};
-export function getMilestones(language:Language){if(language==="en")return milestones;const v=language==="vi"?vi:zh;return milestones.map((m,i)=>({...m,role:v[i][0],summary:v[i][1],highlights:v[i][2],upgrade:upgrades[language][i]}));}
+const localizationOrder=["toyota","fpt","vhunter","video","task","security","electronics","workshop","store","teaching","future"];
+export function getMilestones(language:Language){if(language==="en")return milestones;const v=language==="vi"?vi:zh;return milestones.map(m=>{const i=localizationOrder.indexOf(m.id);return {...m,role:v[i][0],summary:v[i][1],highlights:v[i][2],upgrade:upgrades[language][i]}});}
