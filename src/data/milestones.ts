@@ -1,17 +1,219 @@
 import type { Milestone } from "@/types";
-const milestoneCatalog:Milestone[]=[
- {id:"toyota",shortTitle:"01 · Foundation",title:"Toyota Boshoku Hai Phong",period:"12/2016 — 09/2023",role:"Production & Quality Management",summary:"Nearly seven years on the factory floor built a disciplined foundation in production, quality, people development and continuous improvement within a Japanese manufacturing environment.",highlights:["35% faster employee onboarding","~30% reduction in operational waste","Critical defect rate maintained below 1%","50% fewer equipment incidents"],accent:"#F46300",position:[0,0,-6],upgrade:"Industrial wheels & Kaizen toolbox"},
- {id:"fpt",shortTitle:"02 · Transformation",title:"FPT Polytechnic Hai Phong",period:"09/2023 — 09/2026",role:"Software Development · GPA 3.9/4.0",summary:"A three-year transformation from factory operations to digital product development—combining formal study with school projects, independent R&D, real deployments, leadership and continuous learning.",highlights:["Golden Bee SP26 — Top 1 campus","Excellent Student across semesters","Chairman of the IT Club","Gemini Certified Educator"],accent:"#005EB8",position:[4,0,-17],upgrade:"Digital cockpit"},
- {id:"vhunter",shortTitle:"Field Experience",title:"VHunter Event Company",period:"09/2024 — 09/2025",role:"Event Organization & Management Specialist",summary:"Strengthened commercial awareness and leadership beyond the classroom by winning and delivering a 2,000-guest conference and gala from supplier negotiation to live execution.",highlights:["Managed a budget of ~VND 800 million","98% attendee satisfaction","Reduced organization costs by 20%","Cross-functional coordination under pressure"],accent:"#F46300",position:[-4,0,-29],upgrade:"Leadership roof rack"},
- {id:"video",shortTitle:"Personal Project",title:"Marcus Video",period:"12/2025 — 04/2026",role:"Full-stack Java Developer",summary:"Built a high-performance online video platform to master low-level Java Web architecture, real-time interaction, application security and database optimization without relying on a full-stack framework.",highlights:["Java 21 · Jakarta EE 10 · Hibernate 6.4","WebSocket live chat & asynchronous email","Custom RBAC, BCrypt and Servlet Filters","Pagination, caching and N+1 optimization"],accent:"#005EB8",position:[4,0,-41],upgrade:"Media communication system"},
- {id:"task",shortTitle:"Real Deployment",title:"Internal Task Management System",period:"02/2026 — 04/2026",role:"Solution Designer & Full-stack Developer",summary:"Designed and deployed an on-premise command workflow for the Hong Bang Ward Military Command, translating sensitive operational requirements into a secure and practical LAN product.",highlights:["Spring Boot · Thymeleaf · SQLite","Real-time AJAX command and progress flow","Specialized commander/soldier interfaces","Accepted and deployed in production"],accent:"#00A859",position:[-4,0,-53],upgrade:"Mission control display"},
- {id:"security",shortTitle:"Real Deployment",title:"USB Sentry",period:"02/2026 — 04/2026",role:"Desktop Security Developer",summary:"Engineered a portable zero-trust endpoint guard that monitors unauthorized peripheral devices and automatically isolates internal Windows computers from data-leak risks.",highlights:["Java Swing · Windows API · WMI","Real-time USB and mobile detection","Firewall isolation & emergency shutdown","Accepted for internal LAN operation"],accent:"#00A859",position:[4,0,-65],upgrade:"Zero-trust security shield"},
- {id:"electronics",shortTitle:"Personal Project",title:"Marcus Electronics",period:"01/2026 — 04/2026",role:"Full-stack Product Developer",summary:"Developed an end-to-end electronics commerce platform as an advanced personal project, focusing on secure APIs, transactional payment flows and a normalized product-variant architecture.",highlights:["Java 21 · Spring Boot 3.2 · Vue 3","JWT, refresh tokens and granular RBAC","VNPAY integration with ACID integrity","Product Variants/SKU with 3NF schema"],accent:"#F46300",position:[-4,0,-77],upgrade:"Payment engine & digital body kit"},
- {id:"workshop",shortTitle:"Community",title:"IT Club, Workshops & Mini Projects",period:"2024 — 09/2026",role:"IT Club Chairman · Mentor · Builder",summary:"Turned learning into shared capability through club leadership, technical workshops, workshop projects and interactive tools such as the SQL Quiz game for peer practice.",highlights:["Led and coordinated IT Club activities","Built a Vue 3 SQL Quiz game","Mentored practical programming projects","Shared structured learning with peers"],accent:"#005EB8",position:[4,0,-89],upgrade:"Knowledge-sharing system"},
- {id:"store",shortTitle:"Graduation Project",title:"Marcus Store",period:"05/2026 — 09/2026",role:"Team Leader · Solution Architect",summary:"Leading the graduation team in building an enterprise-style e-commerce platform, establishing the architecture, Git workflow and engineering standards while reviewing delivery across backend and frontend.",highlights:["Java 21 · Spring Boot 3.2.5 · SQL Server","Vue 3 · Vite · Pinia · Bootstrap 5","Protected main/dev branches and PR reviews","Client/Admin systems with JWT security"],accent:"#F46300",position:[-4,0,-101],upgrade:"Team-lead command module"},
- {id:"teaching",shortTitle:"03 · Present",title:"Technology Instructor & Freelance Developer",period:"During FPT — Present",role:"Instructor · AI-enabled Educator · Developer",summary:"Teaching Robocon, programming and workplace technology while building client software and websites. Generative AI is used as a disciplined co-pilot for lesson research, curriculum design, exercise generation, differentiation and personalized learner feedback.",highlights:["Robocon, programming and digital literacy","Microsoft Office & Google Workspace","AI-assisted lesson design and personalization","Freelance software and website delivery"],accent:"#005EB8",position:[3,0,-113],upgrade:"AI copilot drone & instructor badge"},
- {id:"future",shortTitle:"04 · Destination",title:"Smart Factory",period:"2026 — The road ahead",role:"Production × Quality × Software × AI",summary:"The long-term direction is to unite factory-floor understanding, Kaizen, quality data, software automation and responsible AI into systems that improve operations—and empower people to use them confidently.",highlights:["Digitized production & quality workflows","Data-driven Kaizen and automation","Responsible AI for operations and training","Human-centered technology adoption"],accent:"#F46300",position:[0,0,-127],upgrade:"Final smart-factory system"}
+const milestoneCatalog: Milestone[] = [
+  {
+    id: "toyota",
+    shortTitle: "01 · Foundation",
+    title: "Toyota Boshoku Hai Phong",
+    period: "12/2016 — 09/2023",
+    role: "Production & Quality Management",
+    summary:
+      "Nearly seven years on the factory floor built a disciplined foundation in production, quality, people development and continuous improvement within a Japanese manufacturing environment.",
+    highlights: [
+      "35% faster employee onboarding",
+      "~30% reduction in operational waste",
+      "Critical defect rate maintained below 1%",
+      "50% fewer equipment incidents",
+    ],
+    accent: "#F46300",
+    position: [0, 0, -6],
+    upgrade: "Industrial wheels & Kaizen toolbox",
+  },
+  {
+    id: "fpt",
+    shortTitle: "02 · Transformation",
+    title: "FPT Polytechnic Hai Phong",
+    period: "09/2023 — 09/2026",
+    role: "Software Development · GPA 3.9/4.0",
+    summary:
+      "A three-year transformation from factory operations to digital product development—combining formal study with school projects, independent R&D, real deployments, leadership and continuous learning.",
+    highlights: [
+      "Golden Bee SP26 — Top 1 campus",
+      "Excellent Student across semesters",
+      "Chairman of the IT Club",
+      "Gemini Certified Educator",
+    ],
+    accent: "#005EB8",
+    position: [4, 0, -17],
+    upgrade: "Digital cockpit",
+  },
+  {
+    id: "vhunter",
+    shortTitle: "Field Experience",
+    title: "VHunter Event Company",
+    period: "09/2024 — 09/2025",
+    role: "Event Organization & Management Specialist",
+    summary:
+      "Strengthened commercial awareness and leadership beyond the classroom by winning and delivering a 2,000-guest conference and gala from supplier negotiation to live execution.",
+    highlights: [
+      "Managed a budget of ~VND 800 million",
+      "98% attendee satisfaction",
+      "Reduced organization costs by 20%",
+      "Cross-functional coordination under pressure",
+    ],
+    accent: "#F46300",
+    position: [-4, 0, -29],
+    upgrade: "Leadership roof rack",
+  },
+  {
+    id: "video",
+    shortTitle: "Personal Project",
+    title: "Marcus Video",
+    period: "12/2025 — 04/2026",
+    role: "Full-stack Java Developer",
+    summary:
+      "Built a high-performance online video platform to master low-level Java Web architecture, real-time interaction, application security and database optimization without relying on a full-stack framework.",
+    highlights: [
+      "Java 21 · Jakarta EE 10 · Hibernate 6.4",
+      "WebSocket live chat & asynchronous email",
+      "Custom RBAC, BCrypt and Servlet Filters",
+      "Pagination, caching and N+1 optimization",
+    ],
+    accent: "#005EB8",
+    position: [4, 0, -41],
+    upgrade: "Media communication system",
+  },
+  {
+    id: "task",
+    shortTitle: "Real Deployment",
+    title: "Internal Task Management System",
+    period: "02/2026 — 04/2026",
+    role: "Solution Designer & Full-stack Developer",
+    summary:
+      "Designed and deployed an on-premise command workflow for the Hong Bang Ward Military Command, translating sensitive operational requirements into a secure and practical LAN product.",
+    highlights: [
+      "Spring Boot · Thymeleaf · SQLite",
+      "Real-time AJAX command and progress flow",
+      "Specialized commander/soldier interfaces",
+      "Accepted and deployed in production",
+    ],
+    accent: "#00A859",
+    position: [-4, 0, -53],
+    upgrade: "Mission control display",
+  },
+  {
+    id: "security",
+    shortTitle: "Real Deployment",
+    title: "USB Sentry",
+    period: "02/2026 — 04/2026",
+    role: "Desktop Security Developer",
+    summary:
+      "Engineered a portable zero-trust endpoint guard that monitors unauthorized peripheral devices and automatically isolates internal Windows computers from data-leak risks.",
+    highlights: [
+      "Java Swing · Windows API · WMI",
+      "Real-time USB and mobile detection",
+      "Firewall isolation & emergency shutdown",
+      "Accepted for internal LAN operation",
+    ],
+    accent: "#00A859",
+    position: [4, 0, -65],
+    upgrade: "Zero-trust security shield",
+  },
+  {
+    id: "electronics",
+    shortTitle: "Personal Project",
+    title: "Marcus Electronics",
+    period: "01/2026 — 04/2026",
+    role: "Full-stack Product Developer",
+    summary:
+      "Developed an end-to-end electronics commerce platform as an advanced personal project, focusing on secure APIs, transactional payment flows and a normalized product-variant architecture.",
+    highlights: [
+      "Java 21 · Spring Boot 3.2 · Vue 3",
+      "JWT, refresh tokens and granular RBAC",
+      "VNPAY integration with ACID integrity",
+      "Product Variants/SKU with 3NF schema",
+    ],
+    accent: "#F46300",
+    position: [-4, 0, -77],
+    upgrade: "Payment engine & digital body kit",
+  },
+  {
+    id: "workshop",
+    shortTitle: "Community",
+    title: "IT Club, Workshops & Mini Projects",
+    period: "2024 — 09/2026",
+    role: "IT Club Chairman · Mentor · Builder",
+    summary:
+      "Turned learning into shared capability through club leadership, technical workshops, workshop projects and interactive tools such as the SQL Quiz game for peer practice.",
+    highlights: [
+      "Led and coordinated IT Club activities",
+      "Built a Vue 3 SQL Quiz game",
+      "Mentored practical programming projects",
+      "Shared structured learning with peers",
+    ],
+    accent: "#005EB8",
+    position: [4, 0, -89],
+    upgrade: "Knowledge-sharing system",
+  },
+  {
+    id: "store",
+    shortTitle: "Graduation Project",
+    title: "Marcus Store",
+    period: "05/2026 — 09/2026",
+    role: "Team Leader · Solution Architect",
+    summary:
+      "Leading the graduation team in building an enterprise-style e-commerce platform, establishing the architecture, Git workflow and engineering standards while reviewing delivery across backend and frontend.",
+    highlights: [
+      "Java 21 · Spring Boot 3.2.5 · SQL Server",
+      "Vue 3 · Vite · Pinia · Bootstrap 5",
+      "Protected main/dev branches and PR reviews",
+      "Client/Admin systems with JWT security",
+    ],
+    accent: "#F46300",
+    position: [-4, 0, -101],
+    upgrade: "Team-lead command module",
+  },
+  {
+    id: "teaching",
+    shortTitle: "03 · Present",
+    title: "Technology Instructor & Freelance Developer",
+    period: "During FPT — Present",
+    role: "Instructor · AI-enabled Educator · Developer",
+    summary:
+      "Teaching Robocon, programming and workplace technology while building client software and websites. Generative AI is used as a disciplined co-pilot for lesson research, curriculum design, exercise generation, differentiation and personalized learner feedback.",
+    highlights: [
+      "Robocon, programming and digital literacy",
+      "Microsoft Office & Google Workspace",
+      "AI-assisted lesson design and personalization",
+      "Freelance software and website delivery",
+    ],
+    accent: "#005EB8",
+    position: [3, 0, -113],
+    upgrade: "AI copilot drone & instructor badge",
+  },
+  {
+    id: "future",
+    shortTitle: "04 · Destination",
+    title: "Smart Factory",
+    period: "2026 — The road ahead",
+    role: "Production × Quality × Software × AI",
+    summary:
+      "The long-term direction is to unite factory-floor understanding, Kaizen, quality data, software automation and responsible AI into systems that improve operations—and empower people to use them confidently.",
+    highlights: [
+      "Digitized production & quality workflows",
+      "Data-driven Kaizen and automation",
+      "Responsible AI for operations and training",
+      "Human-centered technology adoption",
+    ],
+    accent: "#F46300",
+    position: [0, 0, -127],
+    upgrade: "Final smart-factory system",
+  },
 ];
-const chronologicalOrder=["toyota","fpt","vhunter","workshop","video","electronics","task","security","store","teaching","future"];
-const lane=[0,4,-4,4,-4,4,-4,4,-4,3,0];
-export const milestones=chronologicalOrder.map((id,index)=>({...milestoneCatalog.find(item=>item.id===id) as Milestone,position:[lane[index],0,-5-index*12] as [number,number,number]}));
+const chronologicalOrder = [
+  "toyota",
+  "fpt",
+  "vhunter",
+  "workshop",
+  "video",
+  "electronics",
+  "task",
+  "security",
+  "store",
+  "teaching",
+  "future",
+];
+const lane = [0, 4, -4, 4, -4, 4, -4, 4, -4, 3, 0];
+export const milestones = chronologicalOrder.map((id, index) => ({
+  ...(milestoneCatalog.find((item) => item.id === id) as Milestone),
+  position: [lane[index], 0, -5 - index * 12] as [number, number, number],
+}));

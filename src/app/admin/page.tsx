@@ -12,13 +12,11 @@ export default function AdminPage() {
       }}
     >
       <div>
-        <p style={{ color: "#F46300", letterSpacing: 3, fontSize: 11 }}>
-          MARCUS JOURNEY ADMIN
-        </p>
+        <p style={{ color: "#F46300", letterSpacing: 3, fontSize: 11 }}>MARCUS JOURNEY ADMIN</p>
         <h1>Content studio is coming next.</h1>
         <p>
-          Firebase Authentication and content management will be enabled after
-          credentials are connected.
+          Firebase Authentication and content management will be enabled after credentials are
+          connected.
         </p>
         <Link href="/" style={{ color: "#00A859" }}>
           ← Back to journey

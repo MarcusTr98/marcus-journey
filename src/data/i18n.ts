@@ -1,32 +1,327 @@
-import type {Language} from "@/types";import {milestones} from "./milestones";
-export const copy={en:{tagline:"PRODUCTION • KAIZEN • TECHNOLOGY",subtitle:"From Production Floor\nto Digital Innovation.",start:"START THE JOURNEY",quick:"QUICK PROFILE",projects:"Projects",cv:"Download CV",sound:"Sound",quality:"Quality",journey:"Journey progress",auto:"Auto Journey",drive:"Drive Mode · Soon",scroll:"Scroll to drive",unlocked:"Upgrade unlocked",destination:"DESTINATION · SMART FACTORY",finalTitle:"Build systems that\nmove people forward.",promise:"I understand the factory floor. I improve the process.\nI build the system. I teach others to use it.",contact:"Contact me",github:"GitHub",close:"Close",profileTitle:"Production mind.\nDigital builder."},vi:{tagline:"SẢN XUẤT • KAIZEN • CÔNG NGHỆ",subtitle:"Từ nhà máy sản xuất\nđến đổi mới số.",start:"BẮT ĐẦU HÀNH TRÌNH",quick:"HỒ SƠ NHANH",projects:"Dự án",cv:"Tải CV",sound:"Âm thanh",quality:"Chất lượng",journey:"Tiến độ hành trình",auto:"Hành trình tự động",drive:"Tự lái · Sắp có",scroll:"Cuộn để lái xe",unlocked:"Nâng cấp đã mở",destination:"ĐÍCH ĐẾN · NHÀ MÁY THÔNG MINH",finalTitle:"Xây hệ thống\nđưa con người tiến lên.",promise:"Tôi hiểu nhà máy. Tôi cải tiến quy trình.\nTôi xây dựng hệ thống. Tôi hướng dẫn mọi người sử dụng.",contact:"Liên hệ",github:"GitHub",close:"Đóng",profileTitle:"Tư duy sản xuất.\nKiến tạo số."},zh:{tagline:"生产 • 改善 • 科技",subtitle:"从生产车间\n走向数字创新。",start:"开始旅程",quick:"快速履历",projects:"项目",cv:"下载简历",sound:"声音",quality:"画质",journey:"旅程进度",auto:"自动旅程",drive:"驾驶模式 · 即将推出",scroll:"滚动以驾驶",unlocked:"已解锁升级",destination:"终点 · 智慧工厂",finalTitle:"构建系统，\n推动人们前进。",promise:"我了解生产现场。我改善流程。\n我构建系统。我教会他人使用。",contact:"联系我",github:"GitHub",close:"关闭",profileTitle:"生产思维。\n数字创造者。"}} as const;
-type L=[string,string,string[]];
-const vi:L[]=[
-["Quản lý Sản xuất & Chất lượng","Gần bảy năm trực tiếp tại hiện trường đã tạo nền tảng kỷ luật về sản xuất, chất lượng, phát triển con người và cải tiến liên tục trong môi trường doanh nghiệp Nhật Bản.",["Rút ngắn 35% thời gian onboarding","Giảm khoảng 30% lãng phí vận hành","Duy trì lỗi nghiêm trọng dưới 1%","Giảm 50% sự cố thiết bị"]],
-["Phát triển Phần mềm · GPA 3.9/4.0","Ba năm chuyển mình từ vận hành nhà máy sang phát triển sản phẩm số—kết hợp học chính quy, dự án trường, R&D cá nhân, triển khai thực tế, hoạt động lãnh đạo và tự học liên tục.",["Ong vàng SP26 — Top 1 cơ sở","Sinh viên xuất sắc các kỳ","Chủ nhiệm CLB IT","Gemini Certified Educator"]],
-["Chuyên viên Tổ chức & Quản lý Sự kiện","Mở rộng năng lực thương mại và lãnh đạo ngoài giảng đường qua việc thắng thầu, triển khai hội nghị và gala 2.000 khách từ đàm phán nhà cung cấp tới vận hành trực tiếp.",["Ngân sách khoảng 800 triệu VNĐ","98% khách tham dự hài lòng","Giảm 20% chi phí tổ chức","Điều phối đa bộ phận dưới áp lực cao"]],
-["Lập trình viên Java Full-stack","Xây dựng nền tảng video trực tuyến hiệu năng cao để làm chủ kiến trúc Java Web low-level, tương tác realtime, bảo mật ứng dụng và tối ưu cơ sở dữ liệu mà không phụ thuộc framework full-stack.",["Java 21 · Jakarta EE 10 · Hibernate 6.4","Live chat WebSocket & email bất đồng bộ","Tự xây RBAC, BCrypt và Servlet Filter","Phân trang, caching và xử lý N+1"]],
-["Thiết kế Giải pháp & Lập trình viên Full-stack","Thiết kế và triển khai hệ thống chỉ huy on-premise cho BCHQS phường Hồng Bàng, chuyển hóa yêu cầu nghiệp vụ nhạy cảm thành sản phẩm LAN bảo mật và dễ sử dụng.",["Spring Boot · Thymeleaf · SQLite","Luồng giao lệnh và tiến độ realtime bằng AJAX","Giao diện riêng cho chỉ huy/chiến sĩ","Đã nghiệm thu và đưa vào vận hành"]],
-["Lập trình viên Bảo mật Desktop","Xây dựng chốt chặn endpoint zero-trust dạng portable, giám sát thiết bị ngoại vi trái phép và tự động cô lập máy tính Windows nội bộ trước nguy cơ rò rỉ dữ liệu.",["Java Swing · Windows API · WMI","Phát hiện USB/điện thoại realtime","Cô lập firewall & shutdown khẩn cấp","Đã nghiệm thu trong mạng LAN nội bộ"]],
-["Lập trình viên Sản phẩm Full-stack","Phát triển nền tảng thương mại điện tử end-to-end như một dự án cá nhân nâng cao, tập trung vào API bảo mật, giao dịch thanh toán và kiến trúc biến thể sản phẩm chuẩn hóa.",["Java 21 · Spring Boot 3.2 · Vue 3","JWT, refresh token và RBAC chi tiết","VNPAY với toàn vẹn giao dịch ACID","Product Variants/SKU với schema 3NF"]],
-["Chủ nhiệm CLB IT · Mentor · Người xây dựng","Biến kiến thức thành năng lực cộng đồng thông qua điều hành CLB, workshop kỹ thuật, dự án xưởng và các công cụ tương tác như SQL Quiz để thành viên cùng thực hành.",["Điều phối hoạt động CLB IT","Xây dựng SQL Quiz bằng Vue 3","Hướng dẫn dự án lập trình thực tế","Chia sẻ lộ trình học tập có cấu trúc"]],
-["Trưởng nhóm · Kiến trúc sư Giải pháp","Dẫn dắt nhóm đồ án tốt nghiệp xây dựng nền tảng thương mại điện tử theo hướng enterprise; thiết lập kiến trúc, Git workflow, tiêu chuẩn kỹ thuật và review đầu ra backend/frontend.",["Java 21 · Spring Boot 3.2.5 · SQL Server","Vue 3 · Vite · Pinia · Bootstrap 5","Bảo vệ nhánh main/dev và review Pull Request","Hệ thống Client/Admin bảo mật bằng JWT"]],
-["Giảng viên · Nhà giáo dục ứng dụng AI · Lập trình viên","Giảng dạy Robocon, lập trình và công nghệ văn phòng song song với phát triển phần mềm/website cho khách hàng. AI tạo sinh được sử dụng như copilot có kiểm soát cho nghiên cứu bài giảng, thiết kế giáo án, sinh bài tập, phân hóa và phản hồi cá nhân hóa.",["Robocon, lập trình và năng lực số","Microsoft Office & Google Workspace","Thiết kế bài giảng và cá nhân hóa bằng AI","Phát triển phần mềm/website freelance"]],
-["Sản xuất × Chất lượng × Phần mềm × AI","Định hướng dài hạn là kết hợp hiểu biết hiện trường, Kaizen, dữ liệu chất lượng, tự động hóa phần mềm và AI có trách nhiệm thành các hệ thống nâng cao hiệu suất—đồng thời giúp con người tự tin làm chủ công nghệ.",["Số hóa sản xuất và chất lượng","Kaizen dựa trên dữ liệu & tự động hóa","AI có trách nhiệm cho vận hành/đào tạo","Ứng dụng công nghệ lấy con người làm trung tâm"]]
+import type { Language } from "@/types";
+import { milestones } from "./milestones";
+export const copy = {
+  en: {
+    tagline: "PRODUCTION • KAIZEN • TECHNOLOGY",
+    subtitle: "From Production Floor\nto Digital Innovation.",
+    start: "START THE JOURNEY",
+    quick: "QUICK PROFILE",
+    projects: "Projects",
+    cv: "Download CV",
+    sound: "Sound",
+    quality: "Quality",
+    journey: "Journey progress",
+    auto: "Auto Journey",
+    drive: "Drive Mode · Soon",
+    scroll: "Scroll to drive",
+    unlocked: "Upgrade unlocked",
+    destination: "DESTINATION · SMART FACTORY",
+    finalTitle: "Build systems that\nmove people forward.",
+    promise:
+      "I understand the factory floor. I improve the process.\nI build the system. I teach others to use it.",
+    contact: "Contact me",
+    github: "GitHub",
+    close: "Close",
+    profileTitle: "Production mind.\nDigital builder.",
+  },
+  vi: {
+    tagline: "SẢN XUẤT • KAIZEN • CÔNG NGHỆ",
+    subtitle: "Từ nhà máy sản xuất\nđến đổi mới số.",
+    start: "BẮT ĐẦU HÀNH TRÌNH",
+    quick: "HỒ SƠ NHANH",
+    projects: "Dự án",
+    cv: "Tải CV",
+    sound: "Âm thanh",
+    quality: "Chất lượng",
+    journey: "Tiến độ hành trình",
+    auto: "Hành trình tự động",
+    drive: "Tự lái · Sắp có",
+    scroll: "Cuộn để lái xe",
+    unlocked: "Nâng cấp đã mở",
+    destination: "ĐÍCH ĐẾN · NHÀ MÁY THÔNG MINH",
+    finalTitle: "Xây hệ thống\nđưa con người tiến lên.",
+    promise:
+      "Tôi hiểu nhà máy. Tôi cải tiến quy trình.\nTôi xây dựng hệ thống. Tôi hướng dẫn mọi người sử dụng.",
+    contact: "Liên hệ",
+    github: "GitHub",
+    close: "Đóng",
+    profileTitle: "Tư duy sản xuất.\nKiến tạo số.",
+  },
+  zh: {
+    tagline: "生产 • 改善 • 科技",
+    subtitle: "从生产车间\n走向数字创新。",
+    start: "开始旅程",
+    quick: "快速履历",
+    projects: "项目",
+    cv: "下载简历",
+    sound: "声音",
+    quality: "画质",
+    journey: "旅程进度",
+    auto: "自动旅程",
+    drive: "驾驶模式 · 即将推出",
+    scroll: "滚动以驾驶",
+    unlocked: "已解锁升级",
+    destination: "终点 · 智慧工厂",
+    finalTitle: "构建系统，\n推动人们前进。",
+    promise: "我了解生产现场。我改善流程。\n我构建系统。我教会他人使用。",
+    contact: "联系我",
+    github: "GitHub",
+    close: "关闭",
+    profileTitle: "生产思维。\n数字创造者。",
+  },
+} as const;
+type L = [string, string, string[]];
+const vi: L[] = [
+  [
+    "Quản lý Sản xuất & Chất lượng",
+    "Gần bảy năm trực tiếp tại hiện trường đã tạo nền tảng kỷ luật về sản xuất, chất lượng, phát triển con người và cải tiến liên tục trong môi trường doanh nghiệp Nhật Bản.",
+    [
+      "Rút ngắn 35% thời gian onboarding",
+      "Giảm khoảng 30% lãng phí vận hành",
+      "Duy trì lỗi nghiêm trọng dưới 1%",
+      "Giảm 50% sự cố thiết bị",
+    ],
+  ],
+  [
+    "Phát triển Phần mềm · GPA 3.9/4.0",
+    "Ba năm chuyển mình từ vận hành nhà máy sang phát triển sản phẩm số—kết hợp học chính quy, dự án trường, R&D cá nhân, triển khai thực tế, hoạt động lãnh đạo và tự học liên tục.",
+    [
+      "Ong vàng SP26 — Top 1 cơ sở",
+      "Sinh viên xuất sắc các kỳ",
+      "Chủ nhiệm CLB IT",
+      "Gemini Certified Educator",
+    ],
+  ],
+  [
+    "Chuyên viên Tổ chức & Quản lý Sự kiện",
+    "Mở rộng năng lực thương mại và lãnh đạo ngoài giảng đường qua việc thắng thầu, triển khai hội nghị và gala 2.000 khách từ đàm phán nhà cung cấp tới vận hành trực tiếp.",
+    [
+      "Ngân sách khoảng 800 triệu VNĐ",
+      "98% khách tham dự hài lòng",
+      "Giảm 20% chi phí tổ chức",
+      "Điều phối đa bộ phận dưới áp lực cao",
+    ],
+  ],
+  [
+    "Lập trình viên Java Full-stack",
+    "Xây dựng nền tảng video trực tuyến hiệu năng cao để làm chủ kiến trúc Java Web low-level, tương tác realtime, bảo mật ứng dụng và tối ưu cơ sở dữ liệu mà không phụ thuộc framework full-stack.",
+    [
+      "Java 21 · Jakarta EE 10 · Hibernate 6.4",
+      "Live chat WebSocket & email bất đồng bộ",
+      "Tự xây RBAC, BCrypt và Servlet Filter",
+      "Phân trang, caching và xử lý N+1",
+    ],
+  ],
+  [
+    "Thiết kế Giải pháp & Lập trình viên Full-stack",
+    "Thiết kế và triển khai hệ thống chỉ huy on-premise cho BCHQS phường Hồng Bàng, chuyển hóa yêu cầu nghiệp vụ nhạy cảm thành sản phẩm LAN bảo mật và dễ sử dụng.",
+    [
+      "Spring Boot · Thymeleaf · SQLite",
+      "Luồng giao lệnh và tiến độ realtime bằng AJAX",
+      "Giao diện riêng cho chỉ huy/chiến sĩ",
+      "Đã nghiệm thu và đưa vào vận hành",
+    ],
+  ],
+  [
+    "Lập trình viên Bảo mật Desktop",
+    "Xây dựng chốt chặn endpoint zero-trust dạng portable, giám sát thiết bị ngoại vi trái phép và tự động cô lập máy tính Windows nội bộ trước nguy cơ rò rỉ dữ liệu.",
+    [
+      "Java Swing · Windows API · WMI",
+      "Phát hiện USB/điện thoại realtime",
+      "Cô lập firewall & shutdown khẩn cấp",
+      "Đã nghiệm thu trong mạng LAN nội bộ",
+    ],
+  ],
+  [
+    "Lập trình viên Sản phẩm Full-stack",
+    "Phát triển nền tảng thương mại điện tử end-to-end như một dự án cá nhân nâng cao, tập trung vào API bảo mật, giao dịch thanh toán và kiến trúc biến thể sản phẩm chuẩn hóa.",
+    [
+      "Java 21 · Spring Boot 3.2 · Vue 3",
+      "JWT, refresh token và RBAC chi tiết",
+      "VNPAY với toàn vẹn giao dịch ACID",
+      "Product Variants/SKU với schema 3NF",
+    ],
+  ],
+  [
+    "Chủ nhiệm CLB IT · Mentor · Người xây dựng",
+    "Biến kiến thức thành năng lực cộng đồng thông qua điều hành CLB, workshop kỹ thuật, dự án xưởng và các công cụ tương tác như SQL Quiz để thành viên cùng thực hành.",
+    [
+      "Điều phối hoạt động CLB IT",
+      "Xây dựng SQL Quiz bằng Vue 3",
+      "Hướng dẫn dự án lập trình thực tế",
+      "Chia sẻ lộ trình học tập có cấu trúc",
+    ],
+  ],
+  [
+    "Trưởng nhóm · Kiến trúc sư Giải pháp",
+    "Dẫn dắt nhóm đồ án tốt nghiệp xây dựng nền tảng thương mại điện tử theo hướng enterprise; thiết lập kiến trúc, Git workflow, tiêu chuẩn kỹ thuật và review đầu ra backend/frontend.",
+    [
+      "Java 21 · Spring Boot 3.2.5 · SQL Server",
+      "Vue 3 · Vite · Pinia · Bootstrap 5",
+      "Bảo vệ nhánh main/dev và review Pull Request",
+      "Hệ thống Client/Admin bảo mật bằng JWT",
+    ],
+  ],
+  [
+    "Giảng viên · Nhà giáo dục ứng dụng AI · Lập trình viên",
+    "Giảng dạy Robocon, lập trình và công nghệ văn phòng song song với phát triển phần mềm/website cho khách hàng. AI tạo sinh được sử dụng như copilot có kiểm soát cho nghiên cứu bài giảng, thiết kế giáo án, sinh bài tập, phân hóa và phản hồi cá nhân hóa.",
+    [
+      "Robocon, lập trình và năng lực số",
+      "Microsoft Office & Google Workspace",
+      "Thiết kế bài giảng và cá nhân hóa bằng AI",
+      "Phát triển phần mềm/website freelance",
+    ],
+  ],
+  [
+    "Sản xuất × Chất lượng × Phần mềm × AI",
+    "Định hướng dài hạn là kết hợp hiểu biết hiện trường, Kaizen, dữ liệu chất lượng, tự động hóa phần mềm và AI có trách nhiệm thành các hệ thống nâng cao hiệu suất—đồng thời giúp con người tự tin làm chủ công nghệ.",
+    [
+      "Số hóa sản xuất và chất lượng",
+      "Kaizen dựa trên dữ liệu & tự động hóa",
+      "AI có trách nhiệm cho vận hành/đào tạo",
+      "Ứng dụng công nghệ lấy con người làm trung tâm",
+    ],
+  ],
 ];
-const zh:L[]=[
-["生产与质量管理","近七年的生产现场经验，奠定了在日资制造环境中对生产、质量、人才培养与持续改善的严谨基础。",["入职培训提速35%","运营浪费降低约30%","重大缺陷率保持低于1%","设备事故减少50%"]],
-["软件开发 · GPA 3.9/4.0","从工厂运营走向数字产品开发的三年转型，将系统学习、校内项目、个人研发、真实部署、领导力与持续自学融为一体。",["SP26 Golden Bee — 校区第一","各学期优秀学生","IT俱乐部主席","Gemini认证教育者"]],
-["活动组织与管理专员","通过赢得并交付2,000人会议与晚宴，从供应商谈判到现场执行，拓展商业意识与领导能力。",["预算约8亿越南盾","满意度98%","成本降低20%","高压环境下跨团队协调"]],
-["Java全栈开发者","构建高性能在线视频平台，深入掌握底层Java Web架构、实时互动、应用安全与数据库优化。",["Java 21 · Jakarta EE 10 · Hibernate 6.4","WebSocket聊天与异步邮件","自建RBAC、BCrypt与Servlet Filter","分页、缓存与N+1优化"]],
-["解决方案设计师 · 全栈开发者","为红庞坊军事指挥单位设计并部署本地指挥工作流，将敏感业务需求转化为安全实用的局域网产品。",["Spring Boot · Thymeleaf · SQLite","AJAX实时命令与进度流","指挥员/战士专用界面","成功验收并投入运行"]],
-["桌面安全开发者","构建便携式零信任终端防护，监控未授权外设并自动隔离内部Windows电脑的数据泄露风险。",["Java Swing · Windows API · WMI","实时USB/手机检测","防火墙隔离与紧急关机","内部局域网验收运行"]],
-["全栈产品开发者","以高级个人项目形式开发端到端电子商务平台，专注安全API、支付事务与规范化SKU架构。",["Java 21 · Spring Boot 3.2 · Vue 3","JWT、刷新令牌与精细RBAC","VNPAY与ACID事务完整性","SKU与3NF数据库设计"]],
-["IT俱乐部主席 · 导师 · 创作者","通过俱乐部领导、技术工作坊、实践项目和SQL Quiz等互动工具，将个人学习转化为社区能力。",["组织IT俱乐部活动","使用Vue 3开发SQL Quiz","指导实践编程项目","分享结构化学习路径"]],
-["团队负责人 · 解决方案架构师","领导毕业项目团队构建企业级电子商务平台，制定架构、Git流程和工程标准，并审核前后端交付。",["Java 21 · Spring Boot 3.2.5 · SQL Server","Vue 3 · Vite · Pinia · Bootstrap 5","保护main/dev分支并审核PR","JWT安全的Client/Admin系统"]],
-["讲师 · AI赋能教育者 · 开发者","教授Robocon、编程和办公技术，同时为客户开发软件与网站；将生成式AI作为受控协作工具用于课程研究、教案设计、练习生成、分层教学和个性化反馈。",["Robocon、编程与数字素养","Microsoft Office与Google Workspace","AI辅助课程设计和个性化","自由职业软件与网站交付"]],
-["生产 × 质量 × 软件 × AI","长期目标是把生产现场知识、改善、质量数据、软件自动化与负责任的AI融合为提升运营并赋能人员的系统。",["生产与质量流程数字化","数据驱动改善与自动化","运营/培训中的负责任AI","以人为本的技术应用"]]
+const zh: L[] = [
+  [
+    "生产与质量管理",
+    "近七年的生产现场经验，奠定了在日资制造环境中对生产、质量、人才培养与持续改善的严谨基础。",
+    ["入职培训提速35%", "运营浪费降低约30%", "重大缺陷率保持低于1%", "设备事故减少50%"],
+  ],
+  [
+    "软件开发 · GPA 3.9/4.0",
+    "从工厂运营走向数字产品开发的三年转型，将系统学习、校内项目、个人研发、真实部署、领导力与持续自学融为一体。",
+    ["SP26 Golden Bee — 校区第一", "各学期优秀学生", "IT俱乐部主席", "Gemini认证教育者"],
+  ],
+  [
+    "活动组织与管理专员",
+    "通过赢得并交付2,000人会议与晚宴，从供应商谈判到现场执行，拓展商业意识与领导能力。",
+    ["预算约8亿越南盾", "满意度98%", "成本降低20%", "高压环境下跨团队协调"],
+  ],
+  [
+    "Java全栈开发者",
+    "构建高性能在线视频平台，深入掌握底层Java Web架构、实时互动、应用安全与数据库优化。",
+    [
+      "Java 21 · Jakarta EE 10 · Hibernate 6.4",
+      "WebSocket聊天与异步邮件",
+      "自建RBAC、BCrypt与Servlet Filter",
+      "分页、缓存与N+1优化",
+    ],
+  ],
+  [
+    "解决方案设计师 · 全栈开发者",
+    "为红庞坊军事指挥单位设计并部署本地指挥工作流，将敏感业务需求转化为安全实用的局域网产品。",
+    [
+      "Spring Boot · Thymeleaf · SQLite",
+      "AJAX实时命令与进度流",
+      "指挥员/战士专用界面",
+      "成功验收并投入运行",
+    ],
+  ],
+  [
+    "桌面安全开发者",
+    "构建便携式零信任终端防护，监控未授权外设并自动隔离内部Windows电脑的数据泄露风险。",
+    [
+      "Java Swing · Windows API · WMI",
+      "实时USB/手机检测",
+      "防火墙隔离与紧急关机",
+      "内部局域网验收运行",
+    ],
+  ],
+  [
+    "全栈产品开发者",
+    "以高级个人项目形式开发端到端电子商务平台，专注安全API、支付事务与规范化SKU架构。",
+    [
+      "Java 21 · Spring Boot 3.2 · Vue 3",
+      "JWT、刷新令牌与精细RBAC",
+      "VNPAY与ACID事务完整性",
+      "SKU与3NF数据库设计",
+    ],
+  ],
+  [
+    "IT俱乐部主席 · 导师 · 创作者",
+    "通过俱乐部领导、技术工作坊、实践项目和SQL Quiz等互动工具，将个人学习转化为社区能力。",
+    ["组织IT俱乐部活动", "使用Vue 3开发SQL Quiz", "指导实践编程项目", "分享结构化学习路径"],
+  ],
+  [
+    "团队负责人 · 解决方案架构师",
+    "领导毕业项目团队构建企业级电子商务平台，制定架构、Git流程和工程标准，并审核前后端交付。",
+    [
+      "Java 21 · Spring Boot 3.2.5 · SQL Server",
+      "Vue 3 · Vite · Pinia · Bootstrap 5",
+      "保护main/dev分支并审核PR",
+      "JWT安全的Client/Admin系统",
+    ],
+  ],
+  [
+    "讲师 · AI赋能教育者 · 开发者",
+    "教授Robocon、编程和办公技术，同时为客户开发软件与网站；将生成式AI作为受控协作工具用于课程研究、教案设计、练习生成、分层教学和个性化反馈。",
+    [
+      "Robocon、编程与数字素养",
+      "Microsoft Office与Google Workspace",
+      "AI辅助课程设计和个性化",
+      "自由职业软件与网站交付",
+    ],
+  ],
+  [
+    "生产 × 质量 × 软件 × AI",
+    "长期目标是把生产现场知识、改善、质量数据、软件自动化与负责任的AI融合为提升运营并赋能人员的系统。",
+    ["生产与质量流程数字化", "数据驱动改善与自动化", "运营/培训中的负责任AI", "以人为本的技术应用"],
+  ],
 ];
-const upgrades={vi:["Bánh xe công nghiệp & bộ công cụ Kaizen","Khoang lái số","Giá nóc năng lực lãnh đạo","Hệ thống truyền thông đa phương tiện","Màn hình điều hành nhiệm vụ","Lá chắn bảo mật zero-trust","Động cơ thanh toán & bộ thân xe số","Hệ thống chia sẻ tri thức","Mô-đun điều hành trưởng nhóm","AI copilot & huy hiệu giảng viên","Hệ thống nhà máy thông minh hoàn chỉnh"],zh:["工业车轮与改善工具箱","数字驾驶舱","领导力车顶架","多媒体通信系统","任务控制显示器","零信任安全护盾","支付引擎与数字车身套件","知识共享系统","团队领导指挥模块","AI协作无人机与讲师徽章","完整智慧工厂系统"]};
-const localizationOrder=["toyota","fpt","vhunter","video","task","security","electronics","workshop","store","teaching","future"];
-export function getMilestones(language:Language){if(language==="en")return milestones;const v=language==="vi"?vi:zh;return milestones.map(m=>{const i=localizationOrder.indexOf(m.id);return {...m,role:v[i][0],summary:v[i][1],highlights:v[i][2],upgrade:upgrades[language][i]}});}
+const upgrades = {
+  vi: [
+    "Bánh xe công nghiệp & bộ công cụ Kaizen",
+    "Khoang lái số",
+    "Giá nóc năng lực lãnh đạo",
+    "Hệ thống truyền thông đa phương tiện",
+    "Màn hình điều hành nhiệm vụ",
+    "Lá chắn bảo mật zero-trust",
+    "Động cơ thanh toán & bộ thân xe số",
+    "Hệ thống chia sẻ tri thức",
+    "Mô-đun điều hành trưởng nhóm",
+    "AI copilot & huy hiệu giảng viên",
+    "Hệ thống nhà máy thông minh hoàn chỉnh",
+  ],
+  zh: [
+    "工业车轮与改善工具箱",
+    "数字驾驶舱",
+    "领导力车顶架",
+    "多媒体通信系统",
+    "任务控制显示器",
+    "零信任安全护盾",
+    "支付引擎与数字车身套件",
+    "知识共享系统",
+    "团队领导指挥模块",
+    "AI协作无人机与讲师徽章",
+    "完整智慧工厂系统",
+  ],
+};
+const localizationOrder = [
+  "toyota",
+  "fpt",
+  "vhunter",
+  "video",
+  "task",
+  "security",
+  "electronics",
+  "workshop",
+  "store",
+  "teaching",
+  "future",
+];
+export function getMilestones(language: Language) {
+  if (language === "en") return milestones;
+  const v = language === "vi" ? vi : zh;
+  return milestones.map((m) => {
+    const i = localizationOrder.indexOf(m.id);
+    return {
+      ...m,
+      role: v[i][0],
+      summary: v[i][1],
+      highlights: v[i][2],
+      upgrade: upgrades[language][i],
+    };
+  });
+}

@@ -323,10 +323,12 @@ select:focus-visible {
   text-align: center;
   box-shadow: 0 12px 45px rgba(244, 99, 0, 0.28);
   pointer-events: none;
-  animation: celebrationIn 0.55s cubic-bezier(.2,.8,.2,1);
+  animation: celebrationIn 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .graduation-message b,
-.graduation-message span { display: block; }
+.graduation-message span {
+  display: block;
+}
 .graduation-message b {
   color: #ffc629;
   font: 800 18px var(--font-display);
@@ -339,8 +341,14 @@ select:focus-visible {
   letter-spacing: 0.08em;
 }
 @keyframes celebrationIn {
-  from { opacity: 0; transform: translateY(14px) scale(.92); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 .milestone-panel .panel-index {
   float: right;

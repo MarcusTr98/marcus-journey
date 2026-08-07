@@ -29,8 +29,7 @@ export const useJourneyStore = create<JourneyState>((set) => ({
   setProgress: (progress) => set({ progress }),
   setCurrentMilestone: (currentMilestone) => set({ currentMilestone }),
   setLanguage: (language) => set({ language }),
-  toggleQuality: () =>
-    set((s) => ({ quality: s.quality === "high" ? "low" : "high" })),
+  toggleQuality: () => set((s) => ({ quality: s.quality === "high" ? "low" : "high" })),
   toggleSound: () => set((s) => ({ soundEnabled: !s.soundEnabled })),
   setMode: (mode) => set({ mode }),
   start: () => set({ started: true }),

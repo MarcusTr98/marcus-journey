@@ -43,10 +43,7 @@ export default function JourneyApp() {
       const finishAt = track.offsetTop + track.offsetHeight - innerHeight * 1.25;
       const p = clamp((scrollY - startAt) / Math.max(finishAt - startAt, 1));
       setProgress(p);
-      const next = Math.min(
-        milestones.length - 1,
-        Math.floor(p * milestones.length),
-      );
+      const next = Math.min(milestones.length - 1, Math.floor(p * milestones.length));
       setCurrentMilestone(p < 0.035 ? -1 : next);
     };
     addEventListener("scroll", onScroll, { passive: true });
@@ -148,9 +145,7 @@ export default function JourneyApp() {
             </div>
             <div>
               <small>{t.journey}</small>
-              <strong>
-                {String(Math.round(progress * 100)).padStart(2, "0")}%
-              </strong>
+              <strong>{String(Math.round(progress * 100)).padStart(2, "0")}%</strong>
             </div>
           </aside>
           <div className="mode-switch">
