@@ -87,8 +87,8 @@ export default function Car({
   groupRef,
   ...props
 }: ThreeElements["group"] & { groupRef: RefObject<THREE.Group | null> }) {
-  const progress = useJourneyStore((s) => s.progress),
-    stage = Math.min(milestones.length, Math.floor(progress * milestones.length) + 1),
+  const currentMilestone = useJourneyStore((state) => state.currentMilestone),
+    stage = Math.min(milestones.length, Math.max(1, currentMilestone + 2)),
     body = stage < 2 ? "#9b6545" : stage < 7 ? "#F46300" : "#ed4e16";
   return (
     <group ref={groupRef} {...props}>

@@ -6,6 +6,7 @@ import { copy, getMilestones } from "@/data/i18n";
 import { useJourneyStore } from "@/stores/journeyStore";
 import QuickProfile from "@/components/portfolio/QuickProfile";
 import { clamp } from "@/lib/utils";
+import { getMilestoneAtProgress } from "@/data/journeyPath";
 const Experience = dynamic(() => import("@/components/world/Experience"), {
   ssr: false,
   loading: () => <div className="scene-loading">LOADING 3D WORLD…</div>,
@@ -43,8 +44,7 @@ export default function JourneyApp() {
       const finishAt = track.offsetTop + track.offsetHeight - innerHeight * 1.25;
       const p = clamp((scrollY - startAt) / Math.max(finishAt - startAt, 1));
       setProgress(p);
-      const next = Math.min(milestones.length - 1, Math.floor(p * milestones.length));
-      setCurrentMilestone(p < 0.035 ? -1 : next);
+      setCurrentMilestone(getMilestoneAtProgress(p));
     };
     addEventListener("scroll", onScroll, { passive: true });
     onScroll();

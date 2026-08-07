@@ -1,16 +1,8 @@
 "use client";
 import * as THREE from "three";
 import { useMemo } from "react";
-import { milestones } from "@/data/milestones";
-export const routePoints = [
-  new THREE.Vector3(0, 0, 7),
-  ...milestones.flatMap((item) =>
-    item.id === "store"
-      ? [new THREE.Vector3(...item.position), new THREE.Vector3(2.4, 0, -107)]
-      : [new THREE.Vector3(...item.position)],
-  ),
-  new THREE.Vector3(0, 0, -137),
-];
+import { PATH_POINTS } from "@/data/journeyPath";
+export const routePoints = PATH_POINTS.map((point) => new THREE.Vector3(...point));
 export const routeCurve = new THREE.CatmullRomCurve3(routePoints, false, "catmullrom", 0.14);
 
 function createRoad() {
@@ -61,8 +53,8 @@ export default function Road() {
           <meshStandardMaterial color="#e9e0ba" emissive="#8d875f" emissiveIntensity={0.15} />
         </mesh>
       ))}
-      <mesh position={[0, -0.12, -66]} receiveShadow>
-        <boxGeometry args={[36, 0.24, 160]} />
+      <mesh position={[0, -0.12, -73]} receiveShadow>
+        <boxGeometry args={[36, 0.24, 180]} />
         <meshStandardMaterial color="#101c22" roughness={1} />
       </mesh>
     </group>

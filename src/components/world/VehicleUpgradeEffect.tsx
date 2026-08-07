@@ -1,15 +1,24 @@
 "use client";
 
 import { useFrame } from "@react-three/fiber";
-import { useEffect, useRef, type ReactNode } from "react";
+import { Html } from "@react-three/drei";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import * as THREE from "three";
 import { useJourneyStore } from "@/stores/journeyStore";
+import { getMilestones } from "@/data/i18n";
 
 const RING_DELAYS = [0, 0.12, 0.24];
 const EFFECT_DURATION = 1.35;
+const UPGRADE_LABEL = {
+  vi: "MỞ KHÓA NÂNG CẤP",
+  en: "UPGRADE UNLOCKED",
+  zh: "升级已解锁",
+};
 
 export default function VehicleUpgradeEffect({ children }: { children: ReactNode }) {
   const currentMilestone = useJourneyStore((state) => state.currentMilestone);
+  const language = useJourneyStore((state) => state.language);
+  const [showUpgrade, setShowUpgrade] = useState(false);
   const model = useRef<THREE.Group>(null);
   const rings = useRef<Array<THREE.Mesh | null>>([]);
   const ringMaterials = useRef<Array<THREE.MeshBasicMaterial | null>>([]);
@@ -21,8 +30,14 @@ export default function VehicleUpgradeEffect({ children }: { children: ReactNode
     if (currentMilestone >= 0 && currentMilestone !== previousMilestone.current) {
       elapsed.current = 0;
       previousMilestone.current = currentMilestone;
+      setShowUpgrade(true);
+      const timer = window.setTimeout(() => setShowUpgrade(false), 1800);
+      return () => window.clearTimeout(timer);
     }
   }, [currentMilestone]);
+
+  const activeUpgrade =
+    currentMilestone >= 0 ? getMilestones(language)[currentMilestone]?.upgrade : null;
 
   useFrame((_, delta) => {
     elapsed.current = Math.min(EFFECT_DURATION, elapsed.current + delta);
@@ -87,6 +102,18 @@ export default function VehicleUpgradeEffect({ children }: { children: ReactNode
         </mesh>
       ))}
       <pointLight ref={glow} color="#ffffff" intensity={0} distance={5} position={[0, 1, 0]} />
+      {showUpgrade && activeUpgrade && (
+        <Html center sprite position={[0, 2.75, 0]} distanceFactor={8} zIndexRange={[30, 0]}>
+          <div className="vehicle-upgrade-toast">
+            <span className="upgrade-unlock-icon">🔓</span>
+            <span className="upgrade-copy">
+              <small>+ {UPGRADE_LABEL[language]}</small>
+              <strong>{activeUpgrade}</strong>
+            </span>
+            <span className="upgrade-arrow">↑</span>
+          </div>
+        </Html>
+      )}
     </group>
   );
 }

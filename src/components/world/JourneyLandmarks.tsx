@@ -4,6 +4,11 @@ import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import type * as THREE from "three";
 import { useJourneyStore } from "@/stores/journeyStore";
+import { FINISH_POSITION, MILESTONE_PROGRESS, TROPHY_POSITION } from "@/data/journeyPath";
+import { milestones } from "@/data/milestones";
+
+const STORE_INDEX = milestones.findIndex((milestone) => milestone.id === "store");
+const TEACHING_INDEX = milestones.findIndex((milestone) => milestone.id === "teaching");
 const labels = {
   vi: {
     start: "GO!",
@@ -65,7 +70,7 @@ function StartLine() {
 }
 function Trophy() {
   return (
-    <group position={[0, 0.1, -107]} scale={1.25}>
+    <group position={[TROPHY_POSITION[0], 0.1, TROPHY_POSITION[2]]} scale={1.25}>
       <mesh position={[0, 0.22, 0]}>
         <cylinderGeometry args={[0.7, 0.82, 0.2, 18]} />
         <meshStandardMaterial color="#17242a" metalness={0.7} />
@@ -101,7 +106,9 @@ function GraduationCelebration() {
     progress = useJourneyStore((s) => s.progress),
     language = useJourneyStore((s) => s.language),
     t = labels[language],
-    active = progress > 0.76 && progress < 0.89;
+    active =
+      progress > MILESTONE_PROGRESS[STORE_INDEX] - 0.015 &&
+      progress < MILESTONE_PROGRESS[TEACHING_INDEX] - 0.025;
   const pieces = useMemo(
     () =>
       Array.from({ length: 46 }, (_, i) => ({
@@ -123,7 +130,7 @@ function GraduationCelebration() {
     });
   });
   return (
-    <group visible={active} position={[0, 0, -107]}>
+    <group visible={active} position={TROPHY_POSITION}>
       <group ref={group}>
         {pieces.map((p, i) => (
           <mesh key={i} position={[p.x, p.y, p.z]} rotation={[i * 0.4, i * 0.2, 0]}>
@@ -143,7 +150,7 @@ function GraduationCelebration() {
 }
 function FinishFlag() {
   return (
-    <group position={[0, 0, -134]}>
+    <group position={FINISH_POSITION}>
       <mesh position={[1.55, 1.65, 0]}>
         <cylinderGeometry args={[0.035, 0.05, 3.3, 10]} />
         <meshStandardMaterial color="#dbe4e2" metalness={0.7} />

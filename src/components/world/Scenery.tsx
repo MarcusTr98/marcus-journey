@@ -1,7 +1,9 @@
 "use client";
 
 import { useMemo } from "react";
+import * as THREE from "three";
 import { useJourneyStore } from "@/stores/journeyStore";
+import { routeCurve } from "./Road";
 
 const FOLIAGE = ["#1d5c46", "#267256", "#318262", "#174938"];
 
@@ -63,13 +65,19 @@ export default function Scenery() {
   const trees = useMemo(
     () =>
       Array.from({ length: treeCount }, (_, index) => {
+        const progress = (index + 0.65) / (treeCount + 1);
+        const point = routeCurve.getPointAt(progress);
+        const tangent = routeCurve.getTangentAt(progress);
+        const normal = new THREE.Vector3(-tangent.z, 0, tangent.x).normalize();
         const side = index % 2 === 0 ? -1 : 1;
+        const edgeDistance = 4.6 + ((index * 7) % 7) * 0.72;
+        const alongRoad = (((index * 13) % 9) - 4) * 0.18;
+        const position = point
+          .clone()
+          .addScaledVector(normal, side * edgeDistance)
+          .addScaledVector(tangent, alongRoad);
         return {
-          position: [side * (6 + ((index * 7) % 7)), 0, 3 - index * (140 / treeCount)] as [
-            number,
-            number,
-            number,
-          ],
+          position: [position.x, 0, position.z] as [number, number, number],
           scale: 0.72 + ((index * 11) % 9) * 0.055,
           tone: index,
         };
@@ -79,13 +87,15 @@ export default function Scenery() {
   const rocks = useMemo(
     () =>
       Array.from({ length: quality === "high" ? 24 : 12 }, (_, index) => {
+        const count = quality === "high" ? 24 : 12;
+        const progress = (index + 1) / (count + 1);
+        const point = routeCurve.getPointAt(progress);
+        const tangent = routeCurve.getTangentAt(progress);
+        const normal = new THREE.Vector3(-tangent.z, 0, tangent.x).normalize();
         const side = index % 2 === 0 ? -1 : 1;
+        const position = point.clone().addScaledVector(normal, side * (4.1 + (index % 5) * 0.65));
         return {
-          position: [side * (5.4 + ((index * 5) % 8)), 0.28, -2 - index * 5.6] as [
-            number,
-            number,
-            number,
-          ],
+          position: [position.x, 0.28, position.z] as [number, number, number],
           scale: 0.45 + (index % 4) * 0.12,
         };
       }),
