@@ -1,6 +1,6 @@
 "use client";
 import * as THREE from "three";import { useMemo } from "react";import {milestones} from "@/data/milestones";
-export const routePoints=[new THREE.Vector3(0,0,7),...milestones.map(item=>new THREE.Vector3(...item.position)),new THREE.Vector3(0,0,-137)];
+export const routePoints=[new THREE.Vector3(0,0,7),...milestones.flatMap(item=>item.id==="store"?[new THREE.Vector3(...item.position),new THREE.Vector3(2.4,0,-107)]:[new THREE.Vector3(...item.position)]),new THREE.Vector3(0,0,-137)];
 export const routeCurve=new THREE.CatmullRomCurve3(routePoints,false,"catmullrom",.14);
 
 function createRoad(){const segments=240,width=2.6,vertices:number[]=[],indices:number[]=[];for(let i=0;i<=segments;i++){const t=i/segments,p=routeCurve.getPointAt(t),tangent=routeCurve.getTangentAt(t);const side=new THREE.Vector3(-tangent.z,0,tangent.x).normalize().multiplyScalar(width/2);const left=p.clone().add(side),right=p.clone().sub(side);vertices.push(left.x,.02,left.z,right.x,.02,right.z);if(i<segments){const a=i*2;indices.push(a,a+2,a+1,a+1,a+2,a+3)}}const geometry=new THREE.BufferGeometry();geometry.setAttribute("position",new THREE.Float32BufferAttribute(vertices,3));geometry.setIndex(indices);geometry.computeVertexNormals();return geometry}

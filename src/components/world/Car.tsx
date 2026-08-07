@@ -14,6 +14,7 @@ export default function Car({groupRef,...props}:ThreeElements["group"]&{groupRef
  {[-.43,.43].map(x=><group key={`head-${x}`} position={[x,.78,1.305]}><mesh><boxGeometry args={[.3,.14,.035]}/><meshStandardMaterial color="#fff4bd" emissive="#ffd55e" emissiveIntensity={stage>4?4:1.5}/></mesh>{stage>4&&<pointLight color="#ffd77a" intensity={.7} distance={3}/>}</group>)}
  {[-.47,.47].map(x=><mesh key={`tail-${x}`} position={[x,.69,-1.255]}><boxGeometry args={[.24,.13,.035]}/><meshStandardMaterial color="#ff2418" emissive="#ff1608" emissiveIntensity={2.5}/></mesh>)}
  {[-.78,.78].flatMap(x=>[-.77,.77].map(z=><Wheel key={`${x}-${z}`} x={x} z={z} upgraded={stage>1}/>))}
+ {stage>1&&<group position={[-.79,.86,-.36]}><RoundedBox args={[.18,.38,.72]} radius={.04} smoothness={2}><meshStandardMaterial color="#d68a22" roughness={.58} metalness={.25}/></RoundedBox><mesh position={[-.105,.08,0]}><boxGeometry args={[.025,.06,.45]}/><meshStandardMaterial color="#ffe0a0" emissive="#F46300" emissiveIntensity={.35}/></mesh></group>}
  {stage>2&&<mesh position={[0,1.29,.04]}><boxGeometry args={[.78,.055,.55]}/><meshStandardMaterial color="#07141b" emissive="#005EB8" emissiveIntensity={1.5}/></mesh>}
  {stage>3&&<RoofLoad/>}
  {stage>5&&<group position={[0,.58,-1.28]}><mesh><boxGeometry args={[1.42,.12,.22]}/><meshStandardMaterial color="#182328" metalness={.85}/></mesh>{[-.58,.58].map(x=><mesh key={x} position={[x,.16,0]}><cylinderGeometry args={[.055,.055,.32,10]}/><meshStandardMaterial color="#cbd3d3" metalness={.9}/></mesh>)}</group>}

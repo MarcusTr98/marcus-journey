@@ -161,6 +161,7 @@ export default function JourneyApp() {
           </div>
           {active && (
             <aside
+              key={active.id}
               className="milestone-panel"
               style={{ "--accent": active.accent } as React.CSSProperties}
             >

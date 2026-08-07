@@ -44,6 +44,7 @@ select:focus-visible {
 }
 .experience canvas {
   display: block;
+  will-change: transform;
 }
 .scene-loading,
 .fallback {
@@ -252,6 +253,7 @@ select:focus-visible {
   left: 0;
   top: 0;
   width: 100%;
+  transition: height 180ms ease-out;
   background: var(--orange);
 }
 .progress-ui small,
@@ -300,6 +302,45 @@ select:focus-visible {
   border-top: 3px solid var(--accent);
   backdrop-filter: blur(16px);
   animation: panelIn 0.5s ease;
+  will-change: transform, opacity;
+}
+.world-label {
+  min-width: 150px;
+  color: #fff;
+  font: 800 24px/1 var(--font-display);
+  letter-spacing: 0.18em;
+  text-align: center;
+  text-shadow: 0 2px 12px #000;
+  pointer-events: none;
+}
+.graduation-message {
+  min-width: 360px;
+  padding: 15px 22px;
+  border: 1px solid rgba(255, 198, 41, 0.65);
+  border-radius: 5px;
+  background: rgba(7, 20, 27, 0.9);
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 12px 45px rgba(244, 99, 0, 0.28);
+  pointer-events: none;
+  animation: celebrationIn 0.55s cubic-bezier(.2,.8,.2,1);
+}
+.graduation-message b,
+.graduation-message span { display: block; }
+.graduation-message b {
+  color: #ffc629;
+  font: 800 18px var(--font-display);
+  letter-spacing: 0.08em;
+}
+.graduation-message span {
+  margin-top: 6px;
+  color: #c9d4d6;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+@keyframes celebrationIn {
+  from { opacity: 0; transform: translateY(14px) scale(.92); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 .milestone-panel .panel-index {
   float: right;

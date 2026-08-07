@@ -9,6 +9,7 @@ import WorldEnvironment from "./Environment";
 import { useJourneyStore } from "@/stores/journeyStore";
 export default function MarcusJourneyScene() {
   const car = useRef<THREE.Group>(null);
+  const focus = useRef(new THREE.Vector3(0, 0, 0));
   const { camera } = useThree();
   const progress = useJourneyStore((s) => s.progress);
   const quality = useJourneyStore((s) => s.quality);
@@ -17,11 +18,20 @@ export default function MarcusJourneyScene() {
     const p = Math.min(0.995, progress);
     const point = routeCurve.getPointAt(p);
     const tangent = routeCurve.getTangentAt(p);
-    car.current.position.lerp(point, Math.min(1, delta * 5));
-    car.current.rotation.y = Math.atan2(tangent.x, tangent.z);
+    car.current.position.lerp(point, 1 - Math.exp(-delta * 6));
+    const desiredRotation = Math.atan2(tangent.x, tangent.z);
+    const angleDelta = Math.atan2(
+      Math.sin(desiredRotation - car.current.rotation.y),
+      Math.cos(desiredRotation - car.current.rotation.y),
+    );
+    car.current.rotation.y += angleDelta * (1 - Math.exp(-delta * 7));
     const target = point.clone().add(new THREE.Vector3(7, 8, 10));
-    camera.position.lerp(target, Math.min(1, delta * 2.4));
-    camera.lookAt(point.x, point.y, point.z - 2);
+    camera.position.lerp(target, 1 - Math.exp(-delta * 2.8));
+    focus.current.lerp(
+      new THREE.Vector3(point.x, point.y, point.z - 2),
+      1 - Math.exp(-delta * 4),
+    );
+    camera.lookAt(focus.current);
   });
   return (
     <>
