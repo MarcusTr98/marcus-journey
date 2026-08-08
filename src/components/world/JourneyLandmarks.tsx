@@ -5,11 +5,8 @@ import { useMemo, useRef } from "react";
 import type * as THREE from "three";
 import { useJourneyStore } from "@/stores/journeyStore";
 import { FINISH_POSITION, TROPHY_POSITION } from "@/data/journeyPath";
-import { milestones } from "@/data/milestones";
-import { milestoneCurveProgress } from "./Road";
+import { trophyCurveProgress } from "./Road";
 
-const STORE_INDEX = milestones.findIndex((milestone) => milestone.id === "store");
-const TEACHING_INDEX = milestones.findIndex((milestone) => milestone.id === "teaching");
 const labels = {
   vi: {
     start: "GO!",
@@ -107,9 +104,7 @@ function GraduationCelebration() {
     progress = useJourneyStore((s) => s.vehicleProgress),
     language = useJourneyStore((s) => s.language),
     t = labels[language],
-    active =
-      progress > milestoneCurveProgress[STORE_INDEX] - 0.012 &&
-      progress < milestoneCurveProgress[TEACHING_INDEX] - 0.02;
+    active = progress > trophyCurveProgress - 0.008 && progress < trophyCurveProgress + 0.045;
   const pieces = useMemo(
     () =>
       Array.from({ length: 46 }, (_, i) => ({

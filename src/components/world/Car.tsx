@@ -28,6 +28,45 @@ function Wheel({ x, z, upgraded }: { x: number; z: number; upgraded: boolean }) 
     </group>
   );
 }
+
+function ToyotaFoundationKit() {
+  return (
+    <group>
+      <group position={[0, 1.31, -0.55]}>
+        <RoundedBox args={[1.05, 0.38, 0.62]} radius={0.07} smoothness={2} castShadow>
+          <meshStandardMaterial color="#f1a51f" roughness={0.48} metalness={0.28} />
+        </RoundedBox>
+        <mesh position={[0, 0.04, -0.32]}>
+          <boxGeometry args={[0.72, 0.07, 0.025]} />
+          <meshStandardMaterial color="#fff1b8" emissive="#F46300" emissiveIntensity={0.55} />
+        </mesh>
+        <mesh position={[0, 0.22, 0]}>
+          <torusGeometry args={[0.18, 0.035, 8, 20, Math.PI]} />
+          <meshStandardMaterial color="#222e33" metalness={0.8} />
+        </mesh>
+      </group>
+      <group position={[0, 0.67, 1.38]}>
+        <mesh>
+          <boxGeometry args={[1.48, 0.08, 0.08]} />
+          <meshStandardMaterial color="#c7d1d1" metalness={0.9} roughness={0.18} />
+        </mesh>
+        {[-0.62, 0.62].map((x) => (
+          <mesh key={x} position={[x, 0.17, -0.03]}>
+            <boxGeometry args={[0.06, 0.4, 0.07]} />
+            <meshStandardMaterial color="#c7d1d1" metalness={0.9} />
+          </mesh>
+        ))}
+      </group>
+      {[-0.82, 0.82].map((x) => (
+        <mesh key={x} position={[x, 0.49, 0]}>
+          <boxGeometry args={[0.055, 0.08, 1.72]} />
+          <meshStandardMaterial color="#e3b34b" metalness={0.65} roughness={0.3} />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
 function RoofLoad() {
   return (
     <group position={[0, 1.35, -0.18]}>
@@ -172,17 +211,7 @@ export default function Car({
         {[-0.78, 0.78].flatMap((x) =>
           [-0.77, 0.77].map((z) => <Wheel key={`${x}-${z}`} x={x} z={z} upgraded={stage > 1} />),
         )}
-        {stage > 1 && (
-          <group position={[-0.79, 0.86, -0.36]}>
-            <RoundedBox args={[0.18, 0.38, 0.72]} radius={0.04} smoothness={2}>
-              <meshStandardMaterial color="#d68a22" roughness={0.58} metalness={0.25} />
-            </RoundedBox>
-            <mesh position={[-0.105, 0.08, 0]}>
-              <boxGeometry args={[0.025, 0.06, 0.45]} />
-              <meshStandardMaterial color="#ffe0a0" emissive="#F46300" emissiveIntensity={0.35} />
-            </mesh>
-          </group>
-        )}
+        {stage > 1 && <ToyotaFoundationKit />}
         {stage > 2 && (
           <mesh position={[0, 1.29, 0.04]}>
             <boxGeometry args={[0.78, 0.055, 0.55]} />

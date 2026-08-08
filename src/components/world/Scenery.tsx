@@ -70,7 +70,7 @@ export default function Scenery() {
         const tangent = routeCurve.getTangentAt(progress);
         const normal = new THREE.Vector3(-tangent.z, 0, tangent.x).normalize();
         const side = index % 2 === 0 ? -1 : 1;
-        const edgeDistance = 4.6 + ((index * 7) % 7) * 0.72;
+        const edgeDistance = 6.4 + ((index * 7) % 7) * 0.72;
         const alongRoad = (((index * 13) % 9) - 4) * 0.18;
         const position = point
           .clone()
@@ -93,7 +93,7 @@ export default function Scenery() {
         const tangent = routeCurve.getTangentAt(progress);
         const normal = new THREE.Vector3(-tangent.z, 0, tangent.x).normalize();
         const side = index % 2 === 0 ? -1 : 1;
-        const position = point.clone().addScaledVector(normal, side * (4.1 + (index % 5) * 0.65));
+        const position = point.clone().addScaledVector(normal, side * (5.8 + (index % 5) * 0.65));
         return {
           position: [position.x, 0.28, position.z] as [number, number, number],
           scale: 0.45 + (index % 4) * 0.12,

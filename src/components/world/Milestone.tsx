@@ -1,10 +1,13 @@
 "use client";
 
 import type { Milestone as MilestoneType } from "@/types";
+import { milestones } from "@/data/milestones";
 
-function StoreLandmark({ offsetX }: { offsetX: number }) {
+type LandmarkOffset = [number, number];
+
+function StoreLandmark({ offset }: { offset: LandmarkOffset }) {
   return (
-    <group position={[offsetX, 0, 0]}>
+    <group position={[offset[0], 0, offset[1]]}>
       <mesh position={[0, 0.12, 0]} receiveShadow>
         <boxGeometry args={[4.2, 0.24, 3.5]} />
         <meshStandardMaterial color="#111d23" roughness={0.88} />
@@ -44,9 +47,9 @@ function StoreLandmark({ offsetX }: { offsetX: number }) {
   );
 }
 
-function StandardLandmark({ data, offsetX }: { data: MilestoneType; offsetX: number }) {
+function StandardLandmark({ data, offset }: { data: MilestoneType; offset: LandmarkOffset }) {
   return (
-    <group position={[offsetX, 0, 0]}>
+    <group position={[offset[0], 0, offset[1]]}>
       <mesh position={[0, 0.55, 0]} castShadow>
         <boxGeometry args={[2.6, 1.1, 2.6]} />
         <meshStandardMaterial color={data.accent} roughness={0.65} />
@@ -56,7 +59,7 @@ function StandardLandmark({ data, offsetX }: { data: MilestoneType; offsetX: num
         <meshStandardMaterial color="#ffffff" emissive={data.accent} emissiveIntensity={1.5} />
       </mesh>
       {[...Array(3)].map((_, index) => (
-        <mesh key={index} position={[offsetX > 0 ? 1.6 : -1.6, 0.3, index * 0.7 - 1]}>
+        <mesh key={index} position={[1.65, 0.3, index * 0.7 - 1]}>
           <boxGeometry args={[0.45, 0.6, 0.45]} />
           <meshStandardMaterial color="#405159" />
         </mesh>
@@ -66,14 +69,23 @@ function StandardLandmark({ data, offsetX }: { data: MilestoneType; offsetX: num
 }
 
 export default function Milestone({ data, index }: { data: MilestoneType; index: number }) {
-  const offsetX =
-    data.position[0] === 0 ? (index % 2 ? 2.5 : -2.5) : -Math.sign(data.position[0]) * 2.55;
+  const previous = milestones[Math.max(0, index - 1)].position;
+  const next = milestones[Math.min(milestones.length - 1, index + 1)].position;
+  const tangentX = next[0] - previous[0];
+  const tangentZ = next[2] - previous[2];
+  const length = Math.hypot(tangentX, tangentZ) || 1;
+  const side = index % 2 === 0 ? -1 : 1;
+  const clearance = data.id === "store" ? 5.4 : 4.6;
+  const offset: LandmarkOffset = [
+    (-tangentZ / length) * clearance * side,
+    (tangentX / length) * clearance * side,
+  ];
   return (
     <group position={data.position}>
       {data.id === "store" ? (
-        <StoreLandmark offsetX={offsetX} />
+        <StoreLandmark offset={offset} />
       ) : (
-        <StandardLandmark data={data} offsetX={offsetX} />
+        <StandardLandmark data={data} offset={offset} />
       )}
     </group>
   );

@@ -4,14 +4,11 @@ import { Environment as DreiEnvironment, Stars } from "@react-three/drei";
 import { useRef } from "react";
 import * as THREE from "three";
 import Car from "./Car";
-import Road, { milestoneCurveProgress, routeCurve } from "./Road";
+import Road, { milestoneCurveProgress, routeCurve, trophyCurveProgress } from "./Road";
 import WorldEnvironment from "./Environment";
 import { useJourneyStore } from "@/stores/journeyStore";
 import { TROPHY_POSITION } from "@/data/journeyPath";
-import { milestones } from "@/data/milestones";
 
-const STORE_INDEX = milestones.findIndex((milestone) => milestone.id === "store");
-const TEACHING_INDEX = milestones.findIndex((milestone) => milestone.id === "teaching");
 const TROPHY_CAMERA_POSITION = new THREE.Vector3(7.2, 6.6, TROPHY_POSITION[2] + 9.5);
 const TROPHY_FOCUS = new THREE.Vector3(TROPHY_POSITION[0] + 0.4, 0.8, TROPHY_POSITION[2]);
 const MAX_PROGRESS_PER_SECOND = 0.075;
@@ -58,9 +55,7 @@ export default function MarcusJourneyScene() {
       Math.cos(desiredRotation - car.current.rotation.y),
     );
     car.current.rotation.y += angleDelta * (1 - Math.exp(-delta * 7));
-    const isAtGraduation =
-      p > milestoneCurveProgress[STORE_INDEX] - 0.012 &&
-      p < milestoneCurveProgress[TEACHING_INDEX] - 0.02;
+    const isAtGraduation = p > trophyCurveProgress - 0.008 && p < trophyCurveProgress + 0.045;
     const target = isAtGraduation
       ? TROPHY_CAMERA_POSITION
       : point.clone().add(new THREE.Vector3(7, 8, 10));

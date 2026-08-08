@@ -1,7 +1,7 @@
 "use client";
 import * as THREE from "three";
 import { useMemo } from "react";
-import { PATH_POINTS } from "@/data/journeyPath";
+import { PATH_POINTS, TROPHY_POSITION } from "@/data/journeyPath";
 import { milestones } from "@/data/milestones";
 export const routePoints = PATH_POINTS.map((point) => new THREE.Vector3(...point));
 export const routeCurve = new THREE.CatmullRomCurve3(routePoints, false, "catmullrom", 0.14);
@@ -24,6 +24,7 @@ function findClosestCurveProgress(position: [number, number, number]) {
 export const milestoneCurveProgress = milestones.map((milestone) =>
   findClosestCurveProgress(milestone.position),
 );
+export const trophyCurveProgress = findClosestCurveProgress(TROPHY_POSITION);
 
 function createRoad() {
   const segments = 240,
