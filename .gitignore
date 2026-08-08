@@ -1,9 +1,12 @@
-node_modules
-.next
-out
-dist
+node_modules/
+.next/
+out/
+dist/
+test-results/
+playwright-report/
 .env
 .env.local
+.env.*.local
 *.log
 *.tsbuildinfo
 .DS_Store

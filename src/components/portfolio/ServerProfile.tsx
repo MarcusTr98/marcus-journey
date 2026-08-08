@@ -1,17 +1,39 @@
 import { getMilestones } from "@/data/i18n";
 import { cvByLanguage, profile } from "@/data/profile";
+import type { Language } from "@/types";
 
-export default function ServerProfile() {
-  const profileMilestones = getMilestones("vi");
+const archiveCopy = {
+  vi: {
+    kicker: "HÀNH TRÌNH NGHỀ NGHIỆP & DỰ ÁN",
+    title: "Toàn bộ hành trình, không cần chế độ 3D.",
+    intro:
+      "Kinh nghiệm sản xuất, kỹ nghệ phần mềm, triển khai thực tế và giáo dục công nghệ dưới dạng nội dung dễ tiếp cận.",
+    source: "Mã nguồn GitHub",
+  },
+  en: {
+    kicker: "CAREER & PROJECT ARCHIVE",
+    title: "The journey, available without 3D.",
+    intro:
+      "Production leadership, software engineering, practical deployments and technology education—presented as accessible case studies.",
+    source: "GitHub source",
+  },
+  zh: {
+    kicker: "职业与项目档案",
+    title: "无需3D，也能完整了解这段旅程。",
+    intro: "以易于访问的案例形式呈现生产领导力、软件工程、实际部署与科技教育经历。",
+    source: "GitHub源代码",
+  },
+} as const;
+
+export default function ServerProfile({ language }: { language: Language }) {
+  const profileMilestones = getMilestones(language);
+  const t = archiveCopy[language];
   return (
     <section className="seo-profile" id="case-studies" aria-labelledby="case-studies-title">
       <header>
-        <span className="kicker">CAREER &amp; PROJECT ARCHIVE</span>
-        <h2 id="case-studies-title">The journey, available without 3D.</h2>
-        <p>
-          Production leadership, software engineering, practical deployments and technology
-          education—presented as accessible, indexable case studies.
-        </p>
+        <span className="kicker">{t.kicker}</span>
+        <h2 id="case-studies-title">{t.title}</h2>
+        <p>{t.intro}</p>
         <address>
           <strong>
             {profile.legalName} ({profile.preferredName})
@@ -47,7 +69,7 @@ export default function ServerProfile() {
             </ul>
             {milestone.projectUrl && (
               <a href={milestone.projectUrl} target="_blank" rel="noreferrer">
-                GitHub source ↗
+                {t.source} ↗
               </a>
             )}
           </article>

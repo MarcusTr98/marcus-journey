@@ -1,6 +1,6 @@
 "use client";
 import { useFrame, useThree } from "@react-three/fiber";
-import { Environment as DreiEnvironment, Stars } from "@react-three/drei";
+import { Environment as DreiEnvironment, PerformanceMonitor, Stars } from "@react-three/drei";
 import { useRef } from "react";
 import * as THREE from "three";
 import Car from "./Car";
@@ -29,6 +29,7 @@ export default function MarcusJourneyScene() {
   const { camera, scene } = useThree();
   const progress = useJourneyStore((s) => s.progress);
   const quality = useJourneyStore((s) => s.quality);
+  const setQuality = useJourneyStore((s) => s.setQuality);
   useFrame((_, delta) => {
     if (!car.current) return;
     const journeyState = useJourneyStore.getState();
@@ -109,6 +110,7 @@ export default function MarcusJourneyScene() {
   });
   return (
     <>
+      <PerformanceMonitor onDecline={() => setQuality("low")} flipflops={2} />
       <color attach="background" args={["#07141b"]} />
       <fog attach="fog" args={["#07141b", 14, 44]} />
       <ambientLight intensity={1.25} />

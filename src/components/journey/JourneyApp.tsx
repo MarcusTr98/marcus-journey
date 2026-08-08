@@ -6,9 +6,11 @@ import { copy, getMilestones } from "@/data/i18n";
 import { useJourneyStore } from "@/stores/journeyStore";
 import QuickProfile from "@/components/portfolio/QuickProfile";
 import CvCenter from "@/components/portfolio/CvCenter";
-import { clamp } from "@/lib/utils";
 import { profile } from "@/data/profile";
 import { getStageLabel, stageOrder } from "@/data/stages";
+import { useRouter } from "next/navigation";
+import type { Language } from "@/types";
+import { useJourneyNavigation } from "@/hooks/useJourneyNavigation";
 const Experience = dynamic(() => import("@/components/world/Experience"), {
   ssr: false,
   loading: () => <div className="scene-loading">LOADING 3D WORLD…</div>,
@@ -23,10 +25,11 @@ const SOURCE_LABEL = {
   en: "VIEW SOURCE CODE",
   zh: "查看源代码",
 };
-export default function JourneyApp() {
+export default function JourneyApp({ initialLanguage }: { initialLanguage: Language }) {
+  const router = useRouter();
   const [quick, setQuick] = useState(false);
   const [cvOpen, setCvOpen] = useState(false);
-  const [reduced, setReduced] = useState(false);
+  const { begin, goToMilestone } = useJourneyNavigation();
   const {
     vehicleProgress,
     currentMilestone,
@@ -35,67 +38,21 @@ export default function JourneyApp() {
     quality,
     soundEnabled,
     sceneReady,
-    start,
-    resetJourney,
-    requestMilestone,
-    setProgress,
     setLanguage,
     toggleQuality,
     toggleSound,
   } = useJourneyStore();
   useEffect(() => {
-    void useJourneyStore.persist.rehydrate();
-  }, []);
-  useEffect(() => {
-    const media = matchMedia("(prefers-reduced-motion: reduce)");
-    setReduced(media.matches);
-    const onChange = () => setReduced(media.matches);
-    media.addEventListener("change", onChange);
-    return () => media.removeEventListener("change", onChange);
-  }, []);
-  useEffect(() => {
-    const onScroll = () => {
-      if (!started) return;
-      const track = document.getElementById("journey-track");
-      if (!track) return;
-      const startAt = innerHeight * 0.86;
-      const finishAt = track.offsetTop + track.offsetHeight - innerHeight * 1.25;
-      const p = clamp((scrollY - startAt) / Math.max(finishAt - startAt, 1));
-      setProgress(p);
-    };
-    addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => removeEventListener("scroll", onScroll);
-  }, [started, setProgress]);
+    void Promise.resolve(useJourneyStore.persist.rehydrate()).then(() =>
+      setLanguage(initialLanguage),
+    );
+    document.documentElement.lang = initialLanguage === "zh" ? "zh-CN" : initialLanguage;
+  }, [initialLanguage, setLanguage]);
   const t = copy[language],
     items = getMilestones(language),
     active = currentMilestone >= 0 ? items[currentMilestone] : null,
     activeStageItems = active ? items.filter(({ stage }) => stage === active.stage) : [],
     activeStageStop = active ? activeStageItems.findIndex(({ id }) => id === active.id) + 1 : 0;
-  const begin = () => {
-    resetJourney();
-    start();
-    requestAnimationFrame(() =>
-      scrollTo({
-        top: innerHeight * 0.86,
-        behavior: reduced ? "auto" : "smooth",
-      }),
-    );
-  };
-  const goToMilestone = (index: number) => {
-    if (!started) start();
-    const track = document.getElementById("journey-track");
-    if (!track) return;
-    const targetProgress = (index + 1) / (milestones.length + 1);
-    const startAt = innerHeight * 0.86;
-    const finishAt = track.offsetTop + track.offsetHeight - innerHeight * 1.25;
-    setProgress(targetProgress);
-    requestMilestone(index);
-    scrollTo({
-      top: startAt + targetProgress * Math.max(finishAt - startAt, 1),
-      behavior: "auto",
-    });
-  };
   if (quick)
     return (
       <>
@@ -129,7 +86,11 @@ export default function JourneyApp() {
           </button>
           <select
             value={language}
-            onChange={(e) => setLanguage(e.target.value as "vi" | "en" | "zh")}
+            onChange={(e) => {
+              const nextLanguage = e.target.value as Language;
+              setLanguage(nextLanguage);
+              router.push(`/${nextLanguage}${location.hash}`);
+            }}
             aria-label="Language"
           >
             <option value="vi">🇻🇳 VI</option>

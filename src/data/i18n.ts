@@ -339,17 +339,25 @@ const localizationOrder = [
   "future",
   "graduation",
 ];
+const localizedContent = {
+  vi: Object.fromEntries(localizationOrder.map((id, index) => [id, vi[index]])),
+  zh: Object.fromEntries(localizationOrder.map((id, index) => [id, zh[index]])),
+} satisfies Record<Exclude<Language, "en">, Record<string, L>>;
+const localizedUpgrades = {
+  vi: Object.fromEntries(localizationOrder.map((id, index) => [id, upgrades.vi[index]])),
+  zh: Object.fromEntries(localizationOrder.map((id, index) => [id, upgrades.zh[index]])),
+} satisfies Record<Exclude<Language, "en">, Record<string, string>>;
+
 export function getMilestones(language: Language) {
   if (language === "en") return milestones;
-  const v = language === "vi" ? vi : zh;
   return milestones.map((m) => {
-    const i = localizationOrder.indexOf(m.id);
+    const content = localizedContent[language][m.id];
     return {
       ...m,
-      role: v[i][0],
-      summary: v[i][1],
-      highlights: v[i][2],
-      upgrade: upgrades[language][i],
+      role: content[0],
+      summary: content[1],
+      highlights: content[2],
+      upgrade: localizedUpgrades[language][m.id],
     };
   });
 }

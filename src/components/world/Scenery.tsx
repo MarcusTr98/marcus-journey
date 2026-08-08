@@ -1,61 +1,98 @@
 "use client";
 
-import { useMemo } from "react";
+import { useLayoutEffect, useMemo, useRef, type RefObject } from "react";
 import * as THREE from "three";
 import { useJourneyStore } from "@/stores/journeyStore";
 import { routeCurve } from "./Road";
 
 const FOLIAGE = ["#1d5c46", "#267256", "#318262", "#174938"];
+type Instance = { position: THREE.Vector3; scale: number; tone: number };
 
-function LowPolyTree({
-  position,
-  scale,
-  tone,
+function useInstanceMatrices(
+  ref: RefObject<THREE.InstancedMesh | null>,
+  instances: Instance[],
+  y: number,
+  scaleFactor = 1,
+) {
+  useLayoutEffect(() => {
+    if (!ref.current) return;
+    const matrix = new THREE.Matrix4();
+    const position = new THREE.Vector3();
+    const scale = new THREE.Vector3();
+    instances.forEach((item, index) => {
+      position.copy(item.position).add(new THREE.Vector3(0, y * item.scale, 0));
+      scale.setScalar(item.scale * scaleFactor);
+      matrix.compose(position, new THREE.Quaternion(), scale);
+      ref.current?.setMatrixAt(index, matrix);
+    });
+    ref.current.instanceMatrix.needsUpdate = true;
+  }, [instances, ref, scaleFactor, y]);
+}
+
+function TreeCrowns({
+  trees,
+  color,
+  upper,
   shadows,
 }: {
-  position: [number, number, number];
-  scale: number;
-  tone: number;
+  trees: Instance[];
+  color: string;
+  upper: boolean;
   shadows: boolean;
 }) {
-  const color = FOLIAGE[tone % FOLIAGE.length];
+  const ref = useRef<THREE.InstancedMesh>(null);
+  useInstanceMatrices(ref, trees, upper ? 2.05 : 1.35);
   return (
-    <group position={position} scale={scale}>
-      <mesh position={[0, 0.55, 0]} castShadow={shadows}>
+    <instancedMesh ref={ref} args={[undefined, undefined, trees.length]} castShadow={shadows}>
+      <coneGeometry args={upper ? [0.48, 1.18, 7] : [0.68, 1.45, 7]} />
+      <meshStandardMaterial color={color} roughness={upper ? 0.9 : 0.92} flatShading />
+    </instancedMesh>
+  );
+}
+
+function InstancedTrees({ trees, shadows }: { trees: Instance[]; shadows: boolean }) {
+  const trunks = useRef<THREE.InstancedMesh>(null);
+  useInstanceMatrices(trunks, trees, 0.55);
+  return (
+    <group>
+      <instancedMesh ref={trunks} args={[undefined, undefined, trees.length]} castShadow={shadows}>
         <cylinderGeometry args={[0.09, 0.15, 1.1, 7]} />
         <meshStandardMaterial color="#68462f" roughness={1} />
-      </mesh>
-      <mesh position={[0, 1.35, 0]} castShadow={shadows}>
-        <coneGeometry args={[0.68, 1.45, 7]} />
-        <meshStandardMaterial color={color} roughness={0.92} flatShading />
-      </mesh>
-      <mesh position={[0, 2.05, 0]} castShadow={shadows}>
-        <coneGeometry args={[0.48, 1.18, 7]} />
-        <meshStandardMaterial
-          color={FOLIAGE[(tone + 1) % FOLIAGE.length]}
-          roughness={0.9}
-          flatShading
-        />
-      </mesh>
-      <mesh position={[0, 0.035, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-        <circleGeometry args={[0.72, 9]} />
-        <meshStandardMaterial color="#15382e" roughness={1} />
-      </mesh>
+      </instancedMesh>
+      {FOLIAGE.map((color, tone) => {
+        const lowerTrees = trees.filter((tree) => tree.tone % FOLIAGE.length === tone);
+        const upperTrees = trees.filter((tree) => (tree.tone + 1) % FOLIAGE.length === tone);
+        return (
+          <group key={color}>
+            <TreeCrowns trees={lowerTrees} color={color} upper={false} shadows={shadows} />
+            <TreeCrowns trees={upperTrees} color={color} upper shadows={shadows} />
+          </group>
+        );
+      })}
     </group>
   );
 }
 
-function Rock({ position, scale }: { position: [number, number, number]; scale: number }) {
+function InstancedRocks({ rocks }: { rocks: Instance[] }) {
+  const ref = useRef<THREE.InstancedMesh>(null);
+  useLayoutEffect(() => {
+    if (!ref.current) return;
+    const matrix = new THREE.Matrix4();
+    rocks.forEach((rock, index) => {
+      matrix.compose(
+        rock.position,
+        new THREE.Quaternion().setFromEuler(new THREE.Euler(0.1, rock.scale * 2, -0.08)),
+        new THREE.Vector3(rock.scale, rock.scale * 0.65, rock.scale),
+      );
+      ref.current?.setMatrixAt(index, matrix);
+    });
+    ref.current.instanceMatrix.needsUpdate = true;
+  }, [rocks]);
   return (
-    <mesh
-      position={position}
-      scale={[scale, scale * 0.65, scale]}
-      rotation={[0.1, scale * 2, -0.08]}
-      castShadow
-    >
+    <instancedMesh ref={ref} args={[undefined, undefined, rocks.length]} castShadow>
       <dodecahedronGeometry args={[0.48, 0]} />
       <meshStandardMaterial color="#53636a" roughness={0.96} flatShading />
-    </mesh>
+    </instancedMesh>
   );
 }
 
@@ -70,46 +107,37 @@ export default function Scenery() {
         const tangent = routeCurve.getTangentAt(progress);
         const normal = new THREE.Vector3(-tangent.z, 0, tangent.x).normalize();
         const side = index % 2 === 0 ? -1 : 1;
-        const edgeDistance = 6.4 + ((index * 7) % 7) * 0.72;
-        const alongRoad = (((index * 13) % 9) - 4) * 0.18;
-        const position = point
-          .clone()
-          .addScaledVector(normal, side * edgeDistance)
-          .addScaledVector(tangent, alongRoad);
         return {
-          position: [position.x, 0, position.z] as [number, number, number],
+          position: point
+            .clone()
+            .addScaledVector(normal, side * (6.4 + ((index * 7) % 7) * 0.72))
+            .addScaledVector(tangent, (((index * 13) % 9) - 4) * 0.18),
           scale: 0.72 + ((index * 11) % 9) * 0.055,
           tone: index,
         };
       }),
     [treeCount],
   );
-  const rocks = useMemo(
-    () =>
-      Array.from({ length: quality === "high" ? 24 : 12 }, (_, index) => {
-        const count = quality === "high" ? 24 : 12;
-        const progress = (index + 1) / (count + 1);
-        const point = routeCurve.getPointAt(progress);
-        const tangent = routeCurve.getTangentAt(progress);
-        const normal = new THREE.Vector3(-tangent.z, 0, tangent.x).normalize();
-        const side = index % 2 === 0 ? -1 : 1;
-        const position = point.clone().addScaledVector(normal, side * (5.8 + (index % 5) * 0.65));
-        return {
-          position: [position.x, 0.28, position.z] as [number, number, number],
-          scale: 0.45 + (index % 4) * 0.12,
-        };
-      }),
-    [quality],
-  );
-
+  const rocks = useMemo(() => {
+    const count = quality === "high" ? 24 : 12;
+    return Array.from({ length: count }, (_, index) => {
+      const point = routeCurve.getPointAt((index + 1) / (count + 1));
+      const tangent = routeCurve.getTangentAt((index + 1) / (count + 1));
+      const normal = new THREE.Vector3(-tangent.z, 0, tangent.x).normalize();
+      return {
+        position: point
+          .clone()
+          .addScaledVector(normal, (index % 2 ? 1 : -1) * (5.8 + (index % 5) * 0.65))
+          .setY(0.28),
+        scale: 0.45 + (index % 4) * 0.12,
+        tone: 0,
+      };
+    });
+  }, [quality]);
   return (
     <group>
-      {trees.map((tree, index) => (
-        <LowPolyTree key={`tree-${index}`} {...tree} shadows={quality === "high"} />
-      ))}
-      {rocks.map((rock, index) => (
-        <Rock key={`rock-${index}`} {...rock} />
-      ))}
+      <InstancedTrees trees={trees} shadows={quality === "high"} />
+      <InstancedRocks rocks={rocks} />
     </group>
   );
 }

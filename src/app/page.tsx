@@ -1,10 +1,4 @@
-import JourneyApp from "@/components/journey/JourneyApp";
-import ServerProfile from "@/components/portfolio/ServerProfile";
+import { redirect } from "next/navigation";
 export default function Home() {
-  return (
-    <main>
-      <JourneyApp />
-      <ServerProfile />
-    </main>
-  );
+  redirect("/vi");
 }

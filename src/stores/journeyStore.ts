@@ -18,6 +18,7 @@ interface JourneyState {
   setCurrentMilestone: (v: number) => void;
   setLanguage: (v: Language) => void;
   toggleQuality: () => void;
+  setQuality: (v: Quality) => void;
   toggleSound: () => void;
   setMode: (v: JourneyMode) => void;
   start: () => void;
@@ -44,6 +45,7 @@ export const useJourneyStore = create<JourneyState>()(
       setCurrentMilestone: (currentMilestone) => set({ currentMilestone }),
       setLanguage: (language) => set({ language }),
       toggleQuality: () => set((s) => ({ quality: s.quality === "high" ? "low" : "high" })),
+      setQuality: (quality) => set({ quality }),
       toggleSound: () => set((s) => ({ soundEnabled: !s.soundEnabled })),
       setMode: (mode) => set({ mode }),
       start: () => set({ started: true }),

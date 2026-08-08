@@ -15,6 +15,8 @@ Open `http://localhost:3000`. Production checks:
 npm run typecheck
 npm run lint
 npm run build
+npm run test
+npm run test:e2e
 ```
 
 ## Firebase
@@ -36,4 +38,12 @@ Import the GitHub repository in Vercel, select Next.js, add the same Firebase en
 - `src/stores`: Zustand journey state
 - `src/lib`: Firebase and shared helpers
 
-Place the final CV at `public/cv/marcus-tran-cv.pdf`. Future optimized assets belong in `public/models`, `public/textures`, and `public/audio`.
+The three localized CV files live in `public/cv`. Public routes are `/vi`, `/en`, and `/zh`; `/` redirects to Vietnamese. Future optimized assets belong in `public/models`, `public/textures`, and `public/audio`.
+
+## Foundation 0.3
+
+- Locale-specific routes and metadata for Vietnamese, English, and Chinese
+- Milestone localization resolved by stable IDs
+- Adaptive 3D quality with instanced trees and rocks
+- Playwright content invariants and browser journey checks
+- Feature CSS and journey navigation extracted from the main application shell

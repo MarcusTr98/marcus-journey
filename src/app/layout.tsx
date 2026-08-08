@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./fonts.css";
+import "../styles/cv-center.css";
 import { profile } from "@/data/profile";
 export const metadata: Metadata = {
   metadataBase: new URL("https://marcus-journey.vercel.app"),
