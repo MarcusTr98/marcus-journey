@@ -16,7 +16,7 @@ const milestoneCatalog: Milestone[] = [
     ],
     accent: "#F46300",
     position: [0, 0, -6],
-    upgrade: "Industrial wheels & Kaizen toolbox",
+    upgrade: "Production Management · Quality · Kaizen · 5S",
   },
   {
     id: "fpt",
@@ -34,7 +34,7 @@ const milestoneCatalog: Milestone[] = [
     ],
     accent: "#005EB8",
     position: [4, 0, -17],
-    upgrade: "Digital cockpit",
+    upgrade: "Java · Spring Boot · SQL · Software Engineering",
   },
   {
     id: "vhunter",
@@ -52,7 +52,7 @@ const milestoneCatalog: Milestone[] = [
     ],
     accent: "#F46300",
     position: [-4, 0, -29],
-    upgrade: "Leadership roof rack",
+    upgrade: "Leadership · Negotiation · Event Operations",
   },
   {
     id: "video",
@@ -70,7 +70,7 @@ const milestoneCatalog: Milestone[] = [
     ],
     accent: "#005EB8",
     position: [4, 0, -41],
-    upgrade: "Media communication system",
+    upgrade: "Java Web · Hibernate · WebSocket · Application Security",
   },
   {
     id: "task",
@@ -88,7 +88,7 @@ const milestoneCatalog: Milestone[] = [
     ],
     accent: "#00A859",
     position: [-4, 0, -53],
-    upgrade: "Mission control display",
+    upgrade: "Solution Design · AJAX · LAN Deployment",
   },
   {
     id: "security",
@@ -106,7 +106,7 @@ const milestoneCatalog: Milestone[] = [
     ],
     accent: "#00A859",
     position: [4, 0, -65],
-    upgrade: "Zero-trust security shield",
+    upgrade: "Windows API · Zero Trust · OS Automation",
   },
   {
     id: "electronics",
@@ -124,7 +124,7 @@ const milestoneCatalog: Milestone[] = [
     ],
     accent: "#F46300",
     position: [-4, 0, -77],
-    upgrade: "Payment engine & digital body kit",
+    upgrade: "REST API · Spring Security · VNPAY · Database 3NF",
   },
   {
     id: "workshop",
@@ -142,7 +142,7 @@ const milestoneCatalog: Milestone[] = [
     ],
     accent: "#005EB8",
     position: [4, 0, -89],
-    upgrade: "Knowledge-sharing system",
+    upgrade: "IT Club Leadership · Mentoring · Vue 3",
   },
   {
     id: "store",
@@ -160,7 +160,7 @@ const milestoneCatalog: Milestone[] = [
     ],
     accent: "#F46300",
     position: [-4, 0, -101],
-    upgrade: "Team-lead command module",
+    upgrade: "Technical Leadership · Git Workflow · Code Review",
   },
   {
     id: "teaching",
@@ -178,7 +178,7 @@ const milestoneCatalog: Milestone[] = [
     ],
     accent: "#005EB8",
     position: [3, 0, -113],
-    upgrade: "AI copilot drone & instructor badge",
+    upgrade: "AI-assisted Education · Robocon · Freelance Delivery",
   },
   {
     id: "future",
@@ -196,7 +196,7 @@ const milestoneCatalog: Milestone[] = [
     ],
     accent: "#F46300",
     position: [0, 0, -127],
-    upgrade: "Final smart-factory system",
+    upgrade: "Smart Factory · Automation · Data · Responsible AI",
   },
 ];
 const chronologicalOrder = [

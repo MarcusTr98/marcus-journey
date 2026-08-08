@@ -10,9 +10,9 @@ import { getMilestones } from "@/data/i18n";
 const RING_DELAYS = [0, 0.12, 0.24];
 const EFFECT_DURATION = 1.35;
 const UPGRADE_LABEL = {
-  vi: "MỞ KHÓA NÂNG CẤP",
-  en: "UPGRADE UNLOCKED",
-  zh: "升级已解锁",
+  vi: "KỸ NĂNG MỚI",
+  en: "SKILL UNLOCKED",
+  zh: "技能已解锁",
 };
 
 export default function VehicleUpgradeEffect({ children }: { children: ReactNode }) {
