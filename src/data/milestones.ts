@@ -155,17 +155,18 @@ const milestoneCatalog: Omit<Milestone, "stage">[] = [
     period: "05/2026 — 09/2026",
     role: "Team Leader · Solution Architect",
     summary:
-      "Leading an evolving graduation codebase for a modular electronics store, defining the backend/frontend architecture and coordinating client, administration, commerce, promotion and CMS domains.",
+      "Leading a broad, production-minded graduation platform that combines dynamic commerce, AI-assisted sales and business intelligence, transaction-safe checkout, shipping automation and configurable client/admin experiences.",
     highlights: [
-      "Java 21 · Spring Boot 3.2.5 · SQL Server · 67 Java files",
-      "Vue 3.5 · Vite 8 · Pinia 3 · 41 Vue components/views",
-      "JWT authentication with role/permission domain model",
-      "SKU, cart, wishlist, orders, promotions, CMS and auditing",
+      "430 Java files · Spring Boot 3.2.5 · SQL Server · 25 tests",
+      "132 Vue files · Vue 3.5 · Vite 8 · Pinia 3 · responsive dynamic UI",
+      "Grounded Gemini advisor, SSE, AI analytics, safety guards and telemetry",
+      "VNPAY lifecycle · GHN shipping · checkout locking · refund/warranty · WebSocket",
     ],
     accent: "#F46300",
     position: [-4, 0, -101],
-    upgrade: "Technical Leadership · Git Workflow · Code Review",
-    projectUrl: "https://github.com/MarcusTr98/DATN-MarcusStore",
+    upgrade: "AI Commerce Architecture · Gemini · Transaction Integrity · Analytics",
+    projectUrl:
+      "https://github.com/MarcusTr98/DATN-MarcusStore/tree/feat/marcus/upgrade-full-website",
   },
   {
     id: "graduation",

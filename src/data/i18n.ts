@@ -154,12 +154,12 @@ const vi: L[] = [
   ],
   [
     "Trưởng nhóm · Kiến trúc sư Giải pháp",
-    "Dẫn dắt codebase đồ án tốt nghiệp đang phát triển cho cửa hàng điện tử dạng module; định hình kiến trúc backend/frontend và điều phối các miền client, quản trị, commerce, khuyến mại và CMS.",
+    "Dẫn dắt nền tảng đồ án tốt nghiệp quy mô lớn theo hướng production, kết hợp thương mại điện tử động, tư vấn bán hàng và phân tích kinh doanh bằng AI, checkout an toàn giao dịch, tự động hóa vận chuyển cùng trải nghiệm client/admin có thể cấu hình.",
     [
-      "Java 21 · Spring Boot 3.2.5 · SQL Server · 67 file Java",
-      "Vue 3.5 · Vite 8 · Pinia 3 · 41 component/view Vue",
-      "JWT với mô hình role/permission",
-      "SKU, cart, wishlist, order, promotion, CMS và auditing",
+      "430 file Java · Spring Boot 3.2.5 · SQL Server · 25 test",
+      "132 file Vue · Vue 3.5 · Vite 8 · Pinia 3 · UI động responsive",
+      "Gemini advisor bám catalog, SSE, AI analytics, safety guard và telemetry",
+      "VNPAY lifecycle · GHN · khóa checkout · refund/warranty · WebSocket",
     ],
   ],
   [
@@ -261,12 +261,12 @@ const zh: L[] = [
   ],
   [
     "团队负责人 · 解决方案架构师",
-    "领导模块化电子商城毕业项目的持续开发，规划前后端架构并协调客户端、管理、交易、促销与CMS领域。",
+    "领导面向生产场景的大型毕业项目平台，融合动态电商、AI销售顾问与商业分析、交易安全结账、物流自动化及可配置的客户端/管理端体验。",
     [
-      "Java 21 · Spring Boot 3.2.5 · SQL Server · 67个Java文件",
-      "Vue 3.5 · Vite 8 · Pinia 3 · 41个Vue组件/页面",
-      "JWT与角色/权限领域模型",
-      "SKU、购物车、收藏、订单、促销、CMS与审计",
+      "430个Java文件 · Spring Boot 3.2.5 · SQL Server · 25项测试",
+      "132个Vue文件 · Vue 3.5 · Vite 8 · Pinia 3 · 响应式动态UI",
+      "基于目录数据的Gemini顾问、SSE、AI分析、安全防护与遥测",
+      "VNPAY生命周期 · GHN物流 · 结账锁 · 退款/保修 · WebSocket",
     ],
   ],
   [
@@ -305,7 +305,7 @@ const upgrades = {
     "Giám sát Windows · Tự động hóa Firewall · Ứng phó sự cố",
     "REST API · Spring Security · VNPAY · Cơ sở dữ liệu 3NF",
     "Lãnh đạo CLB IT · Mentoring · Vue 3",
-    "Lãnh đạo kỹ thuật · Git Workflow · Code Review",
+    "Kiến trúc AI Commerce · Gemini · Toàn vẹn giao dịch · Analytics",
     "Giáo dục ứng dụng AI · Robocon · Phát triển freelance",
     "Smart Factory · Tự động hóa · Dữ liệu · AI có trách nhiệm",
     "Thành tích học thuật · Lãnh đạo · Học tập suốt đời",
@@ -319,7 +319,7 @@ const upgrades = {
     "Windows监控 · 防火墙自动化 · 事件响应",
     "REST API · Spring Security · VNPAY · 3NF数据库",
     "IT俱乐部领导力 · 指导 · Vue 3",
-    "技术领导力 · Git工作流 · 代码审查",
+    "AI电商架构 · Gemini · 交易完整性 · 数据分析",
     "AI辅助教育 · Robocon · 自由职业交付",
     "智慧工厂 · 自动化 · 数据 · 负责任AI",
     "学术卓越 · 领导力 · 终身学习",
