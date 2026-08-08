@@ -454,7 +454,7 @@ select:focus-visible {
   margin-top: 5px;
 }
 .scroll-space {
-  height: 850vh;
+  height: 1180vh;
   position: relative;
   z-index: 1;
   pointer-events: none;
@@ -639,7 +639,7 @@ select:focus-visible {
     left: 13px;
   }
   .scroll-space {
-    height: 770vh;
+    height: 1040vh;
   }
   .profile-grid {
     grid-template-columns: 1fr;

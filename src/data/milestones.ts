@@ -232,7 +232,7 @@ const chronologicalOrder = [
   "future",
 ];
 const lane = [0, 4, -4, 4, -4, 4, -4, 4, -4, 2.6, 3, 0];
-const distance = [-5, -17, -29, -41, -53, -65, -77, -89, -101, -112, -126, -142];
+const distance = [-7, -25, -43, -61, -79, -97, -115, -133, -151, -169, -187, -205];
 export const milestones = chronologicalOrder.map((id, index) => ({
   ...(milestoneCatalog.find((item) => item.id === id) as Milestone),
   position: [lane[index], 0, distance[index]] as [number, number, number],

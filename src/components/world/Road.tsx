@@ -65,6 +65,19 @@ export default function Road() {
       }),
     [],
   );
+  const checkpointMarkers = useMemo(
+    () =>
+      milestoneCurveProgress.map((progress, index) => {
+        const point = routeCurve.getPointAt(progress);
+        const tangent = routeCurve.getTangentAt(progress);
+        return {
+          point,
+          rotation: Math.atan2(tangent.x, tangent.z),
+          color: milestones[index].id === "graduation" ? "#FFC629" : milestones[index].accent,
+        };
+      }),
+    [],
+  );
   return (
     <group>
       <mesh geometry={geometry} receiveShadow>
@@ -76,8 +89,26 @@ export default function Road() {
           <meshStandardMaterial color="#e9e0ba" emissive="#8d875f" emissiveIntensity={0.15} />
         </mesh>
       ))}
-      <mesh position={[0, -0.12, -73]} receiveShadow>
-        <boxGeometry args={[36, 0.24, 180]} />
+      {checkpointMarkers.map((marker, index) => (
+        <group
+          key={milestones[index].id}
+          position={[marker.point.x, 0.075, marker.point.z]}
+          rotation={[0, marker.rotation, 0]}
+        >
+          {[-0.22, 0, 0.22].map((z) => (
+            <mesh key={z} position={[0, 0, z]}>
+              <boxGeometry args={[2.25, 0.025, 0.075]} />
+              <meshStandardMaterial
+                color={marker.color}
+                emissive={marker.color}
+                emissiveIntensity={1.4}
+              />
+            </mesh>
+          ))}
+        </group>
+      ))}
+      <mesh position={[0, -0.12, -108]} receiveShadow>
+        <boxGeometry args={[36, 0.24, 255]} />
         <meshStandardMaterial color="#101c22" roughness={1} />
       </mesh>
     </group>

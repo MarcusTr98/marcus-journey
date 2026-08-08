@@ -9,42 +9,56 @@ import WorldEnvironment from "./Environment";
 import { useJourneyStore } from "@/stores/journeyStore";
 import { TROPHY_POSITION } from "@/data/journeyPath";
 
-const TROPHY_CAMERA_POSITION = new THREE.Vector3(7.2, 6.6, TROPHY_POSITION[2] + 9.5);
-const TROPHY_FOCUS = new THREE.Vector3(TROPHY_POSITION[0] + 0.4, 0.8, TROPHY_POSITION[2]);
-const MAX_PROGRESS_PER_SECOND = 0.075;
-
-function getMilestoneAtVehiclePosition(progress: number) {
-  let active = -1;
-  milestoneCurveProgress.forEach((checkpoint, index) => {
-    if (progress >= checkpoint - 0.003) active = index;
-  });
-  return active;
-}
+const TROPHY_CAMERA_POSITION = new THREE.Vector3(8.6, 7.2, TROPHY_POSITION[2] + 11);
+const TROPHY_FOCUS = new THREE.Vector3(0, 1, TROPHY_POSITION[2]);
+const MAX_PROGRESS_PER_SECOND = 0.052;
+const CHECKPOINT_HOLD_SECONDS = 1.5;
 
 export default function MarcusJourneyScene() {
   const car = useRef<THREE.Group>(null);
   const focus = useRef(new THREE.Vector3(0, 0, 0));
   const actualProgress = useRef(0);
+  const checkpointHold = useRef(0);
   const { camera } = useThree();
   const progress = useJourneyStore((s) => s.progress);
   const quality = useJourneyStore((s) => s.quality);
   useFrame((_, delta) => {
     if (!car.current) return;
-    const dampedProgress = THREE.MathUtils.damp(actualProgress.current, progress, 5, delta);
-    const maxStep = MAX_PROGRESS_PER_SECOND * delta;
-    actualProgress.current += THREE.MathUtils.clamp(
-      dampedProgress - actualProgress.current,
-      -maxStep,
-      maxStep,
-    );
-    const p = THREE.MathUtils.clamp(actualProgress.current, 0, 0.998);
     const journeyState = useJourneyStore.getState();
+    checkpointHold.current = Math.max(0, checkpointHold.current - delta);
+    const nextIndex = journeyState.currentMilestone + 1;
+    const nextCheckpoint = milestoneCurveProgress[nextIndex];
+    const drivingForward = progress > actualProgress.current;
+
+    if (checkpointHold.current <= 0) {
+      const dampedProgress = THREE.MathUtils.damp(actualProgress.current, progress, 4.2, delta);
+      const checkpointDistance =
+        drivingForward && nextCheckpoint !== undefined
+          ? nextCheckpoint - actualProgress.current
+          : Number.POSITIVE_INFINITY;
+      const approachFactor = THREE.MathUtils.smoothstep(checkpointDistance, 0.0015, 0.018);
+      const maxStep =
+        MAX_PROGRESS_PER_SECOND * THREE.MathUtils.lerp(0.34, 1, approachFactor) * delta;
+      const proposed =
+        actualProgress.current +
+        THREE.MathUtils.clamp(dampedProgress - actualProgress.current, -maxStep, maxStep);
+
+      if (
+        drivingForward &&
+        nextCheckpoint !== undefined &&
+        progress >= nextCheckpoint &&
+        proposed >= nextCheckpoint - 0.00035
+      ) {
+        actualProgress.current = nextCheckpoint;
+        checkpointHold.current = CHECKPOINT_HOLD_SECONDS;
+        journeyState.setCurrentMilestone(nextIndex);
+      } else {
+        actualProgress.current = proposed;
+      }
+    }
+    const p = THREE.MathUtils.clamp(actualProgress.current, 0, 0.998);
     if (Math.abs(journeyState.vehicleProgress - p) > 0.00025) {
       journeyState.setVehicleProgress(p);
-    }
-    const reachedMilestone = getMilestoneAtVehiclePosition(p);
-    if (reachedMilestone !== journeyState.currentMilestone) {
-      journeyState.setCurrentMilestone(reachedMilestone);
     }
     const point = routeCurve.getPointAt(p);
     const tangent = routeCurve.getTangentAt(p);
@@ -57,13 +71,18 @@ export default function MarcusJourneyScene() {
     car.current.rotation.y += angleDelta * (1 - Math.exp(-delta * 7));
     const isAtGraduation =
       p > graduationCurveProgress - 0.008 && p < graduationCurveProgress + 0.045;
-    const target = isAtGraduation
-      ? TROPHY_CAMERA_POSITION
-      : point.clone().add(new THREE.Vector3(7, 8, 10));
-    camera.position.lerp(target, 1 - Math.exp(-delta * 2.8));
+    const roadNormal = new THREE.Vector3(-tangent.z, 0, tangent.x).normalize();
+    const chaseTarget = point
+      .clone()
+      .addScaledVector(tangent, -9.5)
+      .addScaledVector(roadNormal, 4.8)
+      .add(new THREE.Vector3(0, 7.2, 0));
+    const lookAhead = routeCurve.getPointAt(Math.min(0.998, p + 0.014));
+    const target = isAtGraduation ? TROPHY_CAMERA_POSITION : chaseTarget;
+    camera.position.lerp(target, 1 - Math.exp(-delta * 3.5));
     focus.current.lerp(
-      isAtGraduation ? TROPHY_FOCUS : new THREE.Vector3(point.x, point.y, point.z - 2),
-      1 - Math.exp(-delta * 4),
+      isAtGraduation ? TROPHY_FOCUS : lookAhead.setY(0.65),
+      1 - Math.exp(-delta * 5),
     );
     camera.lookAt(focus.current);
   });
