@@ -260,6 +260,62 @@ select:focus-visible {
 .progress-ui strong {
   display: block;
 }
+.milestone-dots {
+  position: fixed;
+  z-index: 24;
+  left: 50%;
+  bottom: 24px;
+  display: flex;
+  gap: 5px;
+  transform: translateX(-50%);
+}
+.milestone-dots button {
+  width: 34px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #8fa0a5;
+  background: transparent;
+  cursor: pointer;
+}
+.milestone-dots button span {
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--dot);
+  border-radius: 50%;
+  background: #07141b;
+  transition: 220ms ease;
+}
+.milestone-dots button small {
+  font-size: 7px;
+  opacity: 0;
+  transform: translateX(-3px);
+  transition: 220ms ease;
+}
+.milestone-dots button:hover span,
+.milestone-dots button.is-active span {
+  background: var(--dot);
+  box-shadow: 0 0 12px var(--dot);
+  transform: scale(1.45);
+}
+.milestone-dots button:hover small,
+.milestone-dots button.is-active small {
+  opacity: 1;
+  transform: none;
+}
+.milestone-cta {
+  display: inline-flex;
+  margin-top: 16px;
+  color: #fff;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 5px;
+}
 .progress-ui small {
   font-size: 7px;
   letter-spacing: 0.17em;
@@ -271,23 +327,7 @@ select:focus-visible {
   font: 600 11px var(--font-display);
 }
 .mode-switch {
-  position: fixed;
-  z-index: 12;
-  right: 4vw;
-  top: 95px;
-  display: flex;
-}
-.mode-switch button {
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: #07141b99;
-  padding: 9px 12px;
-  color: #778990;
-  font-size: 8px;
-  letter-spacing: 0.13em;
-}
-.mode-switch .active {
-  color: #fff;
-  border-color: var(--orange);
+  display: none;
 }
 .milestone-panel {
   position: fixed;
@@ -454,7 +494,7 @@ select:focus-visible {
   margin-top: 5px;
 }
 .scroll-space {
-  height: 1180vh;
+  height: 650vh;
   position: relative;
   z-index: 1;
   pointer-events: none;
@@ -503,6 +543,70 @@ select:focus-visible {
   padding: 5vw;
   position: relative;
   z-index: 40;
+}
+.seo-profile {
+  position: relative;
+  z-index: 30;
+  padding: 110px 7vw;
+  color: #d9e3e3;
+  background: #e9eeee;
+  content-visibility: auto;
+  contain-intrinsic-size: 1200px;
+}
+.seo-profile > header {
+  max-width: 820px;
+  margin-bottom: 60px;
+  color: #0a2029;
+}
+.seo-profile > header h2 {
+  margin: 12px 0 20px;
+  font-size: clamp(42px, 6vw, 86px);
+  line-height: 0.95;
+  letter-spacing: -0.055em;
+}
+.seo-profile > header p {
+  max-width: 680px;
+  color: #53666c;
+  font-size: 17px;
+  line-height: 1.65;
+}
+.seo-profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid #b9c6c8;
+  border-left: 1px solid #b9c6c8;
+}
+.seo-profile-grid article {
+  min-height: 390px;
+  padding: 38px;
+  color: #52666c;
+  border-right: 1px solid #b9c6c8;
+  border-bottom: 1px solid #b9c6c8;
+}
+.seo-profile-grid article > span {
+  color: #71878d;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.seo-profile-grid h3 {
+  margin: 20px 0 8px;
+  color: #08232d;
+  font-size: clamp(24px, 2.4vw, 38px);
+  line-height: 1.05;
+}
+.seo-profile-grid strong {
+  color: #0066b3;
+  font-size: 11px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+.seo-profile-grid p,
+.seo-profile-grid li {
+  line-height: 1.65;
+}
+.seo-profile-grid ul {
+  padding-left: 18px;
 }
 .quick-profile header {
   display: flex;
@@ -639,7 +743,7 @@ select:focus-visible {
     left: 13px;
   }
   .scroll-space {
-    height: 1040vh;
+    height: 600vh;
   }
   .profile-grid {
     grid-template-columns: 1fr;
@@ -658,6 +762,22 @@ select:focus-visible {
   }
   .quick-profile header {
     padding-top: 30px;
+  }
+  .milestone-dots {
+    left: 50%;
+    bottom: 180px;
+  }
+  .milestone-dots button {
+    width: 15px;
+  }
+  .milestone-dots button small {
+    display: none;
+  }
+  .seo-profile {
+    padding: 80px 24px;
+  }
+  .seo-profile-grid {
+    grid-template-columns: 1fr;
   }
   .garage {
     padding-left: 28px;

@@ -25,6 +25,13 @@ export default function MarcusJourneyScene() {
   useFrame((_, delta) => {
     if (!car.current) return;
     const journeyState = useJourneyStore.getState();
+    if (journeyState.requestedMilestone !== null) {
+      const requestedIndex = journeyState.requestedMilestone;
+      actualProgress.current = milestoneCurveProgress[requestedIndex];
+      checkpointHold.current = CHECKPOINT_HOLD_SECONDS;
+      journeyState.setCurrentMilestone(requestedIndex);
+      journeyState.requestMilestone(null);
+    }
     checkpointHold.current = Math.max(0, checkpointHold.current - delta);
     const nextIndex = journeyState.currentMilestone + 1;
     const nextCheckpoint = milestoneCurveProgress[nextIndex];

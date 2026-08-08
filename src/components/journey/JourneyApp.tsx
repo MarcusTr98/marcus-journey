@@ -10,6 +10,11 @@ const Experience = dynamic(() => import("@/components/world/Experience"), {
   ssr: false,
   loading: () => <div className="scene-loading">LOADING 3D WORLD…</div>,
 });
+const ACTION_LABEL = {
+  vi: "XEM CASE STUDY",
+  en: "VIEW CASE STUDY",
+  zh: "查看案例",
+};
 export default function JourneyApp() {
   const [quick, setQuick] = useState(false);
   const [reduced, setReduced] = useState(false);
@@ -20,12 +25,18 @@ export default function JourneyApp() {
     language,
     quality,
     soundEnabled,
+    sceneReady,
     start,
+    resetJourney,
+    requestMilestone,
     setProgress,
     setLanguage,
     toggleQuality,
     toggleSound,
   } = useJourneyStore();
+  useEffect(() => {
+    void useJourneyStore.persist.rehydrate();
+  }, []);
   useEffect(() => {
     const media = matchMedia("(prefers-reduced-motion: reduce)");
     setReduced(media.matches);
@@ -51,6 +62,7 @@ export default function JourneyApp() {
     items = getMilestones(language),
     active = currentMilestone >= 0 ? items[currentMilestone] : null;
   const begin = () => {
+    resetJourney();
     start();
     requestAnimationFrame(() =>
       scrollTo({
@@ -58,6 +70,20 @@ export default function JourneyApp() {
         behavior: reduced ? "auto" : "smooth",
       }),
     );
+  };
+  const goToMilestone = (index: number) => {
+    if (!started) start();
+    const track = document.getElementById("journey-track");
+    if (!track) return;
+    const targetProgress = (index + 1) / (milestones.length + 1);
+    const startAt = innerHeight * 0.86;
+    const finishAt = track.offsetTop + track.offsetHeight - innerHeight * 1.25;
+    setProgress(targetProgress);
+    requestMilestone(index);
+    scrollTo({
+      top: startAt + targetProgress * Math.max(finishAt - startAt, 1),
+      behavior: "auto",
+    });
   };
   if (quick)
     return (
@@ -80,7 +106,7 @@ export default function JourneyApp() {
         </a>
         <nav aria-label="Utility navigation">
           <button onClick={() => setQuick(true)}>{t.quick}</button>
-          <a href="#projects">{t.projects}</a>
+          <a href="#case-studies">{t.projects}</a>
           <a href="/cv/marcus-tran-cv.pdf" download>
             {t.cv}
           </a>
@@ -121,8 +147,8 @@ export default function JourneyApp() {
             ))}
           </p>
           <div className="hero-actions">
-            <button className="main-cta" onClick={begin}>
-              {t.start} <b>→</b>
+            <button className="main-cta" onClick={begin} disabled={!sceneReady}>
+              {sceneReady ? t.start : "LOADING 3D…"} <b>{sceneReady ? "→" : "·"}</b>
             </button>
             <button onClick={() => setQuick(true)}>{t.quick}</button>
           </div>
@@ -145,12 +171,21 @@ export default function JourneyApp() {
               <strong>{String(Math.round(vehicleProgress * 100)).padStart(2, "0")}%</strong>
             </div>
           </aside>
-          <div className="mode-switch">
-            <button className="active">{t.auto}</button>
-            <button disabled title="Coming soon">
-              {t.drive}
-            </button>
-          </div>
+          <nav className="milestone-dots" aria-label="Journey milestones">
+            {items.map((item, index) => (
+              <button
+                key={item.id}
+                className={index === currentMilestone ? "is-active" : ""}
+                style={{ "--dot": item.accent } as React.CSSProperties}
+                onClick={() => goToMilestone(index)}
+                aria-label={`${index + 1}. ${item.title}`}
+                title={`${index + 1}. ${item.title}`}
+              >
+                <span />
+                <small>{String(index + 1).padStart(2, "0")}</small>
+              </button>
+            ))}
+          </nav>
           {active && (
             <aside
               key={active.id}
@@ -173,6 +208,9 @@ export default function JourneyApp() {
               <div className="upgrade">
                 {t.unlocked} <b>{active.upgrade}</b>
               </div>
+              <a className="milestone-cta" href="#case-studies">
+                {ACTION_LABEL[language]} ↗
+              </a>
             </aside>
           )}
         </>
