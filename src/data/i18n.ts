@@ -182,6 +182,16 @@ const vi: L[] = [
       "Ứng dụng công nghệ lấy con người làm trung tâm",
     ],
   ],
+  [
+    "Tốt nghiệp Phát triển Phần mềm · GPA 3.9/4.0",
+    "Hoàn thành hành trình ba năm chuyển đổi từ vận hành sản xuất sang kỹ nghệ phần mềm, kết hợp thành tích học thuật, năng lực lãnh đạo, sản phẩm triển khai thực tế và phương pháp học tập có AI hỗ trợ một cách có kiểm soát.",
+    [
+      "GPA 3.9/4.0",
+      "Ong vàng SP26 — Top 1 FPT Polytechnic Hải Phòng",
+      "Sinh viên xuất sắc các kỳ",
+      "Chủ nhiệm CLB IT · Gemini Certified Educator",
+    ],
+  ],
 ];
 const zh: L[] = [
   [
@@ -269,6 +279,16 @@ const zh: L[] = [
     "长期目标是把生产现场知识、改善、质量数据、软件自动化与负责任的AI融合为提升运营并赋能人员的系统。",
     ["生产与质量流程数字化", "数据驱动改善与自动化", "运营/培训中的负责任AI", "以人为本的技术应用"],
   ],
+  [
+    "软件开发毕业生 · GPA 3.9/4.0",
+    "完成从制造运营到软件工程的三年转型，将优异学业、领导力、真实产品交付与审慎的AI辅助学习融为一体。",
+    [
+      "GPA 3.9/4.0",
+      "SP26 Golden Bee — 海防FPT Polytechnic第一名",
+      "多个学期获评优秀学生",
+      "IT俱乐部主席 · Gemini认证教育者",
+    ],
+  ],
 ];
 const upgrades = {
   vi: [
@@ -283,6 +303,7 @@ const upgrades = {
     "Lãnh đạo kỹ thuật · Git Workflow · Code Review",
     "Giáo dục ứng dụng AI · Robocon · Phát triển freelance",
     "Smart Factory · Tự động hóa · Dữ liệu · AI có trách nhiệm",
+    "Thành tích học thuật · Lãnh đạo · Học tập suốt đời",
   ],
   zh: [
     "生产管理 · 质量 · 改善 · 5S",
@@ -296,6 +317,7 @@ const upgrades = {
     "技术领导力 · Git工作流 · 代码审查",
     "AI辅助教育 · Robocon · 自由职业交付",
     "智慧工厂 · 自动化 · 数据 · 负责任AI",
+    "学术卓越 · 领导力 · 终身学习",
   ],
 };
 const localizationOrder = [
@@ -310,6 +332,7 @@ const localizationOrder = [
   "store",
   "teaching",
   "future",
+  "graduation",
 ];
 export function getMilestones(language: Language) {
   if (language === "en") return milestones;

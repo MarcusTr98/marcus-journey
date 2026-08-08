@@ -69,13 +69,15 @@ function StandardLandmark({ data, offset }: { data: MilestoneType; offset: Landm
 }
 
 export default function Milestone({ data, index }: { data: MilestoneType; index: number }) {
+  if (data.id === "graduation") return null;
+
   const previous = milestones[Math.max(0, index - 1)].position;
   const next = milestones[Math.min(milestones.length - 1, index + 1)].position;
   const tangentX = next[0] - previous[0];
   const tangentZ = next[2] - previous[2];
   const length = Math.hypot(tangentX, tangentZ) || 1;
   const side = index % 2 === 0 ? -1 : 1;
-  const clearance = data.id === "store" ? 5.4 : 4.6;
+  const clearance = data.id === "store" ? 4.5 : 3.8;
   const offset: LandmarkOffset = [
     (-tangentZ / length) * clearance * side,
     (tangentX / length) * clearance * side,

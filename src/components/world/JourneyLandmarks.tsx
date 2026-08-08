@@ -5,7 +5,7 @@ import { useMemo, useRef } from "react";
 import type * as THREE from "three";
 import { useJourneyStore } from "@/stores/journeyStore";
 import { FINISH_POSITION, TROPHY_POSITION } from "@/data/journeyPath";
-import { trophyCurveProgress } from "./Road";
+import { graduationCurveProgress } from "./Road";
 
 const labels = {
   vi: {
@@ -66,36 +66,58 @@ function StartLine() {
     </group>
   );
 }
-function Trophy() {
+function GraduationMonument() {
   return (
-    <group position={[TROPHY_POSITION[0], 0.1, TROPHY_POSITION[2]]} scale={1.25}>
-      <mesh position={[0, 0.22, 0]}>
-        <cylinderGeometry args={[0.7, 0.82, 0.2, 18]} />
-        <meshStandardMaterial color="#17242a" metalness={0.7} />
+    <group position={[TROPHY_POSITION[0], 0.08, TROPHY_POSITION[2]]} scale={1.15}>
+      <mesh position={[0, 0.18, 0]} castShadow>
+        <cylinderGeometry args={[1.15, 1.3, 0.28, 8]} />
+        <meshStandardMaterial color="#17242a" metalness={0.62} roughness={0.28} />
       </mesh>
-      <mesh position={[0, 0.48, 0]}>
-        <cylinderGeometry args={[0.38, 0.55, 0.34, 18]} />
-        <meshStandardMaterial color="#f4b000" metalness={0.8} roughness={0.2} />
+      <mesh position={[0, 0.4, 0]}>
+        <cylinderGeometry args={[0.94, 1.08, 0.18, 8]} />
+        <meshStandardMaterial color="#F46300" emissive="#F46300" emissiveIntensity={0.35} />
       </mesh>
-      <mesh position={[0, 1.15, 0]}>
-        <cylinderGeometry args={[0.68, 0.38, 1.1, 20]} />
-        <meshStandardMaterial color="#ffc629" metalness={0.8} roughness={0.18} />
-      </mesh>
-      <mesh position={[0, 1.78, 0]}>
-        <sphereGeometry args={[0.3, 18, 12]} />
-        <meshStandardMaterial
-          color="#ffe08a"
-          emissive="#F46300"
-          emissiveIntensity={0.7}
-          metalness={0.7}
-        />
-      </mesh>
-      {[-1, 1].map((side) => (
-        <mesh key={side} position={[side * 0.7, 1.28, 0]} rotation={[Math.PI / 2, 0, 0]}>
-          <torusGeometry args={[0.42, 0.1, 10, 20, Math.PI]} />
-          <meshStandardMaterial color="#f4b000" metalness={0.8} />
+      <group position={[0, 1.45, 0]} rotation={[0, 0.3, 0]}>
+        <mesh position={[0, -0.35, 0]} castShadow>
+          <cylinderGeometry args={[0.72, 0.9, 0.55, 4]} />
+          <meshStandardMaterial color="#082c42" metalness={0.35} roughness={0.3} />
         </mesh>
-      ))}
+        <mesh castShadow>
+          <boxGeometry args={[2.25, 0.16, 2.25]} />
+          <meshStandardMaterial
+            color="#005EB8"
+            emissive="#005EB8"
+            emissiveIntensity={0.3}
+            metalness={0.42}
+            roughness={0.25}
+          />
+        </mesh>
+        <mesh position={[0, 0.14, 0]}>
+          <sphereGeometry args={[0.13, 14, 10]} />
+          <meshStandardMaterial color="#FFC629" emissive="#F46300" emissiveIntensity={0.8} />
+        </mesh>
+        <mesh position={[0.74, -0.08, 0.74]} rotation={[0, 0, -0.58]}>
+          <cylinderGeometry args={[0.035, 0.035, 1.25, 8]} />
+          <meshStandardMaterial color="#FFC629" emissive="#FFC629" emissiveIntensity={0.45} />
+        </mesh>
+        <mesh position={[1.09, -0.58, 0.74]}>
+          <sphereGeometry args={[0.11, 12, 8]} />
+          <meshStandardMaterial color="#F46300" emissive="#F46300" emissiveIntensity={0.6} />
+        </mesh>
+      </group>
+      <group position={[1.1, 0.84, 0.55]} rotation={[0, 0, Math.PI / 2]}>
+        <mesh castShadow>
+          <cylinderGeometry args={[0.24, 0.24, 1.45, 18]} />
+          <meshStandardMaterial color="#f7f2df" roughness={0.48} />
+        </mesh>
+        {[-0.38, 0.38].map((y) => (
+          <mesh key={y} position={[0, y, 0]}>
+            <torusGeometry args={[0.255, 0.055, 8, 20]} />
+            <meshStandardMaterial color="#F46300" emissive="#F46300" emissiveIntensity={0.35} />
+          </mesh>
+        ))}
+      </group>
+      <pointLight position={[0, 2.3, 0.7]} color="#ffc629" intensity={2.4} distance={7} />
     </group>
   );
 }
@@ -104,7 +126,8 @@ function GraduationCelebration() {
     progress = useJourneyStore((s) => s.vehicleProgress),
     language = useJourneyStore((s) => s.language),
     t = labels[language],
-    active = progress > trophyCurveProgress - 0.008 && progress < trophyCurveProgress + 0.045;
+    active =
+      progress > graduationCurveProgress - 0.008 && progress < graduationCurveProgress + 0.045;
   const pieces = useMemo(
     () =>
       Array.from({ length: 46 }, (_, i) => ({
@@ -170,7 +193,7 @@ export default function JourneyLandmarks() {
   return (
     <>
       <StartLine />
-      <Trophy />
+      <GraduationMonument />
       <GraduationCelebration />
       <FinishFlag />
     </>

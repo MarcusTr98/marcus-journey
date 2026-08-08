@@ -163,6 +163,24 @@ const milestoneCatalog: Milestone[] = [
     upgrade: "Technical Leadership · Git Workflow · Code Review",
   },
   {
+    id: "graduation",
+    shortTitle: "Graduation Milestone",
+    title: "FPT Polytechnic Graduation",
+    period: "09/2026",
+    role: "Software Development Graduate · GPA 3.9/4.0",
+    summary:
+      "Completed a three-year transformation from manufacturing operations to software engineering, combining academic excellence with leadership, deployed products and disciplined AI-assisted learning.",
+    highlights: [
+      "GPA 3.9/4.0",
+      "Golden Bee SP26 — Top 1 FPT Polytechnic Hai Phong",
+      "Excellent Student across semesters",
+      "IT Club Chairman · Gemini Certified Educator",
+    ],
+    accent: "#FFC629",
+    position: [2.6, 0, -112],
+    upgrade: "Academic Excellence · Leadership · Lifelong Learning",
+  },
+  {
     id: "teaching",
     shortTitle: "03 · Present",
     title: "Technology Instructor & Freelance Developer",
@@ -209,11 +227,12 @@ const chronologicalOrder = [
   "task",
   "security",
   "store",
+  "graduation",
   "teaching",
   "future",
 ];
-const lane = [0, 4, -4, 4, -4, 4, -4, 4, -4, 3, 0];
-const distance = [-5, -17, -29, -41, -53, -65, -77, -89, -101, -123, -139];
+const lane = [0, 4, -4, 4, -4, 4, -4, 4, -4, 2.6, 3, 0];
+const distance = [-5, -17, -29, -41, -53, -65, -77, -89, -101, -112, -126, -142];
 export const milestones = chronologicalOrder.map((id, index) => ({
   ...(milestoneCatalog.find((item) => item.id === id) as Milestone),
   position: [lane[index], 0, distance[index]] as [number, number, number],

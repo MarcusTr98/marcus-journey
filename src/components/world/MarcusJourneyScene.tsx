@@ -4,7 +4,7 @@ import { Environment as DreiEnvironment, Stars } from "@react-three/drei";
 import { useRef } from "react";
 import * as THREE from "three";
 import Car from "./Car";
-import Road, { milestoneCurveProgress, routeCurve, trophyCurveProgress } from "./Road";
+import Road, { graduationCurveProgress, milestoneCurveProgress, routeCurve } from "./Road";
 import WorldEnvironment from "./Environment";
 import { useJourneyStore } from "@/stores/journeyStore";
 import { TROPHY_POSITION } from "@/data/journeyPath";
@@ -55,7 +55,8 @@ export default function MarcusJourneyScene() {
       Math.cos(desiredRotation - car.current.rotation.y),
     );
     car.current.rotation.y += angleDelta * (1 - Math.exp(-delta * 7));
-    const isAtGraduation = p > trophyCurveProgress - 0.008 && p < trophyCurveProgress + 0.045;
+    const isAtGraduation =
+      p > graduationCurveProgress - 0.008 && p < graduationCurveProgress + 0.045;
     const target = isAtGraduation
       ? TROPHY_CAMERA_POSITION
       : point.clone().add(new THREE.Vector3(7, 8, 10));

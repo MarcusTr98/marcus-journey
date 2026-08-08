@@ -166,7 +166,7 @@ export default function JourneyApp() {
               <h3>{active.role}</h3>
               <p>{active.summary}</p>
               <ul>
-                {active.highlights.slice(0, 3).map((h) => (
+                {active.highlights.slice(0, 4).map((h) => (
                   <li key={h}>{h}</li>
                 ))}
               </ul>

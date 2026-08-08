@@ -8,7 +8,7 @@ import { useJourneyStore } from "@/stores/journeyStore";
 import { getMilestones } from "@/data/i18n";
 
 const RING_DELAYS = [0, 0.12, 0.24];
-const EFFECT_DURATION = 1.35;
+const EFFECT_DURATION = 1.55;
 const UPGRADE_LABEL = {
   vi: "KỸ NĂNG MỚI",
   en: "SKILL UNLOCKED",
@@ -31,7 +31,7 @@ export default function VehicleUpgradeEffect({ children }: { children: ReactNode
       elapsed.current = 0;
       previousMilestone.current = currentMilestone;
       setShowUpgrade(true);
-      const timer = window.setTimeout(() => setShowUpgrade(false), 1800);
+      const timer = window.setTimeout(() => setShowUpgrade(false), 2100);
       return () => window.clearTimeout(timer);
     }
   }, [currentMilestone]);
@@ -45,8 +45,11 @@ export default function VehicleUpgradeEffect({ children }: { children: ReactNode
     const active = time < EFFECT_DURATION;
 
     if (model.current) {
-      const jumpProgress = Math.min(time / 0.72, 1);
-      const jump = active ? Math.sin(jumpProgress * Math.PI) * 0.62 : 0;
+      const isToyotaUpgrade = currentMilestone === 0;
+      const jumpDuration = isToyotaUpgrade ? 0.95 : 0.78;
+      const jumpHeight = isToyotaUpgrade ? 1.12 : 0.72;
+      const jumpProgress = Math.min(time / jumpDuration, 1);
+      const jump = active ? Math.sin(jumpProgress * Math.PI) * jumpHeight : 0;
       model.current.position.y = THREE.MathUtils.damp(model.current.position.y, jump, 14, delta);
       model.current.rotation.z = active
         ? Math.sin(time * 11) * 0.025 * (1 - time / EFFECT_DURATION)

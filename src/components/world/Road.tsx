@@ -25,6 +25,8 @@ export const milestoneCurveProgress = milestones.map((milestone) =>
   findClosestCurveProgress(milestone.position),
 );
 export const trophyCurveProgress = findClosestCurveProgress(TROPHY_POSITION);
+export const graduationCurveProgress =
+  milestoneCurveProgress[milestones.findIndex(({ id }) => id === "graduation")];
 
 function createRoad() {
   const segments = 240,
