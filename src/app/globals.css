@@ -306,6 +306,58 @@ select:focus-visible {
   opacity: 1;
   transform: none;
 }
+.dot-stage {
+  position: relative;
+  padding-left: 8px;
+  border-left: 1px solid #ffffff24;
+}
+.dot-stage:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+.dot-stage > div {
+  display: flex;
+  gap: 4px;
+}
+.dot-stage > em {
+  position: absolute;
+  left: 8px;
+  bottom: 31px;
+  color: #91a4aa;
+  font-size: 7px;
+  font-style: normal;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(3px);
+  transition: 220ms ease;
+}
+.dot-stage:hover > em,
+.dot-stage:has(.is-active) > em {
+  opacity: 1;
+  transform: none;
+}
+.stage-context {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 15px;
+  color: var(--accent);
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.stage-context span {
+  color: #91a4aa;
+}
+.chapter-title {
+  display: block;
+  margin-bottom: 7px;
+  color: #91a4aa;
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
 .milestone-cta {
   display: inline-flex;
   margin-top: 16px;
@@ -570,6 +622,22 @@ select:focus-visible {
   font-size: 17px;
   line-height: 1.65;
 }
+.seo-profile address {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  margin-top: 26px;
+  color: #40575e;
+  font-size: 12px;
+  font-style: normal;
+}
+.seo-profile address strong {
+  width: 100%;
+  color: #09232d;
+}
+.seo-profile address a {
+  color: #0066b3;
+}
 .seo-profile-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -771,6 +839,9 @@ select:focus-visible {
     width: 15px;
   }
   .milestone-dots button small {
+    display: none;
+  }
+  .dot-stage > em {
     display: none;
   }
   .seo-profile {

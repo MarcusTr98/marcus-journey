@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./fonts.css";
+import { profile } from "@/data/profile";
 export const metadata: Metadata = {
   metadataBase: new URL("https://marcus-journey.vercel.app"),
   title: {
@@ -23,10 +24,12 @@ export const metadata: Metadata = {
 const personSchema = {
   "@context": "https://schema.org",
   "@type": "Person",
-  name: "Marcus Tran",
+  name: `${profile.legalName} (${profile.preferredName})`,
   url: "https://marcus-journey.vercel.app",
-  email: "mailto:marcus.tran2202@gmail.com",
-  sameAs: ["https://github.com/MarcusTr98"],
+  email: `mailto:${profile.email}`,
+  telephone: profile.phoneDisplay,
+  address: { "@type": "PostalAddress", addressLocality: "Hải Phòng", addressCountry: "VN" },
+  sameAs: [profile.github],
   jobTitle: "Software Developer and Technology Instructor",
   knowsAbout: [
     "Production Management",

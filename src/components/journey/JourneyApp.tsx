@@ -6,6 +6,8 @@ import { copy, getMilestones } from "@/data/i18n";
 import { useJourneyStore } from "@/stores/journeyStore";
 import QuickProfile from "@/components/portfolio/QuickProfile";
 import { clamp } from "@/lib/utils";
+import { cvByLanguage, profile } from "@/data/profile";
+import { getStageLabel, stageOrder } from "@/data/stages";
 const Experience = dynamic(() => import("@/components/world/Experience"), {
   ssr: false,
   loading: () => <div className="scene-loading">LOADING 3D WORLD…</div>,
@@ -14,6 +16,11 @@ const ACTION_LABEL = {
   vi: "XEM CASE STUDY",
   en: "VIEW CASE STUDY",
   zh: "查看案例",
+};
+const SOURCE_LABEL = {
+  vi: "XEM SOURCE CODE",
+  en: "VIEW SOURCE CODE",
+  zh: "查看源代码",
 };
 export default function JourneyApp() {
   const [quick, setQuick] = useState(false);
@@ -60,7 +67,9 @@ export default function JourneyApp() {
   }, [started, setProgress]);
   const t = copy[language],
     items = getMilestones(language),
-    active = currentMilestone >= 0 ? items[currentMilestone] : null;
+    active = currentMilestone >= 0 ? items[currentMilestone] : null,
+    activeStageItems = active ? items.filter(({ stage }) => stage === active.stage) : [],
+    activeStageStop = active ? activeStageItems.findIndex(({ id }) => id === active.id) + 1 : 0;
   const begin = () => {
     resetJourney();
     start();
@@ -107,7 +116,7 @@ export default function JourneyApp() {
         <nav aria-label="Utility navigation">
           <button onClick={() => setQuick(true)}>{t.quick}</button>
           <a href="#case-studies">{t.projects}</a>
-          <a href="/cv/marcus-tran-cv.pdf" download>
+          <a href={cvByLanguage[language]} download>
             {t.cv}
           </a>
         </nav>
@@ -123,9 +132,9 @@ export default function JourneyApp() {
             onChange={(e) => setLanguage(e.target.value as "vi" | "en" | "zh")}
             aria-label="Language"
           >
-            <option value="vi">VI</option>
-            <option value="en">EN</option>
-            <option value="zh">中文</option>
+            <option value="vi">🇻🇳 VI</option>
+            <option value="en">🇬🇧 EN</option>
+            <option value="zh">🇨🇳 中文</option>
           </select>
         </div>
       </header>
@@ -172,18 +181,29 @@ export default function JourneyApp() {
             </div>
           </aside>
           <nav className="milestone-dots" aria-label="Journey milestones">
-            {items.map((item, index) => (
-              <button
-                key={item.id}
-                className={index === currentMilestone ? "is-active" : ""}
-                style={{ "--dot": item.accent } as React.CSSProperties}
-                onClick={() => goToMilestone(index)}
-                aria-label={`${index + 1}. ${item.title}`}
-                title={`${index + 1}. ${item.title}`}
-              >
-                <span />
-                <small>{String(index + 1).padStart(2, "0")}</small>
-              </button>
+            {stageOrder.map((stage, stageIndex) => (
+              <div className="dot-stage" key={stage}>
+                <em>
+                  {stageIndex + 1}. {getStageLabel(language, stage)}
+                </em>
+                <div>
+                  {items.map((item, index) =>
+                    item.stage === stage ? (
+                      <button
+                        key={item.id}
+                        className={index === currentMilestone ? "is-active" : ""}
+                        style={{ "--dot": item.accent } as React.CSSProperties}
+                        onClick={() => goToMilestone(index)}
+                        aria-label={`${index + 1}. ${item.title}`}
+                        title={`${index + 1}. ${item.title}`}
+                      >
+                        <span />
+                        <small>{String(index + 1).padStart(2, "0")}</small>
+                      </button>
+                    ) : null,
+                  )}
+                </div>
+              </div>
             ))}
           </nav>
           {active && (
@@ -192,10 +212,19 @@ export default function JourneyApp() {
               className="milestone-panel"
               style={{ "--accent": active.accent } as React.CSSProperties}
             >
+              <div className="stage-context">
+                {String(stageOrder.indexOf(active.stage) + 1).padStart(2, "0")}/
+                {String(stageOrder.length).padStart(2, "0")} ·{" "}
+                {getStageLabel(language, active.stage)}
+                <span>
+                  {activeStageStop}/{activeStageItems.length}
+                </span>
+              </div>
               <span className="panel-index">
                 {String(currentMilestone + 1).padStart(2, "0")} /{" "}
                 {String(milestones.length).padStart(2, "0")}
               </span>
+              <span className="chapter-title">{active.shortTitle}</span>
               <span className="kicker">{active.period}</span>
               <h2>{active.title}</h2>
               <h3>{active.role}</h3>
@@ -208,8 +237,13 @@ export default function JourneyApp() {
               <div className="upgrade">
                 {t.unlocked} <b>{active.upgrade}</b>
               </div>
-              <a className="milestone-cta" href="#case-studies">
-                {ACTION_LABEL[language]} ↗
+              <a
+                className="milestone-cta"
+                href={active.projectUrl ?? "#case-studies"}
+                target={active.projectUrl ? "_blank" : undefined}
+                rel={active.projectUrl ? "noreferrer" : undefined}
+              >
+                {active.projectUrl ? SOURCE_LABEL[language] : ACTION_LABEL[language]} ↗
               </a>
             </aside>
           )}
@@ -235,10 +269,12 @@ export default function JourneyApp() {
           ))}
         </p>
         <div>
-          <a href="/cv/marcus-tran-cv.pdf">{t.cv} ↗</a>
+          <a href={cvByLanguage[language]} download>
+            {t.cv} ↗
+          </a>
           <button onClick={() => setQuick(true)}>{t.projects} ↗</button>
-          <a href="mailto:marcus.tran2202@gmail.com">{t.contact} ↗</a>
-          <a href="https://github.com/MarcusTr98" target="_blank" rel="noreferrer">
+          <a href={`mailto:${profile.email}`}>{t.contact} ↗</a>
+          <a href={profile.github} target="_blank" rel="noreferrer">
             {t.github} ↗
           </a>
         </div>

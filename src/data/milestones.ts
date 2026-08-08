@@ -1,5 +1,5 @@
-import type { Milestone } from "@/types";
-const milestoneCatalog: Milestone[] = [
+import type { JourneyStage, Milestone } from "@/types";
+const milestoneCatalog: Omit<Milestone, "stage">[] = [
   {
     id: "toyota",
     shortTitle: "01 · Foundation",
@@ -27,10 +27,10 @@ const milestoneCatalog: Milestone[] = [
     summary:
       "A three-year transformation from factory operations to digital product development—combining formal study with school projects, independent R&D, real deployments, leadership and continuous learning.",
     highlights: [
-      "Golden Bee SP26 — Top 1 campus",
-      "Excellent Student across semesters",
-      "Chairman of the IT Club",
-      "Gemini Certified Educator",
+      "Transitioned from manufacturing into software development",
+      "Started a structured foundation in Java, databases and web engineering",
+      "Applied Kaizen thinking to digital workflows and software products",
+      "Combined formal study with practical projects from the first year",
     ],
     accent: "#005EB8",
     position: [4, 0, -17],
@@ -61,16 +61,17 @@ const milestoneCatalog: Milestone[] = [
     period: "12/2025 — 04/2026",
     role: "Full-stack Java Developer",
     summary:
-      "Built a high-performance online video platform to master low-level Java Web architecture, real-time interaction, application security and database optimization without relying on a full-stack framework.",
+      "Built a Jakarta Servlet/JSP video platform with a layered DAO-service-controller architecture, covering content discovery, user interaction, administration and real-time communication without a full-stack framework.",
     highlights: [
-      "Java 21 · Jakarta EE 10 · Hibernate 6.4",
-      "WebSocket live chat & asynchronous email",
-      "Custom RBAC, BCrypt and Servlet Filters",
-      "Pagination, caching and N+1 optimization",
+      "Java 21 · Servlet 6 · JPA 3.1 · Hibernate 6.4 · SQL Server",
+      "WebSocket chat · favorites · watch history · sharing",
+      "BCrypt authentication filter · password recovery email",
+      "JSP/JSTL admin dashboard, charts and content management",
     ],
     accent: "#005EB8",
     position: [4, 0, -41],
     upgrade: "Java Web · Hibernate · WebSocket · Application Security",
+    projectUrl: "https://github.com/MarcusTr98/Marcus-video",
   },
   {
     id: "task",
@@ -79,16 +80,17 @@ const milestoneCatalog: Milestone[] = [
     period: "02/2026 — 04/2026",
     role: "Solution Designer & Full-stack Developer",
     summary:
-      "Designed and deployed an on-premise command workflow for the Hong Bang Ward Military Command, translating sensitive operational requirements into a secure and practical LAN product.",
+      "Designed a role-specific LAN workflow for the Hong Bang Ward Military Command, connecting commander task assignment with soldier acknowledgement, completion reporting and live status visibility.",
     highlights: [
-      "Spring Boot · Thymeleaf · SQLite",
-      "Real-time AJAX command and progress flow",
-      "Specialized commander/soldier interfaces",
-      "Accepted and deployed in production",
+      "Java 21 · Spring Boot 4.0.2 · Thymeleaf · SQLite",
+      "Commander assignment, deadlines, editing and cancellation",
+      "Soldier acknowledgement → completion status workflow",
+      "AJAX polling alerts · portable local database · LAN operation",
     ],
     accent: "#00A859",
     position: [-4, 0, -53],
     upgrade: "Solution Design · AJAX · LAN Deployment",
+    projectUrl: "https://github.com/MarcusTr98/quan-ly-cong-viec-bchqs-hong-bang",
   },
   {
     id: "security",
@@ -97,16 +99,17 @@ const milestoneCatalog: Milestone[] = [
     period: "02/2026 — 04/2026",
     role: "Desktop Security Developer",
     summary:
-      "Engineered a portable zero-trust endpoint guard that monitors unauthorized peripheral devices and automatically isolates internal Windows computers from data-leak risks.",
+      "Built a portable Windows desktop guard that detects newly connected storage and mobile devices, then executes a defensive response to reduce internal data-exfiltration risk.",
     highlights: [
-      "Java Swing · Windows API · WMI",
-      "Real-time USB and mobile detection",
-      "Firewall isolation & emergency shutdown",
-      "Accepted for internal LAN operation",
+      "Java 21 · Swing dashboard · shaded portable JAR",
+      "1.5-second drive monitoring · WMI/WPD mobile detection",
+      "Netsh outbound firewall isolation · 15-second shutdown",
+      "Administrator recovery: cancel shutdown and restore network",
     ],
     accent: "#00A859",
     position: [4, 0, -65],
-    upgrade: "Windows API · Zero Trust · OS Automation",
+    upgrade: "Windows Monitoring · Firewall Automation · Incident Response",
+    projectUrl: "https://github.com/MarcusTr98/USB-Sentry",
   },
   {
     id: "electronics",
@@ -115,16 +118,17 @@ const milestoneCatalog: Milestone[] = [
     period: "01/2026 — 04/2026",
     role: "Full-stack Product Developer",
     summary:
-      "Developed an end-to-end electronics commerce platform as an advanced personal project, focusing on secure APIs, transactional payment flows and a normalized product-variant architecture.",
+      "Developed a full-stack electronics commerce system spanning catalog, SKU inventory, customer checkout, order operations, reporting and COD/VNPAY payment flows.",
     highlights: [
-      "Java 21 · Spring Boot 3.2 · Vue 3",
-      "JWT, refresh tokens and granular RBAC",
-      "VNPAY integration with ACID integrity",
-      "Product Variants/SKU with 3NF schema",
+      "Java 21 · Spring Boot 4.0.1 · SQL Server",
+      "Vue 3.5 · Vite 7 · Axios · Chart.js",
+      "JWT/Spring Security · customer and admin workflows",
+      "SKU/options, inventory, price history, COD and VNPAY",
     ],
     accent: "#F46300",
     position: [-4, 0, -77],
     upgrade: "REST API · Spring Security · VNPAY · Database 3NF",
+    projectUrl: "https://github.com/MarcusTr98/Marcus-electronics",
   },
   {
     id: "workshop",
@@ -151,16 +155,17 @@ const milestoneCatalog: Milestone[] = [
     period: "05/2026 — 09/2026",
     role: "Team Leader · Solution Architect",
     summary:
-      "Leading the graduation team in building an enterprise-style e-commerce platform, establishing the architecture, Git workflow and engineering standards while reviewing delivery across backend and frontend.",
+      "Leading an evolving graduation codebase for a modular electronics store, defining the backend/frontend architecture and coordinating client, administration, commerce, promotion and CMS domains.",
     highlights: [
-      "Java 21 · Spring Boot 3.2.5 · SQL Server",
-      "Vue 3 · Vite · Pinia · Bootstrap 5",
-      "Protected main/dev branches and PR reviews",
-      "Client/Admin systems with JWT security",
+      "Java 21 · Spring Boot 3.2.5 · SQL Server · 67 Java files",
+      "Vue 3.5 · Vite 8 · Pinia 3 · 41 Vue components/views",
+      "JWT authentication with role/permission domain model",
+      "SKU, cart, wishlist, orders, promotions, CMS and auditing",
     ],
     accent: "#F46300",
     position: [-4, 0, -101],
     upgrade: "Technical Leadership · Git Workflow · Code Review",
+    projectUrl: "https://github.com/MarcusTr98/DATN-MarcusStore",
   },
   {
     id: "graduation",
@@ -236,4 +241,11 @@ const distance = [-7, -25, -43, -61, -79, -97, -115, -133, -151, -169, -187, -20
 export const milestones = chronologicalOrder.map((id, index) => ({
   ...(milestoneCatalog.find((item) => item.id === id) as Milestone),
   position: [lane[index], 0, distance[index]] as [number, number, number],
+  stage: (id === "toyota"
+    ? "foundation"
+    : id === "teaching"
+      ? "present"
+      : id === "future"
+        ? "destination"
+        : "transformation") as JourneyStage,
 }));

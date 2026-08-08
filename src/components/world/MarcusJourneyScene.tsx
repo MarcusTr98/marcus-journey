@@ -8,23 +8,37 @@ import Road, { graduationCurveProgress, milestoneCurveProgress, routeCurve } fro
 import WorldEnvironment from "./Environment";
 import { useJourneyStore } from "@/stores/journeyStore";
 import { TROPHY_POSITION } from "@/data/journeyPath";
+import { milestones } from "@/data/milestones";
 
 const TROPHY_CAMERA_POSITION = new THREE.Vector3(8.6, 7.2, TROPHY_POSITION[2] + 11);
 const TROPHY_FOCUS = new THREE.Vector3(0, 1, TROPHY_POSITION[2]);
 const MAX_PROGRESS_PER_SECOND = 0.052;
 const CHECKPOINT_HOLD_SECONDS = 1.5;
+const STAGE_SKY = {
+  foundation: new THREE.Color("#07141b"),
+  transformation: new THREE.Color("#071923"),
+  present: new THREE.Color("#081d22"),
+  destination: new THREE.Color("#0b1828"),
+};
 
 export default function MarcusJourneyScene() {
   const car = useRef<THREE.Group>(null);
   const focus = useRef(new THREE.Vector3(0, 0, 0));
   const actualProgress = useRef(0);
   const checkpointHold = useRef(0);
-  const { camera } = useThree();
+  const { camera, scene } = useThree();
   const progress = useJourneyStore((s) => s.progress);
   const quality = useJourneyStore((s) => s.quality);
   useFrame((_, delta) => {
     if (!car.current) return;
     const journeyState = useJourneyStore.getState();
+    const stage = milestones[Math.max(0, journeyState.currentMilestone)]?.stage ?? "foundation";
+    if (scene.background instanceof THREE.Color) {
+      scene.background.lerp(STAGE_SKY[stage], 1 - Math.exp(-delta * 0.7));
+    }
+    if (scene.fog instanceof THREE.Fog) {
+      scene.fog.color.lerp(STAGE_SKY[stage], 1 - Math.exp(-delta * 0.7));
+    }
     if (journeyState.requestedMilestone !== null) {
       const requestedIndex = journeyState.requestedMilestone;
       actualProgress.current = milestoneCurveProgress[requestedIndex];

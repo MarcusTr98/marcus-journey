@@ -1,6 +1,7 @@
 "use client";
 import { copy, getMilestones } from "@/data/i18n";
 import { useJourneyStore } from "@/stores/journeyStore";
+import { cvByLanguage, profile } from "@/data/profile";
 export default function QuickProfile({ onClose }: { onClose: () => void }) {
   const language = useJourneyStore((s) => s.language),
     t = copy[language],
@@ -33,9 +34,19 @@ export default function QuickProfile({ onClose }: { onClose: () => void }) {
           ))}
         </p>
         <div>
-          <strong>MARCUS TRAN</strong>
+          <strong>
+            {profile.legalName.toUpperCase()} · {profile.preferredName}
+          </strong>
           <span>{t.tagline}</span>
-          <a href="mailto:marcus.tran2202@gmail.com">marcus.tran2202@gmail.com ↗</a>
+          <a href={`mailto:${profile.email}`}>{profile.email} ↗</a>
+          <a href={profile.phoneHref}>{profile.phoneDisplay}</a>
+          <span>{profile.location}</span>
+          <a href={profile.github} target="_blank" rel="noreferrer">
+            GitHub ↗
+          </a>
+          <a href={cvByLanguage[language]} download>
+            {t.cv} ↗
+          </a>
         </div>
       </div>
       <div className="profile-grid">
@@ -52,6 +63,11 @@ export default function QuickProfile({ onClose }: { onClose: () => void }) {
                 <li key={h}>{h}</li>
               ))}
             </ul>
+            {m.projectUrl && (
+              <a href={m.projectUrl} target="_blank" rel="noreferrer">
+                GitHub source ↗
+              </a>
+            )}
           </article>
         ))}
       </div>

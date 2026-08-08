@@ -1,4 +1,5 @@
 import { getMilestones } from "@/data/i18n";
+import { cvByLanguage, profile } from "@/data/profile";
 
 export default function ServerProfile() {
   const profileMilestones = getMilestones("vi");
@@ -11,12 +12,30 @@ export default function ServerProfile() {
           Production leadership, software engineering, practical deployments and technology
           education—presented as accessible, indexable case studies.
         </p>
+        <address>
+          <strong>
+            {profile.legalName} ({profile.preferredName})
+          </strong>
+          <a href={`mailto:${profile.email}`}>{profile.email}</a>
+          <a href={profile.phoneHref}>{profile.phoneDisplay}</a>
+          <span>{profile.location}</span>
+          <a href={profile.github}>GitHub: MarcusTr98</a>
+          <a href={cvByLanguage.vi} download>
+            🇻🇳 CV tiếng Việt
+          </a>
+          <a href={cvByLanguage.en} download>
+            🇬🇧 English CV
+          </a>
+          <a href={cvByLanguage.zh} download>
+            🇨🇳 中文简历
+          </a>
+        </address>
       </header>
       <div className="seo-profile-grid">
         {profileMilestones.map((milestone, index) => (
           <article key={milestone.id}>
             <span>
-              {String(index + 1).padStart(2, "0")} / {milestone.period}
+              {String(index + 1).padStart(2, "0")} / {milestone.shortTitle} / {milestone.period}
             </span>
             <h3>{milestone.title}</h3>
             <strong>{milestone.role}</strong>
@@ -26,6 +45,11 @@ export default function ServerProfile() {
                 <li key={highlight}>{highlight}</li>
               ))}
             </ul>
+            {milestone.projectUrl && (
+              <a href={milestone.projectUrl} target="_blank" rel="noreferrer">
+                GitHub source ↗
+              </a>
+            )}
           </article>
         ))}
       </div>
