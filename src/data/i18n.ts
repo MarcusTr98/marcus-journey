@@ -154,12 +154,12 @@ const vi: L[] = [
   ],
   [
     "Trưởng nhóm · Kiến trúc sư Giải pháp",
-    "Dẫn dắt nền tảng đồ án tốt nghiệp quy mô lớn theo hướng production, kết hợp thương mại điện tử động, tư vấn bán hàng và phân tích kinh doanh bằng AI, checkout an toàn giao dịch, tự động hóa vận chuyển cùng trải nghiệm client/admin có thể cấu hình.",
+    "Khởi xướng định hướng sản phẩm và dẫn dắt nhóm 5 thành viên, đồng thời trực tiếp đảm nhiệm khoảng 60% khối lượng—từ kiến trúc giải pháp, kỹ thuật lõi đến trải nghiệm thương mại điện tử ứng dụng AI liên tục phát triển.",
     [
-      "430 file Java · Spring Boot 3.2.5 · SQL Server · 25 test",
-      "132 file Vue · Vue 3.5 · Vite 8 · Pinia 3 · UI động responsive",
-      "Gemini advisor bám catalog, SSE, AI analytics, safety guard và telemetry",
-      "VNPAY lifecycle · GHN · khóa checkout · refund/warranty · WebSocket",
+      "Tầm nhìn sản phẩm, lãnh đạo kỹ thuật và kiến trúc end-to-end",
+      "Gemini tư vấn bám catalog, phản hồi streaming và AI phân tích kinh doanh",
+      "Storefront/CMS quản trị động, hỗ trợ thời gian thực và trải nghiệm cấu hình được",
+      "Checkout an toàn giao dịch, VNPAY, tự động hóa GHN, hoàn tiền và bảo hành",
     ],
   ],
   [
@@ -261,12 +261,12 @@ const zh: L[] = [
   ],
   [
     "团队负责人 · 解决方案架构师",
-    "领导面向生产场景的大型毕业项目平台，融合动态电商、AI销售顾问与商业分析、交易安全结账、物流自动化及可配置的客户端/管理端体验。",
+    "提出产品方向并领导五人团队，同时亲自完成约60%的工作，涵盖解决方案架构、核心工程以及持续演进的AI电商体验。",
     [
-      "430个Java文件 · Spring Boot 3.2.5 · SQL Server · 25项测试",
-      "132个Vue文件 · Vue 3.5 · Vite 8 · Pinia 3 · 响应式动态UI",
-      "基于目录数据的Gemini顾问、SSE、AI分析、安全防护与遥测",
-      "VNPAY生命周期 · GHN物流 · 结账锁 · 退款/保修 · WebSocket",
+      "产品愿景、技术领导与端到端架构",
+      "基于商品目录的Gemini顾问、流式响应与AI商业分析",
+      "动态商城与管理CMS、实时支持及可配置体验",
+      "交易安全结账、VNPAY、GHN自动化、退款与保修流程",
     ],
   ],
   [

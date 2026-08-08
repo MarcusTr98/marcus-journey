@@ -5,8 +5,9 @@ import { milestones } from "@/data/milestones";
 import { copy, getMilestones } from "@/data/i18n";
 import { useJourneyStore } from "@/stores/journeyStore";
 import QuickProfile from "@/components/portfolio/QuickProfile";
+import CvCenter from "@/components/portfolio/CvCenter";
 import { clamp } from "@/lib/utils";
-import { cvByLanguage, profile } from "@/data/profile";
+import { profile } from "@/data/profile";
 import { getStageLabel, stageOrder } from "@/data/stages";
 const Experience = dynamic(() => import("@/components/world/Experience"), {
   ssr: false,
@@ -24,6 +25,7 @@ const SOURCE_LABEL = {
 };
 export default function JourneyApp() {
   const [quick, setQuick] = useState(false);
+  const [cvOpen, setCvOpen] = useState(false);
   const [reduced, setReduced] = useState(false);
   const {
     vehicleProgress,
@@ -116,9 +118,7 @@ export default function JourneyApp() {
         <nav aria-label="Utility navigation">
           <button onClick={() => setQuick(true)}>{t.quick}</button>
           <a href="#case-studies">{t.projects}</a>
-          <a href={cvByLanguage[language]} download>
-            {t.cv}
-          </a>
+          <button onClick={() => setCvOpen(true)}>{t.cv}</button>
         </nav>
         <div className="controls">
           <button onClick={toggleSound} aria-label="Toggle sound">
@@ -269,9 +269,7 @@ export default function JourneyApp() {
           ))}
         </p>
         <div>
-          <a href={cvByLanguage[language]} download>
-            {t.cv} ↗
-          </a>
+          <button onClick={() => setCvOpen(true)}>{t.cv} ↗</button>
           <button onClick={() => setQuick(true)}>{t.projects} ↗</button>
           <a href={`mailto:${profile.email}`}>{t.contact} ↗</a>
           <a href={profile.github} target="_blank" rel="noreferrer">
@@ -279,6 +277,7 @@ export default function JourneyApp() {
           </a>
         </div>
       </section>
+      {cvOpen && <CvCenter language={language} onClose={() => setCvOpen(false)} />}
     </div>
   );
 }

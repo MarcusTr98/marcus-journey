@@ -1,8 +1,11 @@
 "use client";
 import { copy, getMilestones } from "@/data/i18n";
 import { useJourneyStore } from "@/stores/journeyStore";
-import { cvByLanguage, profile } from "@/data/profile";
+import { profile } from "@/data/profile";
+import CvCenter from "@/components/portfolio/CvCenter";
+import { useState } from "react";
 export default function QuickProfile({ onClose }: { onClose: () => void }) {
+  const [cvOpen, setCvOpen] = useState(false);
   const language = useJourneyStore((s) => s.language),
     t = copy[language],
     items = getMilestones(language);
@@ -44,9 +47,9 @@ export default function QuickProfile({ onClose }: { onClose: () => void }) {
           <a href={profile.github} target="_blank" rel="noreferrer">
             GitHub ↗
           </a>
-          <a href={cvByLanguage[language]} download>
+          <button className="profile-cv-button" onClick={() => setCvOpen(true)}>
             {t.cv} ↗
-          </a>
+          </button>
         </div>
       </div>
       <div className="profile-grid">
@@ -71,6 +74,7 @@ export default function QuickProfile({ onClose }: { onClose: () => void }) {
           </article>
         ))}
       </div>
+      {cvOpen && <CvCenter language={language} onClose={() => setCvOpen(false)} />}
     </section>
   );
 }

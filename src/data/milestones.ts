@@ -155,12 +155,12 @@ const milestoneCatalog: Omit<Milestone, "stage">[] = [
     period: "05/2026 — 09/2026",
     role: "Team Leader · Solution Architect",
     summary:
-      "Leading a broad, production-minded graduation platform that combines dynamic commerce, AI-assisted sales and business intelligence, transaction-safe checkout, shipping automation and configurable client/admin experiences.",
+      "Originated the product direction and led a five-person team while personally delivering roughly 60% of the work—from solution architecture and core engineering to an evolving AI-powered commerce experience.",
     highlights: [
-      "430 Java files · Spring Boot 3.2.5 · SQL Server · 25 tests",
-      "132 Vue files · Vue 3.5 · Vite 8 · Pinia 3 · responsive dynamic UI",
-      "Grounded Gemini advisor, SSE, AI analytics, safety guards and telemetry",
-      "VNPAY lifecycle · GHN shipping · checkout locking · refund/warranty · WebSocket",
+      "Product vision, technical leadership and end-to-end architecture",
+      "Grounded Gemini sales advisor, streaming responses and AI business intelligence",
+      "Dynamic storefront/admin CMS, real-time support and configurable experiences",
+      "Transaction-safe checkout, VNPAY, GHN automation, refunds and warranty workflows",
     ],
     accent: "#F46300",
     position: [-4, 0, -101],
