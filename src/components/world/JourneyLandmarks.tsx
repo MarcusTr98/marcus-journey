@@ -4,8 +4,9 @@ import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import type * as THREE from "three";
 import { useJourneyStore } from "@/stores/journeyStore";
-import { FINISH_POSITION, MILESTONE_PROGRESS, TROPHY_POSITION } from "@/data/journeyPath";
+import { FINISH_POSITION, TROPHY_POSITION } from "@/data/journeyPath";
 import { milestones } from "@/data/milestones";
+import { milestoneCurveProgress } from "./Road";
 
 const STORE_INDEX = milestones.findIndex((milestone) => milestone.id === "store");
 const TEACHING_INDEX = milestones.findIndex((milestone) => milestone.id === "teaching");
@@ -103,12 +104,12 @@ function Trophy() {
 }
 function GraduationCelebration() {
   const group = useRef<THREE.Group>(null),
-    progress = useJourneyStore((s) => s.progress),
+    progress = useJourneyStore((s) => s.vehicleProgress),
     language = useJourneyStore((s) => s.language),
     t = labels[language],
     active =
-      progress > MILESTONE_PROGRESS[STORE_INDEX] - 0.015 &&
-      progress < MILESTONE_PROGRESS[TEACHING_INDEX] - 0.025;
+      progress > milestoneCurveProgress[STORE_INDEX] - 0.012 &&
+      progress < milestoneCurveProgress[TEACHING_INDEX] - 0.02;
   const pieces = useMemo(
     () =>
       Array.from({ length: 46 }, (_, i) => ({

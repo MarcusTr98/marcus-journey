@@ -3,6 +3,7 @@ import type { JourneyMode, Language, Quality } from "@/types";
 interface JourneyState {
   currentMilestone: number;
   progress: number;
+  vehicleProgress: number;
   unlockedUpgrades: string[];
   language: Language;
   quality: Quality;
@@ -10,6 +11,7 @@ interface JourneyState {
   mode: JourneyMode;
   started: boolean;
   setProgress: (v: number) => void;
+  setVehicleProgress: (v: number) => void;
   setCurrentMilestone: (v: number) => void;
   setLanguage: (v: Language) => void;
   toggleQuality: () => void;
@@ -20,6 +22,7 @@ interface JourneyState {
 export const useJourneyStore = create<JourneyState>((set) => ({
   currentMilestone: -1,
   progress: 0,
+  vehicleProgress: 0,
   unlockedUpgrades: [],
   language: "vi",
   quality: "high",
@@ -27,6 +30,7 @@ export const useJourneyStore = create<JourneyState>((set) => ({
   mode: "auto",
   started: false,
   setProgress: (progress) => set({ progress }),
+  setVehicleProgress: (vehicleProgress) => set({ vehicleProgress }),
   setCurrentMilestone: (currentMilestone) => set({ currentMilestone }),
   setLanguage: (language) => set({ language }),
   toggleQuality: () => set((s) => ({ quality: s.quality === "high" ? "low" : "high" })),

@@ -4,29 +4,54 @@ import { Environment as DreiEnvironment, Stars } from "@react-three/drei";
 import { useRef } from "react";
 import * as THREE from "three";
 import Car from "./Car";
-import Road, { routeCurve } from "./Road";
+import Road, { milestoneCurveProgress, routeCurve } from "./Road";
 import WorldEnvironment from "./Environment";
 import { useJourneyStore } from "@/stores/journeyStore";
-import { MILESTONE_PROGRESS, TROPHY_POSITION } from "@/data/journeyPath";
+import { TROPHY_POSITION } from "@/data/journeyPath";
 import { milestones } from "@/data/milestones";
 
 const STORE_INDEX = milestones.findIndex((milestone) => milestone.id === "store");
 const TEACHING_INDEX = milestones.findIndex((milestone) => milestone.id === "teaching");
 const TROPHY_CAMERA_POSITION = new THREE.Vector3(7.2, 6.6, TROPHY_POSITION[2] + 9.5);
 const TROPHY_FOCUS = new THREE.Vector3(TROPHY_POSITION[0] + 0.4, 0.8, TROPHY_POSITION[2]);
+const MAX_PROGRESS_PER_SECOND = 0.075;
+
+function getMilestoneAtVehiclePosition(progress: number) {
+  let active = -1;
+  milestoneCurveProgress.forEach((checkpoint, index) => {
+    if (progress >= checkpoint - 0.003) active = index;
+  });
+  return active;
+}
 
 export default function MarcusJourneyScene() {
   const car = useRef<THREE.Group>(null);
   const focus = useRef(new THREE.Vector3(0, 0, 0));
+  const actualProgress = useRef(0);
   const { camera } = useThree();
   const progress = useJourneyStore((s) => s.progress);
   const quality = useJourneyStore((s) => s.quality);
   useFrame((_, delta) => {
     if (!car.current) return;
-    const p = Math.min(0.995, progress);
+    const dampedProgress = THREE.MathUtils.damp(actualProgress.current, progress, 5, delta);
+    const maxStep = MAX_PROGRESS_PER_SECOND * delta;
+    actualProgress.current += THREE.MathUtils.clamp(
+      dampedProgress - actualProgress.current,
+      -maxStep,
+      maxStep,
+    );
+    const p = THREE.MathUtils.clamp(actualProgress.current, 0, 0.998);
+    const journeyState = useJourneyStore.getState();
+    if (Math.abs(journeyState.vehicleProgress - p) > 0.00025) {
+      journeyState.setVehicleProgress(p);
+    }
+    const reachedMilestone = getMilestoneAtVehiclePosition(p);
+    if (reachedMilestone !== journeyState.currentMilestone) {
+      journeyState.setCurrentMilestone(reachedMilestone);
+    }
     const point = routeCurve.getPointAt(p);
     const tangent = routeCurve.getTangentAt(p);
-    car.current.position.lerp(point, 1 - Math.exp(-delta * 6));
+    car.current.position.copy(point);
     const desiredRotation = Math.atan2(tangent.x, tangent.z);
     const angleDelta = Math.atan2(
       Math.sin(desiredRotation - car.current.rotation.y),
@@ -34,8 +59,8 @@ export default function MarcusJourneyScene() {
     );
     car.current.rotation.y += angleDelta * (1 - Math.exp(-delta * 7));
     const isAtGraduation =
-      progress > MILESTONE_PROGRESS[STORE_INDEX] - 0.02 &&
-      progress < MILESTONE_PROGRESS[TEACHING_INDEX] - 0.025;
+      p > milestoneCurveProgress[STORE_INDEX] - 0.012 &&
+      p < milestoneCurveProgress[TEACHING_INDEX] - 0.02;
     const target = isAtGraduation
       ? TROPHY_CAMERA_POSITION
       : point.clone().add(new THREE.Vector3(7, 8, 10));

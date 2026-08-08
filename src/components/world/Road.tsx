@@ -2,8 +2,28 @@
 import * as THREE from "three";
 import { useMemo } from "react";
 import { PATH_POINTS } from "@/data/journeyPath";
+import { milestones } from "@/data/milestones";
 export const routePoints = PATH_POINTS.map((point) => new THREE.Vector3(...point));
 export const routeCurve = new THREE.CatmullRomCurve3(routePoints, false, "catmullrom", 0.14);
+
+function findClosestCurveProgress(position: [number, number, number]) {
+  const target = new THREE.Vector3(...position);
+  let closestProgress = 0;
+  let closestDistance = Number.POSITIVE_INFINITY;
+  for (let sample = 0; sample <= 1600; sample += 1) {
+    const progress = sample / 1600;
+    const distance = routeCurve.getPointAt(progress).distanceToSquared(target);
+    if (distance < closestDistance) {
+      closestDistance = distance;
+      closestProgress = progress;
+    }
+  }
+  return closestProgress;
+}
+
+export const milestoneCurveProgress = milestones.map((milestone) =>
+  findClosestCurveProgress(milestone.position),
+);
 
 function createRoad() {
   const segments = 240,

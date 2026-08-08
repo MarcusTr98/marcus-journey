@@ -6,7 +6,6 @@ import { copy, getMilestones } from "@/data/i18n";
 import { useJourneyStore } from "@/stores/journeyStore";
 import QuickProfile from "@/components/portfolio/QuickProfile";
 import { clamp } from "@/lib/utils";
-import { getMilestoneAtProgress } from "@/data/journeyPath";
 const Experience = dynamic(() => import("@/components/world/Experience"), {
   ssr: false,
   loading: () => <div className="scene-loading">LOADING 3D WORLD…</div>,
@@ -15,7 +14,7 @@ export default function JourneyApp() {
   const [quick, setQuick] = useState(false);
   const [reduced, setReduced] = useState(false);
   const {
-    progress,
+    vehicleProgress,
     currentMilestone,
     started,
     language,
@@ -23,7 +22,6 @@ export default function JourneyApp() {
     soundEnabled,
     start,
     setProgress,
-    setCurrentMilestone,
     setLanguage,
     toggleQuality,
     toggleSound,
@@ -44,12 +42,11 @@ export default function JourneyApp() {
       const finishAt = track.offsetTop + track.offsetHeight - innerHeight * 1.25;
       const p = clamp((scrollY - startAt) / Math.max(finishAt - startAt, 1));
       setProgress(p);
-      setCurrentMilestone(getMilestoneAtProgress(p));
     };
     addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => removeEventListener("scroll", onScroll);
-  }, [started, setProgress, setCurrentMilestone]);
+  }, [started, setProgress]);
   const t = copy[language],
     items = getMilestones(language),
     active = currentMilestone >= 0 ? items[currentMilestone] : null;
@@ -141,11 +138,11 @@ export default function JourneyApp() {
         <>
           <aside className="progress-ui">
             <div className="progress-track">
-              <span style={{ height: `${progress * 100}%` }} />
+              <span style={{ height: `${vehicleProgress * 100}%` }} />
             </div>
             <div>
               <small>{t.journey}</small>
-              <strong>{String(Math.round(progress * 100)).padStart(2, "0")}%</strong>
+              <strong>{String(Math.round(vehicleProgress * 100)).padStart(2, "0")}%</strong>
             </div>
           </aside>
           <div className="mode-switch">
@@ -181,7 +178,7 @@ export default function JourneyApp() {
         </>
       )}
       <div id="journey-track" className="scroll-space" aria-hidden="true" />
-      <section id="projects" className="final-cta">
+      <section id="projects" className={`final-cta ${vehicleProgress < 0.985 ? "is-waiting" : ""}`}>
         <span className="kicker">{t.destination}</span>
         <h2>
           {t.finalTitle.split("\n").map((x, i) => (

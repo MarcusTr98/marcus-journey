@@ -470,6 +470,14 @@ select:focus-visible {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  transition:
+    opacity 700ms ease,
+    visibility 700ms ease;
+}
+.final-cta.is-waiting {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
 }
 .final-cta h2 {
   font-size: clamp(52px, 7vw, 105px);

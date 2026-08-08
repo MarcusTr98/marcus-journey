@@ -1,22 +1,80 @@
 "use client";
+
 import type { Milestone as MilestoneType } from "@/types";
-export default function Milestone({ data, index }: { data: MilestoneType; index: number }) {
+
+function StoreLandmark({ offsetX }: { offsetX: number }) {
   return (
-    <group position={data.position}>
-      <mesh position={[index % 2 ? 2.2 : -2.2, 0.55, 0]} castShadow>
+    <group position={[offsetX, 0, 0]}>
+      <mesh position={[0, 0.12, 0]} receiveShadow>
+        <boxGeometry args={[4.2, 0.24, 3.5]} />
+        <meshStandardMaterial color="#111d23" roughness={0.88} />
+      </mesh>
+      <mesh position={[0, 1.05, 0]} castShadow>
+        <boxGeometry args={[2.65, 1.85, 2.35]} />
+        <meshStandardMaterial color="#F46300" roughness={0.38} metalness={0.18} />
+      </mesh>
+      <mesh position={[0, 1.08, 1.19]}>
+        <boxGeometry args={[2.2, 1.25, 0.05]} />
+        <meshStandardMaterial color="#0c3a50" emissive="#005EB8" emissiveIntensity={0.5} />
+      </mesh>
+      <mesh position={[0, 1.78, 1.35]} rotation={[0.14, 0, 0]}>
+        <boxGeometry args={[3.15, 0.16, 0.65]} />
+        <meshStandardMaterial color="#f7c45c" emissive="#F46300" emissiveIntensity={0.45} />
+      </mesh>
+      {[-1.55, 1.55].map((x, index) => (
+        <group key={x} position={[x, 0, -0.2]}>
+          <mesh position={[0, 0.72, 0]} castShadow>
+            <boxGeometry args={[0.65, 1.42, 1.5]} />
+            <meshStandardMaterial color={index ? "#005EB8" : "#00A859"} roughness={0.42} />
+          </mesh>
+          {[0.35, 0.72, 1.08].map((y) => (
+            <mesh key={y} position={[0, y, 0.77]}>
+              <boxGeometry args={[0.42, 0.08, 0.03]} />
+              <meshStandardMaterial color="#d8fbff" emissive="#ffffff" emissiveIntensity={0.8} />
+            </mesh>
+          ))}
+        </group>
+      ))}
+      <mesh position={[0, 2.35, 0]} rotation={[0, Math.PI / 4, 0]}>
+        <octahedronGeometry args={[0.48]} />
+        <meshStandardMaterial color="#ffffff" emissive="#F46300" emissiveIntensity={1.8} />
+      </mesh>
+      <pointLight position={[0, 2.2, 1.8]} color="#ff9b55" intensity={1.7} distance={6} />
+    </group>
+  );
+}
+
+function StandardLandmark({ data, offsetX }: { data: MilestoneType; offsetX: number }) {
+  return (
+    <group position={[offsetX, 0, 0]}>
+      <mesh position={[0, 0.55, 0]} castShadow>
         <boxGeometry args={[2.6, 1.1, 2.6]} />
         <meshStandardMaterial color={data.accent} roughness={0.65} />
       </mesh>
-      <mesh position={[index % 2 ? 2.2 : -2.2, 1.5, 0]}>
+      <mesh position={[0, 1.5, 0]}>
         <octahedronGeometry args={[0.38]} />
         <meshStandardMaterial color="#ffffff" emissive={data.accent} emissiveIntensity={1.5} />
       </mesh>
-      {[...Array(3)].map((_, i) => (
-        <mesh key={i} position={[index % 2 ? 3.8 : -3.8, 0.3, i * 0.7 - 1]}>
+      {[...Array(3)].map((_, index) => (
+        <mesh key={index} position={[offsetX > 0 ? 1.6 : -1.6, 0.3, index * 0.7 - 1]}>
           <boxGeometry args={[0.45, 0.6, 0.45]} />
           <meshStandardMaterial color="#405159" />
         </mesh>
       ))}
+    </group>
+  );
+}
+
+export default function Milestone({ data, index }: { data: MilestoneType; index: number }) {
+  const offsetX =
+    data.position[0] === 0 ? (index % 2 ? 2.5 : -2.5) : -Math.sign(data.position[0]) * 2.55;
+  return (
+    <group position={data.position}>
+      {data.id === "store" ? (
+        <StoreLandmark offsetX={offsetX} />
+      ) : (
+        <StandardLandmark data={data} offsetX={offsetX} />
+      )}
     </group>
   );
 }
