@@ -84,7 +84,7 @@ const vi: L[] = [
   ],
   [
     "Phát triển Phần mềm · GPA 3.9/4.0",
-    "Ba năm chuyển mình từ vận hành nhà máy sang phát triển sản phẩm số—kết hợp học chính quy, dự án trường, R&D cá nhân, triển khai thực tế, hoạt động lãnh đạo và tự học liên tục.",
+    "Hành trình chuyển đổi nghề nghiệp có chủ đích từ vận hành nhà máy sang kỹ nghệ phần mềm—kết hợp đào tạo chính quy, nghiên cứu độc lập, sản phẩm thực tế, năng lực lãnh đạo và kỷ luật tự học liên tục.",
     [
       "Chuyển hướng từ sản xuất sang phát triển phần mềm",
       "Xây nền tảng có hệ thống với Java, cơ sở dữ liệu và công nghệ web",
@@ -94,7 +94,7 @@ const vi: L[] = [
   ],
   [
     "Chuyên viên Tổ chức & Quản lý Sự kiện",
-    "Mở rộng năng lực thương mại và lãnh đạo ngoài giảng đường qua việc thắng thầu, triển khai hội nghị và gala 2.000 khách từ đàm phán nhà cung cấp tới vận hành trực tiếp.",
+    "Mở rộng năng lực thương mại và điều hành thông qua việc thắng thầu, lập kế hoạch và triển khai trọn vẹn hội nghị–gala quy mô 2.000 khách, từ đàm phán nhà cung cấp đến vận hành hiện trường.",
     [
       "Ngân sách khoảng 800 triệu VNĐ",
       "98% khách tham dự hài lòng",
@@ -104,7 +104,7 @@ const vi: L[] = [
   ],
   [
     "Lập trình viên Java Full-stack",
-    "Xây dựng nền tảng video bằng Jakarta Servlet/JSP theo kiến trúc phân lớp DAO–service–controller, bao phủ khám phá nội dung, tương tác người dùng, quản trị và giao tiếp thời gian thực mà không dùng framework full-stack.",
+    "Thiết kế và phát triển nền tảng video Java Web theo kiến trúc phân lớp DAO–service–controller, bao phủ khám phá nội dung, tương tác người dùng, quản trị vận hành và giao tiếp thời gian thực.",
     [
       "Java 21 · Servlet 6 · JPA 3.1 · Hibernate 6.4 · SQL Server",
       "WebSocket chat · yêu thích · lịch sử xem · chia sẻ",
@@ -113,28 +113,18 @@ const vi: L[] = [
     ],
   ],
   [
-    "Thiết kế Giải pháp & Lập trình viên Full-stack",
-    "Thiết kế quy trình LAN theo vai trò cho BCHQS phường Hồng Bàng, kết nối việc chỉ huy giao nhiệm vụ với chiến sĩ xác nhận, báo cáo hoàn thành và theo dõi trạng thái.",
+    "Kiến trúc sư Giải pháp · Lập trình viên Full-stack & Bảo mật",
+    "Khảo sát, thiết kế, triển khai và nghiệm thu hai giải pháp nội bộ cho khách hàng thực tế: hệ thống quản lý công việc theo vai trò trên mạng LAN và USB Sentry bảo vệ thiết bị đầu cuối Windows. Cả hai sản phẩm được nghiệm thu với mức độ hài lòng 100%.",
     [
-      "Java 21 · Spring Boot 4.0.2 · Thymeleaf · SQLite",
-      "Giao việc, deadline, chỉnh sửa và hủy nhiệm vụ",
-      "Luồng chiến sĩ xác nhận → báo cáo hoàn thành",
-      "Cảnh báo AJAX polling · dữ liệu local · vận hành LAN",
-    ],
-  ],
-  [
-    "Lập trình viên Bảo mật Desktop",
-    "Xây dựng công cụ bảo vệ Windows dạng portable, phát hiện ổ lưu trữ và thiết bị di động mới kết nối rồi thực thi phản ứng phòng vệ nhằm giảm nguy cơ thất thoát dữ liệu nội bộ.",
-    [
-      "Java 21 · Swing dashboard · shaded portable JAR",
-      "Quét ổ đĩa 1,5 giây/lần · phát hiện di động WMI/WPD",
-      "Cô lập outbound bằng netsh · shutdown sau 15 giây",
-      "Quản trị viên có thể hủy shutdown và khôi phục mạng",
+      "Vòng đời công việc: giao việc, xác nhận, báo cáo hoàn thành và theo dõi trực quan",
+      "Phát hiện USB/thiết bị di động bằng drive polling và WMI/WPD",
+      "Triển khai portable ưu tiên mạng LAN với SQLite và Windows JAR độc lập",
+      "Xác thực yêu cầu, hướng dẫn người dùng và nghiệm thu đầy đủ hai sản phẩm",
     ],
   ],
   [
     "Lập trình viên Sản phẩm Full-stack",
-    "Phát triển hệ thống thương mại điện tử full-stack bao phủ catalog, tồn kho SKU, checkout khách hàng, vận hành đơn hàng, báo cáo và thanh toán COD/VNPAY.",
+    "Thiết kế hệ thống thương mại điện tử full-stack với luồng nghiệp vụ xuyên suốt từ catalog, tồn kho SKU và checkout đến vận hành đơn hàng, báo cáo quản trị và thanh toán COD/VNPAY.",
     [
       "Java 21 · Spring Boot 4.0.1 · SQL Server",
       "Vue 3.5 · Vite 7 · Axios · Chart.js",
@@ -144,7 +134,7 @@ const vi: L[] = [
   ],
   [
     "Chủ nhiệm CLB IT · Mentor · Người xây dựng",
-    "Biến kiến thức thành năng lực cộng đồng thông qua điều hành CLB, workshop kỹ thuật, dự án xưởng và các công cụ tương tác như SQL Quiz để thành viên cùng thực hành.",
+    "Chuyển hóa kiến thức cá nhân thành năng lực cộng đồng thông qua điều hành CLB, tổ chức workshop kỹ thuật, cố vấn dự án thực hành và xây dựng công cụ học tập tương tác như SQL Quiz.",
     [
       "Điều phối hoạt động CLB IT",
       "Xây dựng SQL Quiz bằng Vue 3",
@@ -164,7 +154,7 @@ const vi: L[] = [
   ],
   [
     "Giảng viên · Nhà giáo dục ứng dụng AI · Lập trình viên",
-    "Giảng dạy Robocon, lập trình và công nghệ văn phòng song song với phát triển phần mềm/website cho khách hàng. AI tạo sinh được sử dụng như copilot có kiểm soát cho nghiên cứu bài giảng, thiết kế giáo án, sinh bài tập, phân hóa và phản hồi cá nhân hóa.",
+    "Kết hợp giảng dạy Robocon, lập trình và năng lực số với phát triển phần mềm/website cho khách hàng. AI tạo sinh được vận dụng như một copilot có kiểm soát trong nghiên cứu học liệu, thiết kế giáo án, tạo bài tập, phân hóa và phản hồi cá nhân hóa.",
     [
       "Robocon, lập trình và năng lực số",
       "Microsoft Office & Google Workspace",
@@ -230,23 +220,13 @@ const zh: L[] = [
     ],
   ],
   [
-    "解决方案设计师 · 全栈开发者",
-    "为红庞坊军事指挥单位设计基于角色的局域网任务流程，连接指挥员派发、战士确认、完成报告与状态跟踪。",
+    "解决方案架构师 · 全栈与安全开发者",
+    "为真实客户调研、设计、部署并验收两套内部解决方案：基于角色的局域网任务管理系统，以及保护Windows终端的USB Sentry。两项产品均获客户100%满意验收。",
     [
-      "Java 21 · Spring Boot 4.0.2 · Thymeleaf · SQLite",
-      "任务派发、截止时间、编辑与取消",
-      "战士确认 → 完成报告状态流",
-      "AJAX轮询提醒 · 本地数据库 · 局域网运行",
-    ],
-  ],
-  [
-    "桌面安全开发者",
-    "构建便携式Windows防护工具，检测新接入的存储与移动设备，并自动执行防御响应以降低数据外泄风险。",
-    [
-      "Java 21 · Swing仪表盘 · 可携带shaded JAR",
-      "每1.5秒扫描磁盘 · WMI/WPD移动设备检测",
-      "netsh出站隔离 · 15秒后关机",
-      "管理员可取消关机并恢复网络",
+      "任务全流程：派发、确认、完成报告与实时可视化",
+      "通过磁盘轮询与WMI/WPD检测USB及移动设备",
+      "采用SQLite和独立Windows JAR进行便携式局域网部署",
+      "完成需求确认、用户指导与两项产品正式验收",
     ],
   ],
   [
@@ -306,8 +286,7 @@ const upgrades = {
     "Java · Spring Boot · SQL · Kỹ nghệ phần mềm",
     "Lãnh đạo · Đàm phán · Vận hành sự kiện",
     "Java Web · Hibernate · WebSocket · Bảo mật ứng dụng",
-    "Thiết kế giải pháp · AJAX · Triển khai LAN",
-    "Giám sát Windows · Tự động hóa Firewall · Ứng phó sự cố",
+    "Khảo sát khách hàng · Kiến trúc giải pháp · Triển khai LAN · Bảo mật đầu cuối",
     "REST API · Spring Security · VNPAY · Cơ sở dữ liệu 3NF",
     "Lãnh đạo CLB IT · Mentoring · Vue 3",
     "Kiến trúc AI Commerce · Gemini · Toàn vẹn giao dịch · Analytics",
@@ -320,8 +299,7 @@ const upgrades = {
     "Java · Spring Boot · SQL · 软件工程",
     "领导力 · 谈判 · 活动运营",
     "Java Web · Hibernate · WebSocket · 应用安全",
-    "解决方案设计 · AJAX · 局域网部署",
-    "Windows监控 · 防火墙自动化 · 事件响应",
+    "客户调研 · 解决方案架构 · 局域网交付 · 终端安全",
     "REST API · Spring Security · VNPAY · 3NF数据库",
     "IT俱乐部领导力 · 指导 · Vue 3",
     "AI电商架构 · Gemini · 交易完整性 · 数据分析",
@@ -335,8 +313,7 @@ const localizationOrder = [
   "fpt",
   "vhunter",
   "video",
-  "task",
-  "security",
+  "solutions",
   "electronics",
   "workshop",
   "store",

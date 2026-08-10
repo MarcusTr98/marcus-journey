@@ -109,6 +109,24 @@ function GraduationMonument() {
         <boxGeometry args={[1.8, 0.65, 0.9]} />
         <meshStandardMaterial color="#1b313b" roughness={0.48} />
       </mesh>
+      <group position={[1.08, 1.15, 0.35]} rotation={[0, -0.25, 0]}>
+        <mesh castShadow rotation={[0, Math.PI / 4, 0]}>
+          <boxGeometry args={[1.05, 0.1, 1.05]} />
+          <meshStandardMaterial color="#102d4a" roughness={0.38} />
+        </mesh>
+        <mesh position={[0, -0.2, 0]} castShadow>
+          <boxGeometry args={[0.5, 0.35, 0.5]} />
+          <meshStandardMaterial color="#163d63" />
+        </mesh>
+        <mesh position={[0.48, -0.25, 0.15]} rotation={[0, 0, -0.45]}>
+          <cylinderGeometry args={[0.025, 0.025, 0.72, 8]} />
+          <meshStandardMaterial color="#ffc629" />
+        </mesh>
+        <mesh position={[0.62, -0.55, 0.15]}>
+          <sphereGeometry args={[0.08, 10, 8]} />
+          <meshStandardMaterial color="#ffc629" emissive="#F46300" emissiveIntensity={0.5} />
+        </mesh>
+      </group>
       <pointLight position={[0, 2.5, 1]} color="#ffc629" intensity={1.8} distance={6} />
     </group>
   );

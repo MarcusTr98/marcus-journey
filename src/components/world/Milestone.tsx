@@ -49,6 +49,18 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
             </mesh>
           ))}
           <Block position={[0, 0.38, 1.38]} size={[2.7, 0.45, 0.12]} color="#ffc064" glow />
+          {[-1.15, 1.15].map((x) => (
+            <group key={x} position={[x, 2.35, -0.65]}>
+              <mesh castShadow>
+                <cylinderGeometry args={[0.24, 0.34, 1.65, 10]} />
+                <meshStandardMaterial color="#d5dadd" roughness={0.55} />
+              </mesh>
+              <mesh position={[0, 0.9, 0]}>
+                <cylinderGeometry args={[0.3, 0.24, 0.2, 10]} />
+                <meshStandardMaterial color="#F46300" />
+              </mesh>
+            </group>
+          ))}
         </group>
       );
     case "campus":
@@ -56,28 +68,38 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
         <group>
           <Block position={[0, 0.8, 0]} size={[3.4, 1.55, 2.1]} color="#f2e4ce" />
           <Block position={[0, 1.85, 0]} size={[3.8, 0.32, 2.45]} color="#F46300" />
-          {[-1.15, 0, 1.15].map((x) => (
+          {[-1.15, 0, 1.15].map((x, index) => (
             <Block
               key={x}
               position={[x, 0.85, 1.08]}
               size={[0.55, 0.72, 0.08]}
-              color="#0d668d"
+              color={["#F37021", "#00A859", "#005EB8"][index]}
               glow
             />
           ))}
+          <Block position={[-1.15, 0.18, 1.2]} size={[1.05, 0.18, 0.5]} color="#F37021" />
+          <Block position={[0, 0.18, 1.2]} size={[1.05, 0.18, 0.5]} color="#00A859" />
+          <Block position={[1.15, 0.18, 1.2]} size={[1.05, 0.18, 0.5]} color="#005EB8" />
         </group>
       );
     case "stage":
       return (
         <group>
-          <Block position={[0, 0.22, 0]} size={[3.7, 0.42, 2.7]} color="#20262c" />
-          {[-1.6, 1.6].map((x) => (
+          <Block position={[0, 0.22, 0]} size={[4.5, 0.42, 3.2]} color="#0b2f26" />
+          {[-1.95, 1.95].map((x) => (
             <group key={x}>
-              <Block position={[x, 1.25, 0]} size={[0.12, 2.5, 0.12]} color="#aeb9bd" />
-              <pointLight position={[x, 2.3, 1]} color={accent} intensity={2.2} distance={5} />
+              <Block position={[x, 1.55, 0]} size={[0.14, 3.1, 0.14]} color="#b9cbc5" />
+              <pointLight position={[x, 2.65, 1]} color="#4dff9c" intensity={3} distance={6} />
             </group>
           ))}
-          <Block position={[0, 1.25, -1.05]} size={[2.9, 1.65, 0.12]} color="#351756" glow />
+          <Block position={[0, 3.05, 0]} size={[4.05, 0.18, 0.18]} color="#00A859" glow />
+          <Block position={[0, 1.45, -1.3]} size={[3.45, 2.1, 0.12]} color="#075b3d" glow />
+          {[-1.15, 0, 1.15].map((x) => (
+            <mesh key={x} position={[x, 2.65, 0.65]} rotation={[Math.PI / 4, 0, 0]}>
+              <coneGeometry args={[0.35, 1.4, 12, 1, true]} />
+              <meshBasicMaterial color="#71ffc1" transparent opacity={0.3} />
+            </mesh>
+          ))}
         </group>
       );
     case "lab":
@@ -129,72 +151,73 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
           </mesh>
         </group>
       );
-    case "command":
+    case "solutions":
       return (
         <group>
-          <Block position={[0, 0.75, 0]} size={[3.4, 1.4, 2.25]} color="#314f3d" />
-          <Block position={[0, 1.2, 1.16]} size={[2.7, 0.72, 0.08]} color="#dcebd7" />
+          <Block position={[0, 0.72, 0]} size={[3.7, 1.35, 2.45]} color="#173943" />
+          <Block position={[-0.55, 1.18, 1.26]} size={[2.15, 0.72, 0.08]} color="#dcebd7" />
           {[-0.85, 0, 0.85].map((x, i) => (
             <Block
               key={x}
-              position={[x, 1.2, 1.22]}
-              size={[0.55, 0.1 + 0.18 * i, 0.04]}
+              position={[x - 0.55, 1.12, 1.32]}
+              size={[0.45, 0.12 + 0.17 * i, 0.04]}
               color={accent}
               glow
             />
           ))}
-        </group>
-      );
-    case "security":
-      return (
-        <group>
-          <mesh position={[0, 1.25, 0]} rotation={[0, 0, Math.PI / 4]}>
-            <boxGeometry args={[1.8, 1.8, 0.55]} />
-            <meshStandardMaterial color="#123d4a" metalness={0.55} />
+          <mesh position={[1.15, 1.05, 1.32]} rotation={[0, 0, Math.PI / 4]}>
+            <boxGeometry args={[0.9, 0.9, 0.16]} />
+            <meshStandardMaterial color="#10252c" metalness={0.55} />
           </mesh>
-          <mesh position={[0, 1.25, 0.42]}>
-            <torusGeometry args={[0.7, 0.1, 8, 24]} />
+          <mesh position={[1.15, 1.05, 1.43]}>
+            <torusGeometry args={[0.36, 0.07, 8, 24]} />
             <meshStandardMaterial color="#00e38c" emissive="#00A859" emissiveIntensity={2} />
           </mesh>
-          <Block position={[0, 0.18, 0]} size={[3, 0.35, 2.4]} color="#17242a" />
         </group>
       );
     case "commerce":
       return (
         <group>
-          <Block position={[0, 1, 0]} size={[3.7, 1.9, 2.5]} color="#F46300" />
-          {[-1.15, 0, 1.15].map((x, i) => (
-            <Block
-              key={x}
-              position={[x, 1, 1.28]}
-              size={[0.72, 1.15, 0.08]}
-              color={["#0e87bd", "#151d24", "#00A859"][i]}
-              glow
-            />
-          ))}
-          <mesh position={[0, 2.35, 0]} rotation={[0, Math.PI / 4, 0]}>
-            <octahedronGeometry args={[0.5]} />
-            <meshStandardMaterial color="#fff" emissive="#F46300" emissiveIntensity={2} />
-          </mesh>
-        </group>
-      );
-    case "classroom":
-      return (
-        <group>
-          <Block position={[0, 1, -0.75]} size={[3.4, 1.7, 0.15]} color="#123f36" />
-          {[-1, 0, 1].map((x) => (
-            <group key={x} position={[x, 0.55, 0.45]}>
-              <Block position={[0, 0, 0]} size={[0.72, 0.18, 0.7]} color="#a87543" />
-              <mesh position={[0, 0.55, 0]}>
-                <sphereGeometry args={[0.22, 10, 7]} />
-                <meshStandardMaterial color="#e9b77a" />
+          <Block position={[0, 1, 0]} size={[3.9, 1.9, 2.5]} color="#f3f1eb" />
+          <Block position={[0, 2.12, 0]} size={[4.15, 0.35, 2.72]} color="#d71920" />
+          <Block position={[0, 1.75, 1.29]} size={[3.4, 0.35, 0.08]} color="#d71920" glow />
+          {[-1.15, 0, 1.15].map((x) => (
+            <group key={x} position={[x, 0.92, 1.31]}>
+              <Block position={[0, 0, 0]} size={[0.72, 1.1, 0.08]} color="#ffffff" />
+              <Block position={[0, 0.08, 0.06]} size={[0.42, 0.68, 0.05]} color="#162a34" glow />
+              <mesh position={[0, -0.4, 0.1]}>
+                <circleGeometry args={[0.055, 12]} />
+                <meshStandardMaterial color="#d71920" />
               </mesh>
             </group>
           ))}
-          <mesh position={[0, 1.1, -0.58]}>
-            <torusGeometry args={[0.42, 0.09, 8, 20]} />
-            <meshStandardMaterial color="#82ffd0" emissive="#00A859" emissiveIntensity={1.4} />
-          </mesh>
+        </group>
+      );
+    case "robot":
+      return (
+        <group position={[0, 0.15, 0]}>
+          <Block position={[0, 0.12, 0]} size={[3.2, 0.24, 2.5]} color="#17242a" />
+          <Block position={[0, 1.35, 0]} size={[1.25, 1.35, 0.85]} color="#e6edf0" />
+          <Block position={[0, 2.35, 0]} size={[1.05, 0.72, 0.78]} color="#f6f8f7" />
+          <Block position={[0, 2.35, 0.41]} size={[0.72, 0.34, 0.05]} color="#123849" glow />
+          {[-0.22, 0.22].map((x) => (
+            <mesh key={x} position={[x, 2.39, 0.46]}>
+              <sphereGeometry args={[0.07, 10, 8]} />
+              <meshStandardMaterial color="#58e7ff" emissive="#005EB8" emissiveIntensity={2.5} />
+            </mesh>
+          ))}
+          {[-1, 1].map((x) => (
+            <group key={x}>
+              <mesh position={[x, 1.5, 0]} rotation={[0, 0, x * -0.25]}>
+                <capsuleGeometry args={[0.16, 0.85, 6, 10]} />
+                <meshStandardMaterial color="#F46300" metalness={0.35} />
+              </mesh>
+              <mesh position={[x * 0.38, 0.55, 0]}>
+                <capsuleGeometry args={[0.18, 0.75, 6, 10]} />
+                <meshStandardMaterial color="#005EB8" metalness={0.35} />
+              </mesh>
+            </group>
+          ))}
         </group>
       );
     case "smart-factory":

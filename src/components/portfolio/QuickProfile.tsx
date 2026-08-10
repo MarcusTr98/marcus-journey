@@ -71,6 +71,11 @@ export default function QuickProfile({ onClose }: { onClose: () => void }) {
                 GitHub source ↗
               </a>
             )}
+            {m.projectLinks?.map((link) => (
+              <a key={link.url} href={link.url} target="_blank" rel="noreferrer">
+                {link.label} ↗
+              </a>
+            ))}
           </article>
         ))}
       </div>

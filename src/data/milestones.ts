@@ -74,42 +74,29 @@ const milestoneCatalog: Omit<Milestone, "stage">[] = [
     projectUrl: "https://github.com/MarcusTr98/Marcus-video",
   },
   {
-    id: "task",
-    shortTitle: "Real Deployment",
-    title: "Internal Task Management System",
+    id: "solutions",
+    shortTitle: "Client-Commissioned Solutions",
+    title: "Operational & Security Solutions",
     period: "02/2026 — 04/2026",
-    role: "Solution Designer & Full-stack Developer",
+    role: "Solution Architect · Full-stack & Security Developer",
     summary:
-      "Designed a role-specific LAN workflow for the Hong Bang Ward Military Command, connecting commander task assignment with soldier acknowledgement, completion reporting and live status visibility.",
+      "Designed, delivered and commissioned two production-ready internal solutions for a real client: a role-based LAN task-management workflow and USB Sentry, a portable Windows endpoint-protection utility. Both products were accepted with 100% client satisfaction.",
     highlights: [
-      "Java 21 · Spring Boot 4.0.2 · Thymeleaf · SQLite",
-      "Commander assignment, deadlines, editing and cancellation",
-      "Soldier acknowledgement → completion status workflow",
-      "AJAX polling alerts · portable local database · LAN operation",
+      "Task lifecycle: assignment, acknowledgement, completion reporting and live visibility",
+      "USB/mobile detection through drive polling and WMI/WPD monitoring",
+      "Portable LAN-first deployment with SQLite and a standalone Windows JAR",
+      "Requirements validated, users guided and both solutions formally accepted",
     ],
     accent: "#00A859",
     position: [-4, 0, -53],
-    upgrade: "Solution Design · AJAX · LAN Deployment",
-    projectUrl: "https://github.com/MarcusTr98/quan-ly-cong-viec-bchqs-hong-bang",
-  },
-  {
-    id: "security",
-    shortTitle: "Real Deployment",
-    title: "USB Sentry",
-    period: "02/2026 — 04/2026",
-    role: "Desktop Security Developer",
-    summary:
-      "Built a portable Windows desktop guard that detects newly connected storage and mobile devices, then executes a defensive response to reduce internal data-exfiltration risk.",
-    highlights: [
-      "Java 21 · Swing dashboard · shaded portable JAR",
-      "1.5-second drive monitoring · WMI/WPD mobile detection",
-      "Netsh outbound firewall isolation · 15-second shutdown",
-      "Administrator recovery: cancel shutdown and restore network",
+    upgrade: "Client Discovery · Solution Architecture · LAN Delivery · Endpoint Security",
+    projectLinks: [
+      {
+        label: "Task Management",
+        url: "https://github.com/MarcusTr98/quan-ly-cong-viec-bchqs-hong-bang",
+      },
+      { label: "USB Sentry", url: "https://github.com/MarcusTr98/USB-Sentry" },
     ],
-    accent: "#00A859",
-    position: [4, 0, -65],
-    upgrade: "Windows Monitoring · Firewall Automation · Incident Response",
-    projectUrl: "https://github.com/MarcusTr98/USB-Sentry",
   },
   {
     id: "electronics",
@@ -230,15 +217,14 @@ const chronologicalOrder = [
   "workshop",
   "video",
   "electronics",
-  "task",
-  "security",
+  "solutions",
   "store",
   "graduation",
   "teaching",
   "future",
 ];
-const lane = [0, 4, -4, 4, -4, 4, -4, 4, -4, 2.6, 3, 0];
-const distance = [-7, -25, -43, -61, -79, -97, -115, -133, -151, -169, -187, -205];
+const lane = [0, 4, -4, 4, -4, 4, -4, 4, 2.6, 3, 0];
+const distance = [-7, -27, -47, -67, -87, -107, -127, -147, -167, -187, -207];
 export const milestones = chronologicalOrder.map((id, index) => ({
   ...(milestoneCatalog.find((item) => item.id === id) as Milestone),
   position: [lane[index], 0, distance[index]] as [number, number, number],

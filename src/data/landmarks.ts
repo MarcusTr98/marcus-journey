@@ -5,11 +5,10 @@ export type LandmarkKind =
   | "lab"
   | "cinema"
   | "electronics"
-  | "command"
-  | "security"
+  | "solutions"
   | "commerce"
   | "graduation"
-  | "classroom"
+  | "robot"
   | "smart-factory";
 
 export const landmarkMeta: Record<string, { kind: LandmarkKind; icon: string; image?: string }> = {
@@ -19,10 +18,9 @@ export const landmarkMeta: Record<string, { kind: LandmarkKind; icon: string; im
   workshop: { kind: "lab", icon: "🧪" },
   video: { kind: "cinema", icon: "🎬" },
   electronics: { kind: "electronics", icon: "💻" },
-  task: { kind: "command", icon: "📋" },
-  security: { kind: "security", icon: "🛡️" },
-  store: { kind: "commerce", icon: "✨" },
+  solutions: { kind: "solutions", icon: "🛡️" },
+  store: { kind: "commerce", icon: "📱" },
   graduation: { kind: "graduation", icon: "🎓" },
-  teaching: { kind: "classroom", icon: "🤖" },
+  teaching: { kind: "robot", icon: "🤖" },
   future: { kind: "smart-factory", icon: "🏁" },
 };

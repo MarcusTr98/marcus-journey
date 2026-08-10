@@ -15,4 +15,5 @@ export interface Milestone {
   upgrade: string;
   stage: JourneyStage;
   projectUrl?: string;
+  projectLinks?: { label: string; url: string }[];
 }

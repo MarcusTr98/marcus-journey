@@ -211,14 +211,22 @@ export default function JourneyApp({ initialLanguage }: { initialLanguage: Langu
               <div className="upgrade">
                 {t.unlocked} <b>{active.upgrade}</b>
               </div>
-              <a
-                className="milestone-cta"
-                href={active.projectUrl ?? "#case-studies"}
-                target={active.projectUrl ? "_blank" : undefined}
-                rel={active.projectUrl ? "noreferrer" : undefined}
-              >
-                {active.projectUrl ? SOURCE_LABEL[language] : ACTION_LABEL[language]} ↗
-              </a>
+              {(
+                active.projectLinks ??
+                (active.projectUrl
+                  ? [{ label: SOURCE_LABEL[language], url: active.projectUrl }]
+                  : [{ label: ACTION_LABEL[language], url: "#case-studies" }])
+              ).map((link) => (
+                <a
+                  key={link.url}
+                  className="milestone-cta"
+                  href={link.url}
+                  target={link.url.startsWith("http") ? "_blank" : undefined}
+                  rel={link.url.startsWith("http") ? "noreferrer" : undefined}
+                >
+                  {link.label} ↗
+                </a>
+              ))}
             </aside>
           )}
         </>
