@@ -127,6 +127,18 @@ function GraduationMonument() {
           <meshStandardMaterial color="#ffc629" emissive="#F46300" emissiveIntensity={0.5} />
         </mesh>
       </group>
+      <group position={[-1.05, 0.95, 0.48]} rotation={[0, 0, -0.28]}>
+        <mesh castShadow rotation={[0, 0, Math.PI / 2]}>
+          <cylinderGeometry args={[0.2, 0.2, 1.15, 16]} />
+          <meshStandardMaterial color="#f7f0dc" roughness={0.55} />
+        </mesh>
+        {[-0.48, 0.48].map((x) => (
+          <mesh key={x} position={[x, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
+            <torusGeometry args={[0.22, 0.045, 8, 18]} />
+            <meshStandardMaterial color="#F46300" emissive="#F46300" emissiveIntensity={0.45} />
+          </mesh>
+        ))}
+      </group>
       <pointLight position={[0, 2.5, 1]} color="#ffc629" intensity={1.8} distance={6} />
     </group>
   );

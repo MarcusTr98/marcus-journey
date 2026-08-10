@@ -114,12 +114,12 @@ const vi: L[] = [
   ],
   [
     "Kiến trúc sư Giải pháp · Lập trình viên Full-stack & Bảo mật",
-    "Khảo sát, thiết kế, triển khai và nghiệm thu hai giải pháp nội bộ cho khách hàng thực tế: hệ thống quản lý công việc theo vai trò trên mạng LAN và USB Sentry bảo vệ thiết bị đầu cuối Windows. Cả hai sản phẩm được nghiệm thu với mức độ hài lòng 100%.",
+    "Khảo sát, thiết kế, triển khai và nghiệm thu hai giải pháp số hóa cho Ban Chỉ huy Quân sự phường Hồng Bàng: hệ thống quản lý công việc theo vai trò trên mạng LAN và USB Sentry bảo vệ thiết bị đầu cuối Windows. Cả hai sản phẩm được nghiệm thu chính thức với mức độ hài lòng 100%.",
     [
       "Vòng đời công việc: giao việc, xác nhận, báo cáo hoàn thành và theo dõi trực quan",
       "Phát hiện USB/thiết bị di động bằng drive polling và WMI/WPD",
       "Triển khai portable ưu tiên mạng LAN với SQLite và Windows JAR độc lập",
-      "Xác thực yêu cầu, hướng dẫn người dùng và nghiệm thu đầy đủ hai sản phẩm",
+      "Chuẩn hóa yêu cầu nghiệp vụ quân sự, đào tạo người dùng và nghiệm thu đầy đủ hai sản phẩm",
     ],
   ],
   [
@@ -221,12 +221,12 @@ const zh: L[] = [
   ],
   [
     "解决方案架构师 · 全栈与安全开发者",
-    "为真实客户调研、设计、部署并验收两套内部解决方案：基于角色的局域网任务管理系统，以及保护Windows终端的USB Sentry。两项产品均获客户100%满意验收。",
+    "为红庞坊军事指挥部调研、设计、部署并验收两套数字化解决方案：基于角色的局域网任务管理系统，以及保护Windows终端的USB Sentry。两项产品均以100%满意度正式验收。",
     [
       "任务全流程：派发、确认、完成报告与实时可视化",
       "通过磁盘轮询与WMI/WPD检测USB及移动设备",
       "采用SQLite和独立Windows JAR进行便携式局域网部署",
-      "完成需求确认、用户指导与两项产品正式验收",
+      "完成军事业务需求梳理、用户培训与两项产品正式验收",
     ],
   ],
   [

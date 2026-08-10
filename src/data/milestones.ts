@@ -75,17 +75,17 @@ const milestoneCatalog: Omit<Milestone, "stage">[] = [
   },
   {
     id: "solutions",
-    shortTitle: "Client-Commissioned Solutions",
-    title: "Operational & Security Solutions",
+    shortTitle: "Military Command Digitalization",
+    title: "Operational & Endpoint Security Solutions",
     period: "02/2026 — 04/2026",
     role: "Solution Architect · Full-stack & Security Developer",
     summary:
-      "Designed, delivered and commissioned two production-ready internal solutions for a real client: a role-based LAN task-management workflow and USB Sentry, a portable Windows endpoint-protection utility. Both products were accepted with 100% client satisfaction.",
+      "Designed, delivered and commissioned two internal solutions for the Hong Bang Ward Military Command: a role-based LAN task-management workflow and USB Sentry, a portable Windows endpoint-protection utility. Both products were formally accepted with 100% client satisfaction.",
     highlights: [
       "Task lifecycle: assignment, acknowledgement, completion reporting and live visibility",
       "USB/mobile detection through drive polling and WMI/WPD monitoring",
       "Portable LAN-first deployment with SQLite and a standalone Windows JAR",
-      "Requirements validated, users guided and both solutions formally accepted",
+      "Military-command requirements validated, users trained and both solutions formally accepted",
     ],
     accent: "#00A859",
     position: [-4, 0, -53],

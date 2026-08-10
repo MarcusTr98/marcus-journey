@@ -1,5 +1,5 @@
 "use client";
-import { copy, getMilestones } from "@/data/i18n";
+import { copy } from "@/data/i18n";
 import { useJourneyStore } from "@/stores/journeyStore";
 import { profile } from "@/data/profile";
 import CvCenter from "@/components/portfolio/CvCenter";
@@ -7,8 +7,7 @@ import { useState } from "react";
 export default function QuickProfile({ onClose }: { onClose: () => void }) {
   const [cvOpen, setCvOpen] = useState(false);
   const language = useJourneyStore((s) => s.language),
-    t = copy[language],
-    items = getMilestones(language);
+    t = copy[language];
   return (
     <section className="quick-profile" aria-label="Marcus Tran quick profile">
       <header>
@@ -51,33 +50,6 @@ export default function QuickProfile({ onClose }: { onClose: () => void }) {
             {t.cv} ↗
           </button>
         </div>
-      </div>
-      <div className="profile-grid">
-        {items.map((m, i) => (
-          <article key={m.id}>
-            <span>
-              {String(i + 1).padStart(2, "0")} / {m.period}
-            </span>
-            <h3>{m.title}</h3>
-            <strong>{m.role}</strong>
-            <p>{m.summary}</p>
-            <ul>
-              {m.highlights.map((h) => (
-                <li key={h}>{h}</li>
-              ))}
-            </ul>
-            {m.projectUrl && (
-              <a href={m.projectUrl} target="_blank" rel="noreferrer">
-                GitHub source ↗
-              </a>
-            )}
-            {m.projectLinks?.map((link) => (
-              <a key={link.url} href={link.url} target="_blank" rel="noreferrer">
-                {link.label} ↗
-              </a>
-            ))}
-          </article>
-        ))}
       </div>
       {cvOpen && <CvCenter language={language} onClose={() => setCvOpen(false)} />}
     </section>
