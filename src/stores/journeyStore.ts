@@ -6,6 +6,7 @@ interface JourneyState {
   progress: number;
   vehicleProgress: number;
   unlockedUpgrades: string[];
+  visitedMilestones: number[];
   language: Language;
   quality: Quality;
   soundEnabled: boolean;
@@ -33,6 +34,7 @@ export const useJourneyStore = create<JourneyState>()(
       progress: 0,
       vehicleProgress: 0,
       unlockedUpgrades: [],
+      visitedMilestones: [],
       language: "vi",
       quality: "high",
       soundEnabled: false,
@@ -42,7 +44,13 @@ export const useJourneyStore = create<JourneyState>()(
       requestedMilestone: null,
       setProgress: (progress) => set({ progress }),
       setVehicleProgress: (vehicleProgress) => set({ vehicleProgress }),
-      setCurrentMilestone: (currentMilestone) => set({ currentMilestone }),
+      setCurrentMilestone: (currentMilestone) =>
+        set((state) => ({
+          currentMilestone,
+          visitedMilestones: state.visitedMilestones.includes(currentMilestone)
+            ? state.visitedMilestones
+            : [...state.visitedMilestones, currentMilestone].sort((a, b) => a - b),
+        })),
       setLanguage: (language) => set({ language }),
       toggleQuality: () => set((s) => ({ quality: s.quality === "high" ? "low" : "high" })),
       setQuality: (quality) => set({ quality }),
@@ -52,7 +60,13 @@ export const useJourneyStore = create<JourneyState>()(
       setSceneReady: (sceneReady) => set({ sceneReady }),
       requestMilestone: (requestedMilestone) => set({ requestedMilestone }),
       resetJourney: () =>
-        set({ progress: 0, vehicleProgress: 0, currentMilestone: -1, requestedMilestone: null }),
+        set({
+          progress: 0,
+          vehicleProgress: 0,
+          currentMilestone: -1,
+          requestedMilestone: null,
+          visitedMilestones: [],
+        }),
     }),
     {
       name: "marcus-journey-preferences",

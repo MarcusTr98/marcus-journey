@@ -11,6 +11,7 @@ import { getStageLabel, stageOrder } from "@/data/stages";
 import { useRouter } from "next/navigation";
 import type { Language } from "@/types";
 import { useJourneyNavigation } from "@/hooks/useJourneyNavigation";
+import JourneyAlbum from "@/components/journey/JourneyAlbum";
 const Experience = dynamic(() => import("@/components/world/Experience"), {
   ssr: false,
   loading: () => <div className="scene-loading">LOADING 3D WORLD…</div>,
@@ -29,6 +30,7 @@ export default function JourneyApp({ initialLanguage }: { initialLanguage: Langu
   const router = useRouter();
   const [quick, setQuick] = useState(false);
   const [cvOpen, setCvOpen] = useState(false);
+  const [albumOpen, setAlbumOpen] = useState(false);
   const { begin, goToMilestone } = useJourneyNavigation();
   const {
     vehicleProgress,
@@ -38,6 +40,7 @@ export default function JourneyApp({ initialLanguage }: { initialLanguage: Langu
     quality,
     soundEnabled,
     sceneReady,
+    visitedMilestones,
     setLanguage,
     toggleQuality,
     toggleSound,
@@ -132,6 +135,15 @@ export default function JourneyApp({ initialLanguage }: { initialLanguage: Langu
       </section>
       {started && (
         <>
+          <JourneyAlbum
+            language={language}
+            items={items}
+            visited={visitedMilestones}
+            open={albumOpen}
+            onOpen={() => setAlbumOpen(true)}
+            onClose={() => setAlbumOpen(false)}
+            onNavigate={goToMilestone}
+          />
           <aside className="progress-ui">
             <div className="progress-track">
               <span style={{ height: `${vehicleProgress * 100}%` }} />
