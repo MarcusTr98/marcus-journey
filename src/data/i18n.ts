@@ -74,12 +74,12 @@ type L = [string, string, string[]];
 const vi: L[] = [
   [
     "Quản lý Sản xuất & Chất lượng",
-    "Gần bảy năm trực tiếp tại hiện trường đã tạo nền tảng kỷ luật về sản xuất, chất lượng, phát triển con người và cải tiến liên tục trong môi trường doanh nghiệp Nhật Bản.",
+    "Phụ trách sản xuất và chất lượng trên chuyền khoảng 40 máy, đồng thời phối hợp cơ cấu vận hành gần 200 người—bao gồm sản xuất, sửa máy, đóng hàng, thay dao, đào tạo và bố trí nhân sự dự phòng.",
     [
-      "Rút ngắn 35% thời gian onboarding",
-      "Giảm khoảng 30% lãng phí vận hành",
-      "Duy trì lỗi nghiêm trọng dưới 1%",
-      "Giảm 50% sự cố thiết bị",
+      "Standard Work · Check Sheet · Pareto · Q-Point → giữ lỗi nghiêm trọng dưới 1%",
+      "QCC · Kaizen · 5W1H/5 Why → giảm khoảng 30% lãng phí vận hành",
+      "TPM → giảm 50% sự cố · Safety Dojo/5S → rút ngắn 35% onboarding",
+      "Điều phối Plan/Kanban; xây dashboard, báo cáo và hệ thống lưu trữ dữ liệu",
     ],
   ],
   [
@@ -196,8 +196,13 @@ const vi: L[] = [
 const zh: L[] = [
   [
     "生产与质量管理",
-    "近七年的生产现场经验，奠定了在日资制造环境中对生产、质量、人才培养与持续改善的严谨基础。",
-    ["入职培训提速35%", "运营浪费降低约30%", "重大缺陷率保持低于1%", "设备事故减少50%"],
+    "负责约40台设备生产线的生产与质量，并协调近200人的运营体系，涵盖生产、维修、包装、换刀、培训及休假替补安排。",
+    [
+      "标准作业 · 检查表 · 帕累托 · Q-Point → 严重缺陷率低于1%",
+      "QCC · 改善 · 5W1H/5Why → 运营浪费降低约30%",
+      "TPM → 设备故障减少50% · Safety Dojo/5S → 入职培训提速35%",
+      "使用生产计划/Kanban调度，并建立绩效看板、报告与数据归档体系",
+    ],
   ],
   [
     "软件开发 · GPA 3.9/4.0",
@@ -297,7 +302,7 @@ const zh: L[] = [
 ];
 const upgrades = {
   vi: [
-    "Quản lý sản xuất · Chất lượng · Kaizen · 5S",
+    "Standard Work · QCC · Pareto · Q-Point · TPM · Kanban · Safety Dojo",
     "Java · Spring Boot · SQL · Kỹ nghệ phần mềm",
     "Lãnh đạo · Đàm phán · Vận hành sự kiện",
     "Java Web · Hibernate · WebSocket · Bảo mật ứng dụng",
@@ -311,7 +316,7 @@ const upgrades = {
     "Thành tích học thuật · Lãnh đạo · Học tập suốt đời",
   ],
   zh: [
-    "生产管理 · 质量 · 改善 · 5S",
+    "标准作业 · QCC · 帕累托 · Q-Point · TPM · Kanban · Safety Dojo",
     "Java · Spring Boot · SQL · 软件工程",
     "领导力 · 谈判 · 活动运营",
     "Java Web · Hibernate · WebSocket · 应用安全",

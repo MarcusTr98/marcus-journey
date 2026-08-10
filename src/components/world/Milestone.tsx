@@ -6,7 +6,6 @@ import type { Milestone as MilestoneType } from "@/types";
 import { milestones } from "@/data/milestones";
 import { landmarkMeta, type LandmarkKind } from "@/data/landmarks";
 import { useJourneyStore } from "@/stores/journeyStore";
-import { getMilestones } from "@/data/i18n";
 import Image from "next/image";
 
 type LandmarkOffset = [number, number];
@@ -233,7 +232,6 @@ function MemoryPostcard({
   offset: LandmarkOffset;
 }) {
   const current = useJourneyStore((s) => s.currentMilestone);
-  const language = useJourneyStore((s) => s.language);
   const [visible, setVisible] = useState(false);
   const active = current === index;
   useEffect(() => {
@@ -246,7 +244,6 @@ function MemoryPostcard({
     return () => window.clearTimeout(timer);
   }, [active]);
   if (!visible) return null;
-  const localized = getMilestones(language)[index];
   const meta = landmarkMeta[data.id];
   return (
     <Html
@@ -269,11 +266,7 @@ function MemoryPostcard({
               <small>PHOTO PLACEHOLDER</small>
             </>
           )}
-        </div>
-        <div>
-          <em>{localized.period}</em>
-          <strong>{localized.title}</strong>
-          <small>{localized.role}</small>
+          <b className="memory-captured">{String(index + 1).padStart(2, "0")} · MEMORY UNLOCKED</b>
         </div>
       </article>
     </Html>

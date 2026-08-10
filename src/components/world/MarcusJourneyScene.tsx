@@ -1,6 +1,6 @@
 "use client";
 import { useFrame, useThree } from "@react-three/fiber";
-import { Environment as DreiEnvironment, PerformanceMonitor, Stars } from "@react-three/drei";
+import { PerformanceMonitor, Stars } from "@react-three/drei";
 import { useRef } from "react";
 import * as THREE from "three";
 import Car from "./Car";
@@ -115,8 +115,8 @@ export default function MarcusJourneyScene() {
       <fog attach="fog" args={["#07141b", 14, 44]} />
       <ambientLight intensity={1.25} />
       <directionalLight position={[8, 14, 6]} intensity={2.2} castShadow={quality === "high"} />
-      {quality === "high" && <Stars radius={55} depth={25} count={900} factor={2} />}
-      <DreiEnvironment preset="warehouse" environmentIntensity={0.25} />
+      <hemisphereLight args={["#b9ddff", "#15241e", 0.75]} />
+      {quality === "high" && <Stars radius={55} depth={25} count={450} factor={1.8} />}
       <Road />
       <WorldEnvironment />
       <Car groupRef={car} />

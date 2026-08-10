@@ -19,15 +19,9 @@ npm run test
 npm run test:e2e
 ```
 
-## Firebase
-
-The site uses local milestone data when Firebase is not configured. Copy `.env.example` to `.env.local`, create a Firebase web app, and fill the `NEXT_PUBLIC_FIREBASE_*` values. Planned collections: `profile`, `milestones`, `projects`, `skills`, `achievements`, `messages`, and `siteSettings`.
-
-Use Firebase Authentication only for `/admin`. Keep Firestore writes denied by default and grant write access only to approved admin UIDs. Never add a service account or private key to this repository.
-
 ## Deploy to Vercel
 
-Import the GitHub repository in Vercel, select Next.js, add the same Firebase environment variables, then deploy. No custom build command is required.
+Import the GitHub repository in Vercel and deploy with the default Next.js configuration. No environment variables or custom build command are required for the static portfolio.
 
 ## MVP architecture
 
@@ -36,7 +30,7 @@ Import the GitHub repository in Vercel, select Next.js, add the same Firebase en
 - `src/components/portfolio`: semantic 2D Quick Profile fallback
 - `src/data`: typed local content fallback
 - `src/stores`: Zustand journey state
-- `src/lib`: Firebase and shared helpers
+- `src/lib`: shared helpers
 
 The three localized CV files live in `public/cv`. Public routes are `/vi`, `/en`, and `/zh`; `/` redirects to Vietnamese. Future optimized assets belong in `public/models`, `public/textures`, and `public/audio`.
 

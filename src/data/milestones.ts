@@ -7,16 +7,16 @@ const milestoneCatalog: Omit<Milestone, "stage">[] = [
     period: "12/2016 — 09/2023",
     role: "Production & Quality Management",
     summary:
-      "Nearly seven years on the factory floor built a disciplined foundation in production, quality, people development and continuous improvement within a Japanese manufacturing environment.",
+      "Led production and quality across a line of roughly 40 machines while coordinating an operating structure of around 200 people—including production, maintenance, packing, tooling, training and leave coverage.",
     highlights: [
-      "35% faster employee onboarding",
-      "~30% reduction in operational waste",
-      "Critical defect rate maintained below 1%",
-      "50% fewer equipment incidents",
+      "Standard Work · Check Sheets · Pareto · Q-Point → serious defects below 1%",
+      "QCC · Kaizen · 5W1H/5 Whys → approximately 30% less operational waste",
+      "TPM → 50% fewer equipment incidents · Safety Dojo/5S → 35% faster onboarding",
+      "Kanban/production planning plus performance dashboards and structured reporting",
     ],
     accent: "#F46300",
     position: [0, 0, -6],
-    upgrade: "Production Management · Quality · Kaizen · 5S",
+    upgrade: "Standard Work · QCC · Pareto · Q-Point · TPM · Kanban · Safety Dojo",
   },
   {
     id: "fpt",
