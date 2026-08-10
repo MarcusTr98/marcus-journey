@@ -1,15 +1,23 @@
 "use client";
 
-import { Html, useTexture } from "@react-three/drei";
-import { useEffect, useState } from "react";
+import { useTexture } from "@react-three/drei";
+import * as THREE from "three";
 import type { Milestone as MilestoneType } from "@/types";
 import { milestones } from "@/data/milestones";
 import { landmarkMeta, type LandmarkKind } from "@/data/landmarks";
-import { useJourneyStore } from "@/stores/journeyStore";
-import Image from "next/image";
 
 type LandmarkOffset = [number, number];
 const beamPositions = [-1.15, 0, 1.15];
+const vietnamStar = new THREE.Shape();
+Array.from({ length: 10 }, (_, index) => {
+  const radius = index % 2 === 0 ? 0.26 : 0.105;
+  const angle = Math.PI / 2 + (index * Math.PI) / 5;
+  return new THREE.Vector2(Math.cos(angle) * radius, Math.sin(angle) * radius);
+}).forEach((point, index) => {
+  if (index === 0) vietnamStar.moveTo(point.x, point.y);
+  else vietnamStar.lineTo(point.x, point.y);
+});
+vietnamStar.closePath();
 
 function Block({
   position,
@@ -38,7 +46,6 @@ function Block({
 
 function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: string }) {
   const fptLogo = useTexture("/landmarks/fpt-logo.svg");
-  const vietnamFlag = useTexture("/landmarks/vietnam-flag.svg");
   switch (kind) {
     case "factory":
       return (
@@ -202,9 +209,10 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
             <cylinderGeometry args={[0.035, 0.045, 2.8, 8]} />
             <meshStandardMaterial color="#d9e0d7" metalness={0.65} />
           </mesh>
-          <mesh position={[-0.95, 2.75, -0.38]}>
-            <planeGeometry args={[1.15, 0.76]} />
-            <meshBasicMaterial map={vietnamFlag} toneMapped={false} side={2} />
+          <Block position={[-0.95, 2.75, -0.43]} size={[1.2, 0.78, 0.08]} color="#DA251D" glow />
+          <mesh position={[-0.95, 2.75, -0.375]}>
+            <shapeGeometry args={[vietnamStar]} />
+            <meshBasicMaterial color="#FFFF00" toneMapped={false} side={2} />
           </mesh>
           <Block position={[1.05, 2.25, -0.65]} size={[1.15, 0.28, 0.65]} color="#63794f" />
           <mesh position={[1.05, 2.55, -0.65]}>
@@ -316,58 +324,6 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
   }
 }
 
-function MemoryPostcard({
-  data,
-  index,
-  offset,
-}: {
-  data: MilestoneType;
-  index: number;
-  offset: LandmarkOffset;
-}) {
-  const current = useJourneyStore((s) => s.currentMilestone);
-  const vehicleProgress = useJourneyStore((s) => s.vehicleProgress);
-  const [visible, setVisible] = useState(false);
-  const active = current === index;
-  useEffect(() => {
-    if (!active) {
-      setVisible(false);
-      return;
-    }
-    setVisible(true);
-    const timer = window.setTimeout(() => setVisible(false), 3600);
-    return () => window.clearTimeout(timer);
-  }, [active]);
-  if (!visible || vehicleProgress >= 0.985) return null;
-  const meta = landmarkMeta[data.id];
-  return (
-    <Html
-      center
-      sprite
-      position={[offset[0], data.id === "toyota" ? 5.65 : 4.55, offset[1]]}
-      distanceFactor={7.5}
-      zIndexRange={[24, 0]}
-    >
-      <article
-        className="memory-postcard"
-        style={{ "--memory-accent": data.accent } as React.CSSProperties}
-      >
-        <div className={`memory-placeholder memory-${meta.kind}`}>
-          {meta.image ? (
-            <Image src={meta.image} alt="" fill sizes="290px" />
-          ) : (
-            <>
-              <span>{meta.icon}</span>
-              <small>PHOTO PLACEHOLDER</small>
-            </>
-          )}
-          <b className="memory-captured">{String(index + 1).padStart(2, "0")} · MEMORY UNLOCKED</b>
-        </div>
-      </article>
-    </Html>
-  );
-}
-
 export default function Milestone({ data, index }: { data: MilestoneType; index: number }) {
   if (data.id === "graduation") return null;
   const previous = milestones[Math.max(0, index - 1)].position;
@@ -391,7 +347,6 @@ export default function Milestone({ data, index }: { data: MilestoneType; index:
         </mesh>
         {data.id !== "graduation" && <LandmarkStructure kind={meta.kind} accent={data.accent} />}
       </group>
-      <MemoryPostcard data={data} index={index} offset={offset} />
     </group>
   );
 }

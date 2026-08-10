@@ -4,17 +4,15 @@ import { PerformanceMonitor, Stars } from "@react-three/drei";
 import { useRef } from "react";
 import * as THREE from "three";
 import Car from "./Car";
-import Road, { graduationCurveProgress, milestoneCurveProgress, routeCurve } from "./Road";
+import Road, { milestoneCurveProgress, routeCurve } from "./Road";
 import WorldEnvironment from "./Environment";
 import { useJourneyStore } from "@/stores/journeyStore";
-import { TROPHY_POSITION } from "@/data/journeyPath";
 import { milestones } from "@/data/milestones";
 
-const TROPHY_CAMERA_POSITION = new THREE.Vector3(8.6, 7.2, TROPHY_POSITION[2] + 11);
-const TROPHY_FOCUS = new THREE.Vector3(0, 1, TROPHY_POSITION[2]);
+const STABLE_CAMERA_OFFSET = new THREE.Vector3(8.4, 7.4, 10.8);
+const STABLE_FOCUS_OFFSET = new THREE.Vector3(0, 0.9, -0.6);
 const MAX_PROGRESS_PER_SECOND = 0.052;
 const CHECKPOINT_HOLD_SECONDS = 1.5;
-const LANDMARK_CAMERA_HEIGHT = [7.8, 7.2, 7.4, 7.1, 7.2, 7.4, 7.4, 7.2, 7.8, 7.5, 7.6];
 const STAGE_SKY = {
   foundation: new THREE.Color("#07141b"),
   transformation: new THREE.Color("#071923"),
@@ -93,42 +91,14 @@ export default function MarcusJourneyScene() {
       Math.cos(desiredRotation - car.current.rotation.y),
     );
     car.current.rotation.y += angleDelta * (1 - Math.exp(-delta * 7));
-    const isAtGraduation =
-      p > graduationCurveProgress - 0.008 && p < graduationCurveProgress + 0.045;
-    const roadNormal = new THREE.Vector3(-tangent.z, 0, tangent.x).normalize();
-    const chaseTarget = point
-      .clone()
-      .addScaledVector(tangent, -9.5)
-      .addScaledVector(roadNormal, 4.8)
-      .add(new THREE.Vector3(0, 7.2, 0));
-    const lookAhead = routeCurve.getPointAt(Math.min(0.998, p + 0.014));
-    const checkpointIndex = journeyState.currentMilestone;
-    const checkpointProgress = milestoneCurveProgress[checkpointIndex];
-    const framingCheckpoint =
-      checkpointIndex >= 0 &&
-      checkpointProgress !== undefined &&
-      Math.abs(p - checkpointProgress) < 0.011;
-    const landmarkSide = checkpointIndex % 2 === 0 ? -1 : 1;
-    const landmarkClearance = milestones[checkpointIndex]?.id === "store" ? 4.8 : 4.2;
-    const landmarkFocus = point
-      .clone()
-      .addScaledVector(roadNormal, landmarkClearance * landmarkSide * 0.48)
-      .setY(1.15);
-    const landmarkCamera = point
-      .clone()
-      .addScaledVector(tangent, -10.5)
-      .addScaledVector(roadNormal, -landmarkSide * 6.8)
-      .add(new THREE.Vector3(0, LANDMARK_CAMERA_HEIGHT[checkpointIndex] ?? 7.3, 0));
-    const target = isAtGraduation
-      ? TROPHY_CAMERA_POSITION
-      : framingCheckpoint
-        ? landmarkCamera
-        : chaseTarget;
-    camera.position.lerp(target, 1 - Math.exp(-delta * 3.5));
-    focus.current.lerp(
-      isAtGraduation ? TROPHY_FOCUS : framingCheckpoint ? landmarkFocus : lookAhead.setY(0.65),
-      1 - Math.exp(-delta * 5),
-    );
+    const target = point.clone().add(STABLE_CAMERA_OFFSET);
+    const stableFocus = point.clone().add(STABLE_FOCUS_OFFSET);
+    if (camera instanceof THREE.PerspectiveCamera) {
+      camera.fov = THREE.MathUtils.damp(camera.fov, 41, 2.4, delta);
+      camera.updateProjectionMatrix();
+    }
+    camera.position.lerp(target, 1 - Math.exp(-delta * 2.1));
+    focus.current.lerp(stableFocus, 1 - Math.exp(-delta * 2.8));
     camera.lookAt(focus.current);
   });
   return (
