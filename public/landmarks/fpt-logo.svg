@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 250" role="img" aria-label="FPT logo">
+  <g transform="skewX(-10)">
+    <rect x="42" y="35" width="172" height="180" rx="24" fill="#F37021"/>
+    <rect x="214" y="35" width="172" height="180" rx="24" fill="#00A859"/>
+    <rect x="386" y="35" width="172" height="180" rx="24" fill="#005EB8"/>
+    <path fill="#fff" d="M78 76h112v31h-72v25h62v30h-62v52H78z"/>
+    <path fill="#fff" d="M250 76h66c40 0 58 16 58 46 0 31-21 48-59 48h-25v44h-40zm40 31v33h22c15 0 22-5 22-17 0-11-7-16-22-16z"/>
+    <path fill="#fff" d="M412 76h126v32h-43v106h-40V108h-43z"/>
+  </g>
+</svg>

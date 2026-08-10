@@ -14,6 +14,7 @@ const TROPHY_CAMERA_POSITION = new THREE.Vector3(8.6, 7.2, TROPHY_POSITION[2] + 
 const TROPHY_FOCUS = new THREE.Vector3(0, 1, TROPHY_POSITION[2]);
 const MAX_PROGRESS_PER_SECOND = 0.052;
 const CHECKPOINT_HOLD_SECONDS = 1.5;
+const LANDMARK_CAMERA_HEIGHT = [7.8, 7.2, 7.4, 7.1, 7.2, 7.4, 7.4, 7.2, 7.8, 7.5, 7.6];
 const STAGE_SKY = {
   foundation: new THREE.Color("#07141b"),
   transformation: new THREE.Color("#071923"),
@@ -43,6 +44,7 @@ export default function MarcusJourneyScene() {
     if (journeyState.requestedMilestone !== null) {
       const requestedIndex = journeyState.requestedMilestone;
       actualProgress.current = milestoneCurveProgress[requestedIndex];
+      journeyState.setProgress(actualProgress.current);
       checkpointHold.current = CHECKPOINT_HOLD_SECONDS;
       journeyState.setCurrentMilestone(requestedIndex);
       journeyState.requestMilestone(null);
@@ -100,10 +102,31 @@ export default function MarcusJourneyScene() {
       .addScaledVector(roadNormal, 4.8)
       .add(new THREE.Vector3(0, 7.2, 0));
     const lookAhead = routeCurve.getPointAt(Math.min(0.998, p + 0.014));
-    const target = isAtGraduation ? TROPHY_CAMERA_POSITION : chaseTarget;
+    const checkpointIndex = journeyState.currentMilestone;
+    const checkpointProgress = milestoneCurveProgress[checkpointIndex];
+    const framingCheckpoint =
+      checkpointIndex >= 0 &&
+      checkpointProgress !== undefined &&
+      Math.abs(p - checkpointProgress) < 0.011;
+    const landmarkSide = checkpointIndex % 2 === 0 ? -1 : 1;
+    const landmarkClearance = milestones[checkpointIndex]?.id === "store" ? 4.8 : 4.2;
+    const landmarkFocus = point
+      .clone()
+      .addScaledVector(roadNormal, landmarkClearance * landmarkSide * 0.48)
+      .setY(1.15);
+    const landmarkCamera = point
+      .clone()
+      .addScaledVector(tangent, -10.5)
+      .addScaledVector(roadNormal, -landmarkSide * 6.8)
+      .add(new THREE.Vector3(0, LANDMARK_CAMERA_HEIGHT[checkpointIndex] ?? 7.3, 0));
+    const target = isAtGraduation
+      ? TROPHY_CAMERA_POSITION
+      : framingCheckpoint
+        ? landmarkCamera
+        : chaseTarget;
     camera.position.lerp(target, 1 - Math.exp(-delta * 3.5));
     focus.current.lerp(
-      isAtGraduation ? TROPHY_FOCUS : lookAhead.setY(0.65),
+      isAtGraduation ? TROPHY_FOCUS : framingCheckpoint ? landmarkFocus : lookAhead.setY(0.65),
       1 - Math.exp(-delta * 5),
     );
     camera.lookAt(focus.current);

@@ -14,6 +14,7 @@ interface JourneyState {
   started: boolean;
   sceneReady: boolean;
   requestedMilestone: number | null;
+  navigationPinned: boolean;
   setProgress: (v: number) => void;
   setVehicleProgress: (v: number) => void;
   setCurrentMilestone: (v: number) => void;
@@ -25,6 +26,7 @@ interface JourneyState {
   start: () => void;
   setSceneReady: (v: boolean) => void;
   requestMilestone: (v: number | null) => void;
+  setNavigationPinned: (v: boolean) => void;
   resetJourney: () => void;
 }
 export const useJourneyStore = create<JourneyState>()(
@@ -42,6 +44,7 @@ export const useJourneyStore = create<JourneyState>()(
       started: false,
       sceneReady: false,
       requestedMilestone: null,
+      navigationPinned: false,
       setProgress: (progress) => set({ progress }),
       setVehicleProgress: (vehicleProgress) => set({ vehicleProgress }),
       setCurrentMilestone: (currentMilestone) =>
@@ -59,12 +62,14 @@ export const useJourneyStore = create<JourneyState>()(
       start: () => set({ started: true }),
       setSceneReady: (sceneReady) => set({ sceneReady }),
       requestMilestone: (requestedMilestone) => set({ requestedMilestone }),
+      setNavigationPinned: (navigationPinned) => set({ navigationPinned }),
       resetJourney: () =>
         set({
           progress: 0,
           vehicleProgress: 0,
           currentMilestone: -1,
           requestedMilestone: null,
+          navigationPinned: false,
           visitedMilestones: [],
         }),
     }),

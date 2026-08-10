@@ -1,6 +1,6 @@
 "use client";
 
-import { Html } from "@react-three/drei";
+import { Html, useTexture } from "@react-three/drei";
 import { useEffect, useState } from "react";
 import type { Milestone as MilestoneType } from "@/types";
 import { milestones } from "@/data/milestones";
@@ -37,6 +37,8 @@ function Block({
 }
 
 function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: string }) {
+  const fptLogo = useTexture("/landmarks/fpt-logo.svg");
+  const vietnamFlag = useTexture("/landmarks/vietnam-flag.svg");
   switch (kind) {
     case "factory":
       return (
@@ -80,15 +82,12 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
           <Block position={[-1.15, 0.18, 1.2]} size={[1.05, 0.18, 0.5]} color="#F37021" />
           <Block position={[0, 0.18, 1.2]} size={[1.05, 0.18, 0.5]} color="#00A859" />
           <Block position={[1.15, 0.18, 1.2]} size={[1.05, 0.18, 0.5]} color="#005EB8" />
-          <group position={[-0.95, 2.55, 0.35]}>
-            <Block position={[0, 0, 0]} size={[0.18, 0.9, 0.28]} color="#F37021" />
-            <Block position={[0.3, 0.36, 0]} size={[0.55, 0.18, 0.28]} color="#F37021" />
-            <Block position={[0.3, 0, 0]} size={[0.48, 0.18, 0.28]} color="#F37021" />
-            <Block position={[0.78, 0, 0]} size={[0.18, 0.9, 0.28]} color="#00A859" />
-            <Block position={[1.03, 0.36, 0]} size={[0.5, 0.18, 0.28]} color="#00A859" />
-            <Block position={[1.03, 0, 0]} size={[0.44, 0.18, 0.28]} color="#00A859" />
-            <Block position={[1.5, 0.36, 0]} size={[0.72, 0.18, 0.28]} color="#005EB8" />
-            <Block position={[1.5, -0.02, 0]} size={[0.18, 0.75, 0.28]} color="#005EB8" />
+          <group position={[0, 2.62, 0.15]}>
+            <Block position={[0, 0, -0.08]} size={[2.65, 1.08, 0.22]} color="#ffffff" />
+            <mesh position={[0, 0, 0.045]}>
+              <planeGeometry args={[2.5, 1.04]} />
+              <meshBasicMaterial map={fptLogo} transparent toneMapped={false} side={2} />
+            </mesh>
           </group>
         </group>
       );
@@ -106,23 +105,27 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
           <Block position={[0, 1.45, -1.3]} size={[3.45, 2.1, 0.12]} color="#075b3d" glow />
           {[-2.15, 2.15].map((x) => (
             <group key={`speaker-${x}`} position={[x, 0.95, 0.9]}>
-              <Block position={[0, 0, 0]} size={[0.62, 1.55, 0.62]} color="#14251f" />
+              <Block position={[0, 0, 0]} size={[0.62, 1.55, 0.62]} color="#481a62" />
               {[0.35, -0.35].map((y) => (
                 <mesh key={y} position={[0, y, 0.33]} rotation={[Math.PI / 2, 0, 0]}>
                   <cylinderGeometry args={[0.21, 0.27, 0.08, 16]} />
                   <meshStandardMaterial
-                    color="#7effb6"
-                    emissive="#00A859"
-                    emissiveIntensity={0.7}
+                    color="#ffe35b"
+                    emissive="#ff4fa3"
+                    emissiveIntensity={1.2}
                   />
                 </mesh>
               ))}
             </group>
           ))}
-          {[-1.15, 0, 1.15].map((x) => (
+          {[-1.15, 0, 1.15].map((x, index) => (
             <mesh key={x} position={[x, 2.65, 0.65]} rotation={[Math.PI / 4, 0, 0]}>
               <coneGeometry args={[0.35, 1.4, 12, 1, true]} />
-              <meshBasicMaterial color="#71ffc1" transparent opacity={0.3} />
+              <meshBasicMaterial
+                color={["#ff58a8", "#fff16a", "#64e7ff"][index]}
+                transparent
+                opacity={0.38}
+              />
             </mesh>
           ))}
         </group>
@@ -199,10 +202,9 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
             <cylinderGeometry args={[0.035, 0.045, 2.8, 8]} />
             <meshStandardMaterial color="#d9e0d7" metalness={0.65} />
           </mesh>
-          <Block position={[-0.95, 2.75, -0.43]} size={[1.05, 0.62, 0.06]} color="#d71920" glow />
-          <mesh position={[-0.95, 2.75, -0.38]} rotation={[0, 0, Math.PI / 4]}>
-            <octahedronGeometry args={[0.17]} />
-            <meshStandardMaterial color="#ffd43b" emissive="#F46300" emissiveIntensity={1.4} />
+          <mesh position={[-0.95, 2.75, -0.38]}>
+            <planeGeometry args={[1.15, 0.76]} />
+            <meshBasicMaterial map={vietnamFlag} toneMapped={false} side={2} />
           </mesh>
           <Block position={[1.05, 2.25, -0.65]} size={[1.15, 0.28, 0.65]} color="#63794f" />
           <mesh position={[1.05, 2.55, -0.65]}>
@@ -217,7 +219,7 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
           <Block position={[0, 1, 0]} size={[3.9, 1.9, 2.5]} color="#f3f1eb" />
           <Block position={[0, 2.12, 0]} size={[4.15, 0.35, 2.72]} color="#d71920" />
           <Block position={[0, 1.75, 1.29]} size={[3.4, 0.35, 0.08]} color="#d71920" glow />
-          <group position={[0, 2.65, 0.2]}>
+          <group position={[0, 2.72, 0.2]} rotation={[0, 0, -0.62]}>
             <Block position={[0, 0, 0]} size={[0.8, 1.25, 0.18]} color="#ffffff" glow />
             <Block position={[0, 0.05, 0.11]} size={[0.52, 0.78, 0.06]} color="#ff3340" glow />
             <mesh position={[0, -0.48, 0.17]}>
@@ -275,9 +277,9 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
               </mesh>
             </group>
           ))}
-          <group position={[0, 0.25, 0.95]} scale={0.62}>
-            <Block position={[0, 0.35, 0]} size={[1.8, 0.55, 1.15]} color="#F46300" />
-            <Block position={[0, 0.75, -0.05]} size={[1.2, 0.52, 0.9]} color="#eaf3f4" />
+          <group position={[1.12, 0.28, 0.95]} rotation={[0, -0.62, 0]} scale={0.58}>
+            <Block position={[0, 0.35, 0]} size={[1.8, 0.55, 1.15]} color="#ff4fa3" />
+            <Block position={[0, 0.75, -0.05]} size={[1.2, 0.52, 0.9]} color="#fff1a8" />
             {[-0.72, 0.72].map((x) =>
               [-0.42, 0.42].map((z) => (
                 <mesh key={`${x}-${z}`} position={[x, 0.15, z]} rotation={[0, 0, Math.PI / 2]}>
@@ -343,7 +345,7 @@ function MemoryPostcard({
       center
       sprite
       position={[offset[0], data.id === "toyota" ? 5.65 : 4.55, offset[1]]}
-      distanceFactor={9}
+      distanceFactor={7.5}
       zIndexRange={[24, 0]}
     >
       <article
