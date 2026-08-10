@@ -104,6 +104,10 @@
   color: #fff;
   backdrop-filter: blur(12px);
 }
+.journey-album-trigger.is-right {
+  right: 3vw;
+  left: auto;
+}
 .journey-album-trigger > span {
   grid-row: span 2;
   color: var(--orange);
@@ -202,6 +206,10 @@
   .journey-album-trigger {
     left: 12px;
     bottom: 12px;
+  }
+  .journey-album-trigger.is-right {
+    right: 12px;
+    left: auto;
   }
   .journey-album-trigger small {
     display: none;

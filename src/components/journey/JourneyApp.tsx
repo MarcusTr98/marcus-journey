@@ -133,7 +133,7 @@ export default function JourneyApp({ initialLanguage }: { initialLanguage: Langu
           {t.scroll} <b>↓</b>
         </div>
       </section>
-      {started && (
+      {started && vehicleProgress < 0.985 && (
         <>
           <JourneyAlbum
             language={language}
@@ -143,6 +143,7 @@ export default function JourneyApp({ initialLanguage }: { initialLanguage: Langu
             onOpen={() => setAlbumOpen(true)}
             onClose={() => setAlbumOpen(false)}
             onNavigate={goToMilestone}
+            triggerSide={currentMilestone % 2 === 1 ? "right" : "left"}
           />
           <aside className="progress-ui">
             <div className="progress-track">

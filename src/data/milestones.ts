@@ -7,7 +7,7 @@ const milestoneCatalog: Omit<Milestone, "stage">[] = [
     period: "12/2016 — 09/2023",
     role: "Production & Quality Management",
     summary:
-      "Led production and quality across a line of roughly 40 machines while coordinating an operating structure of around 200 people—including production, maintenance, packing, tooling, training and leave coverage.",
+      "Led production and quality across a line of roughly 40 Laser Cutting CNC machines while coordinating an operating structure of around 200 people—including production, quality, machine engineering, packing, material changeovers, training and workforce coverage.",
     highlights: [
       "Standard Work · Check Sheets · Pareto · Q-Point → serious defects below 1%",
       "QCC · Kaizen · 5W1H/5 Whys → approximately 30% less operational waste",

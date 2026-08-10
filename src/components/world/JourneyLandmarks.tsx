@@ -68,56 +68,48 @@ function StartLine() {
 }
 function GraduationMonument() {
   return (
-    <group position={[TROPHY_POSITION[0], 0.08, TROPHY_POSITION[2]]} scale={1.15}>
-      <mesh position={[0, 0.18, 0]} castShadow>
-        <cylinderGeometry args={[1.15, 1.3, 0.28, 8]} />
-        <meshStandardMaterial color="#17242a" metalness={0.62} roughness={0.28} />
+    <group position={[TROPHY_POSITION[0], 0.04, TROPHY_POSITION[2]]}>
+      <mesh position={[0, 0.16, 0]} receiveShadow>
+        <boxGeometry args={[4.4, 0.3, 3.2]} />
+        <meshStandardMaterial color="#13242c" roughness={0.82} />
       </mesh>
-      <mesh position={[0, 0.4, 0]}>
-        <cylinderGeometry args={[0.94, 1.08, 0.18, 8]} />
-        <meshStandardMaterial color="#F46300" emissive="#F46300" emissiveIntensity={0.35} />
+      <mesh position={[0, 0.36, 0]}>
+        <boxGeometry args={[3.8, 0.12, 2.7]} />
+        <meshStandardMaterial color="#005EB8" metalness={0.3} roughness={0.35} />
       </mesh>
-      <group position={[0, 1.45, 0]} rotation={[0, 0.3, 0]}>
-        <mesh position={[0, -0.35, 0]} castShadow>
-          <cylinderGeometry args={[0.72, 0.9, 0.55, 4]} />
-          <meshStandardMaterial color="#082c42" metalness={0.35} roughness={0.3} />
+      {[-1.65, 1.65].map((x) => (
+        <mesh key={x} position={[x, 1.7, -0.72]} castShadow>
+          <boxGeometry args={[0.22, 2.7, 0.22]} />
+          <meshStandardMaterial color="#f2ede0" roughness={0.5} />
         </mesh>
+      ))}
+      <mesh position={[0, 2.95, -0.72]}>
+        <boxGeometry args={[3.5, 0.34, 0.28]} />
+        <meshStandardMaterial color="#F46300" emissive="#F46300" emissiveIntensity={0.45} />
+      </mesh>
+      <group position={[0, 1.05, 0.08]} rotation={[-0.2, 0, 0]}>
         <mesh castShadow>
-          <boxGeometry args={[2.25, 0.16, 2.25]} />
-          <meshStandardMaterial
-            color="#005EB8"
-            emissive="#005EB8"
-            emissiveIntensity={0.3}
-            metalness={0.42}
-            roughness={0.25}
-          />
+          <boxGeometry args={[1.55, 1.05, 0.12]} />
+          <meshStandardMaterial color="#f8f2df" roughness={0.55} />
         </mesh>
-        <mesh position={[0, 0.14, 0]}>
-          <sphereGeometry args={[0.13, 14, 10]} />
-          <meshStandardMaterial color="#FFC629" emissive="#F46300" emissiveIntensity={0.8} />
+        <mesh position={[0, 0, 0.075]}>
+          <boxGeometry args={[1.25, 0.75, 0.025]} />
+          <meshStandardMaterial color="#e4ebea" />
         </mesh>
-        <mesh position={[0.74, -0.08, 0.74]} rotation={[0, 0, -0.58]}>
-          <cylinderGeometry args={[0.035, 0.035, 1.25, 8]} />
-          <meshStandardMaterial color="#FFC629" emissive="#FFC629" emissiveIntensity={0.45} />
+        <mesh position={[0, 0.2, 0.1]}>
+          <boxGeometry args={[0.75, 0.055, 0.02]} />
+          <meshStandardMaterial color="#005EB8" />
         </mesh>
-        <mesh position={[1.09, -0.58, 0.74]}>
-          <sphereGeometry args={[0.11, 12, 8]} />
-          <meshStandardMaterial color="#F46300" emissive="#F46300" emissiveIntensity={0.6} />
+        <mesh position={[0, -0.05, 0.1]}>
+          <boxGeometry args={[0.95, 0.035, 0.02]} />
+          <meshStandardMaterial color="#F46300" />
         </mesh>
       </group>
-      <group position={[1.1, 0.84, 0.55]} rotation={[0, 0, Math.PI / 2]}>
-        <mesh castShadow>
-          <cylinderGeometry args={[0.24, 0.24, 1.45, 18]} />
-          <meshStandardMaterial color="#f7f2df" roughness={0.48} />
-        </mesh>
-        {[-0.38, 0.38].map((y) => (
-          <mesh key={y} position={[0, y, 0]}>
-            <torusGeometry args={[0.255, 0.055, 8, 20]} />
-            <meshStandardMaterial color="#F46300" emissive="#F46300" emissiveIntensity={0.35} />
-          </mesh>
-        ))}
-      </group>
-      <pointLight position={[0, 2.3, 0.7]} color="#ffc629" intensity={2.4} distance={7} />
+      <mesh position={[0, 0.55, 0.62]} castShadow>
+        <boxGeometry args={[1.8, 0.65, 0.9]} />
+        <meshStandardMaterial color="#1b313b" roughness={0.48} />
+      </mesh>
+      <pointLight position={[0, 2.5, 1]} color="#ffc629" intensity={1.8} distance={6} />
     </group>
   );
 }

@@ -36,6 +36,7 @@ export default function JourneyAlbum({
   onOpen,
   onClose,
   onNavigate,
+  triggerSide,
 }: {
   language: Language;
   items: Milestone[];
@@ -44,6 +45,7 @@ export default function JourneyAlbum({
   onOpen: () => void;
   onClose: () => void;
   onNavigate: (index: number) => void;
+  triggerSide: "left" | "right";
 }) {
   const t = labels[language];
   useEffect(() => {
@@ -54,7 +56,11 @@ export default function JourneyAlbum({
   }, [onClose, open]);
   return (
     <>
-      <button className="journey-album-trigger" onClick={onOpen} aria-label={t.album}>
+      <button
+        className={`journey-album-trigger is-${triggerSide}`}
+        onClick={onOpen}
+        aria-label={t.album}
+      >
         <span>▣</span>
         <b>{visited.length}</b>
         <small>{t.album}</small>

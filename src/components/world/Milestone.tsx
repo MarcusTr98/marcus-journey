@@ -232,6 +232,7 @@ function MemoryPostcard({
   offset: LandmarkOffset;
 }) {
   const current = useJourneyStore((s) => s.currentMilestone);
+  const vehicleProgress = useJourneyStore((s) => s.vehicleProgress);
   const [visible, setVisible] = useState(false);
   const active = current === index;
   useEffect(() => {
@@ -243,7 +244,7 @@ function MemoryPostcard({
     const timer = window.setTimeout(() => setVisible(false), 3600);
     return () => window.clearTimeout(timer);
   }, [active]);
-  if (!visible) return null;
+  if (!visible || vehicleProgress >= 0.985) return null;
   const meta = landmarkMeta[data.id];
   return (
     <Html
@@ -274,6 +275,7 @@ function MemoryPostcard({
 }
 
 export default function Milestone({ data, index }: { data: MilestoneType; index: number }) {
+  if (data.id === "graduation") return null;
   const previous = milestones[Math.max(0, index - 1)].position;
   const next = milestones[Math.min(milestones.length - 1, index + 1)].position;
   const tangentX = next[0] - previous[0],

@@ -74,7 +74,7 @@ type L = [string, string, string[]];
 const vi: L[] = [
   [
     "Quản lý Sản xuất & Chất lượng",
-    "Phụ trách sản xuất và chất lượng trên chuyền khoảng 40 máy, đồng thời phối hợp cơ cấu vận hành gần 200 người—bao gồm sản xuất, sửa máy, đóng hàng, thay dao, đào tạo và bố trí nhân sự dự phòng.",
+    "Phụ trách sản xuất và chất lượng trên chuyền khoảng 40 máy Laser Cutting CNC, đồng thời phối hợp cơ cấu vận hành gần 200 người—bao gồm sản xuất, chất lượng, kỹ thuật máy, đóng hàng, thay nguyên vật liệu, đào tạo và bố trí nhân sự dự phòng.",
     [
       "Standard Work · Check Sheet · Pareto · Q-Point → giữ lỗi nghiêm trọng dưới 1%",
       "QCC · Kaizen · 5W1H/5 Why → giảm khoảng 30% lãng phí vận hành",
@@ -196,7 +196,7 @@ const vi: L[] = [
 const zh: L[] = [
   [
     "生产与质量管理",
-    "负责约40台设备生产线的生产与质量，并协调近200人的运营体系，涵盖生产、维修、包装、换刀、培训及休假替补安排。",
+    "负责约40台Laser Cutting CNC设备生产线的生产与质量，并协调近200人的运营体系，涵盖生产、质量、设备技术、包装、原材料更换、培训及人员替补安排。",
     [
       "标准作业 · 检查表 · 帕累托 · Q-Point → 严重缺陷率低于1%",
       "QCC · 改善 · 5W1H/5Why → 运营浪费降低约30%",
