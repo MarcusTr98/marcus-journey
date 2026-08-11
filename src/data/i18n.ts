@@ -114,7 +114,7 @@ const vi: L[] = [
   ],
   [
     "Kiến trúc sư Giải pháp · Lập trình viên Full-stack & Bảo mật",
-    "Khảo sát, thiết kế, triển khai và nghiệm thu hai giải pháp số hóa cho Ban Chỉ huy Quân sự phường Hồng Bàng: hệ thống quản lý công việc theo vai trò trên mạng LAN và USB Sentry bảo vệ thiết bị đầu cuối Windows. Cả hai sản phẩm được nghiệm thu chính thức với mức độ hài lòng 100%.",
+    "Bàn giao hai sản phẩm nội bộ cho Ban Chỉ huy Quân sự phường Hồng Bàng: quản lý công việc trên mạng LAN và USB Sentry bảo vệ máy tính Windows. Cả hai được nghiệm thu với mức độ hài lòng 100%.",
     [
       "Vòng đời công việc: giao việc, xác nhận, báo cáo hoàn thành và theo dõi trực quan",
       "Phát hiện USB/thiết bị di động bằng drive polling và WMI/WPD",
@@ -221,7 +221,7 @@ const zh: L[] = [
   ],
   [
     "解决方案架构师 · 全栈与安全开发者",
-    "为红庞坊军事指挥部调研、设计、部署并验收两套数字化解决方案：基于角色的局域网任务管理系统，以及保护Windows终端的USB Sentry。两项产品均以100%满意度正式验收。",
+    "为红庞坊军事指挥部交付两套内部产品：局域网任务管理系统和Windows终端防护工具USB Sentry。两项产品均以100%满意度正式验收。",
     [
       "任务全流程：派发、确认、完成报告与实时可视化",
       "通过磁盘轮询与WMI/WPD检测USB及移动设备",
@@ -334,7 +334,7 @@ const localizedTitles: Record<Exclude<Language, "en">, Record<string, string>> =
   vi: {
     vhunter: "Kinh nghiệm thực tế · VHunter Event Company",
     video: "Dự án website Marcus Video",
-    solutions: "Sản phẩm thực tế · Giải pháp vận hành & bảo mật",
+    solutions: "Sản phẩm thực tế · Số hóa & bảo mật nội bộ",
     electronics: "Dự án website Marcus Electronics",
     store: "Đồ án tốt nghiệp · Marcus Store",
     graduation: "Tốt nghiệp FPT Polytechnic",

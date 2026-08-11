@@ -75,12 +75,12 @@ const milestoneCatalog: Omit<Milestone, "stage">[] = [
   },
   {
     id: "solutions",
-    shortTitle: "Military Command Digitalization",
-    title: "Military Command Operational & Security Products",
+    shortTitle: "Deployed Client Products",
+    title: "Military Command Digital Solutions",
     period: "02/2026 — 04/2026",
     role: "Solution Architect · Full-stack & Security Developer",
     summary:
-      "Designed, delivered and commissioned two internal solutions for the Hong Bang Ward Military Command: a role-based LAN task-management workflow and USB Sentry, a portable Windows endpoint-protection utility. Both products were formally accepted with 100% client satisfaction.",
+      "Delivered two internal products for the Hong Bang Ward Military Command: LAN task management and USB Sentry endpoint protection. Both were formally accepted with 100% client satisfaction.",
     highlights: [
       "Task lifecycle: assignment, acknowledgement, completion reporting and live visibility",
       "USB/mobile detection through drive polling and WMI/WPD monitoring",

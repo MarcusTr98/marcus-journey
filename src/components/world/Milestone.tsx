@@ -1,6 +1,8 @@
 "use client";
 
 import { useTexture } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
+import { useRef } from "react";
 import * as THREE from "three";
 import type { Milestone as MilestoneType } from "@/types";
 import { milestones } from "@/data/milestones";
@@ -41,6 +43,35 @@ function Block({
         emissiveIntensity={glow ? 0.55 : 0}
       />
     </mesh>
+  );
+}
+
+function RotatingRoofSign({ kind }: { kind: "phone" | "laptop" }) {
+  const sign = useRef<THREE.Group>(null);
+  useFrame((_, delta) => {
+    if (sign.current) sign.current.rotation.y += delta * 0.85;
+  });
+  return (
+    <group ref={sign} rotation={[0, 0, -0.32]}>
+      {kind === "phone" ? (
+        <group>
+          <Block position={[0, 0, 0]} size={[0.78, 1.2, 0.2]} color="#ffffff" glow />
+          <Block position={[0, 0.02, 0.12]} size={[0.52, 0.78, 0.06]} color="#ff3340" glow />
+          <Block position={[0, 0.48, 0.13]} size={[0.2, 0.035, 0.02]} color="#ffccd0" />
+          <mesh position={[0, -0.48, 0.17]}>
+            <circleGeometry args={[0.065, 16]} />
+            <meshStandardMaterial color="#ffffff" emissive="#ffffff" emissiveIntensity={2} />
+          </mesh>
+        </group>
+      ) : (
+        <group>
+          <Block position={[0, 0.2, 0]} size={[1.2, 0.78, 0.16]} color="#ffffff" glow />
+          <Block position={[0, 0.22, 0.1]} size={[0.9, 0.52, 0.055]} color="#ff7a18" glow />
+          <Block position={[0, -0.35, 0.28]} size={[1.38, 0.12, 0.72]} color="#fff2dc" />
+          <Block position={[0, -0.27, 0.52]} size={[0.62, 0.025, 0.24]} color="#ffb067" />
+        </group>
+      )}
+    </group>
   );
 }
 
@@ -180,6 +211,10 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
               <Block position={[0, -0.25, 0.18]} size={[0.95, 0.08, 0.45]} color="#d8dfe1" />
             </group>
           ))}
+          <group position={[0, 2.75, 0.1]}>
+            <RotatingRoofSign kind="laptop" />
+          </group>
+          <pointLight position={[0, 2.75, 0.8]} color="#ff9a3d" intensity={3.4} distance={7} />
           <pointLight position={[0, 1.4, 1.5]} color="#ffb36f" intensity={2.8} distance={6} />
         </group>
       );
@@ -227,13 +262,8 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
           <Block position={[0, 1, 0]} size={[3.9, 1.9, 2.5]} color="#f3f1eb" />
           <Block position={[0, 2.12, 0]} size={[4.15, 0.35, 2.72]} color="#d71920" />
           <Block position={[0, 1.75, 1.29]} size={[3.4, 0.35, 0.08]} color="#d71920" glow />
-          <group position={[0, 2.72, 0.2]} rotation={[0, 0, -0.62]}>
-            <Block position={[0, 0, 0]} size={[0.8, 1.25, 0.18]} color="#ffffff" glow />
-            <Block position={[0, 0.05, 0.11]} size={[0.52, 0.78, 0.06]} color="#ff3340" glow />
-            <mesh position={[0, -0.48, 0.17]}>
-              <circleGeometry args={[0.07, 14]} />
-              <meshStandardMaterial color="#ffffff" emissive="#ffffff" emissiveIntensity={2} />
-            </mesh>
+          <group position={[0, 2.75, 0.2]}>
+            <RotatingRoofSign kind="phone" />
           </group>
           <pointLight position={[0, 2.6, 1]} color="#ff3040" intensity={3.5} distance={7} />
           {[-1.15, 0, 1.15].map((x) => (
@@ -252,7 +282,7 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
       return (
         <group position={[0, 0.15, 0]}>
           <Block position={[0, 0.12, 0]} size={[3.2, 0.24, 2.5]} color="#17242a" />
-          <Block position={[0, 1.35, 0]} size={[1.25, 1.35, 0.85]} color="#e6edf0" />
+          <Block position={[0, 1.35, 0]} size={[1.25, 1.35, 0.85]} color="#ffd43b" />
           <mesh position={[0, 1.42, 0.47]}>
             <circleGeometry args={[0.26, 20]} />
             <meshStandardMaterial color="#ff934f" emissive="#F46300" emissiveIntensity={2.2} />
@@ -273,21 +303,24 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
             <sphereGeometry args={[0.12, 12, 8]} />
             <meshStandardMaterial color="#59efff" emissive="#005EB8" emissiveIntensity={2.5} />
           </mesh>
-          {[-1, 1].map((x) => (
+          {[-1, 1].map((x, index) => (
             <group key={x}>
-              <mesh position={[x, 1.5, 0]} rotation={[0, 0, x * -0.25]}>
-                <capsuleGeometry args={[0.16, 0.85, 6, 10]} />
-                <meshStandardMaterial color="#F46300" metalness={0.35} />
-              </mesh>
-              <mesh position={[x * 0.38, 0.55, 0]}>
-                <capsuleGeometry args={[0.18, 0.75, 6, 10]} />
-                <meshStandardMaterial color="#005EB8" metalness={0.35} />
+              <Block
+                position={[x, 1.48, 0]}
+                size={[0.34, 1.02, 0.36]}
+                color={index ? "#ff4fa3" : "#F46300"}
+              />
+              <Block position={[x * 0.38, 0.55, 0]} size={[0.4, 0.85, 0.5]} color="#005EB8" />
+              <mesh position={[x, 2.02, 0]}>
+                <cylinderGeometry args={[0.19, 0.19, 0.12, 12]} />
+                <meshStandardMaterial color="#ffffff" />
               </mesh>
             </group>
           ))}
-          <group position={[1.12, 0.28, 0.95]} rotation={[0, -0.62, 0]} scale={0.58}>
-            <Block position={[0, 0.35, 0]} size={[1.8, 0.55, 1.15]} color="#ff4fa3" />
+          <group position={[-1.35, 0.38, 1.35]} rotation={[0, 0.52, 0]} scale={0.72}>
+            <Block position={[0, 0.35, 0]} size={[1.8, 0.55, 1.15]} color="#00c98d" />
             <Block position={[0, 0.75, -0.05]} size={[1.2, 0.52, 0.9]} color="#fff1a8" />
+            <Block position={[0, 0.72, 0.48]} size={[0.75, 0.22, 0.08]} color="#8b5cf6" glow />
             {[-0.72, 0.72].map((x) =>
               [-0.42, 0.42].map((z) => (
                 <mesh key={`${x}-${z}`} position={[x, 0.15, z]} rotation={[0, 0, Math.PI / 2]}>
