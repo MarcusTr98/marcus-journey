@@ -10,6 +10,7 @@ import { landmarkMeta, type LandmarkKind } from "@/data/landmarks";
 
 type LandmarkOffset = [number, number];
 const beamPositions = [-1.15, 0, 1.15];
+const MAP_COLORS = ["#ff4fa3", "#ffd43b", "#64e7ff", "#8b5cf6", "#00c98d", "#ff6b35"];
 const vietnamStar = new THREE.Shape();
 Array.from({ length: 10 }, (_, index) => {
   const radius = index % 2 === 0 ? 0.26 : 0.105;
@@ -57,6 +58,7 @@ function RotatingRoofSign({ kind }: { kind: "phone" | "laptop" }) {
         <group>
           <Block position={[0, 0, 0]} size={[0.78, 1.2, 0.2]} color="#ffffff" glow />
           <Block position={[0, 0.02, 0.12]} size={[0.52, 0.78, 0.06]} color="#ff3340" glow />
+          <Block position={[0, 0.02, -0.12]} size={[0.52, 0.78, 0.06]} color="#ff3340" glow />
           <Block position={[0, 0.48, 0.13]} size={[0.2, 0.035, 0.02]} color="#ffccd0" />
           <mesh position={[0, -0.48, 0.17]}>
             <circleGeometry args={[0.065, 16]} />
@@ -262,10 +264,10 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
           <Block position={[0, 1, 0]} size={[3.9, 1.9, 2.5]} color="#f3f1eb" />
           <Block position={[0, 2.12, 0]} size={[4.15, 0.35, 2.72]} color="#d71920" />
           <Block position={[0, 1.75, 1.29]} size={[3.4, 0.35, 0.08]} color="#d71920" glow />
-          <group position={[0, 2.75, 0.2]}>
+          <group position={[0, 3.35, 0.2]}>
             <RotatingRoofSign kind="phone" />
           </group>
-          <pointLight position={[0, 2.6, 1]} color="#ff3040" intensity={3.5} distance={7} />
+          <pointLight position={[0, 3.2, 1]} color="#ff3040" intensity={3.8} distance={8} />
           {[-1.15, 0, 1.15].map((x) => (
             <group key={x} position={[x, 0.92, 1.31]}>
               <Block position={[0, 0, 0]} size={[0.72, 1.1, 0.08]} color="#ffffff" />
@@ -335,21 +337,41 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
     case "smart-factory":
       return (
         <group>
-          {[-1.2, 0, 1.2].map((x, i) => (
-            <group key={x}>
-              <Block
-                position={[x, 0.65 + i * 0.25, 0]}
-                size={[0.82, 1.3 + i * 0.5, 1.5]}
-                color={["#005EB8", "#132d3a", "#F46300"][i]}
-                glow
-              />
-              <mesh position={[x, 1.6 + i * 0.5, 0]}>
-                <sphereGeometry args={[0.18, 10, 8]} />
-                <meshStandardMaterial color="#8dffe0" emissive="#00A859" emissiveIntensity={2} />
+          <Block position={[0, 0.18, 0]} size={[4.3, 0.3, 3.15]} color="#eadfb9" />
+          <Block position={[-1.35, 0.38, -0.75]} size={[1.05, 0.12, 0.85]} color="#6bcf8e" />
+          <Block position={[1.25, 0.38, 0.72]} size={[1.25, 0.12, 0.72]} color="#64b5f6" />
+          {[
+            [-1.45, -0.95],
+            [-0.75, -0.45],
+            [-0.95, 0.2],
+            [-0.15, 0.55],
+            [0.55, 0.05],
+            [1.3, 0.65],
+          ].map(([x, z], index) => (
+            <group key={`${x}-${z}`} position={[x, 0.52, z]}>
+              <Block position={[0, 0, 0]} size={[0.55, 0.08, 0.12]} color="#F46300" glow />
+              <mesh position={[0, 0.15, 0]}>
+                <sphereGeometry args={[0.11, 10, 8]} />
+                <meshStandardMaterial
+                  color={MAP_COLORS[index % MAP_COLORS.length]}
+                  emissive={MAP_COLORS[index % MAP_COLORS.length]}
+                  emissiveIntensity={1.7}
+                />
               </mesh>
             </group>
           ))}
-          <Block position={[0, 0.15, 0]} size={[4, 0.28, 2.8]} color="#17242a" />
+          {[-1.45, -0.85, -0.25].map((x, index) => (
+            <mesh key={x} position={[x, 0.72, 1.02 + index * 0.12]}>
+              <coneGeometry args={[0.32, 0.78, 6]} />
+              <meshStandardMaterial color={index === 1 ? "#8b5cf6" : "#55786a"} />
+            </mesh>
+          ))}
+          <mesh position={[1.55, 1.18, 0.88]}>
+            <cylinderGeometry args={[0.025, 0.035, 1.35, 8]} />
+            <meshStandardMaterial color="#e8eef0" metalness={0.6} />
+          </mesh>
+          <Block position={[1.85, 1.55, 0.88]} size={[0.62, 0.38, 0.05]} color="#ff3340" glow />
+          <pointLight position={[1.55, 1.7, 0.9]} color="#ffd43b" intensity={2.8} distance={5} />
         </group>
       );
     default:

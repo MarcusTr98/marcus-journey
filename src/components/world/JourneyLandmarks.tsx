@@ -9,6 +9,9 @@ import { graduationCurveProgress } from "./Road";
 import { milestones } from "@/data/milestones";
 
 const fptPosition = milestones.find(({ id }) => id === "fpt")?.position ?? [4, 0, -27];
+const graduationPosition = milestones.find(({ id }) => id === "graduation")?.position ?? [
+  2.6, 0, -167,
+];
 const celebrationColors = ["#ff4fa3", "#ffd43b", "#64e7ff", "#8b5cf6", "#ff6b35"];
 
 const labels = {
@@ -348,6 +351,7 @@ export default function JourneyLandmarks() {
       <StartLine />
       <StartCelebration />
       <BuntingGate position={fptPosition} />
+      <BuntingGate position={graduationPosition} />
       <MinorLearningCheckpoint />
       <GraduationMonument />
       <GraduationCelebration />

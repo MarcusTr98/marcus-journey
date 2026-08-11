@@ -119,16 +119,16 @@ export default function MarcusJourneyScene() {
       <Stars
         radius={70}
         depth={38}
-        count={quality === "high" ? 900 : 260}
-        factor={quality === "high" ? 2.1 : 1.45}
+        count={quality === "high" ? 1500 : 420}
+        factor={quality === "high" ? 2.35 : 1.65}
         fade
         speed={0.35}
       />
       <Sparkles
         position={[0, 8, -108]}
         scale={[34, 12, 230]}
-        count={quality === "high" ? 55 : 28}
-        size={quality === "high" ? 2 : 1.35}
+        count={quality === "high" ? 95 : 42}
+        size={quality === "high" ? 2.25 : 1.55}
         speed={0.2}
         color="#ffffff"
         opacity={0.58}
@@ -138,8 +138,8 @@ export default function MarcusJourneyScene() {
           <Sparkles
             position={[0, 10, -108]}
             scale={[38, 15, 230]}
-            count={90}
-            size={2.4}
+            count={135}
+            size={2.7}
             speed={0.22}
             color="#8ee8ff"
             opacity={0.72}
@@ -147,11 +147,20 @@ export default function MarcusJourneyScene() {
           <Sparkles
             position={[0, 7, -108]}
             scale={[34, 10, 230]}
-            count={60}
-            size={1.8}
+            count={95}
+            size={2.05}
             speed={0.3}
             color="#ffd86a"
             opacity={0.6}
+          />
+          <Sparkles
+            position={[0, 6, -108]}
+            scale={[36, 9, 230]}
+            count={75}
+            size={2.1}
+            speed={0.26}
+            color="#d59cff"
+            opacity={0.62}
           />
         </>
       )}

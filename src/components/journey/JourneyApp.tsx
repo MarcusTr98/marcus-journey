@@ -183,7 +183,7 @@ export default function JourneyApp({ initialLanguage }: { initialLanguage: Langu
           {active && (
             <aside
               key={active.id}
-              className={`milestone-panel ${currentMilestone % 2 === 1 ? "is-left" : "is-right"}`}
+              className={`milestone-panel ${active.id !== "graduation" && currentMilestone % 2 === 1 ? "is-left" : "is-right"}`}
               style={{ "--accent": active.accent } as React.CSSProperties}
             >
               <div className="stage-context">
