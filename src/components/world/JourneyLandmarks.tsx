@@ -6,6 +6,13 @@ import type * as THREE from "three";
 import { useJourneyStore } from "@/stores/journeyStore";
 import { FINISH_POSITION, TROPHY_POSITION } from "@/data/journeyPath";
 import { graduationCurveProgress } from "./Road";
+import { milestones } from "@/data/milestones";
+
+const fptPosition = milestones.find(({ id }) => id === "fpt")?.position ?? [4, 0, -27];
+const graduationPosition = milestones.find(({ id }) => id === "graduation")?.position ?? [
+  2.6, 0, -167,
+];
+const celebrationColors = ["#ff4fa3", "#ffd43b", "#64e7ff", "#8b5cf6", "#ff6b35"];
 
 const labels = {
   vi: {
@@ -60,9 +67,105 @@ function StartLine() {
         <meshStandardMaterial color="#F46300" emissive="#F46300" emissiveIntensity={0.9} />
       </mesh>
       <pointLight position={[0, 2.5, 0.7]} color="#ffb36f" intensity={2.2} distance={6} />
+      {[-1.15, 1.15].map((x, index) => (
+        <group key={x} position={[x, 1.1, 0.2]} rotation={[0, 0, x * -0.18]}>
+          <mesh rotation={[0, 0, index ? -0.48 : 0.48]}>
+            <coneGeometry args={[0.55, 4.2, 18, 1, true]} />
+            <meshBasicMaterial
+              color={index ? "#64e7ff" : "#ffd43b"}
+              transparent
+              opacity={0.22}
+              depthWrite={false}
+            />
+          </mesh>
+          <pointLight
+            position={[0, 1.8, 0]}
+            color={index ? "#64e7ff" : "#ffd43b"}
+            intensity={2.8}
+            distance={7}
+          />
+        </group>
+      ))}
       <Html center position={[0, 2.66, 0.12]} transform distanceFactor={7}>
         <div className="world-label start-label">{t.start}</div>
       </Html>
+    </group>
+  );
+}
+
+function StartCelebration() {
+  const group = useRef<THREE.Group>(null);
+  const elapsed = useRef(0);
+  const started = useJourneyStore((s) => s.started);
+  const progress = useJourneyStore((s) => s.vehicleProgress);
+  const active = started && progress < 0.045;
+  const particles = useMemo(
+    () =>
+      Array.from({ length: 54 }, (_, index) => {
+        const angle = (index * 2.399) % (Math.PI * 2);
+        const lift = 0.45 + ((index * 17) % 50) / 50;
+        return {
+          direction: [Math.cos(angle), lift, Math.sin(angle)] as [number, number, number],
+          delay: ((index * 13) % 31) / 31,
+          speed: 0.7 + (index % 5) * 0.08,
+          color: celebrationColors[index % celebrationColors.length],
+        };
+      }),
+    [],
+  );
+  useFrame((_, delta) => {
+    if (!active || !group.current) return;
+    elapsed.current += delta;
+    group.current.children.forEach((child, index) => {
+      const particle = particles[index];
+      const phase = (elapsed.current * particle.speed + particle.delay) % 1;
+      child.position.set(
+        particle.direction[0] * phase * 4.2,
+        2.4 + particle.direction[1] * phase * 3.4 - phase * phase * 1.8,
+        particle.direction[2] * phase * 3.2,
+      );
+      child.scale.setScalar(Math.max(0.15, 1 - phase));
+    });
+  });
+  return (
+    <group visible={active} position={[0, 0, 4.7]}>
+      <group ref={group}>
+        {particles.map((particle, index) => (
+          <mesh key={index}>
+            <sphereGeometry args={[0.07, 7, 6]} />
+            <meshStandardMaterial
+              color={particle.color}
+              emissive={particle.color}
+              emissiveIntensity={2.8}
+              toneMapped={false}
+            />
+          </mesh>
+        ))}
+      </group>
+    </group>
+  );
+}
+
+function BuntingGate({ position }: { position: [number, number, number] }) {
+  const colors = ["#ff4fa3", "#ffd43b", "#00c98d", "#4ea5ff", "#8b5cf6", "#ff6b35"];
+  return (
+    <group position={[position[0], 0.04, position[2]]}>
+      {[-1.72, 1.72].map((x) => (
+        <mesh key={x} position={[x, 1.45, 0]} castShadow>
+          <cylinderGeometry args={[0.045, 0.06, 2.9, 10]} />
+          <meshStandardMaterial color="#f2eee2" metalness={0.35} />
+        </mesh>
+      ))}
+      <mesh position={[0, 2.82, 0]}>
+        <boxGeometry args={[3.45, 0.035, 0.035]} />
+        <meshStandardMaterial color="#f6ead2" />
+      </mesh>
+      {colors.map((color, index) => (
+        <mesh key={color} position={[-1.38 + index * 0.55, 2.58, 0]} rotation={[0, 0, Math.PI]}>
+          <coneGeometry args={[0.2, 0.48, 3]} />
+          <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.35} />
+        </mesh>
+      ))}
     </group>
   );
 }
@@ -215,6 +318,9 @@ export default function JourneyLandmarks() {
   return (
     <>
       <StartLine />
+      <StartCelebration />
+      <BuntingGate position={fptPosition} />
+      <BuntingGate position={graduationPosition} />
       <GraduationMonument />
       <GraduationCelebration />
       <FinishFlag />

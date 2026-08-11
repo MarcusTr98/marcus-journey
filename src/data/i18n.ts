@@ -73,13 +73,13 @@ export const copy = {
 type L = [string, string, string[]];
 const vi: L[] = [
   [
-    "Quản lý Sản xuất & Chất lượng",
-    "Phụ trách sản xuất và chất lượng trên chuyền khoảng 40 máy Laser Cutting CNC, đồng thời phối hợp cơ cấu vận hành gần 200 người—bao gồm sản xuất, chất lượng, kỹ thuật máy, đóng hàng, thay nguyên vật liệu, đào tạo và bố trí nhân sự dự phòng.",
+    "Quản lý & Điều phối Sản xuất – Chất lượng",
+    "Phụ trách quản lý và điều phối sản xuất và chất lượng nhà xưởng (~40 máy Laser Cutting CNC và ~200 nhân sự).",
     [
-      "Standard Work · Check Sheet · Pareto · Q-Point → giữ lỗi nghiêm trọng dưới 1%",
-      "QCC · Kaizen · 5W1H/5 Why → giảm khoảng 30% lãng phí vận hành",
-      "TPM → giảm 50% sự cố · Safety Dojo/5S → rút ngắn 35% onboarding",
-      "Điều phối Plan/Kanban; xây dashboard, báo cáo và hệ thống lưu trữ dữ liệu",
+      "Chuẩn hóa thao tác, Check Sheet, Pareto và Q-Point → kiểm soát lỗi nghiêm trọng dưới 1%",
+      "Điều hành QCC/Kaizen, phân tích 5W1H–5 Why → giảm khoảng 30% lãng phí vận hành",
+      "Triển khai TPM, 5S và Safety Dojo → giảm 50% sự cố thiết bị, rút ngắn 35% thời gian đào tạo hội nhập",
+      "Điều độ sản xuất theo Plan/Kanban; cân đối nhân lực–vật tư và quản trị báo cáo hiệu suất",
     ],
   ],
   [
@@ -185,8 +185,8 @@ const vi: L[] = [
 ];
 const zh: L[] = [
   [
-    "生产与质量管理",
-    "负责约40台Laser Cutting CNC设备生产线的生产与质量，并协调近200人的运营体系，涵盖生产、质量、设备技术、包装、原材料更换、培训及人员替补安排。",
+    "生产与质量管理协调",
+    "负责工厂生产与质量的管理及协调，覆盖约40台Laser Cutting CNC设备和约200名员工。",
     [
       "标准作业 · 检查表 · 帕累托 · Q-Point → 严重缺陷率低于1%",
       "QCC · 改善 · 5W1H/5Why → 运营浪费降低约30%",
