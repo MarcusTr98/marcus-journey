@@ -1,11 +1,13 @@
 "use client";
 
 import { useLayoutEffect, useMemo, useRef, type RefObject } from "react";
+import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { useJourneyStore } from "@/stores/journeyStore";
 import { routeCurve } from "./Road";
 
 const FOLIAGE = ["#1d5c46", "#267256", "#318262", "#174938"];
+const FIREFLY_COLORS = ["#fff4a8", "#7de8ff", "#ff78ba", "#a78bfa", "#8affcb"];
 type Instance = { position: THREE.Vector3; scale: number; tone: number };
 
 function useInstanceMatrices(
@@ -96,6 +98,53 @@ function InstancedRocks({ rocks }: { rocks: Instance[] }) {
   );
 }
 
+function RoadsideFireflies({ count }: { count: number }) {
+  const points = useRef<THREE.Points>(null);
+  const material = useRef<THREE.PointsMaterial>(null);
+  const geometry = useMemo(() => {
+    const positions: number[] = [];
+    const colors: number[] = [];
+    for (let index = 0; index < count; index += 1) {
+      const progress = (index + 0.35) / (count + 0.7);
+      const point = routeCurve.getPointAt(progress);
+      const tangent = routeCurve.getTangentAt(progress);
+      const normal = new THREE.Vector3(-tangent.z, 0, tangent.x).normalize();
+      const side = index % 2 === 0 ? -1 : 1;
+      const distance = 3.5 + ((index * 17) % 13) * 0.38;
+      point
+        .addScaledVector(normal, side * distance)
+        .addScaledVector(tangent, (((index * 19) % 11) - 5) * 0.12);
+      positions.push(point.x, 0.45 + ((index * 23) % 17) * 0.16, point.z);
+      const color = new THREE.Color(FIREFLY_COLORS[index % FIREFLY_COLORS.length]);
+      colors.push(color.r, color.g, color.b);
+    }
+    const buffer = new THREE.BufferGeometry();
+    buffer.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+    buffer.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
+    return buffer;
+  }, [count]);
+  useFrame(({ clock }) => {
+    const time = clock.getElapsedTime();
+    if (points.current) points.current.position.y = Math.sin(time * 0.55) * 0.09;
+    if (material.current) material.current.opacity = 0.58 + Math.sin(time * 1.7) * 0.22;
+  });
+  return (
+    <points ref={points} geometry={geometry}>
+      <pointsMaterial
+        ref={material}
+        size={0.13}
+        vertexColors
+        transparent
+        opacity={0.75}
+        depthWrite={false}
+        blending={THREE.AdditiveBlending}
+        sizeAttenuation
+        toneMapped={false}
+      />
+    </points>
+  );
+}
+
 export default function Scenery() {
   const quality = useJourneyStore((state) => state.quality);
   const treeCount = quality === "high" ? 66 : 38;
@@ -138,6 +187,7 @@ export default function Scenery() {
     <group>
       <InstancedTrees trees={trees} shadows={quality === "high"} />
       <InstancedRocks rocks={rocks} />
+      <RoadsideFireflies count={quality === "high" ? 150 : 72} />
     </group>
   );
 }
