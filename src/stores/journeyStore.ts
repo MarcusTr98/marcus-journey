@@ -15,6 +15,7 @@ interface JourneyState {
   sceneReady: boolean;
   requestedMilestone: number | null;
   navigationPinned: boolean;
+  minorUpgradePulse: number;
   setProgress: (v: number) => void;
   setVehicleProgress: (v: number) => void;
   setCurrentMilestone: (v: number) => void;
@@ -27,6 +28,7 @@ interface JourneyState {
   setSceneReady: (v: boolean) => void;
   requestMilestone: (v: number | null) => void;
   setNavigationPinned: (v: boolean) => void;
+  triggerMinorUpgrade: () => void;
   resetJourney: () => void;
 }
 export const useJourneyStore = create<JourneyState>()(
@@ -45,6 +47,7 @@ export const useJourneyStore = create<JourneyState>()(
       sceneReady: false,
       requestedMilestone: null,
       navigationPinned: false,
+      minorUpgradePulse: 0,
       setProgress: (progress) => set({ progress }),
       setVehicleProgress: (vehicleProgress) => set({ vehicleProgress }),
       setCurrentMilestone: (currentMilestone) =>
@@ -63,6 +66,8 @@ export const useJourneyStore = create<JourneyState>()(
       setSceneReady: (sceneReady) => set({ sceneReady }),
       requestMilestone: (requestedMilestone) => set({ requestedMilestone }),
       setNavigationPinned: (navigationPinned) => set({ navigationPinned }),
+      triggerMinorUpgrade: () =>
+        set((state) => ({ minorUpgradePulse: state.minorUpgradePulse + 1 })),
       resetJourney: () =>
         set({
           progress: 0,

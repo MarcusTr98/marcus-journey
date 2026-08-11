@@ -57,7 +57,7 @@ const milestoneCatalog: Omit<Milestone, "stage">[] = [
   {
     id: "video",
     shortTitle: "Personal Project",
-    title: "Marcus Video",
+    title: "Marcus Video Website Project",
     period: "12/2025 — 04/2026",
     role: "Full-stack Java Developer",
     summary:
@@ -76,7 +76,7 @@ const milestoneCatalog: Omit<Milestone, "stage">[] = [
   {
     id: "solutions",
     shortTitle: "Military Command Digitalization",
-    title: "Operational & Endpoint Security Solutions",
+    title: "Military Command Operational & Security Products",
     period: "02/2026 — 04/2026",
     role: "Solution Architect · Full-stack & Security Developer",
     summary:
@@ -101,7 +101,7 @@ const milestoneCatalog: Omit<Milestone, "stage">[] = [
   {
     id: "electronics",
     shortTitle: "Personal Project",
-    title: "Marcus Electronics",
+    title: "Marcus Electronics E-commerce Website",
     period: "01/2026 — 04/2026",
     role: "Full-stack Product Developer",
     summary:
@@ -138,7 +138,7 @@ const milestoneCatalog: Omit<Milestone, "stage">[] = [
   {
     id: "store",
     shortTitle: "Graduation Project",
-    title: "Marcus Store",
+    title: "Marcus Store AI Commerce Graduation Project",
     period: "05/2026 — 09/2026",
     role: "Team Leader · Solution Architect",
     summary:
@@ -214,7 +214,6 @@ const chronologicalOrder = [
   "toyota",
   "fpt",
   "vhunter",
-  "workshop",
   "video",
   "electronics",
   "solutions",
@@ -223,8 +222,8 @@ const chronologicalOrder = [
   "teaching",
   "future",
 ];
-const lane = [0, 4, -4, 4, -4, 4, -4, 4, 2.6, 3, 0];
-const distance = [-7, -27, -47, -67, -87, -107, -127, -147, -167, -187, -207];
+const lane = [0, 4, -4, -4, 4, -4, 4, 2.6, 3, 0];
+const distance = [-7, -27, -47, -87, -107, -127, -147, -167, -187, -207];
 export const milestones = chronologicalOrder.map((id, index) => ({
   ...(milestoneCatalog.find((item) => item.id === id) as Milestone),
   position: [lane[index], 0, distance[index]] as [number, number, number],

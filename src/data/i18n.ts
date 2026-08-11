@@ -330,12 +330,36 @@ const localizedUpgrades = {
   zh: Object.fromEntries(localizationOrder.map((id, index) => [id, upgrades.zh[index]])),
 } satisfies Record<Exclude<Language, "en">, Record<string, string>>;
 
+const localizedTitles: Record<Exclude<Language, "en">, Record<string, string>> = {
+  vi: {
+    vhunter: "Kinh nghiệm thực tế · VHunter Event Company",
+    video: "Dự án website Marcus Video",
+    solutions: "Sản phẩm thực tế · Giải pháp vận hành & bảo mật",
+    electronics: "Dự án website Marcus Electronics",
+    store: "Đồ án tốt nghiệp · Marcus Store",
+    graduation: "Tốt nghiệp FPT Polytechnic",
+    teaching: "Giảng dạy Công nghệ & Phát triển phần mềm tự do",
+    future: "Mục tiêu nghề nghiệp · Smart Factory",
+  },
+  zh: {
+    vhunter: "实践经历 · VHunter活动公司",
+    video: "Marcus Video网站项目",
+    solutions: "军区指挥部 · 运营与安全产品",
+    electronics: "Marcus Electronics电商网站项目",
+    store: "毕业项目 · Marcus Store",
+    graduation: "FPT Polytechnic毕业",
+    teaching: "科技教育与自由软件开发",
+    future: "职业目标 · 智慧工厂",
+  },
+};
+
 export function getMilestones(language: Language) {
   if (language === "en") return milestones;
   return milestones.map((m) => {
     const content = localizedContent[language][m.id];
     return {
       ...m,
+      title: localizedTitles[language][m.id] ?? m.title,
       role: content[0],
       summary: content[1],
       highlights: content[2],

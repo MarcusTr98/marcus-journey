@@ -4,7 +4,7 @@ import { PerformanceMonitor, Sparkles, Stars } from "@react-three/drei";
 import { useRef } from "react";
 import * as THREE from "three";
 import Car from "./Car";
-import Road, { milestoneCurveProgress, routeCurve } from "./Road";
+import Road, { milestoneCurveProgress, minorLearningCurveProgress, routeCurve } from "./Road";
 import WorldEnvironment from "./Environment";
 import { useJourneyStore } from "@/stores/journeyStore";
 import { milestones } from "@/data/milestones";
@@ -25,6 +25,7 @@ export default function MarcusJourneyScene() {
   const focus = useRef(new THREE.Vector3(0, 0, 0));
   const actualProgress = useRef(0);
   const checkpointHold = useRef(0);
+  const minorLearningTriggered = useRef(false);
   const { camera, scene } = useThree();
   const progress = useJourneyStore((s) => s.progress);
   const quality = useJourneyStore((s) => s.quality);
@@ -79,6 +80,12 @@ export default function MarcusJourneyScene() {
       }
     }
     const p = THREE.MathUtils.clamp(actualProgress.current, 0, 0.998);
+    if (p >= minorLearningCurveProgress && !minorLearningTriggered.current) {
+      minorLearningTriggered.current = true;
+      journeyState.triggerMinorUpgrade();
+    } else if (p < minorLearningCurveProgress - 0.006) {
+      minorLearningTriggered.current = false;
+    }
     if (Math.abs(journeyState.vehicleProgress - p) > 0.00025) {
       journeyState.setVehicleProgress(p);
     }
@@ -109,9 +116,25 @@ export default function MarcusJourneyScene() {
       <ambientLight intensity={1.25} />
       <directionalLight position={[8, 14, 6]} intensity={2.2} castShadow={quality === "high"} />
       <hemisphereLight args={["#b9ddff", "#15241e", 0.75]} />
+      <Stars
+        radius={70}
+        depth={38}
+        count={quality === "high" ? 900 : 260}
+        factor={quality === "high" ? 2.1 : 1.45}
+        fade
+        speed={0.35}
+      />
+      <Sparkles
+        position={[0, 8, -108]}
+        scale={[34, 12, 230]}
+        count={quality === "high" ? 55 : 28}
+        size={quality === "high" ? 2 : 1.35}
+        speed={0.2}
+        color="#ffffff"
+        opacity={0.58}
+      />
       {quality === "high" && (
         <>
-          <Stars radius={70} depth={38} count={900} factor={2.1} fade speed={0.35} />
           <Sparkles
             position={[0, 10, -108]}
             scale={[38, 15, 230]}

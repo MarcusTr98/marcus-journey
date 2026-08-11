@@ -4,7 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import type * as THREE from "three";
 import { useJourneyStore } from "@/stores/journeyStore";
-import { FINISH_POSITION, TROPHY_POSITION } from "@/data/journeyPath";
+import { FINISH_POSITION, MINOR_LEARNING_POSITION, TROPHY_POSITION } from "@/data/journeyPath";
 import { graduationCurveProgress } from "./Road";
 import { milestones } from "@/data/milestones";
 
@@ -102,12 +102,12 @@ function StartCelebration() {
   const particles = useMemo(
     () =>
       Array.from({ length: 54 }, (_, index) => {
-        const angle = (index * 2.399) % (Math.PI * 2);
-        const lift = 0.45 + ((index * 17) % 50) / 50;
         return {
-          direction: [Math.cos(angle), lift, Math.sin(angle)] as [number, number, number],
+          x: ((index * 37) % 100) / 12 - 4.1,
+          z: ((index * 29) % 100) / 24 - 2.1,
           delay: ((index * 13) % 31) / 31,
-          speed: 0.7 + (index % 5) * 0.08,
+          speed: 0.18 + (index % 5) * 0.025,
+          sway: 0.35 + (index % 4) * 0.12,
           color: celebrationColors[index % celebrationColors.length],
         };
       }),
@@ -120,11 +120,12 @@ function StartCelebration() {
       const particle = particles[index];
       const phase = (elapsed.current * particle.speed + particle.delay) % 1;
       child.position.set(
-        particle.direction[0] * phase * 4.2,
-        2.4 + particle.direction[1] * phase * 3.4 - phase * phase * 1.8,
-        particle.direction[2] * phase * 3.2,
+        particle.x + Math.sin(phase * Math.PI * 4 + index) * particle.sway,
+        6.4 - phase * 6.1,
+        particle.z,
       );
-      child.scale.setScalar(Math.max(0.15, 1 - phase));
+      child.rotation.x += delta * (1.5 + (index % 3));
+      child.rotation.z += delta * (2 + (index % 5) * 0.3);
     });
   });
   return (
@@ -132,16 +133,46 @@ function StartCelebration() {
       <group ref={group}>
         {particles.map((particle, index) => (
           <mesh key={index}>
-            <sphereGeometry args={[0.07, 7, 6]} />
+            <boxGeometry args={[0.12, 0.24, 0.025]} />
             <meshStandardMaterial
               color={particle.color}
               emissive={particle.color}
-              emissiveIntensity={2.8}
+              emissiveIntensity={0.65}
               toneMapped={false}
             />
           </mesh>
         ))}
       </group>
+    </group>
+  );
+}
+
+function MinorLearningCheckpoint() {
+  const language = useJourneyStore((state) => state.language);
+  const label = {
+    vi: "CLB IT · WORKSHOP · MINI PROJECTS",
+    en: "IT CLUB · WORKSHOPS · MINI PROJECTS",
+    zh: "IT俱乐部 · 技术工坊 · 小型项目",
+  }[language];
+  return (
+    <group position={MINOR_LEARNING_POSITION}>
+      <mesh position={[0, 0.09, 0]} rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[1.15, 0.055, 8, 40]} />
+        <meshStandardMaterial color="#8b5cf6" emissive="#8b5cf6" emissiveIntensity={1.6} />
+      </mesh>
+      {[-0.7, 0, 0.7].map((x, index) => (
+        <mesh key={x} position={[x, 0.42, 0]} rotation={[0, 0, Math.PI / 4]}>
+          <octahedronGeometry args={[0.18]} />
+          <meshStandardMaterial
+            color={celebrationColors[index]}
+            emissive={celebrationColors[index]}
+            emissiveIntensity={1.4}
+          />
+        </mesh>
+      ))}
+      <Html center sprite position={[0, 1.15, 0]} distanceFactor={7} zIndexRange={[10, 0]}>
+        <div className="world-label">+ LEVEL · {label}</div>
+      </Html>
     </group>
   );
 }
@@ -321,6 +352,7 @@ export default function JourneyLandmarks() {
       <StartCelebration />
       <BuntingGate position={fptPosition} />
       <BuntingGate position={graduationPosition} />
+      <MinorLearningCheckpoint />
       <GraduationMonument />
       <GraduationCelebration />
       <FinishFlag />

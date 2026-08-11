@@ -14,10 +14,16 @@ const UPGRADE_LABEL = {
   en: "SKILL UNLOCKED",
   zh: "技能已解锁",
 };
+const MINOR_LEARNING_UPGRADE = {
+  vi: "Lãnh đạo CLB IT · Workshop · Mentoring",
+  en: "IT Club Leadership · Workshops · Mentoring",
+  zh: "IT俱乐部领导力 · 技术工坊 · 指导",
+};
 
 export default function VehicleUpgradeEffect({ children }: { children: ReactNode }) {
   const currentMilestone = useJourneyStore((state) => state.currentMilestone);
   const language = useJourneyStore((state) => state.language);
+  const minorUpgradePulse = useJourneyStore((state) => state.minorUpgradePulse);
   const [showUpgrade, setShowUpgrade] = useState(false);
   const model = useRef<THREE.Group>(null);
   const rings = useRef<Array<THREE.Mesh | null>>([]);
@@ -25,6 +31,8 @@ export default function VehicleUpgradeEffect({ children }: { children: ReactNode
   const glow = useRef<THREE.PointLight>(null);
   const elapsed = useRef(EFFECT_DURATION);
   const previousMilestone = useRef(-1);
+  const previousMinorPulse = useRef(0);
+  const [minorUpgrade, setMinorUpgrade] = useState(false);
 
   useEffect(() => {
     if (currentMilestone >= 0 && currentMilestone !== previousMilestone.current) {
@@ -36,8 +44,25 @@ export default function VehicleUpgradeEffect({ children }: { children: ReactNode
     }
   }, [currentMilestone]);
 
-  const activeUpgrade =
-    currentMilestone >= 0 ? getMilestones(language)[currentMilestone]?.upgrade : null;
+  useEffect(() => {
+    if (minorUpgradePulse > previousMinorPulse.current) {
+      previousMinorPulse.current = minorUpgradePulse;
+      elapsed.current = 0;
+      setMinorUpgrade(true);
+      setShowUpgrade(true);
+      const timer = window.setTimeout(() => {
+        setMinorUpgrade(false);
+        setShowUpgrade(false);
+      }, 2100);
+      return () => window.clearTimeout(timer);
+    }
+  }, [minorUpgradePulse]);
+
+  const activeUpgrade = minorUpgrade
+    ? MINOR_LEARNING_UPGRADE[language]
+    : currentMilestone >= 0
+      ? getMilestones(language)[currentMilestone]?.upgrade
+      : null;
 
   useFrame((_, delta) => {
     elapsed.current = Math.min(EFFECT_DURATION, elapsed.current + delta);
