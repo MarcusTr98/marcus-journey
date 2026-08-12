@@ -1,6 +1,6 @@
 "use client";
 
-import { useTexture } from "@react-three/drei";
+import { Html, useTexture } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import * as THREE from "three";
@@ -128,6 +128,77 @@ function AutomatedFactory() {
   );
 }
 
+function EventCoordinator() {
+  return (
+    <group position={[0.95, 0.45, 0.75]}>
+      <mesh position={[0, 1.38, 0]} castShadow>
+        <sphereGeometry args={[0.22, 16, 12]} />
+        <meshStandardMaterial color="#d99a6c" roughness={0.72} />
+      </mesh>
+      <Block position={[0, 0.85, 0]} size={[0.5, 0.82, 0.34]} color="#f2f4f5" />
+      <Block position={[-0.18, 0.25, 0]} size={[0.14, 0.72, 0.18]} color="#17242a" />
+      <Block position={[0.18, 0.25, 0]} size={[0.14, 0.72, 0.18]} color="#17242a" />
+      <group position={[0.43, 0.93, 0.05]} rotation={[0, 0, -0.5]}>
+        <Block position={[0, 0, 0]} size={[0.42, 0.13, 0.14]} color="#d99a6c" />
+        <Block position={[0.26, 0.05, 0]} size={[0.18, 0.34, 0.12]} color="#101820" />
+        <mesh position={[0.26, 0.28, 0]}>
+          <cylinderGeometry args={[0.018, 0.018, 0.28, 6]} />
+          <meshStandardMaterial color="#101820" />
+        </mesh>
+      </group>
+    </group>
+  );
+}
+
+function TeachingRobot() {
+  const wavingArm = useRef<THREE.Group>(null);
+  useFrame(({ clock }) => {
+    if (wavingArm.current)
+      wavingArm.current.rotation.z = -0.75 + Math.sin(clock.elapsedTime * 3) * 0.38;
+  });
+  return (
+    <group position={[0, 0.15, 0]}>
+      <Block position={[0, 0.12, 0]} size={[3.2, 0.24, 2.5]} color="#557782" />
+      <Block position={[0, 1.35, 0]} size={[1.25, 1.35, 0.85]} color="#ffd43b" />
+      <mesh position={[0, 1.42, 0.47]}>
+        <circleGeometry args={[0.26, 20]} />
+        <meshStandardMaterial color="#ff934f" emissive="#F46300" emissiveIntensity={2.2} />
+      </mesh>
+      <Block position={[0, 2.35, 0]} size={[1.05, 0.72, 0.78]} color="#f6f8f7" />
+      <Block position={[0, 2.35, 0.41]} size={[0.72, 0.34, 0.05]} color="#123849" glow />
+      {[-0.22, 0.22].map((x) => (
+        <mesh key={x} position={[x, 2.39, 0.46]}>
+          <sphereGeometry args={[0.07, 10, 8]} />
+          <meshStandardMaterial color="#58e7ff" emissive="#005EB8" emissiveIntensity={2.5} />
+        </mesh>
+      ))}
+      <mesh position={[0, 3.03, 0]}>
+        <cylinderGeometry args={[0.035, 0.035, 0.7, 8]} />
+        <meshStandardMaterial color="#d8e7ea" metalness={0.6} />
+      </mesh>
+      <mesh position={[0, 3.4, 0]}>
+        <sphereGeometry args={[0.12, 12, 8]} />
+        <meshStandardMaterial color="#59efff" emissive="#005EB8" emissiveIntensity={2.5} />
+      </mesh>
+      <group ref={wavingArm} position={[0.72, 1.85, 0]}>
+        <Block position={[0.43, 0, 0]} size={[0.86, 0.32, 0.36]} color="#ff4fa3" />
+        <mesh position={[0.9, 0, 0]}>
+          <sphereGeometry args={[0.2, 12, 8]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+      </group>
+      <Block position={[-1, 1.48, 0]} size={[0.34, 1.02, 0.36]} color="#F46300" />
+      <Block position={[-0.38, 0.55, 0]} size={[0.4, 0.85, 0.5]} color="#005EB8" />
+      <Block position={[0.38, 0.55, 0]} size={[0.4, 0.85, 0.5]} color="#005EB8" />
+      <group position={[-1.15, 0.48, 1.38]} rotation={[-0.12, 0.35, 0]} scale={0.66}>
+        <Block position={[0, 0.24, 0]} size={[1.25, 0.78, 0.12]} color="#ffffff" glow />
+        <Block position={[0, 0.25, 0.08]} size={[0.92, 0.52, 0.04]} color="#45c8ff" glow />
+        <Block position={[0, -0.28, 0.34]} size={[1.45, 0.1, 0.72]} color="#cfd8dc" />
+      </group>
+    </group>
+  );
+}
+
 function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: string }) {
   const fptLogo = useTexture("/landmarks/fpt-logo.svg");
   switch (kind) {
@@ -181,6 +252,18 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
               <planeGeometry args={[2.58, 1.06]} />
               <meshBasicMaterial map={fptLogo} transparent toneMapped={false} side={2} />
             </mesh>
+            <Html position={[0, -0.72, 0.16]} center transform distanceFactor={4.5}>
+              <strong
+                style={{
+                  color: "#173c52",
+                  font: "900 13px Arial",
+                  letterSpacing: "0.22em",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                EDUCATION
+              </strong>
+            </Html>
           </group>
         </group>
       );
@@ -198,19 +281,16 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
           <Block position={[0, 1.45, -1.3]} size={[3.45, 2.1, 0.12]} color="#075b3d" glow />
           {[-2.15, 2.15].map((x) => (
             <group key={`speaker-${x}`} position={[x, 0.95, 0.9]}>
-              <Block position={[0, 0, 0]} size={[0.62, 1.55, 0.62]} color="#481a62" />
+              <Block position={[0, 0, 0]} size={[0.62, 1.55, 0.62]} color="#101820" />
               {[0.35, -0.35].map((y) => (
                 <mesh key={y} position={[0, y, 0.33]} rotation={[Math.PI / 2, 0, 0]}>
                   <cylinderGeometry args={[0.21, 0.27, 0.08, 16]} />
-                  <meshStandardMaterial
-                    color="#ffe35b"
-                    emissive="#ff4fa3"
-                    emissiveIntensity={1.2}
-                  />
+                  <meshStandardMaterial color="#252b30" emissive="#000000" emissiveIntensity={0} />
                 </mesh>
               ))}
             </group>
           ))}
+          <EventCoordinator />
           {[-1.15, 0, 1.15].map((x, index) => (
             <mesh key={x} position={[x, 2.65, 0.65]} rotation={[Math.PI / 4, 0, 0]}>
               <coneGeometry args={[0.35, 1.4, 12, 1, true]} />
@@ -245,13 +325,26 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
     case "cinema":
       return (
         <group>
-          <Block position={[0, 1.05, 0]} size={[3.6, 2.05, 0.28]} color="#087fbd" glow />
-          <mesh position={[0, 1.05, 0.2]}>
-            <circleGeometry args={[0.58, 3]} />
-            <meshStandardMaterial color="#fff8d4" emissive="#ffb347" emissiveIntensity={2.2} />
+          <Block position={[0, 0.18, 0]} size={[4.2, 0.35, 2.8]} color="#7138a8" />
+          <Block position={[0, 1.25, -0.5]} size={[3.8, 2.25, 1.5]} color="#d92f61" />
+          <Block position={[0, 1.35, 0.29]} size={[2.75, 1.25, 0.08]} color="#fff4dc" glow />
+          <mesh position={[0, 1.35, 0.35]}>
+            <circleGeometry args={[0.42, 3]} />
+            <meshBasicMaterial color="#ff425f" toneMapped={false} />
           </mesh>
-          <Block position={[0, 0.18, 0]} size={[3.9, 0.35, 2.5]} color="#F46300" glow />
-          <pointLight position={[0, 1.4, 1.2]} color="#6ee7ff" intensity={3.2} distance={6} />
+          <Block position={[0, 2.65, -0.15]} size={[3.15, 0.48, 0.3]} color="#ffd43b" glow />
+          {[-1.45, -0.48, 0.48, 1.45].map((x) => (
+            <mesh key={x} position={[x, 2.65, 0.03]}>
+              <sphereGeometry args={[0.09, 10, 8]} />
+              <meshBasicMaterial color="#ffffff" toneMapped={false} />
+            </mesh>
+          ))}
+          <Html position={[0, 2.65, 0.2]} center transform distanceFactor={4.5}>
+            <strong style={{ color: "#55237c", font: "900 12px Arial", whiteSpace: "nowrap" }}>
+              MARCUS CINEMA
+            </strong>
+          </Html>
+          <pointLight position={[0, 2.2, 1.2]} color="#ff7ad9" intensity={4} distance={7} />
         </group>
       );
     case "electronics":
@@ -334,59 +427,7 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
         </group>
       );
     case "robot":
-      return (
-        <group position={[0, 0.15, 0]}>
-          <Block position={[0, 0.12, 0]} size={[3.2, 0.24, 2.5]} color="#557782" />
-          <Block position={[0, 1.35, 0]} size={[1.25, 1.35, 0.85]} color="#ffd43b" />
-          <mesh position={[0, 1.42, 0.47]}>
-            <circleGeometry args={[0.26, 20]} />
-            <meshStandardMaterial color="#ff934f" emissive="#F46300" emissiveIntensity={2.2} />
-          </mesh>
-          <Block position={[0, 2.35, 0]} size={[1.05, 0.72, 0.78]} color="#f6f8f7" />
-          <Block position={[0, 2.35, 0.41]} size={[0.72, 0.34, 0.05]} color="#123849" glow />
-          {[-0.22, 0.22].map((x) => (
-            <mesh key={x} position={[x, 2.39, 0.46]}>
-              <sphereGeometry args={[0.07, 10, 8]} />
-              <meshStandardMaterial color="#58e7ff" emissive="#005EB8" emissiveIntensity={2.5} />
-            </mesh>
-          ))}
-          <mesh position={[0, 3.03, 0]}>
-            <cylinderGeometry args={[0.035, 0.035, 0.7, 8]} />
-            <meshStandardMaterial color="#d8e7ea" metalness={0.6} />
-          </mesh>
-          <mesh position={[0, 3.4, 0]}>
-            <sphereGeometry args={[0.12, 12, 8]} />
-            <meshStandardMaterial color="#59efff" emissive="#005EB8" emissiveIntensity={2.5} />
-          </mesh>
-          {[-1, 1].map((x, index) => (
-            <group key={x}>
-              <Block
-                position={[x, 1.48, 0]}
-                size={[0.34, 1.02, 0.36]}
-                color={index ? "#ff4fa3" : "#F46300"}
-              />
-              <Block position={[x * 0.38, 0.55, 0]} size={[0.4, 0.85, 0.5]} color="#005EB8" />
-              <mesh position={[x, 2.02, 0]}>
-                <cylinderGeometry args={[0.19, 0.19, 0.12, 12]} />
-                <meshStandardMaterial color="#ffffff" />
-              </mesh>
-            </group>
-          ))}
-          <group position={[-1.35, 0.38, 1.35]} rotation={[0, 0.52, 0]} scale={0.72}>
-            <Block position={[0, 0.35, 0]} size={[1.8, 0.55, 1.15]} color="#00c98d" />
-            <Block position={[0, 0.75, -0.05]} size={[1.2, 0.52, 0.9]} color="#fff1a8" />
-            <Block position={[0, 0.72, 0.48]} size={[0.75, 0.22, 0.08]} color="#8b5cf6" glow />
-            {[-0.72, 0.72].map((x) =>
-              [-0.42, 0.42].map((z) => (
-                <mesh key={`${x}-${z}`} position={[x, 0.15, z]} rotation={[0, 0, Math.PI / 2]}>
-                  <cylinderGeometry args={[0.22, 0.22, 0.18, 12]} />
-                  <meshStandardMaterial color="#11191d" />
-                </mesh>
-              )),
-            )}
-          </group>
-        </group>
-      );
+      return <TeachingRobot />;
     case "smart-factory":
       return <AutomatedFactory />;
     default:

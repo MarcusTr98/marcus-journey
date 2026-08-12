@@ -35,9 +35,6 @@ export default function MarcusJourneyScene() {
     if (scene.background instanceof THREE.Color) {
       scene.background.lerp(STAGE_SKY[stage], 1 - Math.exp(-delta * 0.7));
     }
-    if (scene.fog instanceof THREE.Fog) {
-      scene.fog.color.lerp(STAGE_SKY[stage], 1 - Math.exp(-delta * 0.7));
-    }
     if (journeyState.requestedMilestone !== null) {
       const requestedIndex = journeyState.requestedMilestone;
       actualProgress.current = milestoneCurveProgress[requestedIndex];
@@ -109,7 +106,6 @@ export default function MarcusJourneyScene() {
   return (
     <>
       <color attach="background" args={["#527fa3"]} />
-      <fog attach="fog" args={["#527fa3", 48, 105]} />
       <ambientLight intensity={0.72} />
       <directionalLight
         position={[8, 14, 6]}

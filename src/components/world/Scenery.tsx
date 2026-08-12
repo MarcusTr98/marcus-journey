@@ -4,10 +4,30 @@ import { useLayoutEffect, useMemo, useRef, type RefObject } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { routeCurve } from "./Road";
+import { milestones } from "@/data/milestones";
 
 const FOLIAGE = ["#2f8f68", "#49a978", "#70bd79", "#26785d"];
 const FIREFLY_COLORS = ["#fff4a8", "#7de8ff", "#ff78ba", "#a78bfa", "#8affcb"];
 type Instance = { position: THREE.Vector3; scale: number; tone: number };
+
+const LANDMARK_CENTERS = milestones.map((milestone, index) => {
+  const previous = milestones[Math.max(0, index - 1)].position;
+  const next = milestones[Math.min(milestones.length - 1, index + 1)].position;
+  const tangentX = next[0] - previous[0];
+  const tangentZ = next[2] - previous[2];
+  const length = Math.hypot(tangentX, tangentZ) || 1;
+  const side = index % 2 === 0 ? -1 : 1;
+  const clearance = milestone.id === "store" ? 4.8 : 4.2;
+  return new THREE.Vector3(
+    milestone.position[0] + (-tangentZ / length) * clearance * side,
+    0,
+    milestone.position[2] + (tangentX / length) * clearance * side,
+  );
+});
+
+function outsideLandmarks(position: THREE.Vector3, radius: number) {
+  return LANDMARK_CENTERS.every((center) => center.distanceToSquared(position) > radius * radius);
+}
 
 function useInstanceMatrices(
   ref: RefObject<THREE.InstancedMesh | null>,
@@ -148,38 +168,44 @@ export default function Scenery() {
   const treeCount = 66;
   const trees = useMemo(
     () =>
-      Array.from({ length: treeCount }, (_, index) => {
+      Array.from({ length: treeCount + 22 }, (_, index) => {
         const progress = (index + 0.65) / (treeCount + 1);
         const point = routeCurve.getPointAt(progress);
         const tangent = routeCurve.getTangentAt(progress);
         const normal = new THREE.Vector3(-tangent.z, 0, tangent.x).normalize();
         const side = index % 2 === 0 ? -1 : 1;
+        const position = point
+          .clone()
+          .addScaledVector(normal, side * (7.7 + ((index * 7) % 7) * 0.72))
+          .addScaledVector(tangent, (((index * 13) % 9) - 4) * 0.18);
         return {
-          position: point
-            .clone()
-            .addScaledVector(normal, side * (6.4 + ((index * 7) % 7) * 0.72))
-            .addScaledVector(tangent, (((index * 13) % 9) - 4) * 0.18),
+          position,
           scale: 0.72 + ((index * 11) % 9) * 0.055,
           tone: index,
         };
-      }),
+      })
+        .filter(({ position }) => outsideLandmarks(position, 4.25))
+        .slice(0, treeCount),
     [treeCount],
   );
   const rocks = useMemo(() => {
     const count = 24;
-    return Array.from({ length: count }, (_, index) => {
+    return Array.from({ length: count + 8 }, (_, index) => {
       const point = routeCurve.getPointAt((index + 1) / (count + 1));
       const tangent = routeCurve.getTangentAt((index + 1) / (count + 1));
       const normal = new THREE.Vector3(-tangent.z, 0, tangent.x).normalize();
+      const position = point
+        .clone()
+        .addScaledVector(normal, (index % 2 ? 1 : -1) * (7.2 + (index % 5) * 0.65))
+        .setY(0.28);
       return {
-        position: point
-          .clone()
-          .addScaledVector(normal, (index % 2 ? 1 : -1) * (5.8 + (index % 5) * 0.65))
-          .setY(0.28),
+        position,
         scale: 0.45 + (index % 4) * 0.12,
         tone: 0,
       };
-    });
+    })
+      .filter(({ position }) => outsideLandmarks(position, 3.8))
+      .slice(0, count);
   }, []);
   return (
     <group>

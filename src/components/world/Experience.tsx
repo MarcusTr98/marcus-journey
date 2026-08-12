@@ -1,6 +1,7 @@
 "use client";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
+import * as THREE from "three";
 import { useJourneyStore } from "@/stores/journeyStore";
 const Canvas = dynamic(() => import("@react-three/fiber").then((m) => m.Canvas), { ssr: false });
 const Scene = dynamic(() => import("./MarcusJourneyScene"), { ssr: false });
@@ -15,8 +16,8 @@ export default function Experience() {
           dpr={[1.5, 2]}
           gl={{ antialias: true, powerPreference: "high-performance" }}
           onCreated={({ gl }) => {
-            gl.toneMapping = 4;
-            gl.toneMappingExposure = 1.12;
+            gl.toneMapping = THREE.NeutralToneMapping;
+            gl.toneMappingExposure = 1;
             setSceneReady(true);
           }}
           fallback={
