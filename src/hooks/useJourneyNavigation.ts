@@ -39,12 +39,22 @@ export function useJourneyNavigation() {
 
   useEffect(() => {
     if (!navigationPinned) return;
-    const release = () => setNavigationPinned(false);
-    addEventListener("wheel", release, { passive: true, once: true });
-    addEventListener("touchstart", release, { passive: true, once: true });
+    const track = document.getElementById("journey-track");
+    const checkpointProgress = useJourneyStore.getState().vehicleProgress;
+    if (track) {
+      const startAt = innerHeight * 0.86;
+      const finishAt = track.offsetTop + track.offsetHeight - innerHeight * 1.25;
+      scrollTo({ top: startAt + checkpointProgress * Math.max(finishAt - startAt, 1) });
+    }
+    const lockedAt = performance.now();
+    const arm = () => {
+      if (performance.now() - lockedAt >= 700) setNavigationPinned(false);
+    };
+    addEventListener("wheel", arm, { passive: true });
+    addEventListener("touchstart", arm, { passive: true });
     return () => {
-      removeEventListener("wheel", release);
-      removeEventListener("touchstart", release);
+      removeEventListener("wheel", arm);
+      removeEventListener("touchstart", arm);
     };
   }, [navigationPinned, setNavigationPinned]);
 

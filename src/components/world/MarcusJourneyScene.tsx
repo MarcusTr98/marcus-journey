@@ -12,7 +12,6 @@ import { milestones } from "@/data/milestones";
 const STABLE_CAMERA_OFFSET = new THREE.Vector3(8.4, 7.4, 10.8);
 const STABLE_FOCUS_OFFSET = new THREE.Vector3(0, 0.9, -0.6);
 const MAX_PROGRESS_PER_SECOND = 0.052;
-const CHECKPOINT_HOLD_SECONDS = 1.5;
 const STAGE_SKY = {
   foundation: new THREE.Color("#527fa3"),
   transformation: new THREE.Color("#638db1"),
@@ -24,7 +23,6 @@ export default function MarcusJourneyScene() {
   const car = useRef<THREE.Group>(null);
   const focus = useRef(new THREE.Vector3(0, 0, 0));
   const actualProgress = useRef(0);
-  const checkpointHold = useRef(0);
   const minorLearningTriggered = useRef(false);
   const { camera, scene } = useThree();
   const progress = useJourneyStore((s) => s.progress);
@@ -39,16 +37,15 @@ export default function MarcusJourneyScene() {
       const requestedIndex = journeyState.requestedMilestone;
       actualProgress.current = milestoneCurveProgress[requestedIndex];
       journeyState.setProgress(actualProgress.current);
-      checkpointHold.current = CHECKPOINT_HOLD_SECONDS;
       journeyState.setCurrentMilestone(requestedIndex);
+      journeyState.setNavigationPinned(true);
       journeyState.requestMilestone(null);
     }
-    checkpointHold.current = Math.max(0, checkpointHold.current - delta);
     const nextIndex = journeyState.currentMilestone + 1;
     const nextCheckpoint = milestoneCurveProgress[nextIndex];
     const drivingForward = progress > actualProgress.current;
 
-    if (checkpointHold.current <= 0) {
+    if (!journeyState.navigationPinned) {
       const dampedProgress = THREE.MathUtils.damp(actualProgress.current, progress, 4.2, delta);
       const checkpointDistance =
         drivingForward && nextCheckpoint !== undefined
@@ -68,8 +65,9 @@ export default function MarcusJourneyScene() {
         proposed >= nextCheckpoint - 0.00035
       ) {
         actualProgress.current = nextCheckpoint;
-        checkpointHold.current = CHECKPOINT_HOLD_SECONDS;
         journeyState.setCurrentMilestone(nextIndex);
+        journeyState.setProgress(nextCheckpoint);
+        journeyState.setNavigationPinned(true);
       } else {
         actualProgress.current = proposed;
       }

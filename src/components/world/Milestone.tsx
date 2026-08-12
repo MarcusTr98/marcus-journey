@@ -447,7 +447,6 @@ function LandmarkStructure({ kind }: { kind: LandmarkKind }) {
             <shapeGeometry args={[vietnamStar]} />
             <meshBasicMaterial color="#FFFF00" toneMapped={false} side={2} />
           </mesh>
-          <Block position={[0, 2.45, -0.58]} size={[3.4, 0.28, 0.65]} color="#2f4b42" />
           <pointLight position={[0, 2.2, 1.3]} color="#8affcb" intensity={2.8} distance={6} />
         </group>
       );

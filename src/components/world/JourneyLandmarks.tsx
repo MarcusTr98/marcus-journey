@@ -211,7 +211,15 @@ function GraduationMonument() {
         <boxGeometry args={[3.8, 0.12, 2.7]} />
         <meshStandardMaterial color="#005EB8" metalness={0.3} roughness={0.35} />
       </mesh>
-      <group position={[-0.72, 1.12, 0.05]} rotation={[-0.12, 0.08, -0.08]}>
+      <mesh position={[0, 0.7, 0.15]} castShadow>
+        <boxGeometry args={[2.7, 0.62, 1.55]} />
+        <meshStandardMaterial color="#173c52" roughness={0.42} />
+      </mesh>
+      <mesh position={[0, 1.04, 0.15]} castShadow>
+        <boxGeometry args={[2.25, 0.12, 1.28]} />
+        <meshStandardMaterial color="#f2ede0" roughness={0.45} />
+      </mesh>
+      <group position={[-0.72, 1.62, 0.12]} rotation={[-0.1, 0.08, -0.06]}>
         <mesh castShadow>
           <boxGeometry args={[1.55, 1.05, 0.12]} />
           <meshStandardMaterial color="#f8f2df" roughness={0.55} />
@@ -229,7 +237,7 @@ function GraduationMonument() {
           <meshStandardMaterial color="#F46300" />
         </mesh>
       </group>
-      <group position={[0.88, 1.18, 0.12]} rotation={[0, -0.25, 0]}>
+      <group position={[0.76, 1.62, 0.12]} rotation={[0, -0.25, 0]}>
         <mesh castShadow rotation={[0, Math.PI / 4, 0]}>
           <boxGeometry args={[1.05, 0.1, 1.05]} />
           <meshStandardMaterial color="#102d4a" roughness={0.38} />
@@ -247,7 +255,7 @@ function GraduationMonument() {
           <meshStandardMaterial color="#ffc629" emissive="#F46300" emissiveIntensity={0.5} />
         </mesh>
       </group>
-      <group position={[0, 0.68, 0.85]} rotation={[0, 0, -0.12]}>
+      <group position={[0, 1.18, 0.82]} rotation={[0, 0, -0.12]}>
         <mesh castShadow rotation={[0, 0, Math.PI / 2]}>
           <cylinderGeometry args={[0.2, 0.2, 1.15, 16]} />
           <meshStandardMaterial color="#f7f0dc" roughness={0.55} />
@@ -259,7 +267,7 @@ function GraduationMonument() {
           </mesh>
         ))}
       </group>
-      <Html center position={[0, 2.35, 0]} distanceFactor={7}>
+      <Html center position={[0, 2.62, 0]} distanceFactor={7}>
         <div className="graduation-landmark-title">GRADUATION 2026</div>
       </Html>
       <pointLight position={[0, 2.5, 1]} color="#ffc629" intensity={1.8} distance={6} />
