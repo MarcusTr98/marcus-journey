@@ -450,6 +450,22 @@ select:focus-visible {
 .graduation-message span {
   display: block;
 }
+.graduation-stage-sign {
+  min-width: 190px;
+  padding: 8px 14px;
+  border: 2px solid #ffc629;
+  border-radius: 4px;
+  background: #173c52;
+  color: #fff;
+  font: 800 10px/1.25 var(--font-display);
+  letter-spacing: 0.13em;
+  text-align: center;
+  white-space: nowrap;
+}
+.graduation-stage-sign b {
+  color: #ffc629;
+  font-size: 15px;
+}
 .graduation-message b {
   color: #ffc629;
   font: 800 18px var(--font-display);
