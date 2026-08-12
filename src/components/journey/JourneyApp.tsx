@@ -66,12 +66,6 @@ export default function JourneyApp({ initialLanguage }: { initialLanguage: Langu
   return (
     <div className={`journey-shell ${started ? "is-started" : ""}`}>
       <Experience />
-      {!started && (
-        <button className="floating-start" onClick={begin} disabled={!sceneReady}>
-          <span>{sceneReady ? t.start : "LOADING 3D…"}</span>
-          <b>{sceneReady ? "→" : "·"}</b>
-        </button>
-      )}
       <header className="topbar">
         <a className="logo" href="#garage">
           <b>M</b>

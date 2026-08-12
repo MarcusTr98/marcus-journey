@@ -5,13 +5,18 @@ import { useMemo, useRef } from "react";
 import type * as THREE from "three";
 import { useJourneyStore } from "@/stores/journeyStore";
 import { FINISH_POSITION, MINOR_LEARNING_POSITION, TROPHY_POSITION } from "@/data/journeyPath";
-import { graduationCurveProgress } from "./Road";
+import {
+  graduationCurveProgress,
+  milestoneCurveProgress,
+  minorLearningCurveProgress,
+  routeCurve,
+} from "./Road";
 import { milestones } from "@/data/milestones";
 
-const fptPosition = milestones.find(({ id }) => id === "fpt")?.position ?? [4, 0, -27];
-const graduationPosition = milestones.find(({ id }) => id === "graduation")?.position ?? [
-  2.6, 0, -167,
-];
+const fptPosition = routeCurve.getPointAt(
+  milestoneCurveProgress[milestones.findIndex(({ id }) => id === "fpt")],
+);
+const graduationPosition = routeCurve.getPointAt(graduationCurveProgress);
 const celebrationColors = ["#ff4fa3", "#ffd43b", "#64e7ff", "#8b5cf6", "#ff6b35"];
 
 const labels = {
@@ -149,11 +154,27 @@ function StartCelebration() {
 
 function MinorLearningCheckpoint() {
   const language = useJourneyStore((state) => state.language);
+  const progress = useJourneyStore((state) => state.vehicleProgress);
   const label = {
     vi: "CLB IT · WORKSHOP · MINI PROJECTS",
     en: "IT CLUB · WORKSHOPS · MINI PROJECTS",
     zh: "IT俱乐部 · 技术工坊 · 小型项目",
   }[language];
+  const card = {
+    vi: {
+      title: "Chủ nhiệm CLB IT",
+      text: "Điều phối hoạt động CLB, tổ chức workshop, hướng dẫn dự án xưởng và chia sẻ lộ trình học lập trình cho thành viên.",
+    },
+    en: {
+      title: "IT Club Chairman",
+      text: "Coordinated club activities, technical workshops, lab projects and structured programming guidance for members.",
+    },
+    zh: {
+      title: "IT俱乐部负责人",
+      text: "统筹俱乐部活动、技术工作坊与实践项目，并为成员提供结构化的编程学习指导。",
+    },
+  }[language];
+  const active = Math.abs(progress - minorLearningCurveProgress) < 0.008;
   return (
     <group position={MINOR_LEARNING_POSITION}>
       <mesh position={[0, 0.09, 0]} rotation={[Math.PI / 2, 0, 0]}>
@@ -173,14 +194,22 @@ function MinorLearningCheckpoint() {
       <Html center sprite position={[0, 1.15, 0]} distanceFactor={7} zIndexRange={[10, 0]}>
         <div className="world-label">+ LEVEL · {label}</div>
       </Html>
+      {active && (
+        <Html center sprite position={[0, 2.15, 0]} distanceFactor={7} zIndexRange={[18, 8]}>
+          <div className="minor-checkpoint-card">
+            <b>{card.title}</b>
+            <span>{card.text}</span>
+          </div>
+        </Html>
+      )}
     </group>
   );
 }
 
-function BuntingGate({ position }: { position: [number, number, number] }) {
+function BuntingGate({ position }: { position: { x: number; z: number } }) {
   const colors = ["#ff4fa3", "#ffd43b", "#00c98d", "#4ea5ff", "#8b5cf6", "#ff6b35"];
   return (
-    <group position={[position[0], 0.04, position[2]]}>
+    <group position={[position.x, 0.04, position.z]}>
       {[-1.72, 1.72].map((x) => (
         <mesh key={x} position={[x, 1.45, 0]} castShadow>
           <cylinderGeometry args={[0.045, 0.06, 2.9, 10]} />
