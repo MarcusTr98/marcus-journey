@@ -16,6 +16,7 @@ interface JourneyState {
   requestedMilestone: number | null;
   navigationPinned: boolean;
   minorUpgradePulse: number;
+  lowQualitySuggested: boolean;
   setProgress: (v: number) => void;
   setVehicleProgress: (v: number) => void;
   setCurrentMilestone: (v: number) => void;
@@ -29,6 +30,7 @@ interface JourneyState {
   requestMilestone: (v: number | null) => void;
   setNavigationPinned: (v: boolean) => void;
   triggerMinorUpgrade: () => void;
+  suggestLowQuality: (v: boolean) => void;
   resetJourney: () => void;
 }
 export const useJourneyStore = create<JourneyState>()(
@@ -48,6 +50,7 @@ export const useJourneyStore = create<JourneyState>()(
       requestedMilestone: null,
       navigationPinned: false,
       minorUpgradePulse: 0,
+      lowQualitySuggested: false,
       setProgress: (progress) => set({ progress }),
       setVehicleProgress: (vehicleProgress) => set({ vehicleProgress }),
       setCurrentMilestone: (currentMilestone) =>
@@ -68,6 +71,7 @@ export const useJourneyStore = create<JourneyState>()(
       setNavigationPinned: (navigationPinned) => set({ navigationPinned }),
       triggerMinorUpgrade: () =>
         set((state) => ({ minorUpgradePulse: state.minorUpgradePulse + 1 })),
+      suggestLowQuality: (lowQualitySuggested) => set({ lowQualitySuggested }),
       resetJourney: () =>
         set({
           progress: 0,
@@ -80,7 +84,7 @@ export const useJourneyStore = create<JourneyState>()(
     }),
     {
       name: "marcus-journey-preferences",
-      partialize: ({ language, quality }) => ({ language, quality }),
+      partialize: ({ language }) => ({ language }),
       skipHydration: true,
     },
   ),

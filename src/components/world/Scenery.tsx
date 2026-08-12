@@ -187,7 +187,7 @@ export default function Scenery() {
     <group>
       <InstancedTrees trees={trees} shadows={quality === "high"} />
       <InstancedRocks rocks={rocks} />
-      <RoadsideFireflies count={quality === "high" ? 220 : 105} />
+      <RoadsideFireflies count={quality === "high" ? 300 : 140} />
     </group>
   );
 }

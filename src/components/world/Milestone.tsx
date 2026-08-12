@@ -77,6 +77,57 @@ function RotatingRoofSign({ kind }: { kind: "phone" | "laptop" }) {
   );
 }
 
+function AutomatedFactory() {
+  const robot = useRef<THREE.Group>(null);
+  const products = useRef<THREE.Group>(null);
+  useFrame(({ clock }) => {
+    if (robot.current) robot.current.rotation.z = -0.35 + Math.sin(clock.elapsedTime * 1.4) * 0.38;
+    if (products.current) products.current.position.x = ((clock.elapsedTime * 0.55) % 1.8) - 0.9;
+  });
+  return (
+    <group>
+      <Block position={[0, 0.18, 0]} size={[4.4, 0.3, 3.2]} color="#17242a" />
+      <Block position={[0, 0.65, 0.25]} size={[3.65, 0.42, 1.15]} color="#31515d" />
+      <group ref={products}>
+        {[-0.75, 0, 0.75].map((x, index) => (
+          <Block
+            key={x}
+            position={[x, 1.02, 0.25]}
+            size={[0.42, 0.3, 0.46]}
+            color={MAP_COLORS[index]}
+            glow
+          />
+        ))}
+      </group>
+      <group position={[-1.25, 1.05, -0.55]}>
+        <Block position={[0, 0, 0]} size={[0.48, 1.25, 0.48]} color="#F46300" />
+        <group ref={robot} position={[0, 0.62, 0]}>
+          <Block position={[0.55, 0, 0]} size={[1.15, 0.24, 0.28]} color="#ffd43b" />
+          <Block position={[1.08, -0.32, 0]} size={[0.24, 0.75, 0.28]} color="#ff4fa3" />
+        </group>
+      </group>
+      <group position={[1.1, 1.75, -0.72]}>
+        <Block position={[0, 0, 0]} size={[1.75, 1.25, 0.14]} color="#eef6f5" />
+        {[0.52, 0.16, -0.2, -0.56].map((y, index) => (
+          <Block
+            key={y}
+            position={[-0.56 + index * 0.37, y, 0.09]}
+            size={[0.23, 0.2 + index * 0.14, 0.04]}
+            color={MAP_COLORS[index + 1]}
+            glow
+          />
+        ))}
+        <Block position={[0, -0.48, 0.09]} size={[1.35, 0.045, 0.035]} color="#203944" />
+      </group>
+      <mesh position={[1.85, 2.45, -0.72]} rotation={[0, 0, -0.65]}>
+        <coneGeometry args={[0.16, 0.55, 3]} />
+        <meshStandardMaterial color="#00c98d" emissive="#00c98d" emissiveIntensity={1.4} />
+      </mesh>
+      <pointLight position={[0, 2.3, 0.5]} color="#68e8ff" intensity={3.2} distance={7} />
+    </group>
+  );
+}
+
 function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: string }) {
   const fptLogo = useTexture("/landmarks/fpt-logo.svg");
   switch (kind) {
@@ -108,24 +159,26 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
     case "campus":
       return (
         <group>
-          <Block position={[0, 0.8, 0]} size={[3.4, 1.55, 2.1]} color="#f2e4ce" />
-          <Block position={[0, 1.85, 0]} size={[3.8, 0.32, 2.45]} color="#F46300" />
-          {[-1.15, 0, 1.15].map((x, index) => (
+          <Block position={[0, 0.13, 0.25]} size={[4.7, 0.24, 3.2]} color="#16303b" />
+          <Block position={[0, 1.15, -0.35]} size={[1.65, 2.25, 1.65]} color="#f4efe5" />
+          <Block position={[-1.55, 0.82, 0.05]} size={[1.55, 1.55, 2.2]} color="#fff8ec" />
+          <Block position={[1.55, 0.82, 0.05]} size={[1.55, 1.55, 2.2]} color="#fff8ec" />
+          <Block position={[0, 2.4, -0.35]} size={[1.95, 0.25, 1.9]} color="#F37021" />
+          {[-1.82, -1.28, -0.28, 0.28, 1.28, 1.82].map((x, index) => (
             <Block
               key={x}
-              position={[x, 0.85, 1.08]}
-              size={[0.55, 0.72, 0.08]}
-              color={["#F37021", "#00A859", "#005EB8"][index]}
+              position={[x, index === 2 || index === 3 ? 1.2 : 0.85, 1.18]}
+              size={[0.34, index === 2 || index === 3 ? 1.25 : 0.62, 0.08]}
+              color={index < 2 ? "#F37021" : index < 4 ? "#00A859" : "#005EB8"}
               glow
             />
           ))}
-          <Block position={[-1.15, 0.18, 1.2]} size={[1.05, 0.18, 0.5]} color="#F37021" />
-          <Block position={[0, 0.18, 1.2]} size={[1.05, 0.18, 0.5]} color="#00A859" />
-          <Block position={[1.15, 0.18, 1.2]} size={[1.05, 0.18, 0.5]} color="#005EB8" />
-          <group position={[0, 2.62, 0.15]}>
-            <Block position={[0, 0, -0.08]} size={[2.65, 1.08, 0.22]} color="#ffffff" />
+          <Block position={[0, 0.24, 1.35]} size={[1.7, 0.15, 0.6]} color="#d9dee0" />
+          <Block position={[0, 0.42, 1.26]} size={[1.4, 0.12, 0.42]} color="#eef2f2" />
+          <group position={[0, 2.85, 0.15]}>
+            <Block position={[0, 0, -0.08]} size={[2.75, 1.12, 0.22]} color="#ffffff" />
             <mesh position={[0, 0, 0.045]}>
-              <planeGeometry args={[2.5, 1.04]} />
+              <planeGeometry args={[2.58, 1.06]} />
               <meshBasicMaterial map={fptLogo} transparent toneMapped={false} side={2} />
             </mesh>
           </group>
@@ -335,45 +388,7 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
         </group>
       );
     case "smart-factory":
-      return (
-        <group>
-          <Block position={[0, 0.18, 0]} size={[4.3, 0.3, 3.15]} color="#eadfb9" />
-          <Block position={[-1.35, 0.38, -0.75]} size={[1.05, 0.12, 0.85]} color="#6bcf8e" />
-          <Block position={[1.25, 0.38, 0.72]} size={[1.25, 0.12, 0.72]} color="#64b5f6" />
-          {[
-            [-1.45, -0.95],
-            [-0.75, -0.45],
-            [-0.95, 0.2],
-            [-0.15, 0.55],
-            [0.55, 0.05],
-            [1.3, 0.65],
-          ].map(([x, z], index) => (
-            <group key={`${x}-${z}`} position={[x, 0.52, z]}>
-              <Block position={[0, 0, 0]} size={[0.55, 0.08, 0.12]} color="#F46300" glow />
-              <mesh position={[0, 0.15, 0]}>
-                <sphereGeometry args={[0.11, 10, 8]} />
-                <meshStandardMaterial
-                  color={MAP_COLORS[index % MAP_COLORS.length]}
-                  emissive={MAP_COLORS[index % MAP_COLORS.length]}
-                  emissiveIntensity={1.7}
-                />
-              </mesh>
-            </group>
-          ))}
-          {[-1.45, -0.85, -0.25].map((x, index) => (
-            <mesh key={x} position={[x, 0.72, 1.02 + index * 0.12]}>
-              <coneGeometry args={[0.32, 0.78, 6]} />
-              <meshStandardMaterial color={index === 1 ? "#8b5cf6" : "#55786a"} />
-            </mesh>
-          ))}
-          <mesh position={[1.55, 1.18, 0.88]}>
-            <cylinderGeometry args={[0.025, 0.035, 1.35, 8]} />
-            <meshStandardMaterial color="#e8eef0" metalness={0.6} />
-          </mesh>
-          <Block position={[1.85, 1.55, 0.88]} size={[0.62, 0.38, 0.05]} color="#ff3340" glow />
-          <pointLight position={[1.55, 1.7, 0.9]} color="#ffd43b" intensity={2.8} distance={5} />
-        </group>
-      );
+      return <AutomatedFactory />;
     default:
       return null;
   }

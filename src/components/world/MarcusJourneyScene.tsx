@@ -29,7 +29,7 @@ export default function MarcusJourneyScene() {
   const { camera, scene } = useThree();
   const progress = useJourneyStore((s) => s.progress);
   const quality = useJourneyStore((s) => s.quality);
-  const setQuality = useJourneyStore((s) => s.setQuality);
+  const suggestLowQuality = useJourneyStore((s) => s.suggestLowQuality);
   useFrame((_, delta) => {
     if (!car.current) return;
     const journeyState = useJourneyStore.getState();
@@ -110,7 +110,7 @@ export default function MarcusJourneyScene() {
   });
   return (
     <>
-      <PerformanceMonitor onDecline={() => setQuality("low")} flipflops={2} />
+      <PerformanceMonitor onDecline={() => suggestLowQuality(true)} flipflops={2} />
       <color attach="background" args={["#07141b"]} />
       <fog attach="fog" args={["#07141b", 14, 44]} />
       <ambientLight intensity={1.25} />
@@ -119,15 +119,15 @@ export default function MarcusJourneyScene() {
       <Stars
         radius={70}
         depth={38}
-        count={quality === "high" ? 1500 : 420}
-        factor={quality === "high" ? 2.35 : 1.65}
+        count={quality === "high" ? 2200 : 620}
+        factor={quality === "high" ? 2.55 : 1.8}
         fade
         speed={0.35}
       />
       <Sparkles
         position={[0, 8, -108]}
         scale={[34, 12, 230]}
-        count={quality === "high" ? 95 : 42}
+        count={quality === "high" ? 145 : 60}
         size={quality === "high" ? 2.25 : 1.55}
         speed={0.2}
         color="#ffffff"
@@ -138,7 +138,7 @@ export default function MarcusJourneyScene() {
           <Sparkles
             position={[0, 10, -108]}
             scale={[38, 15, 230]}
-            count={135}
+            count={190}
             size={2.7}
             speed={0.22}
             color="#8ee8ff"
@@ -147,7 +147,7 @@ export default function MarcusJourneyScene() {
           <Sparkles
             position={[0, 7, -108]}
             scale={[34, 10, 230]}
-            count={95}
+            count={140}
             size={2.05}
             speed={0.3}
             color="#ffd86a"
@@ -156,7 +156,7 @@ export default function MarcusJourneyScene() {
           <Sparkles
             position={[0, 6, -108]}
             scale={[36, 9, 230]}
-            count={75}
+            count={115}
             size={2.1}
             speed={0.26}
             color="#d59cff"
