@@ -9,6 +9,7 @@ import { milestones } from "@/data/milestones";
 const FOLIAGE = ["#2f8f68", "#49a978", "#70bd79", "#26785d"];
 const FIREFLY_COLORS = ["#fff4a8", "#7de8ff", "#ff78ba", "#a78bfa", "#8affcb"];
 type Instance = { position: THREE.Vector3; scale: number; tone: number };
+const FLOWER_COLORS = ["#ff4f9a", "#ffd447", "#ffffff", "#8b5cf6", "#ff6b35", "#54d6ff"];
 
 const LANDMARK_CENTERS = milestones.map((milestone, index) => {
   const previous = milestones[Math.max(0, index - 1)].position;
@@ -117,6 +118,45 @@ function InstancedRocks({ rocks }: { rocks: Instance[] }) {
   );
 }
 
+function RoadsideFlowers({ flowers }: { flowers: Instance[] }) {
+  return (
+    <group>
+      {flowers.map((flower, index) => (
+        <group key={index} position={flower.position} scale={flower.scale}>
+          <mesh position={[0, 0.16, 0]} castShadow>
+            <cylinderGeometry args={[0.018, 0.025, 0.32, 6]} />
+            <meshStandardMaterial color="#25885a" />
+          </mesh>
+          <group position={[0, 0.36, 0]} rotation={[0, index * 1.71, 0]}>
+            {[0, 1, 2, 3, 4].map((petal) => (
+              <mesh
+                key={petal}
+                position={[
+                  Math.cos((petal / 5) * Math.PI * 2) * 0.09,
+                  0,
+                  Math.sin((petal / 5) * Math.PI * 2) * 0.09,
+                ]}
+                rotation={[0, -(petal / 5) * Math.PI * 2, 0.3]}
+              >
+                <sphereGeometry args={[0.065, 7, 5]} />
+                <meshStandardMaterial
+                  color={FLOWER_COLORS[index % FLOWER_COLORS.length]}
+                  emissive={FLOWER_COLORS[index % FLOWER_COLORS.length]}
+                  emissiveIntensity={0.12}
+                />
+              </mesh>
+            ))}
+            <mesh>
+              <sphereGeometry args={[0.055, 8, 6]} />
+              <meshStandardMaterial color="#ffb000" emissive="#ffb000" emissiveIntensity={0.28} />
+            </mesh>
+          </group>
+        </group>
+      ))}
+    </group>
+  );
+}
+
 function RoadsideFireflies({ count }: { count: number }) {
   const points = useRef<THREE.Points>(null);
   const material = useRef<THREE.PointsMaterial>(null);
@@ -165,7 +205,7 @@ function RoadsideFireflies({ count }: { count: number }) {
 }
 
 export default function Scenery() {
-  const treeCount = 66;
+  const treeCount = 80;
   const trees = useMemo(() => {
     const candidateCount = treeCount + 22;
     return Array.from({ length: candidateCount }, (_, index) => {
@@ -208,10 +248,28 @@ export default function Scenery() {
       .filter(({ position }) => outsideLandmarks(position, 3.8))
       .slice(0, count);
   }, []);
+  const flowers = useMemo(
+    () =>
+      Array.from({ length: 76 }, (_, index) => {
+        const progress = 0.035 + (index / 75) * 0.94;
+        const point = routeCurve.getPointAt(progress);
+        const tangent = routeCurve.getTangentAt(progress);
+        const normal = new THREE.Vector3(-tangent.z, 0, tangent.x).normalize();
+        const side = index % 2 === 0 ? -1 : 1;
+        const position = point
+          .clone()
+          .addScaledVector(normal, side * (3.25 + ((index * 7) % 8) * 0.34))
+          .addScaledVector(tangent, (((index * 11) % 7) - 3) * 0.18)
+          .setY(0.03);
+        return { position, scale: 0.72 + (index % 5) * 0.09, tone: index };
+      }).filter(({ position }) => outsideLandmarks(position, 2.8)),
+    [],
+  );
   return (
     <group>
       <InstancedTrees trees={trees} shadows />
       <InstancedRocks rocks={rocks} />
+      <RoadsideFlowers flowers={flowers} />
       <RoadsideFireflies count={300} />
     </group>
   );

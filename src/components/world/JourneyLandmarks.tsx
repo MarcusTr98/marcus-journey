@@ -4,12 +4,8 @@ import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import type * as THREE from "three";
 import { useJourneyStore } from "@/stores/journeyStore";
-import { FINISH_POSITION, MINOR_LEARNING_POSITION, TROPHY_POSITION } from "@/data/journeyPath";
-import {
-  graduationCurveProgress,
-  milestoneCurveProgress,
-  routeCurve,
-} from "./Road";
+import { FINISH_POSITION, MINOR_LEARNING_POSITION } from "@/data/journeyPath";
+import { graduationCurveProgress, milestoneCurveProgress, routeCurve } from "./Road";
 import { milestones } from "@/data/milestones";
 
 const fptPosition = routeCurve.getPointAt(
@@ -210,17 +206,17 @@ function GraduationMonument() {
   useFrame(({ clock }) => {
     const time = clock.getElapsedTime();
     if (cap.current) {
-      cap.current.position.y = 2.45 + Math.sin(time * 1.35) * 0.16;
+      cap.current.position.y = 2.75 + Math.sin(time * 1.35) * 0.16;
       cap.current.rotation.y = time * 0.72;
     }
     if (diploma.current) {
-      diploma.current.position.y = 2.18 + Math.sin(time * 1.1 + 1.4) * 0.13;
+      diploma.current.position.y = 2.43 + Math.sin(time * 1.1 + 1.4) * 0.13;
       diploma.current.rotation.y = -time * 0.58;
     }
   });
   return (
     <group
-      position={[TROPHY_POSITION[0] - 1.7, 0.04, TROPHY_POSITION[2] - 0.7]}
+      position={[graduationPosition.x - 4.25, 0.04, graduationPosition.z]}
       rotation={[0, -0.08, 0]}
     >
       <mesh position={[0, 0.16, 0]} receiveShadow>
@@ -239,7 +235,7 @@ function GraduationMonument() {
         <boxGeometry args={[2.95, 0.09, 1.72]} />
         <meshStandardMaterial color="#ffd447" emissive="#ff9d2e" emissiveIntensity={0.3} />
       </mesh>
-      <group ref={diploma} position={[-0.83, 2.18, 0.1]} rotation={[-0.12, 0, -0.08]}>
+      <group ref={diploma} position={[-0.9, 2.43, 0.1]} rotation={[-0.12, 0, -0.08]} scale={1.3}>
         <mesh castShadow>
           <boxGeometry args={[1.45, 0.98, 0.1]} />
           <meshStandardMaterial color="#f8f2df" roughness={0.55} />
@@ -256,8 +252,16 @@ function GraduationMonument() {
           <boxGeometry args={[0.95, 0.035, 0.02]} />
           <meshStandardMaterial color="#F46300" />
         </mesh>
+        <mesh position={[0.42, -0.25, 0.115]}>
+          <cylinderGeometry args={[0.16, 0.16, 0.025, 24]} />
+          <meshStandardMaterial color="#d71920" emissive="#8f0f17" emissiveIntensity={0.25} />
+        </mesh>
+        <mesh position={[0.42, -0.25, 0.135]}>
+          <torusGeometry args={[0.105, 0.018, 8, 24]} />
+          <meshStandardMaterial color="#ffe2b3" emissive="#ffe2b3" emissiveIntensity={0.2} />
+        </mesh>
       </group>
-      <group ref={cap} position={[0.82, 2.45, 0.08]} rotation={[0, 0, 0]}>
+      <group ref={cap} position={[0.9, 2.75, 0.08]} rotation={[0, 0, 0]} scale={1.42}>
         <mesh castShadow rotation={[0, Math.PI / 4, 0]}>
           <boxGeometry args={[1.05, 0.1, 1.05]} />
           <meshStandardMaterial color="#102d4a" roughness={0.38} />
@@ -314,7 +318,7 @@ function GraduationCelebration() {
     });
   });
   return (
-    <group visible={active} position={TROPHY_POSITION}>
+    <group visible={active} position={graduationPosition}>
       <group ref={group}>
         {pieces.map((p, i) => (
           <mesh key={i} position={[p.x, p.y, p.z]} rotation={[i * 0.4, i * 0.2, 0]}>
@@ -323,7 +327,7 @@ function GraduationCelebration() {
           </mesh>
         ))}
       </group>
-      <Html center position={[0, 4.7, 0]} distanceFactor={10}>
+      <Html center position={[5.2, 4.25, 0.8]} distanceFactor={9}>
         <div className="graduation-message">
           <b>{t.congrats}</b>
           <span>{t.sub}</span>
