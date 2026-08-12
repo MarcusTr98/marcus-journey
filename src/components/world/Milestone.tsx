@@ -5,8 +5,8 @@ import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import * as THREE from "three";
 import type { Milestone as MilestoneType } from "@/types";
-import { milestones } from "@/data/milestones";
 import { landmarkMeta, type LandmarkKind } from "@/data/landmarks";
+import { milestoneCurveProgress, routeCurve } from "./Road";
 
 type LandmarkOffset = [number, number];
 const beamPositions = [-1.15, 0, 1.15];
@@ -505,20 +505,15 @@ function LandmarkStructure({ kind }: { kind: LandmarkKind }) {
 
 export default function Milestone({ data, index }: { data: MilestoneType; index: number }) {
   if (data.id === "graduation") return null;
-  const previous = milestones[Math.max(0, index - 1)].position;
-  const next = milestones[Math.min(milestones.length - 1, index + 1)].position;
-  const tangentX = next[0] - previous[0],
-    tangentZ = next[2] - previous[2];
-  const length = Math.hypot(tangentX, tangentZ) || 1;
+  const curveProgress = milestoneCurveProgress[index];
+  const roadPoint = routeCurve.getPointAt(curveProgress);
+  const tangent = routeCurve.getTangentAt(curveProgress);
   const side = index % 2 === 0 ? -1 : 1;
   const clearance = data.id === "graduation" ? 5.6 : data.id === "store" ? 4.8 : 4.2;
-  const offset: LandmarkOffset = [
-    (-tangentZ / length) * clearance * side,
-    (tangentX / length) * clearance * side,
-  ];
+  const offset: LandmarkOffset = [-tangent.z * clearance * side, tangent.x * clearance * side];
   const meta = landmarkMeta[data.id];
   return (
-    <group position={data.position}>
+    <group position={[roadPoint.x, data.position[1], roadPoint.z]}>
       <group position={[offset[0], 0, offset[1]]}>
         <mesh position={[0, 0.1, 0]} receiveShadow>
           <cylinderGeometry args={[2.25, 2.55, 0.2, 8]} />

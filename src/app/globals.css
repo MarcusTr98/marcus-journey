@@ -208,6 +208,40 @@ select:focus-visible {
 .main-cta b {
   margin-left: 30px;
 }
+.floating-start {
+  position: fixed;
+  z-index: 19;
+  left: 50%;
+  bottom: 9vh;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  min-width: 230px;
+  justify-content: space-between;
+  padding: 15px 18px 15px 22px;
+  transform: translateX(-50%);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 999px;
+  background: #f46300;
+  color: #fff;
+  box-shadow: 0 12px 38px rgba(62, 46, 29, 0.34);
+  font: 800 10px var(--font-display);
+  letter-spacing: 0.14em;
+}
+.floating-start b {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  color: #f46300;
+  font-size: 16px;
+}
+.floating-start:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
 .build-line {
   position: absolute;
   right: 5vw;
@@ -449,22 +483,6 @@ select:focus-visible {
 .graduation-message b,
 .graduation-message span {
   display: block;
-}
-.graduation-stage-sign {
-  min-width: 190px;
-  padding: 8px 14px;
-  border: 2px solid #ffc629;
-  border-radius: 4px;
-  background: #173c52;
-  color: #fff;
-  font: 800 10px/1.25 var(--font-display);
-  letter-spacing: 0.13em;
-  text-align: center;
-  white-space: nowrap;
-}
-.graduation-stage-sign b {
-  color: #ffc629;
-  font-size: 15px;
 }
 .graduation-message b {
   color: #ffc629;
