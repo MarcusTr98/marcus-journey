@@ -211,17 +211,7 @@ function GraduationMonument() {
         <boxGeometry args={[3.8, 0.12, 2.7]} />
         <meshStandardMaterial color="#005EB8" metalness={0.3} roughness={0.35} />
       </mesh>
-      {[-1.65, 1.65].map((x) => (
-        <mesh key={x} position={[x, 1.7, -0.72]} castShadow>
-          <boxGeometry args={[0.22, 2.7, 0.22]} />
-          <meshStandardMaterial color="#f2ede0" roughness={0.5} />
-        </mesh>
-      ))}
-      <mesh position={[0, 2.95, -0.72]}>
-        <boxGeometry args={[3.5, 0.34, 0.28]} />
-        <meshStandardMaterial color="#F46300" emissive="#F46300" emissiveIntensity={0.45} />
-      </mesh>
-      <group position={[0, 1.05, 0.08]} rotation={[-0.2, 0, 0]}>
+      <group position={[-0.72, 1.12, 0.05]} rotation={[-0.12, 0.08, -0.08]}>
         <mesh castShadow>
           <boxGeometry args={[1.55, 1.05, 0.12]} />
           <meshStandardMaterial color="#f8f2df" roughness={0.55} />
@@ -239,11 +229,7 @@ function GraduationMonument() {
           <meshStandardMaterial color="#F46300" />
         </mesh>
       </group>
-      <mesh position={[0, 0.55, 0.62]} castShadow>
-        <boxGeometry args={[1.8, 0.65, 0.9]} />
-        <meshStandardMaterial color="#1b313b" roughness={0.48} />
-      </mesh>
-      <group position={[1.08, 1.15, 0.35]} rotation={[0, -0.25, 0]}>
+      <group position={[0.88, 1.18, 0.12]} rotation={[0, -0.25, 0]}>
         <mesh castShadow rotation={[0, Math.PI / 4, 0]}>
           <boxGeometry args={[1.05, 0.1, 1.05]} />
           <meshStandardMaterial color="#102d4a" roughness={0.38} />
@@ -261,7 +247,7 @@ function GraduationMonument() {
           <meshStandardMaterial color="#ffc629" emissive="#F46300" emissiveIntensity={0.5} />
         </mesh>
       </group>
-      <group position={[-1.05, 0.95, 0.48]} rotation={[0, 0, -0.28]}>
+      <group position={[0, 0.68, 0.85]} rotation={[0, 0, -0.12]}>
         <mesh castShadow rotation={[0, 0, Math.PI / 2]}>
           <cylinderGeometry args={[0.2, 0.2, 1.15, 16]} />
           <meshStandardMaterial color="#f7f0dc" roughness={0.55} />
@@ -273,6 +259,9 @@ function GraduationMonument() {
           </mesh>
         ))}
       </group>
+      <Html center position={[0, 2.35, 0]} distanceFactor={7}>
+        <div className="graduation-landmark-title">GRADUATION 2026</div>
+      </Html>
       <pointLight position={[0, 2.5, 1]} color="#ffc629" intensity={1.8} distance={6} />
     </group>
   );

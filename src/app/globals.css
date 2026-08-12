@@ -272,6 +272,12 @@ select:focus-visible {
   display: flex;
   gap: 5px;
   transform: translateX(-50%);
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  background: rgba(15, 48, 65, 0.9);
+  box-shadow: 0 8px 28px rgba(15, 48, 65, 0.25);
+  backdrop-filter: blur(8px);
 }
 .milestone-dots button {
   width: 34px;
@@ -281,7 +287,7 @@ select:focus-visible {
   display: flex;
   align-items: center;
   gap: 6px;
-  color: #8fa0a5;
+  color: #e6f0f2;
   background: transparent;
   cursor: pointer;
 }
@@ -327,8 +333,9 @@ select:focus-visible {
   position: absolute;
   left: 8px;
   bottom: 31px;
-  color: #91a4aa;
-  font-size: 7px;
+  color: #ffffff;
+  font-size: 8px;
+  font-weight: 700;
   font-style: normal;
   letter-spacing: 0.08em;
   white-space: nowrap;
@@ -340,6 +347,12 @@ select:focus-visible {
 .dot-stage:has(.is-active) > em {
   opacity: 1;
   transform: none;
+}
+.dot-stage:has(.is-active) > em {
+  padding: 4px 7px;
+  border-radius: 4px;
+  background: rgba(15, 48, 65, 0.96);
+  text-shadow: 0 1px 2px #000;
 }
 .stage-context {
   display: flex;
@@ -436,6 +449,17 @@ select:focus-visible {
 .graduation-message b,
 .graduation-message span {
   display: block;
+}
+.graduation-landmark-title {
+  padding: 7px 12px;
+  border: 2px solid #ffc629;
+  border-radius: 4px;
+  background: #173c52;
+  color: #fff;
+  font: 900 12px var(--font-display);
+  letter-spacing: 0.14em;
+  white-space: nowrap;
+  box-shadow: 0 5px 16px rgba(23, 60, 82, 0.28);
 }
 .graduation-message b {
   color: #ffc629;

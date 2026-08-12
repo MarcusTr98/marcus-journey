@@ -1,6 +1,6 @@
 "use client";
 
-import { Html, useTexture } from "@react-three/drei";
+import { Html, Line } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import * as THREE from "three";
@@ -141,6 +141,30 @@ function AutomatedFactory() {
             QUALITY ↑ · OUTPUT ↑ · OEE ↑
           </strong>
         </Html>
+        <Line
+          points={[
+            [-0.78, -0.28, 0.12],
+            [-0.42, -0.08, 0.12],
+            [-0.08, -0.16, 0.12],
+            [0.28, 0.15, 0.12],
+            [0.72, 0.44, 0.12],
+          ]}
+          color="#00a859"
+          lineWidth={4}
+          toneMapped={false}
+        />
+        {[
+          [-0.78, -0.28],
+          [-0.42, -0.08],
+          [-0.08, -0.16],
+          [0.28, 0.15],
+          [0.72, 0.44],
+        ].map(([x, y]) => (
+          <mesh key={`${x}-${y}`} position={[x, y, 0.14]}>
+            <circleGeometry args={[0.055, 12]} />
+            <meshBasicMaterial color="#00c98d" toneMapped={false} />
+          </mesh>
+        ))}
       </group>
       <mesh position={[1.85, 2.45, -0.72]} rotation={[0, 0, -0.65]}>
         <coneGeometry args={[0.16, 0.55, 3]} />
@@ -213,8 +237,7 @@ function TeachingRobot() {
   );
 }
 
-function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: string }) {
-  const fptLogo = useTexture("/landmarks/fpt-logo.svg");
+function LandmarkStructure({ kind }: { kind: LandmarkKind }) {
   switch (kind) {
     case "factory":
       return (
@@ -262,21 +285,35 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
           <Block position={[0, 0.42, 1.26]} size={[1.4, 0.12, 0.42]} color="#eef2f2" />
           <group position={[0, 2.85, 0.15]}>
             <Block position={[0, 0, -0.08]} size={[2.75, 1.12, 0.22]} color="#ffffff" />
-            <mesh position={[0, 0, 0.045]}>
-              <planeGeometry args={[2.58, 1.06]} />
-              <meshBasicMaterial map={fptLogo} transparent toneMapped={false} side={2} />
-            </mesh>
-            <Html position={[0, -0.38, 0.16]} center transform distanceFactor={4.5}>
-              <strong
-                style={{
-                  color: "#173c52",
-                  font: "900 13px Arial",
-                  letterSpacing: "0.22em",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                EDUCATION
-              </strong>
+            <Html
+              position={[0, 0, 0.18]}
+              center
+              transform
+              distanceFactor={4.5}
+              zIndexRange={[30, 20]}
+            >
+              <div style={{ width: 132, textAlign: "center", pointerEvents: "none" }}>
+                <div
+                  role="img"
+                  aria-label="FPT"
+                  style={{
+                    width: 132,
+                    height: 55,
+                    background: "url('/landmarks/fpt-logo.svg') center/contain no-repeat",
+                  }}
+                />
+                <strong
+                  style={{
+                    display: "block",
+                    marginTop: 2,
+                    color: "#173c52",
+                    font: "900 11px Arial",
+                    letterSpacing: "0.18em",
+                  }}
+                >
+                  EDUCATION
+                </strong>
+              </div>
             </Html>
           </group>
         </group>
@@ -352,11 +389,6 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
               <meshBasicMaterial color="#ffffff" toneMapped={false} />
             </mesh>
           ))}
-          <Html position={[0, 2.65, 0.2]} center transform distanceFactor={4.5}>
-            <strong style={{ color: "#55237c", font: "900 12px Arial", whiteSpace: "nowrap" }}>
-              MARCUS VIDEO
-            </strong>
-          </Html>
           <pointLight position={[0, 2.2, 1.2]} color="#ff7ad9" intensity={4} distance={7} />
         </group>
       );
@@ -382,25 +414,30 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
     case "solutions":
       return (
         <group>
-          <Block position={[0, 0.72, 0]} size={[3.7, 1.35, 2.45]} color="#73855d" />
-          <Block position={[-0.55, 1.18, 1.26]} size={[2.15, 0.72, 0.08]} color="#dcebd7" />
-          {[-0.85, 0, 0.85].map((x, i) => (
+          <Block position={[0, 0.18, 0]} size={[4.1, 0.32, 2.8]} color="#425d4b" />
+          <Block position={[-0.65, 0.95, -0.15]} size={[2.35, 1.55, 1.8]} color="#657d66" />
+          <Block position={[-0.65, 1.15, 0.8]} size={[1.75, 0.82, 0.08]} color="#e8f0e7" />
+          {[-0.52, 0, 0.52].map((x, i) => (
             <Block
               key={x}
-              position={[x - 0.55, 1.12, 1.32]}
-              size={[0.45, 0.12 + 0.17 * i, 0.04]}
-              color={accent}
+              position={[x - 0.65, 1.1, 0.86]}
+              size={[0.3, 0.22 + i * 0.2, 0.04]}
+              color={["#ffd43b", "#00c98d", "#4ea5ff"][i]}
               glow
             />
           ))}
-          <mesh position={[1.15, 1.05, 1.32]} rotation={[0, 0, Math.PI / 4]}>
-            <boxGeometry args={[0.9, 0.9, 0.16]} />
-            <meshStandardMaterial color="#10252c" metalness={0.55} />
+          <group position={[1.08, 1.02, 0.15]}>
+            <mesh rotation={[0, 0, Math.PI / 4]}>
+              <boxGeometry args={[1.35, 1.35, 0.25]} />
+              <meshStandardMaterial color="#173c52" metalness={0.4} />
+            </mesh>
+          </group>
+          <mesh position={[1.08, 1.02, 0.32]}>
+            <torusGeometry args={[0.42, 0.09, 10, 28]} />
+            <meshStandardMaterial color="#60f0b0" emissive="#00a859" emissiveIntensity={1.4} />
           </mesh>
-          <mesh position={[1.15, 1.05, 1.43]}>
-            <torusGeometry args={[0.36, 0.07, 8, 24]} />
-            <meshStandardMaterial color="#00e38c" emissive="#00A859" emissiveIntensity={2} />
-          </mesh>
+          <Block position={[1.08, 0.98, 0.33]} size={[0.14, 0.5, 0.08]} color="#ffffff" glow />
+          <Block position={[1.22, 1.17, 0.33]} size={[0.36, 0.14, 0.08]} color="#ffffff" glow />
           <mesh position={[-1.5, 2.2, -0.45]}>
             <cylinderGeometry args={[0.035, 0.045, 2.8, 8]} />
             <meshStandardMaterial color="#d9e0d7" metalness={0.65} />
@@ -410,11 +447,8 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
             <shapeGeometry args={[vietnamStar]} />
             <meshBasicMaterial color="#FFFF00" toneMapped={false} side={2} />
           </mesh>
-          <Block position={[1.05, 2.25, -0.65]} size={[1.15, 0.28, 0.65]} color="#63794f" />
-          <mesh position={[1.05, 2.55, -0.65]}>
-            <coneGeometry args={[0.32, 0.55, 8]} />
-            <meshStandardMaterial color="#536744" />
-          </mesh>
+          <Block position={[0, 2.45, -0.58]} size={[3.4, 0.28, 0.65]} color="#2f4b42" />
+          <pointLight position={[0, 2.2, 1.3]} color="#8affcb" intensity={2.8} distance={6} />
         </group>
       );
     case "commerce":
@@ -469,7 +503,7 @@ export default function Milestone({ data, index }: { data: MilestoneType; index:
           <cylinderGeometry args={[2.25, 2.55, 0.2, 8]} />
           <meshStandardMaterial color="#496d73" roughness={0.88} />
         </mesh>
-        {data.id !== "graduation" && <LandmarkStructure kind={meta.kind} accent={data.accent} />}
+        {data.id !== "graduation" && <LandmarkStructure kind={meta.kind} />}
       </group>
     </group>
   );
