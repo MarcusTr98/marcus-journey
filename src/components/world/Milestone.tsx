@@ -79,15 +79,23 @@ function RotatingRoofSign({ kind }: { kind: "phone" | "laptop" }) {
 
 function AutomatedFactory() {
   const robot = useRef<THREE.Group>(null);
+  const gripper = useRef<THREE.Group>(null);
   const products = useRef<THREE.Group>(null);
   useFrame(({ clock }) => {
     if (robot.current) robot.current.rotation.z = -0.35 + Math.sin(clock.elapsedTime * 1.4) * 0.38;
+    if (gripper.current) gripper.current.position.y = Math.sin(clock.elapsedTime * 1.8) * 0.22;
     if (products.current) products.current.position.x = ((clock.elapsedTime * 0.55) % 1.8) - 0.9;
   });
   return (
     <group>
-      <Block position={[0, 0.18, 0]} size={[4.4, 0.3, 3.2]} color="#496f73" />
-      <Block position={[0, 0.65, 0.25]} size={[3.65, 0.42, 1.15]} color="#6d8f91" />
+      <Block position={[0, 0.18, 0]} size={[4.8, 0.3, 3.5]} color="#355f69" />
+      <Block position={[0, 0.62, 0.45]} size={[3.9, 0.42, 1.25]} color="#708e91" />
+      {[-1.55, -0.52, 0.52, 1.55].map((x) => (
+        <mesh key={x} position={[x, 0.38, 0.45]} rotation={[Math.PI / 2, 0, 0]}>
+          <cylinderGeometry args={[0.13, 0.13, 1.08, 12]} />
+          <meshStandardMaterial color="#b9c9ca" metalness={0.45} />
+        </mesh>
+      ))}
       <group ref={products}>
         {[-0.75, 0, 0.75].map((x, index) => (
           <Block
@@ -106,46 +114,39 @@ function AutomatedFactory() {
           <Block position={[1.08, -0.32, 0]} size={[0.24, 0.75, 0.28]} color="#ff4fa3" />
         </group>
       </group>
-      <group position={[1.1, 1.75, -0.72]}>
-        <Block position={[0, 0, 0]} size={[1.75, 1.25, 0.14]} color="#eef6f5" />
-        {[0.52, 0.16, -0.2, -0.56].map((y, index) => (
+      <group position={[0.2, 2.35, 0.55]}>
+        <Block position={[0, 0, 0]} size={[2.9, 0.18, 0.18]} color="#e8eef0" />
+        <Block position={[-1.35, -0.75, 0]} size={[0.18, 1.55, 0.18]} color="#e8eef0" />
+        <Block position={[1.35, -0.75, 0]} size={[0.18, 1.55, 0.18]} color="#e8eef0" />
+        <group ref={gripper} position={[0.45, -0.48, 0]}>
+          <Block position={[0, 0, 0]} size={[0.15, 0.82, 0.15]} color="#ffd43b" />
+          <Block position={[-0.16, -0.43, 0]} size={[0.12, 0.36, 0.12]} color="#ff4fa3" />
+          <Block position={[0.16, -0.43, 0]} size={[0.12, 0.36, 0.12]} color="#ff4fa3" />
+        </group>
+      </group>
+      <group position={[1.45, 2.15, -0.78]}>
+        <Block position={[0, 0, 0]} size={[2.15, 1.55, 0.14]} color="#f4f8f8" />
+        {[0.5, 0.12, -0.26].map((y, index) => (
           <Block
             key={y}
-            position={[-0.56 + index * 0.37, y, 0.09]}
-            size={[0.23, 0.2 + index * 0.14, 0.04]}
-            color={MAP_COLORS[index + 1]}
+            position={[-0.62 + index * 0.62, y, 0.09]}
+            size={[0.38, 0.28 + index * 0.24, 0.04]}
+            color={["#00c98d", "#4ea5ff", "#ffd43b"][index]}
             glow
           />
         ))}
-        <Block position={[0, -0.48, 0.09]} size={[1.35, 0.045, 0.035]} color="#203944" />
+        <Block position={[0, -0.57, 0.09]} size={[1.7, 0.045, 0.035]} color="#203944" />
+        <Html position={[0, 0.92, 0.11]} center transform distanceFactor={4.3}>
+          <strong style={{ color: "#173c52", font: "900 10px Arial", whiteSpace: "nowrap" }}>
+            QUALITY ↑ · OUTPUT ↑ · OEE ↑
+          </strong>
+        </Html>
       </group>
       <mesh position={[1.85, 2.45, -0.72]} rotation={[0, 0, -0.65]}>
         <coneGeometry args={[0.16, 0.55, 3]} />
         <meshStandardMaterial color="#00c98d" emissive="#00c98d" emissiveIntensity={1.4} />
       </mesh>
       <pointLight position={[0, 2.3, 0.5]} color="#68e8ff" intensity={3.2} distance={7} />
-    </group>
-  );
-}
-
-function EventCoordinator() {
-  return (
-    <group position={[0.95, 0.45, 0.75]}>
-      <mesh position={[0, 1.38, 0]} castShadow>
-        <sphereGeometry args={[0.22, 16, 12]} />
-        <meshStandardMaterial color="#d99a6c" roughness={0.72} />
-      </mesh>
-      <Block position={[0, 0.85, 0]} size={[0.5, 0.82, 0.34]} color="#f2f4f5" />
-      <Block position={[-0.18, 0.25, 0]} size={[0.14, 0.72, 0.18]} color="#17242a" />
-      <Block position={[0.18, 0.25, 0]} size={[0.14, 0.72, 0.18]} color="#17242a" />
-      <group position={[0.43, 0.93, 0.05]} rotation={[0, 0, -0.5]}>
-        <Block position={[0, 0, 0]} size={[0.42, 0.13, 0.14]} color="#d99a6c" />
-        <Block position={[0.26, 0.05, 0]} size={[0.18, 0.34, 0.12]} color="#101820" />
-        <mesh position={[0.26, 0.28, 0]}>
-          <cylinderGeometry args={[0.018, 0.018, 0.28, 6]} />
-          <meshStandardMaterial color="#101820" />
-        </mesh>
-      </group>
     </group>
   );
 }
@@ -194,6 +195,19 @@ function TeachingRobot() {
         <Block position={[0, 0.24, 0]} size={[1.25, 0.78, 0.12]} color="#ffffff" glow />
         <Block position={[0, 0.25, 0.08]} size={[0.92, 0.52, 0.04]} color="#45c8ff" glow />
         <Block position={[0, -0.28, 0.34]} size={[1.45, 0.1, 0.72]} color="#cfd8dc" />
+      </group>
+      <group position={[1.18, 0.42, 1.35]} rotation={[0, -0.48, 0]} scale={0.62}>
+        <Block position={[0, 0.35, 0]} size={[1.8, 0.55, 1.15]} color="#ff6b35" />
+        <Block position={[0, 0.75, -0.05]} size={[1.18, 0.48, 0.86]} color="#f8e6a8" />
+        <Block position={[0, 0.72, 0.48]} size={[0.72, 0.2, 0.08]} color="#00c98d" glow />
+        {[-0.72, 0.72].map((x) =>
+          [-0.42, 0.42].map((z) => (
+            <mesh key={`${x}-${z}`} position={[x, 0.15, z]} rotation={[0, 0, Math.PI / 2]}>
+              <cylinderGeometry args={[0.22, 0.22, 0.18, 12]} />
+              <meshStandardMaterial color="#17242a" />
+            </mesh>
+          )),
+        )}
       </group>
     </group>
   );
@@ -252,7 +266,7 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
               <planeGeometry args={[2.58, 1.06]} />
               <meshBasicMaterial map={fptLogo} transparent toneMapped={false} side={2} />
             </mesh>
-            <Html position={[0, -0.72, 0.16]} center transform distanceFactor={4.5}>
+            <Html position={[0, -0.38, 0.16]} center transform distanceFactor={4.5}>
               <strong
                 style={{
                   color: "#173c52",
@@ -290,7 +304,6 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
               ))}
             </group>
           ))}
-          <EventCoordinator />
           {[-1.15, 0, 1.15].map((x, index) => (
             <mesh key={x} position={[x, 2.65, 0.65]} rotation={[Math.PI / 4, 0, 0]}>
               <coneGeometry args={[0.35, 1.4, 12, 1, true]} />
@@ -341,7 +354,7 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
           ))}
           <Html position={[0, 2.65, 0.2]} center transform distanceFactor={4.5}>
             <strong style={{ color: "#55237c", font: "900 12px Arial", whiteSpace: "nowrap" }}>
-              MARCUS CINEMA
+              MARCUS VIDEO
             </strong>
           </Html>
           <pointLight position={[0, 2.2, 1.2]} color="#ff7ad9" intensity={4} distance={7} />
