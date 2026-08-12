@@ -1,5 +1,4 @@
 export type Language = "vi" | "en" | "zh";
-export type Quality = "low" | "high";
 export type JourneyMode = "auto" | "drive" | "quick";
 export type JourneyStage = "foundation" | "transformation" | "present" | "destination";
 export interface Milestone {

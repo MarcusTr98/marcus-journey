@@ -393,13 +393,15 @@ select:focus-visible {
   transform: translateY(-43%);
   width: min(380px, 38vw);
   padding: 31px;
-  background: rgba(20, 55, 72, 0.88);
+  background: rgba(15, 48, 65, 0.96);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-top: 3px solid var(--accent);
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(8px);
   box-shadow: 0 24px 70px rgba(19, 47, 63, 0.28);
   animation: panelIn 0.5s ease;
   will-change: transform, opacity;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
 }
 .milestone-panel.is-left {
   right: auto;
@@ -412,7 +414,11 @@ select:focus-visible {
   font: 800 24px/1 var(--font-display);
   letter-spacing: 0.18em;
   text-align: center;
-  text-shadow: 0 2px 12px #000;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+  text-shadow:
+    0 2px 3px rgba(8, 27, 38, 0.95),
+    0 0 12px rgba(8, 27, 38, 0.72);
   pointer-events: none;
 }
 .graduation-message {
@@ -943,38 +949,6 @@ select:focus-visible {
     height: calc(100% - 140px);
   }
 }
-.performance-prompt {
-  position: fixed;
-  z-index: 80;
-  right: 1.5rem;
-  bottom: 5.4rem;
-  width: min(360px, calc(100vw - 2rem));
-  padding: 1rem;
-  border: 1px solid #405763;
-  background: rgba(5, 20, 28, 0.94);
-  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(12px);
-}
-.performance-prompt p {
-  margin: 0 0 0.8rem;
-  color: #d8e4e7;
-  line-height: 1.5;
-}
-.performance-prompt div {
-  display: flex;
-  gap: 0.55rem;
-}
-.performance-prompt button {
-  padding: 0.65rem 0.8rem;
-  border: 1px solid #56717d;
-  color: #fff;
-  background: transparent;
-}
-.performance-prompt button:first-child {
-  border-color: #f46300;
-  background: #f46300;
-}
-
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

@@ -26,23 +26,6 @@ const SOURCE_LABEL = {
   en: "VIEW SOURCE CODE",
   zh: "查看源代码",
 };
-const PERFORMANCE_COPY = {
-  vi: {
-    text: "Thiết bị đang tải hơi chậm. Chuyển sang chất lượng Low để mượt hơn?",
-    accept: "CHUYỂN LOW",
-    keep: "GIỮ HIGH",
-  },
-  en: {
-    text: "This device is rendering slowly. Switch to Low quality for smoother motion?",
-    accept: "USE LOW",
-    keep: "KEEP HIGH",
-  },
-  zh: {
-    text: "当前设备渲染较慢，是否切换到低画质以获得更流畅的体验？",
-    accept: "切换低画质",
-    keep: "保持高画质",
-  },
-};
 export default function JourneyApp({ initialLanguage }: { initialLanguage: Language }) {
   const router = useRouter();
   const [quick, setQuick] = useState(false);
@@ -54,25 +37,18 @@ export default function JourneyApp({ initialLanguage }: { initialLanguage: Langu
     currentMilestone,
     started,
     language,
-    quality,
     soundEnabled,
     sceneReady,
-    lowQualitySuggested,
     visitedMilestones,
     setLanguage,
-    setQuality,
-    suggestLowQuality,
-    toggleQuality,
     toggleSound,
   } = useJourneyStore();
   useEffect(() => {
     void Promise.resolve(useJourneyStore.persist.rehydrate()).then(() => {
       setLanguage(initialLanguage);
-      setQuality("high");
-      suggestLowQuality(false);
     });
     document.documentElement.lang = initialLanguage === "zh" ? "zh-CN" : initialLanguage;
-  }, [initialLanguage, setLanguage, setQuality, suggestLowQuality]);
+  }, [initialLanguage, setLanguage]);
   const t = copy[language],
     items = getMilestones(language),
     active = currentMilestone >= 0 ? items[currentMilestone] : null,
@@ -90,24 +66,6 @@ export default function JourneyApp({ initialLanguage }: { initialLanguage: Langu
   return (
     <div className={`journey-shell ${started ? "is-started" : ""}`}>
       <Experience />
-      {lowQualitySuggested && quality === "high" && (
-        <aside className="performance-prompt" role="status">
-          <p>{PERFORMANCE_COPY[language].text}</p>
-          <div>
-            <button
-              onClick={() => {
-                setQuality("low");
-                suggestLowQuality(false);
-              }}
-            >
-              {PERFORMANCE_COPY[language].accept}
-            </button>
-            <button onClick={() => suggestLowQuality(false)}>
-              {PERFORMANCE_COPY[language].keep}
-            </button>
-          </div>
-        </aside>
-      )}
       <header className="topbar">
         <a className="logo" href="#garage">
           <b>M</b>
@@ -123,9 +81,6 @@ export default function JourneyApp({ initialLanguage }: { initialLanguage: Langu
         <div className="controls">
           <button onClick={toggleSound} aria-label="Toggle sound">
             {t.sound} {soundEnabled ? "ON" : "OFF"}
-          </button>
-          <button onClick={toggleQuality}>
-            {t.quality} {quality.toUpperCase()}
           </button>
           <select
             value={language}

@@ -12,9 +12,13 @@ export default function Experience() {
         <Canvas
           shadows
           camera={{ position: [7, 8, 14], fov: 42 }}
-          dpr={[1, 1.5]}
+          dpr={[1.5, 2]}
           gl={{ antialias: true, powerPreference: "high-performance" }}
-          onCreated={() => setSceneReady(true)}
+          onCreated={({ gl }) => {
+            gl.toneMapping = 4;
+            gl.toneMappingExposure = 1.12;
+            setSceneReady(true);
+          }}
           fallback={
             <div className="fallback">
               3D is unavailable. Use Quick Profile to explore Marcus&apos;s work.

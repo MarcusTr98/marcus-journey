@@ -3,7 +3,6 @@
 import { useLayoutEffect, useMemo, useRef, type RefObject } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
-import { useJourneyStore } from "@/stores/journeyStore";
 import { routeCurve } from "./Road";
 
 const FOLIAGE = ["#2f8f68", "#49a978", "#70bd79", "#26785d"];
@@ -146,8 +145,7 @@ function RoadsideFireflies({ count }: { count: number }) {
 }
 
 export default function Scenery() {
-  const quality = useJourneyStore((state) => state.quality);
-  const treeCount = quality === "high" ? 66 : 38;
+  const treeCount = 66;
   const trees = useMemo(
     () =>
       Array.from({ length: treeCount }, (_, index) => {
@@ -168,7 +166,7 @@ export default function Scenery() {
     [treeCount],
   );
   const rocks = useMemo(() => {
-    const count = quality === "high" ? 24 : 12;
+    const count = 24;
     return Array.from({ length: count }, (_, index) => {
       const point = routeCurve.getPointAt((index + 1) / (count + 1));
       const tangent = routeCurve.getTangentAt((index + 1) / (count + 1));
@@ -182,12 +180,12 @@ export default function Scenery() {
         tone: 0,
       };
     });
-  }, [quality]);
+  }, []);
   return (
     <group>
-      <InstancedTrees trees={trees} shadows={quality === "high"} />
+      <InstancedTrees trees={trees} shadows />
       <InstancedRocks rocks={rocks} />
-      <RoadsideFireflies count={quality === "high" ? 300 : 140} />
+      <RoadsideFireflies count={300} />
     </group>
   );
 }

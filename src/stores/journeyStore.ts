@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { JourneyMode, Language, Quality } from "@/types";
+import type { JourneyMode, Language } from "@/types";
 interface JourneyState {
   currentMilestone: number;
   progress: number;
@@ -8,7 +8,6 @@ interface JourneyState {
   unlockedUpgrades: string[];
   visitedMilestones: number[];
   language: Language;
-  quality: Quality;
   soundEnabled: boolean;
   mode: JourneyMode;
   started: boolean;
@@ -16,13 +15,10 @@ interface JourneyState {
   requestedMilestone: number | null;
   navigationPinned: boolean;
   minorUpgradePulse: number;
-  lowQualitySuggested: boolean;
   setProgress: (v: number) => void;
   setVehicleProgress: (v: number) => void;
   setCurrentMilestone: (v: number) => void;
   setLanguage: (v: Language) => void;
-  toggleQuality: () => void;
-  setQuality: (v: Quality) => void;
   toggleSound: () => void;
   setMode: (v: JourneyMode) => void;
   start: () => void;
@@ -30,7 +26,6 @@ interface JourneyState {
   requestMilestone: (v: number | null) => void;
   setNavigationPinned: (v: boolean) => void;
   triggerMinorUpgrade: () => void;
-  suggestLowQuality: (v: boolean) => void;
   resetJourney: () => void;
 }
 export const useJourneyStore = create<JourneyState>()(
@@ -42,7 +37,6 @@ export const useJourneyStore = create<JourneyState>()(
       unlockedUpgrades: [],
       visitedMilestones: [],
       language: "vi",
-      quality: "high",
       soundEnabled: false,
       mode: "auto",
       started: false,
@@ -50,7 +44,6 @@ export const useJourneyStore = create<JourneyState>()(
       requestedMilestone: null,
       navigationPinned: false,
       minorUpgradePulse: 0,
-      lowQualitySuggested: false,
       setProgress: (progress) => set({ progress }),
       setVehicleProgress: (vehicleProgress) => set({ vehicleProgress }),
       setCurrentMilestone: (currentMilestone) =>
@@ -61,8 +54,6 @@ export const useJourneyStore = create<JourneyState>()(
             : [...state.visitedMilestones, currentMilestone].sort((a, b) => a - b),
         })),
       setLanguage: (language) => set({ language }),
-      toggleQuality: () => set((s) => ({ quality: s.quality === "high" ? "low" : "high" })),
-      setQuality: (quality) => set({ quality }),
       toggleSound: () => set((s) => ({ soundEnabled: !s.soundEnabled })),
       setMode: (mode) => set({ mode }),
       start: () => set({ started: true }),
@@ -71,7 +62,6 @@ export const useJourneyStore = create<JourneyState>()(
       setNavigationPinned: (navigationPinned) => set({ navigationPinned }),
       triggerMinorUpgrade: () =>
         set((state) => ({ minorUpgradePulse: state.minorUpgradePulse + 1 })),
-      suggestLowQuality: (lowQualitySuggested) => set({ lowQualitySuggested }),
       resetJourney: () =>
         set({
           progress: 0,

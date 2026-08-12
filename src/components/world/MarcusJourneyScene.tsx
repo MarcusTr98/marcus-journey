@@ -1,6 +1,6 @@
 "use client";
 import { useFrame, useThree } from "@react-three/fiber";
-import { PerformanceMonitor, Sparkles, Stars } from "@react-three/drei";
+import { Sparkles, Stars } from "@react-three/drei";
 import { useRef } from "react";
 import * as THREE from "three";
 import Car from "./Car";
@@ -28,8 +28,6 @@ export default function MarcusJourneyScene() {
   const minorLearningTriggered = useRef(false);
   const { camera, scene } = useThree();
   const progress = useJourneyStore((s) => s.progress);
-  const quality = useJourneyStore((s) => s.quality);
-  const suggestLowQuality = useJourneyStore((s) => s.suggestLowQuality);
   useFrame((_, delta) => {
     if (!car.current) return;
     const journeyState = useJourneyStore.getState();
@@ -110,67 +108,57 @@ export default function MarcusJourneyScene() {
   });
   return (
     <>
-      <PerformanceMonitor onDecline={() => suggestLowQuality(true)} flipflops={2} />
       <color attach="background" args={["#527fa3"]} />
-      <fog attach="fog" args={["#527fa3", 22, 62]} />
-      <ambientLight intensity={1.8} />
+      <fog attach="fog" args={["#527fa3", 48, 105]} />
+      <ambientLight intensity={0.72} />
       <directionalLight
         position={[8, 14, 6]}
         color="#fff1c9"
-        intensity={2.65}
-        castShadow={quality === "high"}
-        shadow-mapSize-width={1024}
-        shadow-mapSize-height={1024}
+        intensity={3.15}
+        castShadow
+        shadow-mapSize-width={2048}
+        shadow-mapSize-height={2048}
       />
-      <hemisphereLight args={["#d9efff", "#7a9166", 1.15]} />
-      <Stars
-        radius={70}
-        depth={38}
-        count={quality === "high" ? 2200 : 620}
-        factor={quality === "high" ? 2.55 : 1.8}
-        fade
-        speed={0.35}
-      />
+      <hemisphereLight args={["#d9efff", "#667c54", 0.68]} />
+      <Stars radius={70} depth={38} count={2200} factor={2.55} fade speed={0.35} />
       <Sparkles
         position={[0, 8, -108]}
         scale={[34, 12, 230]}
-        count={quality === "high" ? 145 : 60}
-        size={quality === "high" ? 2.25 : 1.55}
+        count={145}
+        size={2.25}
         speed={0.2}
         color="#ffffff"
         opacity={0.58}
       />
-      {quality === "high" && (
-        <>
-          <Sparkles
-            position={[0, 10, -108]}
-            scale={[38, 15, 230]}
-            count={190}
-            size={2.7}
-            speed={0.22}
-            color="#8ee8ff"
-            opacity={0.72}
-          />
-          <Sparkles
-            position={[0, 7, -108]}
-            scale={[34, 10, 230]}
-            count={140}
-            size={2.05}
-            speed={0.3}
-            color="#ffd86a"
-            opacity={0.6}
-          />
-          <Sparkles
-            position={[0, 6, -108]}
-            scale={[36, 9, 230]}
-            count={115}
-            size={2.1}
-            speed={0.26}
-            color="#d59cff"
-            opacity={0.62}
-          />
-        </>
-      )}
+      <>
+        <Sparkles
+          position={[0, 10, -108]}
+          scale={[38, 15, 230]}
+          count={190}
+          size={2.7}
+          speed={0.22}
+          color="#8ee8ff"
+          opacity={0.72}
+        />
+        <Sparkles
+          position={[0, 7, -108]}
+          scale={[34, 10, 230]}
+          count={140}
+          size={2.05}
+          speed={0.3}
+          color="#ffd86a"
+          opacity={0.6}
+        />
+        <Sparkles
+          position={[0, 6, -108]}
+          scale={[36, 9, 230]}
+          count={115}
+          size={2.1}
+          speed={0.26}
+          color="#d59cff"
+          opacity={0.62}
+        />
+      </>
       <Road />
       <WorldEnvironment />
       <Car groupRef={car} />
