@@ -12,6 +12,8 @@ import { useRouter } from "next/navigation";
 import type { Language } from "@/types";
 import { useJourneyNavigation } from "@/hooks/useJourneyNavigation";
 import JourneyAlbum from "@/components/journey/JourneyAlbum";
+import { minorLearningCurveProgress } from "@/components/world/Road";
+import type { Milestone } from "@/types";
 const Experience = dynamic(() => import("@/components/world/Experience"), {
   ssr: false,
   loading: () => <div className="scene-loading">LOADING 3D WORLD…</div>,
@@ -25,6 +27,68 @@ const SOURCE_LABEL = {
   vi: "XEM SOURCE CODE",
   en: "VIEW SOURCE CODE",
   zh: "查看源代码",
+};
+const IT_CLUB_MILESTONE: Record<Language, Milestone> = {
+  vi: {
+    id: "it-club",
+    shortTitle: "MỐC LÃNH ĐẠO CỘNG ĐỒNG",
+    title: "Chủ nhiệm CLB IT · Cộng đồng Công nghệ",
+    period: "2024 — 09/2026",
+    role: "ĐIỀU HÀNH CLB · TỔ CHỨC SỰ KIỆN · ĐÀO TẠO AI",
+    summary:
+      "Dẫn dắt hoạt động CLB IT, xây dựng kế hoạch và điều phối workshop, sự kiện cùng các dự án thực hành. Đồng thời hỗ trợ cộng đồng tiếp cận AI an toàn, hiệu quả và huấn luyện giáo viên ứng dụng AI có kiểm soát vào giáo án, bài tập và học liệu.",
+    highlights: [
+      "Điều hành CLB, phân công đội ngũ và duy trì chương trình hoạt động",
+      "Tổ chức workshop, sự kiện công nghệ và mentoring dự án thực tế",
+      "Hỗ trợ cộng đồng tiếp cận, sử dụng AI an toàn và hiệu quả",
+      "Training giáo viên ứng dụng AI vào giảng dạy và thiết kế học liệu",
+    ],
+    accent: "#8b5cf6",
+    position: [0, 0, 0],
+    upgrade: "Lãnh đạo cộng đồng · Tổ chức sự kiện · AI Enablement · Teacher Training",
+    stage: "transformation",
+    projectLinks: [],
+  },
+  en: {
+    id: "it-club",
+    shortTitle: "COMMUNITY LEADERSHIP CHECKPOINT",
+    title: "IT Club Chairman · Technology Community",
+    period: "2024 — 09/2026",
+    role: "CLUB OPERATIONS · EVENTS · AI TRAINING",
+    summary:
+      "Led IT Club operations, planned and coordinated workshops, events and hands-on projects. Also supported responsible AI adoption in the community and trained teachers to use AI with human oversight for lesson plans, assignments and learning materials.",
+    highlights: [
+      "Led the club team, delegated responsibilities and maintained its activity program",
+      "Organized technology workshops and events while mentoring practical projects",
+      "Helped the community adopt AI safely and effectively",
+      "Trained teachers to apply AI in instruction and learning-content design",
+    ],
+    accent: "#8b5cf6",
+    position: [0, 0, 0],
+    upgrade: "Community Leadership · Event Operations · AI Enablement · Teacher Training",
+    stage: "transformation",
+    projectLinks: [],
+  },
+  zh: {
+    id: "it-club",
+    shortTitle: "社区领导力节点",
+    title: "IT俱乐部负责人 · 科技社区",
+    period: "2024 — 09/2026",
+    role: "俱乐部运营 · 活动组织 · AI培训",
+    summary:
+      "负责IT俱乐部运营，策划并统筹技术工作坊、社群活动和实践项目；同时推动社区安全、高效地使用AI，并培训教师在人类监督下将AI应用于教案、作业与学习材料设计。",
+    highlights: [
+      "统筹俱乐部团队、任务分工与持续活动计划",
+      "组织技术工作坊与活动，并指导实践项目",
+      "帮助社区安全、有效地使用AI工具",
+      "培训教师将AI应用于教学与学习材料设计",
+    ],
+    accent: "#8b5cf6",
+    position: [0, 0, 0],
+    upgrade: "社区领导力 · 活动运营 · AI赋能 · 教师培训",
+    stage: "transformation",
+    projectLinks: [],
+  },
 };
 export default function JourneyApp({ initialLanguage }: { initialLanguage: Language }) {
   const router = useRouter();
@@ -49,11 +113,21 @@ export default function JourneyApp({ initialLanguage }: { initialLanguage: Langu
     });
     document.documentElement.lang = initialLanguage === "zh" ? "zh-CN" : initialLanguage;
   }, [initialLanguage, setLanguage]);
+  const isItClubCheckpoint =
+    started && Math.abs(vehicleProgress - minorLearningCurveProgress) < 0.004;
   const t = copy[language],
     items = getMilestones(language),
-    active = currentMilestone >= 0 ? items[currentMilestone] : null,
+    active = isItClubCheckpoint
+      ? IT_CLUB_MILESTONE[language]
+      : currentMilestone >= 0
+        ? items[currentMilestone]
+        : null,
     activeStageItems = active ? items.filter(({ stage }) => stage === active.stage) : [],
-    activeStageStop = active ? activeStageItems.findIndex(({ id }) => id === active.id) + 1 : 0;
+    activeStageStop = isItClubCheckpoint
+      ? 2
+      : active
+        ? activeStageItems.findIndex(({ id }) => id === active.id) + 1
+        : 0;
   if (quick)
     return (
       <>
@@ -195,7 +269,7 @@ export default function JourneyApp({ initialLanguage }: { initialLanguage: Langu
                 </span>
               </div>
               <span className="panel-index">
-                {String(currentMilestone + 1).padStart(2, "0")} /{" "}
+                {isItClubCheckpoint ? "03A" : String(currentMilestone + 1).padStart(2, "0")} /{" "}
                 {String(milestones.length).padStart(2, "0")}
               </span>
               <span className="chapter-title">{active.shortTitle}</span>

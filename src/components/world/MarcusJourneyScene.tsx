@@ -11,8 +11,6 @@ import { milestones } from "@/data/milestones";
 
 const STABLE_CAMERA_OFFSET = new THREE.Vector3(8.4, 7.4, 10.8);
 const STABLE_FOCUS_OFFSET = new THREE.Vector3(0, 0.9, -0.6);
-const GRADUATION_CAMERA_OFFSET = new THREE.Vector3(10.8, 8.8, 13.8);
-const GRADUATION_FOCUS_OFFSET = new THREE.Vector3(-3.25, 1.05, -1.4);
 const MAX_PROGRESS_PER_SECOND = 0.052;
 const STAGE_SKY = {
   foundation: new THREE.Color("#527fa3"),
@@ -60,7 +58,19 @@ export default function MarcusJourneyScene() {
         actualProgress.current +
         THREE.MathUtils.clamp(dampedProgress - actualProgress.current, -maxStep, maxStep);
 
-      if (
+      const reachesMinorCheckpoint =
+        drivingForward &&
+        journeyState.currentMilestone === 2 &&
+        !minorLearningTriggered.current &&
+        progress >= minorLearningCurveProgress &&
+        proposed >= minorLearningCurveProgress - 0.00035;
+      if (reachesMinorCheckpoint) {
+        actualProgress.current = minorLearningCurveProgress;
+        minorLearningTriggered.current = true;
+        journeyState.triggerMinorUpgrade();
+        journeyState.setProgress(minorLearningCurveProgress);
+        journeyState.setNavigationPinned(true);
+      } else if (
         drivingForward &&
         nextCheckpoint !== undefined &&
         progress >= nextCheckpoint &&
@@ -93,15 +103,10 @@ export default function MarcusJourneyScene() {
       Math.cos(desiredRotation - car.current.rotation.y),
     );
     car.current.rotation.y += angleDelta * (1 - Math.exp(-delta * 7));
-    const isGraduation = milestones[journeyState.currentMilestone]?.id === "graduation";
-    const target = point
-      .clone()
-      .add(isGraduation ? GRADUATION_CAMERA_OFFSET : STABLE_CAMERA_OFFSET);
-    const stableFocus = point
-      .clone()
-      .add(isGraduation ? GRADUATION_FOCUS_OFFSET : STABLE_FOCUS_OFFSET);
+    const target = point.clone().add(STABLE_CAMERA_OFFSET);
+    const stableFocus = point.clone().add(STABLE_FOCUS_OFFSET);
     if (camera instanceof THREE.PerspectiveCamera) {
-      camera.fov = THREE.MathUtils.damp(camera.fov, isGraduation ? 47 : 41, 2.4, delta);
+      camera.fov = THREE.MathUtils.damp(camera.fov, 41, 2.4, delta);
       camera.updateProjectionMatrix();
     }
     camera.position.lerp(target, 1 - Math.exp(-delta * 2.1));

@@ -8,7 +8,6 @@ import { FINISH_POSITION, MINOR_LEARNING_POSITION, TROPHY_POSITION } from "@/dat
 import {
   graduationCurveProgress,
   milestoneCurveProgress,
-  minorLearningCurveProgress,
   routeCurve,
 } from "./Road";
 import { milestones } from "@/data/milestones";
@@ -154,27 +153,11 @@ function StartCelebration() {
 
 function MinorLearningCheckpoint() {
   const language = useJourneyStore((state) => state.language);
-  const progress = useJourneyStore((state) => state.vehicleProgress);
   const label = {
     vi: "CLB IT · WORKSHOP · MINI PROJECTS",
     en: "IT CLUB · WORKSHOPS · MINI PROJECTS",
     zh: "IT俱乐部 · 技术工坊 · 小型项目",
   }[language];
-  const card = {
-    vi: {
-      title: "Chủ nhiệm CLB IT",
-      text: "Điều phối hoạt động CLB, tổ chức workshop, hướng dẫn dự án xưởng và chia sẻ lộ trình học lập trình cho thành viên.",
-    },
-    en: {
-      title: "IT Club Chairman",
-      text: "Coordinated club activities, technical workshops, lab projects and structured programming guidance for members.",
-    },
-    zh: {
-      title: "IT俱乐部负责人",
-      text: "统筹俱乐部活动、技术工作坊与实践项目，并为成员提供结构化的编程学习指导。",
-    },
-  }[language];
-  const active = Math.abs(progress - minorLearningCurveProgress) < 0.008;
   return (
     <group position={MINOR_LEARNING_POSITION}>
       <mesh position={[0, 0.09, 0]} rotation={[Math.PI / 2, 0, 0]}>
@@ -194,14 +177,6 @@ function MinorLearningCheckpoint() {
       <Html center sprite position={[0, 1.15, 0]} distanceFactor={7} zIndexRange={[10, 0]}>
         <div className="world-label">+ LEVEL · {label}</div>
       </Html>
-      {active && (
-        <Html center sprite position={[0, 2.15, 0]} distanceFactor={7} zIndexRange={[18, 8]}>
-          <div className="minor-checkpoint-card">
-            <b>{card.title}</b>
-            <span>{card.text}</span>
-          </div>
-        </Html>
-      )}
     </group>
   );
 }
@@ -230,30 +205,43 @@ function BuntingGate({ position }: { position: { x: number; z: number } }) {
   );
 }
 function GraduationMonument() {
+  const cap = useRef<THREE.Group>(null);
+  const diploma = useRef<THREE.Group>(null);
+  useFrame(({ clock }) => {
+    const time = clock.getElapsedTime();
+    if (cap.current) {
+      cap.current.position.y = 2.45 + Math.sin(time * 1.35) * 0.16;
+      cap.current.rotation.y = time * 0.72;
+    }
+    if (diploma.current) {
+      diploma.current.position.y = 2.18 + Math.sin(time * 1.1 + 1.4) * 0.13;
+      diploma.current.rotation.y = -time * 0.58;
+    }
+  });
   return (
     <group
-      position={[TROPHY_POSITION[0] - 1.2, 0.04, TROPHY_POSITION[2] - 1.6]}
-      rotation={[0, 0.08, 0]}
+      position={[TROPHY_POSITION[0] - 1.7, 0.04, TROPHY_POSITION[2] - 0.7]}
+      rotation={[0, -0.08, 0]}
     >
       <mesh position={[0, 0.16, 0]} receiveShadow>
-        <boxGeometry args={[5.2, 0.3, 3.6]} />
-        <meshStandardMaterial color="#52727d" roughness={0.82} />
+        <boxGeometry args={[4.7, 0.3, 3.15]} />
+        <meshStandardMaterial color="#8d1723" roughness={0.58} />
       </mesh>
-      <mesh position={[0, 0.36, 0]}>
-        <boxGeometry args={[4.55, 0.12, 3]} />
-        <meshStandardMaterial color="#005EB8" metalness={0.3} roughness={0.35} />
+      <mesh position={[0, 0.39, 0]} castShadow>
+        <boxGeometry args={[4.15, 0.18, 2.7]} />
+        <meshStandardMaterial color="#ef3340" metalness={0.18} roughness={0.34} />
       </mesh>
-      <mesh position={[0, 0.7, 0.15]} castShadow>
-        <boxGeometry args={[3.4, 0.62, 1.75]} />
-        <meshStandardMaterial color="#173c52" roughness={0.42} />
+      <mesh position={[0, 0.73, 0]} castShadow>
+        <boxGeometry args={[3.35, 0.52, 2.05]} />
+        <meshStandardMaterial color="#ff5a4e" metalness={0.15} roughness={0.32} />
       </mesh>
-      <mesh position={[0, 1.04, 0.15]} castShadow>
-        <boxGeometry args={[2.9, 0.12, 1.48]} />
-        <meshStandardMaterial color="#f2ede0" roughness={0.45} />
+      <mesh position={[0, 1.02, 0]} castShadow>
+        <boxGeometry args={[2.95, 0.09, 1.72]} />
+        <meshStandardMaterial color="#ffd447" emissive="#ff9d2e" emissiveIntensity={0.3} />
       </mesh>
-      <group position={[-0.92, 1.45, 0.38]} rotation={[-0.1, 0.08, -0.06]}>
+      <group ref={diploma} position={[-0.83, 2.18, 0.1]} rotation={[-0.12, 0, -0.08]}>
         <mesh castShadow>
-          <boxGeometry args={[1.55, 1.05, 0.12]} />
+          <boxGeometry args={[1.45, 0.98, 0.1]} />
           <meshStandardMaterial color="#f8f2df" roughness={0.55} />
         </mesh>
         <mesh position={[0, 0, 0.075]}>
@@ -269,7 +257,7 @@ function GraduationMonument() {
           <meshStandardMaterial color="#F46300" />
         </mesh>
       </group>
-      <group position={[0.92, 1.45, 0.38]} rotation={[0, -0.25, 0]}>
+      <group ref={cap} position={[0.82, 2.45, 0.08]} rotation={[0, 0, 0]}>
         <mesh castShadow rotation={[0, Math.PI / 4, 0]}>
           <boxGeometry args={[1.05, 0.1, 1.05]} />
           <meshStandardMaterial color="#102d4a" roughness={0.38} />
@@ -287,19 +275,14 @@ function GraduationMonument() {
           <meshStandardMaterial color="#ffc629" emissive="#F46300" emissiveIntensity={0.5} />
         </mesh>
       </group>
-      <group position={[0, 1.18, 1.02]} rotation={[0, 0, -0.12]}>
-        <mesh castShadow rotation={[0, 0, Math.PI / 2]}>
-          <cylinderGeometry args={[0.2, 0.2, 1.15, 16]} />
-          <meshStandardMaterial color="#f7f0dc" roughness={0.55} />
+      {[-1.45, 1.45].map((x) => (
+        <mesh key={x} position={[x, 3.35, 0]} rotation={[0, 0, x < 0 ? -0.34 : 0.34]}>
+          <coneGeometry args={[0.7, 4.6, 20, 1, true]} />
+          <meshBasicMaterial color="#fff3bd" transparent opacity={0.075} depthWrite={false} />
         </mesh>
-        {[-0.48, 0.48].map((x) => (
-          <mesh key={x} position={[x, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
-            <torusGeometry args={[0.22, 0.045, 8, 18]} />
-            <meshStandardMaterial color="#F46300" emissive="#F46300" emissiveIntensity={0.45} />
-          </mesh>
-        ))}
-      </group>
-      <pointLight position={[0, 2.5, 1]} color="#ffc629" intensity={1.8} distance={6} />
+      ))}
+      <pointLight position={[-1.2, 3.4, 0.5]} color="#fff1b8" intensity={2.6} distance={7} />
+      <pointLight position={[1.2, 3.4, 0.5]} color="#ffd66b" intensity={2.3} distance={7} />
     </group>
   );
 }
