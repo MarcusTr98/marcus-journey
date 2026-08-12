@@ -166,33 +166,34 @@ function RoadsideFireflies({ count }: { count: number }) {
 
 export default function Scenery() {
   const treeCount = 66;
-  const trees = useMemo(
-    () =>
-      Array.from({ length: treeCount + 22 }, (_, index) => {
-        const progress = (index + 0.65) / (treeCount + 1);
-        const point = routeCurve.getPointAt(progress);
-        const tangent = routeCurve.getTangentAt(progress);
-        const normal = new THREE.Vector3(-tangent.z, 0, tangent.x).normalize();
-        const side = index % 2 === 0 ? -1 : 1;
-        const position = point
-          .clone()
-          .addScaledVector(normal, side * (7.7 + ((index * 7) % 7) * 0.72))
-          .addScaledVector(tangent, (((index * 13) % 9) - 4) * 0.18);
-        return {
-          position,
-          scale: 0.72 + ((index * 11) % 9) * 0.055,
-          tone: index,
-        };
-      })
-        .filter(({ position }) => outsideLandmarks(position, 4.25))
-        .slice(0, treeCount),
-    [treeCount],
-  );
+  const trees = useMemo(() => {
+    const candidateCount = treeCount + 22;
+    return Array.from({ length: candidateCount }, (_, index) => {
+      const progress = (index + 0.65) / (candidateCount + 1);
+      const point = routeCurve.getPointAt(progress);
+      const tangent = routeCurve.getTangentAt(progress);
+      const normal = new THREE.Vector3(-tangent.z, 0, tangent.x).normalize();
+      const side = index % 2 === 0 ? -1 : 1;
+      const position = point
+        .clone()
+        .addScaledVector(normal, side * (7.7 + ((index * 7) % 7) * 0.72))
+        .addScaledVector(tangent, (((index * 13) % 9) - 4) * 0.18);
+      return {
+        position,
+        scale: 0.72 + ((index * 11) % 9) * 0.055,
+        tone: index,
+      };
+    })
+      .filter(({ position }) => outsideLandmarks(position, 4.25))
+      .slice(0, treeCount);
+  }, [treeCount]);
   const rocks = useMemo(() => {
     const count = 24;
-    return Array.from({ length: count + 8 }, (_, index) => {
-      const point = routeCurve.getPointAt((index + 1) / (count + 1));
-      const tangent = routeCurve.getTangentAt((index + 1) / (count + 1));
+    const candidateCount = count + 8;
+    return Array.from({ length: candidateCount }, (_, index) => {
+      const progress = (index + 1) / (candidateCount + 1);
+      const point = routeCurve.getPointAt(progress);
+      const tangent = routeCurve.getTangentAt(progress);
       const normal = new THREE.Vector3(-tangent.z, 0, tangent.x).normalize();
       const position = point
         .clone()
