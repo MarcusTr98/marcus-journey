@@ -202,24 +202,27 @@ function BuntingGate({ position }: { position: [number, number, number] }) {
 }
 function GraduationMonument() {
   return (
-    <group position={[TROPHY_POSITION[0], 0.04, TROPHY_POSITION[2]]}>
+    <group
+      position={[TROPHY_POSITION[0] - 1.15, 0.04, TROPHY_POSITION[2] - 1.3]}
+      rotation={[0, 0.14, 0]}
+    >
       <mesh position={[0, 0.16, 0]} receiveShadow>
-        <boxGeometry args={[4.4, 0.3, 3.2]} />
+        <boxGeometry args={[5.2, 0.3, 3.6]} />
         <meshStandardMaterial color="#52727d" roughness={0.82} />
       </mesh>
       <mesh position={[0, 0.36, 0]}>
-        <boxGeometry args={[3.8, 0.12, 2.7]} />
+        <boxGeometry args={[4.55, 0.12, 3]} />
         <meshStandardMaterial color="#005EB8" metalness={0.3} roughness={0.35} />
       </mesh>
       <mesh position={[0, 0.7, 0.15]} castShadow>
-        <boxGeometry args={[2.7, 0.62, 1.55]} />
+        <boxGeometry args={[3.4, 0.62, 1.75]} />
         <meshStandardMaterial color="#173c52" roughness={0.42} />
       </mesh>
       <mesh position={[0, 1.04, 0.15]} castShadow>
-        <boxGeometry args={[2.25, 0.12, 1.28]} />
+        <boxGeometry args={[2.9, 0.12, 1.48]} />
         <meshStandardMaterial color="#f2ede0" roughness={0.45} />
       </mesh>
-      <group position={[-0.72, 1.62, 0.12]} rotation={[-0.1, 0.08, -0.06]}>
+      <group position={[-0.88, 1.62, 0.12]} rotation={[-0.1, 0.08, -0.06]}>
         <mesh castShadow>
           <boxGeometry args={[1.55, 1.05, 0.12]} />
           <meshStandardMaterial color="#f8f2df" roughness={0.55} />
@@ -237,7 +240,7 @@ function GraduationMonument() {
           <meshStandardMaterial color="#F46300" />
         </mesh>
       </group>
-      <group position={[0.76, 1.62, 0.12]} rotation={[0, -0.25, 0]}>
+      <group position={[0.88, 1.62, 0.12]} rotation={[0, -0.25, 0]}>
         <mesh castShadow rotation={[0, Math.PI / 4, 0]}>
           <boxGeometry args={[1.05, 0.1, 1.05]} />
           <meshStandardMaterial color="#102d4a" roughness={0.38} />
@@ -267,9 +270,6 @@ function GraduationMonument() {
           </mesh>
         ))}
       </group>
-      <Html center position={[0, 2.62, 0]} distanceFactor={7}>
-        <div className="graduation-landmark-title">GRADUATION 2026</div>
-      </Html>
       <pointLight position={[0, 2.5, 1]} color="#ffc629" intensity={1.8} distance={6} />
     </group>
   );

@@ -138,7 +138,12 @@ export default function JourneyApp({ initialLanguage }: { initialLanguage: Langu
             onOpen={() => setAlbumOpen(true)}
             onClose={() => setAlbumOpen(false)}
             onNavigate={goToMilestone}
-            triggerSide={currentMilestone % 2 === 1 ? "right" : "left"}
+            triggerSide={
+              currentMilestone >= 0 &&
+              (items[currentMilestone].id === "graduation" || currentMilestone % 2 === 0)
+                ? "left"
+                : "right"
+            }
           />
           <aside className="progress-ui">
             <div className="progress-track">

@@ -450,17 +450,6 @@ select:focus-visible {
 .graduation-message span {
   display: block;
 }
-.graduation-landmark-title {
-  padding: 7px 12px;
-  border: 2px solid #ffc629;
-  border-radius: 4px;
-  background: #173c52;
-  color: #fff;
-  font: 900 12px var(--font-display);
-  letter-spacing: 0.14em;
-  white-space: nowrap;
-  box-shadow: 0 5px 16px rgba(23, 60, 82, 0.28);
-}
 .graduation-message b {
   color: #ffc629;
   font: 800 18px var(--font-display);

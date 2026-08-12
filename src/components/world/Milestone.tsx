@@ -124,46 +124,68 @@ function AutomatedFactory() {
           <Block position={[0.16, -0.43, 0]} size={[0.12, 0.36, 0.12]} color="#ff4fa3" />
         </group>
       </group>
-      <group position={[1.45, 2.15, -0.78]}>
-        <Block position={[0, 0, 0]} size={[2.15, 1.55, 0.14]} color="#f4f8f8" />
-        {[0.5, 0.12, -0.26].map((y, index) => (
+      <group position={[1.35, 2.05, -0.82]}>
+        <Block position={[0, 0, 0]} size={[2.75, 2.15, 0.22]} color="#242b3d" />
+        <Block position={[0, 0.84, 0.13]} size={[2.35, 0.18, 0.05]} color="#566071" />
+        {[-1.02, -0.82, -0.62].map((x, index) => (
+          <mesh key={x} position={[x, 0.84, 0.18]}>
+            <sphereGeometry args={[0.07, 12, 8]} />
+            <meshBasicMaterial
+              color={["#ff6b35", "#62d493", "#4ea5ff"][index]}
+              toneMapped={false}
+            />
+          </mesh>
+        ))}
+        <Block position={[-0.68, 0.2, 0.13]} size={[1.05, 0.9, 0.05]} color="#30384c" />
+        {[0.27, 0.48, 0.72, 0.38, 0.58].map((height, index) => (
           <Block
-            key={y}
-            position={[-0.62 + index * 0.62, y, 0.09]}
-            size={[0.38, 0.28 + index * 0.24, 0.04]}
-            color={["#00c98d", "#4ea5ff", "#ffd43b"][index]}
+            key={index}
+            position={[-1.02 + index * 0.18, -0.2 + height / 2, 0.19]}
+            size={[0.12, height, 0.06]}
+            color={["#4ea5ff", "#64e7ff", "#62d493", "#ffd16a", "#ff6b35"][index]}
             glow
           />
         ))}
-        <Block position={[0, -0.57, 0.09]} size={[1.7, 0.045, 0.035]} color="#203944" />
-        <Html position={[0, 0.92, 0.11]} center transform distanceFactor={4.3}>
-          <strong style={{ color: "#173c52", font: "900 10px Arial", whiteSpace: "nowrap" }}>
-            QUALITY ↑ · OUTPUT ↑ · OEE ↑
-          </strong>
-        </Html>
+        <Block position={[0.63, 0.2, 0.13]} size={[1.22, 0.9, 0.05]} color="#30384c" />
+        {[-0.42, -0.12, 0.18, 0.48].map((y) => (
+          <Block key={y} position={[0.63, y, 0.19]} size={[1.02, 0.025, 0.02]} color="#4f6b8f" />
+        ))}
         <Line
           points={[
-            [-0.78, -0.28, 0.12],
-            [-0.42, -0.08, 0.12],
-            [-0.08, -0.16, 0.12],
-            [0.28, 0.15, 0.12],
-            [0.72, 0.44, 0.12],
+            [0.08, -0.26, 0.22],
+            [0.3, -0.08, 0.22],
+            [0.52, 0.06, 0.22],
+            [0.72, 0, 0.22],
+            [0.94, 0.28, 0.22],
+            [1.14, 0.5, 0.22],
           ]}
-          color="#00a859"
-          lineWidth={4}
+          color="#4ea5ff"
+          lineWidth={6}
           toneMapped={false}
         />
-        {[
-          [-0.78, -0.28],
-          [-0.42, -0.08],
-          [-0.08, -0.16],
-          [0.28, 0.15],
-          [0.72, 0.44],
-        ].map(([x, y]) => (
-          <mesh key={`${x}-${y}`} position={[x, y, 0.14]}>
-            <circleGeometry args={[0.055, 12]} />
-            <meshBasicMaterial color="#00c98d" toneMapped={false} />
-          </mesh>
+        <mesh position={[1.18, 0.55, 0.24]} rotation={[0, 0, -0.72]}>
+          <coneGeometry args={[0.12, 0.36, 3]} />
+          <meshBasicMaterial color="#64c7ff" toneMapped={false} />
+        </mesh>
+        <Block position={[-0.68, -0.63, 0.13]} size={[1.05, 0.35, 0.05]} color="#30384c" />
+        {[0.56, 0.38, 0.72].map((width, index) => (
+          <Block
+            key={index}
+            position={[-0.98 + width / 2, -0.53 - index * 0.1, 0.19]}
+            size={[width, 0.045, 0.04]}
+            color={["#62d493", "#ffd16a", "#4ea5ff"][index]}
+            glow
+          />
+        ))}
+        <Block position={[0.63, -0.63, 0.13]} size={[1.22, 0.35, 0.05]} color="#30384c" />
+        {[0.2, 0.38, 0.28, 0.52, 0.34].map((height, index) => (
+          <Block
+            key={index}
+            position={[0.2 + index * 0.2, -0.78 + height / 2, 0.19]}
+            size={[0.12, height, 0.05]}
+            color={["#ff6b35", "#ffd16a", "#62d493", "#4ea5ff", "#64e7ff"][index]}
+            glow
+          />
         ))}
       </group>
       <mesh position={[1.85, 2.45, -0.72]} rotation={[0, 0, -0.65]}>
