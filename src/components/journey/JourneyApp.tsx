@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import type { Language } from "@/types";
 import { useJourneyNavigation } from "@/hooks/useJourneyNavigation";
 import JourneyAlbum from "@/components/journey/JourneyAlbum";
-import { minorLearningCurveProgress } from "@/components/world/Road";
+import { minorLearningCurveProgress, videoLearningCurveProgress } from "@/components/world/Road";
 import type { Milestone } from "@/types";
 const Experience = dynamic(() => import("@/components/world/Experience"), {
   ssr: false,
@@ -90,6 +90,70 @@ const IT_CLUB_MILESTONE: Record<Language, Milestone> = {
     projectLinks: [],
   },
 };
+const MARCUS_VIDEO_MILESTONE: Record<Language, Milestone> = {
+  vi: {
+    id: "video-learning",
+    shortTitle: "MỐC DỰ ÁN CÁ NHÂN",
+    title: "Dự án website Marcus Video",
+    period: "12/2025 — 04/2026",
+    role: "LẬP TRÌNH VIÊN JAVA FULL-STACK",
+    summary:
+      "Tự thiết kế và phát triển nền tảng video Java Web theo kiến trúc phân lớp DAO–service–controller, bao phủ khám phá nội dung, tương tác người dùng, quản trị vận hành và giao tiếp thời gian thực.",
+    highlights: [
+      "Java 21 · Servlet 6 · JPA 3.1 · Hibernate 6.4 · SQL Server",
+      "WebSocket chat, yêu thích, lịch sử xem và chia sẻ nội dung",
+      "BCrypt, bộ lọc xác thực và khôi phục mật khẩu qua email",
+      "Dashboard quản trị JSP/JSTL, biểu đồ và quản lý nội dung",
+    ],
+    accent: "#ff4f9a",
+    position: [0, 0, 0],
+    upgrade: "Java Web · Hibernate · WebSocket · Bảo mật ứng dụng",
+    stage: "transformation",
+    projectLinks: [{ label: "XEM SOURCE CODE", url: "https://github.com/MarcusTr98/Marcus-video" }],
+  },
+  en: {
+    id: "video-learning",
+    shortTitle: "PERSONAL PROJECT CHECKPOINT",
+    title: "Marcus Video Website Project",
+    period: "12/2025 — 04/2026",
+    role: "FULL-STACK JAVA DEVELOPER",
+    summary:
+      "Independently designed and built a Java Web video platform with a layered DAO–service–controller architecture spanning content discovery, user interaction, operations administration and real-time communication.",
+    highlights: [
+      "Java 21 · Servlet 6 · JPA 3.1 · Hibernate 6.4 · SQL Server",
+      "WebSocket chat, favorites, watch history and content sharing",
+      "BCrypt authentication filters and email password recovery",
+      "JSP/JSTL administration dashboard, charts and content management",
+    ],
+    accent: "#ff4f9a",
+    position: [0, 0, 0],
+    upgrade: "Java Web · Hibernate · WebSocket · Application Security",
+    stage: "transformation",
+    projectLinks: [
+      { label: "VIEW SOURCE CODE", url: "https://github.com/MarcusTr98/Marcus-video" },
+    ],
+  },
+  zh: {
+    id: "video-learning",
+    shortTitle: "个人项目节点",
+    title: "Marcus Video网站项目",
+    period: "12/2025 — 04/2026",
+    role: "JAVA全栈开发者",
+    summary:
+      "独立设计并开发采用DAO–service–controller分层架构的Java Web视频平台，涵盖内容发现、用户互动、运营管理与实时通信。",
+    highlights: [
+      "Java 21 · Servlet 6 · JPA 3.1 · Hibernate 6.4 · SQL Server",
+      "WebSocket聊天、收藏、观看历史与内容分享",
+      "BCrypt身份验证过滤器与邮件密码恢复",
+      "JSP/JSTL管理仪表板、图表与内容管理",
+    ],
+    accent: "#ff4f9a",
+    position: [0, 0, 0],
+    upgrade: "Java Web · Hibernate · WebSocket · 应用安全",
+    stage: "transformation",
+    projectLinks: [{ label: "查看源代码", url: "https://github.com/MarcusTr98/Marcus-video" }],
+  },
+};
 export default function JourneyApp({ initialLanguage }: { initialLanguage: Language }) {
   const router = useRouter();
   const [quick, setQuick] = useState(false);
@@ -115,16 +179,23 @@ export default function JourneyApp({ initialLanguage }: { initialLanguage: Langu
   }, [initialLanguage, setLanguage]);
   const isItClubCheckpoint =
     started && Math.abs(vehicleProgress - minorLearningCurveProgress) < 0.004;
+  const isMarcusVideoCheckpoint =
+    started && Math.abs(vehicleProgress - videoLearningCurveProgress) < 0.004;
+  const isSupplementaryCheckpoint = isItClubCheckpoint || isMarcusVideoCheckpoint;
   const t = copy[language],
     items = getMilestones(language),
-    active = isItClubCheckpoint
-      ? IT_CLUB_MILESTONE[language]
+    active = isSupplementaryCheckpoint
+      ? isItClubCheckpoint
+        ? IT_CLUB_MILESTONE[language]
+        : MARCUS_VIDEO_MILESTONE[language]
       : currentMilestone >= 0
         ? items[currentMilestone]
         : null,
     activeStageItems = active ? items.filter(({ stage }) => stage === active.stage) : [],
-    activeStageStop = isItClubCheckpoint
-      ? 2
+    activeStageStop = isSupplementaryCheckpoint
+      ? isItClubCheckpoint
+        ? 2
+        : 3
       : active
         ? activeStageItems.findIndex(({ id }) => id === active.id) + 1
         : 0;
@@ -269,8 +340,12 @@ export default function JourneyApp({ initialLanguage }: { initialLanguage: Langu
                 </span>
               </div>
               <span className="panel-index">
-                {isItClubCheckpoint ? "03A" : String(currentMilestone + 1).padStart(2, "0")} /{" "}
-                {String(milestones.length).padStart(2, "0")}
+                {isSupplementaryCheckpoint
+                  ? isItClubCheckpoint
+                    ? "03A"
+                    : "03B"
+                  : String(currentMilestone + 1).padStart(2, "0")}{" "}
+                / {String(milestones.length).padStart(2, "0")}
               </span>
               <span className="chapter-title">{active.shortTitle}</span>
               <span className="kicker">{active.period}</span>

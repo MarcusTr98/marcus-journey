@@ -8,6 +8,7 @@ const FINISH: PathPoint = [0, 0, -225];
 export const TROPHY_POSITION: PathPoint = [-2.4, 0, -169];
 export const FINISH_POSITION: PathPoint = [0, 0, -221];
 export const MINOR_LEARNING_POSITION: PathPoint = [-4, 0, -67];
+export const VIDEO_LEARNING_POSITION: PathPoint = [-3.6, 0, -87];
 
 export const PATH_POINTS: PathPoint[] = [
   START,

@@ -1,7 +1,12 @@
 "use client";
 import * as THREE from "three";
 import { useMemo } from "react";
-import { MINOR_LEARNING_POSITION, PATH_POINTS, TROPHY_POSITION } from "@/data/journeyPath";
+import {
+  MINOR_LEARNING_POSITION,
+  PATH_POINTS,
+  TROPHY_POSITION,
+  VIDEO_LEARNING_POSITION,
+} from "@/data/journeyPath";
 import { milestones } from "@/data/milestones";
 export const routePoints = PATH_POINTS.map((point) => new THREE.Vector3(...point));
 export const routeCurve = new THREE.CatmullRomCurve3(routePoints, false, "catmullrom", 0.14);
@@ -26,6 +31,7 @@ export const milestoneCurveProgress = milestones.map((milestone) =>
 );
 export const trophyCurveProgress = findClosestCurveProgress(TROPHY_POSITION);
 export const minorLearningCurveProgress = findClosestCurveProgress(MINOR_LEARNING_POSITION);
+export const videoLearningCurveProgress = findClosestCurveProgress(VIDEO_LEARNING_POSITION);
 export const graduationCurveProgress =
   milestoneCurveProgress[milestones.findIndex(({ id }) => id === "graduation")];
 

@@ -4,7 +4,11 @@ import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import type * as THREE from "three";
 import { useJourneyStore } from "@/stores/journeyStore";
-import { FINISH_POSITION, MINOR_LEARNING_POSITION } from "@/data/journeyPath";
+import {
+  FINISH_POSITION,
+  MINOR_LEARNING_POSITION,
+  VIDEO_LEARNING_POSITION,
+} from "@/data/journeyPath";
 import { graduationCurveProgress, milestoneCurveProgress, routeCurve } from "./Road";
 import { milestones } from "@/data/milestones";
 
@@ -177,6 +181,36 @@ function MinorLearningCheckpoint() {
   );
 }
 
+function VideoLearningCheckpoint() {
+  const language = useJourneyStore((state) => state.language);
+  const label = {
+    vi: "DỰ ÁN WEBSITE MARCUS VIDEO",
+    en: "MARCUS VIDEO WEBSITE PROJECT",
+    zh: "MARCUS VIDEO网站项目",
+  }[language];
+  return (
+    <group position={VIDEO_LEARNING_POSITION}>
+      <mesh position={[0, 0.09, 0]} rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[1.15, 0.055, 8, 40]} />
+        <meshStandardMaterial color="#ff4f9a" emissive="#ff4f9a" emissiveIntensity={1.6} />
+      </mesh>
+      {[-0.7, 0, 0.7].map((x, index) => (
+        <mesh key={x} position={[x, 0.42, 0]} rotation={[0, 0, Math.PI / 4]}>
+          <octahedronGeometry args={[0.18]} />
+          <meshStandardMaterial
+            color={celebrationColors[(index + 2) % celebrationColors.length]}
+            emissive={celebrationColors[(index + 2) % celebrationColors.length]}
+            emissiveIntensity={1.4}
+          />
+        </mesh>
+      ))}
+      <Html center sprite position={[0, 1.15, 0]} distanceFactor={7} zIndexRange={[10, 0]}>
+        <div className="world-label">+ LEVEL · {label}</div>
+      </Html>
+    </group>
+  );
+}
+
 function BuntingGate({ position }: { position: { x: number; z: number } }) {
   const colors = ["#ff4fa3", "#ffd43b", "#00c98d", "#4ea5ff", "#8b5cf6", "#ff6b35"];
   return (
@@ -327,7 +361,7 @@ function GraduationCelebration() {
           </mesh>
         ))}
       </group>
-      <Html center position={[5.2, 4.25, 0.8]} distanceFactor={9}>
+      <Html center position={[-5.2, 4.25, 0.8]} distanceFactor={9}>
         <div className="graduation-message">
           <b>{t.congrats}</b>
           <span>{t.sub}</span>
@@ -366,6 +400,7 @@ export default function JourneyLandmarks() {
       <BuntingGate position={fptPosition} />
       <BuntingGate position={graduationPosition} />
       <MinorLearningCheckpoint />
+      <VideoLearningCheckpoint />
       <GraduationMonument />
       <GraduationCelebration />
       <FinishFlag />

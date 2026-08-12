@@ -4,7 +4,12 @@ import { Sparkles, Stars } from "@react-three/drei";
 import { useRef } from "react";
 import * as THREE from "three";
 import Car from "./Car";
-import Road, { milestoneCurveProgress, minorLearningCurveProgress, routeCurve } from "./Road";
+import Road, {
+  milestoneCurveProgress,
+  minorLearningCurveProgress,
+  routeCurve,
+  videoLearningCurveProgress,
+} from "./Road";
 import WorldEnvironment from "./Environment";
 import { useJourneyStore } from "@/stores/journeyStore";
 import { milestones } from "@/data/milestones";
@@ -24,6 +29,7 @@ export default function MarcusJourneyScene() {
   const focus = useRef(new THREE.Vector3(0, 0, 0));
   const actualProgress = useRef(0);
   const minorLearningTriggered = useRef(false);
+  const videoLearningTriggered = useRef(false);
   const { camera, scene } = useThree();
   const progress = useJourneyStore((s) => s.progress);
   useFrame((_, delta) => {
@@ -64,11 +70,24 @@ export default function MarcusJourneyScene() {
         !minorLearningTriggered.current &&
         progress >= minorLearningCurveProgress &&
         proposed >= minorLearningCurveProgress - 0.00035;
+      const reachesVideoCheckpoint =
+        drivingForward &&
+        journeyState.currentMilestone === 2 &&
+        minorLearningTriggered.current &&
+        !videoLearningTriggered.current &&
+        progress >= videoLearningCurveProgress &&
+        proposed >= videoLearningCurveProgress - 0.00035;
       if (reachesMinorCheckpoint) {
         actualProgress.current = minorLearningCurveProgress;
         minorLearningTriggered.current = true;
         journeyState.triggerMinorUpgrade();
         journeyState.setProgress(minorLearningCurveProgress);
+        journeyState.setNavigationPinned(true);
+      } else if (reachesVideoCheckpoint) {
+        actualProgress.current = videoLearningCurveProgress;
+        videoLearningTriggered.current = true;
+        journeyState.triggerMinorUpgrade();
+        journeyState.setProgress(videoLearningCurveProgress);
         journeyState.setNavigationPinned(true);
       } else if (
         drivingForward &&
@@ -91,6 +110,7 @@ export default function MarcusJourneyScene() {
     } else if (p < minorLearningCurveProgress - 0.006) {
       minorLearningTriggered.current = false;
     }
+    if (p < videoLearningCurveProgress - 0.006) videoLearningTriggered.current = false;
     if (Math.abs(journeyState.vehicleProgress - p) > 0.00025) {
       journeyState.setVehicleProgress(p);
     }
