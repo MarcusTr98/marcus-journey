@@ -13,7 +13,7 @@ export default function Experience() {
           shadows
           camera={{ position: [7, 8, 14], fov: 42 }}
           dpr={[1, 1.5]}
-          gl={{ antialias: false, powerPreference: "high-performance" }}
+          gl={{ antialias: true, powerPreference: "high-performance" }}
           onCreated={() => setSceneReady(true)}
           fallback={
             <div className="fallback">

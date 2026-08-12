@@ -14,10 +14,10 @@ const STABLE_FOCUS_OFFSET = new THREE.Vector3(0, 0.9, -0.6);
 const MAX_PROGRESS_PER_SECOND = 0.052;
 const CHECKPOINT_HOLD_SECONDS = 1.5;
 const STAGE_SKY = {
-  foundation: new THREE.Color("#07141b"),
-  transformation: new THREE.Color("#071923"),
-  present: new THREE.Color("#081d22"),
-  destination: new THREE.Color("#0b1828"),
+  foundation: new THREE.Color("#527fa3"),
+  transformation: new THREE.Color("#638db1"),
+  present: new THREE.Color("#568d8b"),
+  destination: new THREE.Color("#777eae"),
 };
 
 export default function MarcusJourneyScene() {
@@ -111,11 +111,18 @@ export default function MarcusJourneyScene() {
   return (
     <>
       <PerformanceMonitor onDecline={() => suggestLowQuality(true)} flipflops={2} />
-      <color attach="background" args={["#07141b"]} />
-      <fog attach="fog" args={["#07141b", 14, 44]} />
-      <ambientLight intensity={1.25} />
-      <directionalLight position={[8, 14, 6]} intensity={2.2} castShadow={quality === "high"} />
-      <hemisphereLight args={["#b9ddff", "#15241e", 0.75]} />
+      <color attach="background" args={["#527fa3"]} />
+      <fog attach="fog" args={["#527fa3", 22, 62]} />
+      <ambientLight intensity={1.8} />
+      <directionalLight
+        position={[8, 14, 6]}
+        color="#fff1c9"
+        intensity={2.65}
+        castShadow={quality === "high"}
+        shadow-mapSize-width={1024}
+        shadow-mapSize-height={1024}
+      />
+      <hemisphereLight args={["#d9efff", "#7a9166", 1.15]} />
       <Stars
         radius={70}
         depth={38}

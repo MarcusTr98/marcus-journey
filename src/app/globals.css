@@ -2,10 +2,10 @@
   --orange: #f46300;
   --blue: #005eb8;
   --green: #00a859;
-  --dark: #07141b;
-  --panel: #0d2028;
-  --paper: #eaf0ef;
-  --muted: #8ca0a8;
+  --dark: #294e66;
+  --panel: #173c52;
+  --paper: #f7f4ea;
+  --muted: #c7dce4;
 }
 * {
   box-sizing: border-box;
@@ -71,8 +71,9 @@ select:focus-visible {
   align-items: center;
   gap: 3vw;
   padding: 0 4vw;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  background: linear-gradient(#07141bd9, transparent);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  background: linear-gradient(rgba(35, 72, 94, 0.88), rgba(35, 72, 94, 0.18));
+  backdrop-filter: blur(10px);
 }
 .logo {
   display: flex;
@@ -134,9 +135,9 @@ select:focus-visible {
   background: radial-gradient(
     circle at 65% 54%,
     transparent 0,
-    transparent 18%,
-    #07141b9e 55%,
-    #07141bf5 95%
+    transparent 24%,
+    rgba(41, 78, 102, 0.22) 58%,
+    rgba(41, 78, 102, 0.82) 100%
   );
 }
 .garage:before,
@@ -392,10 +393,11 @@ select:focus-visible {
   transform: translateY(-43%);
   width: min(380px, 38vw);
   padding: 31px;
-  background: rgba(7, 20, 27, 0.86);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(20, 55, 72, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-top: 3px solid var(--accent);
   backdrop-filter: blur(16px);
+  box-shadow: 0 24px 70px rgba(19, 47, 63, 0.28);
   animation: panelIn 0.5s ease;
   will-change: transform, opacity;
 }
@@ -418,7 +420,7 @@ select:focus-visible {
   padding: 15px 22px;
   border: 1px solid rgba(255, 198, 41, 0.65);
   border-radius: 5px;
-  background: rgba(7, 20, 27, 0.9);
+  background: rgba(20, 55, 72, 0.92);
   color: #fff;
   text-align: center;
   box-shadow: 0 12px 45px rgba(244, 99, 0, 0.28);
@@ -522,7 +524,7 @@ select:focus-visible {
   letter-spacing: 0.1em;
 }
 .milestone-panel p {
-  color: #b4c1c5;
+  color: #d4e2e5;
   font-size: 13px;
   line-height: 1.65;
 }
@@ -565,8 +567,8 @@ select:focus-visible {
   min-height: 100vh;
   padding: 20vh 7vw;
   background:
-    linear-gradient(90deg, #07141bf7 30%, #07141ba8),
-    radial-gradient(circle at 80%, #005eb8, #07141b);
+    linear-gradient(90deg, rgba(35, 72, 94, 0.96) 30%, rgba(35, 72, 94, 0.72)),
+    radial-gradient(circle at 80%, #5f83b1, #294e66);
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -6,7 +6,7 @@ import * as THREE from "three";
 import { useJourneyStore } from "@/stores/journeyStore";
 import { routeCurve } from "./Road";
 
-const FOLIAGE = ["#1d5c46", "#267256", "#318262", "#174938"];
+const FOLIAGE = ["#2f8f68", "#49a978", "#70bd79", "#26785d"];
 const FIREFLY_COLORS = ["#fff4a8", "#7de8ff", "#ff78ba", "#a78bfa", "#8affcb"];
 type Instance = { position: THREE.Vector3; scale: number; tone: number };
 
@@ -59,7 +59,7 @@ function InstancedTrees({ trees, shadows }: { trees: Instance[]; shadows: boolea
     <group>
       <instancedMesh ref={trunks} args={[undefined, undefined, trees.length]} castShadow={shadows}>
         <cylinderGeometry args={[0.09, 0.15, 1.1, 7]} />
-        <meshStandardMaterial color="#68462f" roughness={1} />
+        <meshStandardMaterial color="#936747" roughness={0.92} />
       </instancedMesh>
       {FOLIAGE.map((color, tone) => {
         const lowerTrees = trees.filter((tree) => tree.tone % FOLIAGE.length === tone);
@@ -93,7 +93,7 @@ function InstancedRocks({ rocks }: { rocks: Instance[] }) {
   return (
     <instancedMesh ref={ref} args={[undefined, undefined, rocks.length]} castShadow>
       <dodecahedronGeometry args={[0.48, 0]} />
-      <meshStandardMaterial color="#53636a" roughness={0.96} flatShading />
+      <meshStandardMaterial color="#9aa6a5" roughness={0.9} flatShading />
     </instancedMesh>
   );
 }

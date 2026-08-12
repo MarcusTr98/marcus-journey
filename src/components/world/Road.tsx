@@ -82,12 +82,12 @@ export default function Road() {
   return (
     <group>
       <mesh geometry={geometry} receiveShadow>
-        <meshStandardMaterial color="#30383b" roughness={0.96} side={THREE.DoubleSide} />
+        <meshStandardMaterial color="#667883" roughness={0.88} side={THREE.DoubleSide} />
       </mesh>
       {markings.map((m, i) => (
         <mesh key={i} position={[m.p.x, 0.055, m.p.z]} rotation={[0, m.rotation, 0]}>
           <boxGeometry args={[0.07, 0.025, 0.75]} />
-          <meshStandardMaterial color="#e9e0ba" emissive="#8d875f" emissiveIntensity={0.15} />
+          <meshStandardMaterial color="#fff3c4" emissive="#d8b957" emissiveIntensity={0.18} />
         </mesh>
       ))}
       {checkpointMarkers.map((marker, index) => (
@@ -110,7 +110,7 @@ export default function Road() {
       ))}
       <mesh position={[0, -0.12, -108]} receiveShadow>
         <boxGeometry args={[36, 0.24, 255]} />
-        <meshStandardMaterial color="#101c22" roughness={1} />
+        <meshStandardMaterial color="#87ae78" roughness={0.98} />
       </mesh>
     </group>
   );

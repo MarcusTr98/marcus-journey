@@ -205,7 +205,7 @@ function GraduationMonument() {
     <group position={[TROPHY_POSITION[0], 0.04, TROPHY_POSITION[2]]}>
       <mesh position={[0, 0.16, 0]} receiveShadow>
         <boxGeometry args={[4.4, 0.3, 3.2]} />
-        <meshStandardMaterial color="#13242c" roughness={0.82} />
+        <meshStandardMaterial color="#52727d" roughness={0.82} />
       </mesh>
       <mesh position={[0, 0.36, 0]}>
         <boxGeometry args={[3.8, 0.12, 2.7]} />

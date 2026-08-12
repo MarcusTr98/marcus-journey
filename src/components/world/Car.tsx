@@ -128,7 +128,7 @@ export default function Car({
 }: ThreeElements["group"] & { groupRef: RefObject<THREE.Group | null> }) {
   const currentMilestone = useJourneyStore((state) => state.currentMilestone),
     stage = Math.min(milestones.length, Math.max(1, currentMilestone + 2)),
-    body = stage < 2 ? "#9b6545" : stage < 7 ? "#F46300" : "#ed4e16";
+    body = stage < 2 ? "#d99454" : stage < 7 ? "#ff7a3d" : "#ff5c4d";
   return (
     <group ref={groupRef} {...props}>
       <VehicleUpgradeEffect>
@@ -141,8 +141,8 @@ export default function Car({
         >
           <meshStandardMaterial
             color={body}
-            roughness={stage > 6 ? 0.25 : 0.52}
-            metalness={stage > 6 ? 0.42 : 0.14}
+            roughness={stage > 6 ? 0.22 : 0.38}
+            metalness={stage > 6 ? 0.38 : 0.18}
           />
         </RoundedBox>
         <RoundedBox
@@ -153,7 +153,7 @@ export default function Car({
           castShadow
         >
           <meshStandardMaterial
-            color={stage < 2 ? "#aeb8b5" : "#c9e3e9"}
+            color={stage < 2 ? "#e8dcc8" : "#d9f1f4"}
             roughness={0.15}
             metalness={0.5}
           />
@@ -161,7 +161,7 @@ export default function Car({
         <mesh position={[0, 1.08, 0.41]} rotation={[Math.PI / 2.8, 0, 0]}>
           <boxGeometry args={[1.04, 0.035, 0.53]} />
           <meshPhysicalMaterial
-            color="#0b2d3b"
+            color="#25556a"
             metalness={0.45}
             roughness={0.08}
             transmission={0.2}
@@ -170,7 +170,7 @@ export default function Car({
         {[-0.615, 0.615].map((x) => (
           <mesh key={`sideglass-${x}`} position={[x, 1.06, -0.25]} rotation={[0, Math.PI / 2, 0]}>
             <boxGeometry args={[0.74, 0.32, 0.026]} />
-            <meshStandardMaterial color="#123c4b" metalness={0.55} roughness={0.12} />
+            <meshStandardMaterial color="#357087" metalness={0.45} roughness={0.16} />
           </mesh>
         ))}
         <RoundedBox
@@ -215,7 +215,7 @@ export default function Car({
         {stage > 2 && (
           <mesh position={[0, 1.29, 0.04]}>
             <boxGeometry args={[0.78, 0.055, 0.55]} />
-            <meshStandardMaterial color="#07141b" emissive="#005EB8" emissiveIntensity={1.5} />
+            <meshStandardMaterial color="#244b5e" emissive="#005EB8" emissiveIntensity={1.5} />
           </mesh>
         )}
         {stage > 3 && <RoofLoad />}

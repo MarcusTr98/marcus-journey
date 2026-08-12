@@ -86,8 +86,8 @@ function AutomatedFactory() {
   });
   return (
     <group>
-      <Block position={[0, 0.18, 0]} size={[4.4, 0.3, 3.2]} color="#17242a" />
-      <Block position={[0, 0.65, 0.25]} size={[3.65, 0.42, 1.15]} color="#31515d" />
+      <Block position={[0, 0.18, 0]} size={[4.4, 0.3, 3.2]} color="#496f73" />
+      <Block position={[0, 0.65, 0.25]} size={[3.65, 0.42, 1.15]} color="#6d8f91" />
       <group ref={products}>
         {[-0.75, 0, 0.75].map((x, index) => (
           <Block
@@ -159,7 +159,7 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
     case "campus":
       return (
         <group>
-          <Block position={[0, 0.13, 0.25]} size={[4.7, 0.24, 3.2]} color="#16303b" />
+          <Block position={[0, 0.13, 0.25]} size={[4.7, 0.24, 3.2]} color="#5e7f86" />
           <Block position={[0, 1.15, -0.35]} size={[1.65, 2.25, 1.65]} color="#f4efe5" />
           <Block position={[-1.55, 0.82, 0.05]} size={[1.55, 1.55, 2.2]} color="#fff8ec" />
           <Block position={[1.55, 0.82, 0.05]} size={[1.55, 1.55, 2.2]} color="#fff8ec" />
@@ -187,7 +187,7 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
     case "stage":
       return (
         <group>
-          <Block position={[0, 0.22, 0]} size={[4.5, 0.42, 3.2]} color="#0b2f26" />
+          <Block position={[0, 0.22, 0]} size={[4.5, 0.42, 3.2]} color="#477a68" />
           {[-1.95, 1.95].map((x) => (
             <group key={x}>
               <Block position={[x, 1.55, 0]} size={[0.14, 3.1, 0.14]} color="#b9cbc5" />
@@ -226,7 +226,7 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
     case "lab":
       return (
         <group>
-          <Block position={[0, 0.55, 0]} size={[3.3, 1.05, 2.3]} color="#183643" />
+          <Block position={[0, 0.55, 0]} size={[3.3, 1.05, 2.3]} color="#527889" />
           {[-1, 0, 1].map((x, i) => (
             <group key={x} position={[x, 1.35, 0]}>
               <mesh>
@@ -276,7 +276,7 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
     case "solutions":
       return (
         <group>
-          <Block position={[0, 0.72, 0]} size={[3.7, 1.35, 2.45]} color="#42543a" />
+          <Block position={[0, 0.72, 0]} size={[3.7, 1.35, 2.45]} color="#73855d" />
           <Block position={[-0.55, 1.18, 1.26]} size={[2.15, 0.72, 0.08]} color="#dcebd7" />
           {[-0.85, 0, 0.85].map((x, i) => (
             <Block
@@ -336,7 +336,7 @@ function LandmarkStructure({ kind, accent }: { kind: LandmarkKind; accent: strin
     case "robot":
       return (
         <group position={[0, 0.15, 0]}>
-          <Block position={[0, 0.12, 0]} size={[3.2, 0.24, 2.5]} color="#17242a" />
+          <Block position={[0, 0.12, 0]} size={[3.2, 0.24, 2.5]} color="#557782" />
           <Block position={[0, 1.35, 0]} size={[1.25, 1.35, 0.85]} color="#ffd43b" />
           <mesh position={[0, 1.42, 0.47]}>
             <circleGeometry args={[0.26, 20]} />
@@ -413,7 +413,7 @@ export default function Milestone({ data, index }: { data: MilestoneType; index:
       <group position={[offset[0], 0, offset[1]]}>
         <mesh position={[0, 0.1, 0]} receiveShadow>
           <cylinderGeometry args={[2.25, 2.55, 0.2, 8]} />
-          <meshStandardMaterial color="#111d23" roughness={0.9} />
+          <meshStandardMaterial color="#496d73" roughness={0.88} />
         </mesh>
         {data.id !== "graduation" && <LandmarkStructure kind={meta.kind} accent={data.accent} />}
       </group>
