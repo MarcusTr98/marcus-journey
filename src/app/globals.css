@@ -1603,6 +1603,82 @@ select:focus-visible {
     margin-bottom: 58px;
   }
 }
+
+/* Keep Toyota project links compact and easy to scan. */
+.timeline-projects {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.seo-profile-grid .timeline-project {
+  display: flex;
+  min-width: 0;
+  aspect-ratio: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin: 0;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ink);
+  text-decoration: none;
+  transition: border-color 160ms ease, transform 160ms ease;
+}
+.seo-profile-grid .timeline-project:hover {
+  border-color: var(--orange);
+  transform: translateY(-2px);
+}
+.seo-profile-grid .timeline-project:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+}
+.seo-profile-grid .timeline-project > span {
+  font-size: 9px;
+  line-height: 1.4;
+}
+.seo-profile-grid .timeline-project h4 {
+  margin: auto 0;
+  font-size: clamp(13px, 1.2vw, 16px);
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+.seo-profile-grid .timeline-project > b {
+  align-self: flex-end;
+  color: var(--orange);
+  font-size: 18px;
+}
+/* The portfolio hero photo stays square-cornered and a little clearer. */
+.garage::after {
+  border-radius: 0;
+  opacity: 0.76;
+  filter: blur(1px);
+}
+@media (max-width: 600px) {
+  .timeline-projects {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 380px) {
+  .timeline-projects {
+    grid-template-columns: 1fr;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .seo-profile-grid .timeline-project {
+    transition: none;
+  }
+}
+@media (max-width: 850px) {
+  .garage::after {
+    opacity: 0.38;
+  }
+}
+@media (max-width: 540px) {
+  .garage::after {
+    opacity: 0.28;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -2537,7 +2613,7 @@ select:focus-visible {
     top: 26%;
     width: 92vw;
     height: 44vh;
-    opacity: 0.2;
+    opacity: 0.28;
   }
 }
 @media (max-width: 850px) {
@@ -2560,5 +2636,22 @@ select:focus-visible {
   }
   .journey-motion-hint button {
     width: 100%;
+  }
+}
+
+/* Keep the hero image clear, square-cornered, and responsive across screens. */
+.garage::after {
+  border-radius: 0;
+  opacity: 0.76;
+  filter: blur(1px);
+}
+@media (max-width: 850px) {
+  .garage::after {
+    opacity: 0.38;
+  }
+}
+@media (max-width: 540px) {
+  .garage::after {
+    opacity: 0.28;
   }
 }

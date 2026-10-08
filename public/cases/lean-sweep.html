@@ -48,8 +48,33 @@ button.g{background:var(--card);color:var(--tx);border:1px solid var(--bd)}
 @keyframes pop{50%{transform:scale(1.5) rotate(-10deg)}}
 .a3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
 .c{position:relative;min-height:150px;background:linear-gradient(145deg,#fff,#f8faf9);border:1px solid var(--bd);border-radius:14px;padding:18px}
+.c[data-step]::before{content:attr(data-step);display:grid;place-items:center;width:30px;height:30px;margin-bottom:11px;border:1px solid #efc6a8;border-radius:8px;background:#fff3e9;color:#a8490c;font-size:12px;font-weight:800}
 .c h3{margin:0 0 8px;font-size:14px;color:var(--ac);letter-spacing:.03em}
 .c p{margin:0;color:#35424d;font-size:14px;line-height:1.6}
+.issue-list{display:grid;gap:7px;padding:0;margin:0;list-style:none}
+.issue-list li{display:grid;grid-template-columns:12px 1fr;gap:8px;align-items:baseline;color:#35424d;font-size:13.5px;line-height:1.45}
+.issue-list li::before{content:"";width:6px;height:6px;margin-left:2px;border-radius:50%;background:var(--orange)}
+.idea-grid{display:grid;grid-template-columns:1fr;gap:12px}
+.idea-card{background:#fff;border:1px solid var(--bd);border-radius:12px;padding:15px}
+.idea-card h3{display:flex;align-items:center;gap:9px;margin:0 0 10px;font-size:15px}
+.idea-card .idea-icon{display:grid;place-items:center;flex:none;width:34px;height:34px;border-radius:9px;background:#eaf6ef;color:var(--ok);font-size:18px}
+.idea-flow{display:grid;grid-template-columns:1fr auto 1fr;gap:7px;align-items:stretch;margin:10px 0}
+.idea-flow div{padding:9px;border:1px solid var(--bd);border-radius:8px;background:#f8faf9;font-size:12px;line-height:1.45}
+.idea-flow div:last-child{background:var(--okbg);border-color:#b9dfc7}
+.idea-flow small{display:block;margin-bottom:3px;color:var(--mu);font-weight:700}
+.idea-flow>span{align-self:center;color:var(--ac);font-weight:800}
+.idea-card>p{margin:0;color:var(--mu);font-size:12.5px}
+.idea-visuals{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:10px 0}
+.idea-visual{min-width:0;padding:7px;border:1px solid var(--bd);border-radius:9px;background:#f8faf9}
+.idea-visual.after{background:#f0f8f3;border-color:#c5dfce}
+.idea-visual b{display:block;margin:0 0 4px;font-size:11px;color:var(--mu)}
+.idea-visual svg{width:100%;height:auto;aspect-ratio:160/90}
+.idea-visual svg .move{animation:illustrationMove 3s ease-in-out infinite alternate}
+.idea-visual svg .pulse{transform-box:fill-box;transform-origin:center;animation:illustrationPulse 2s ease-in-out infinite}
+.idea-visual svg .dash{stroke-dasharray:5 4;animation:illustrationDash 2s linear infinite}
+@keyframes illustrationMove{to{transform:translate(12px,-7px)}}
+@keyframes illustrationPulse{50%{opacity:.45;transform:scale(.9)}}
+@keyframes illustrationDash{to{stroke-dashoffset:-18}}
 .analysis-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .analysis-grid .box{min-width:0}
 .analysis-grid h3{margin:0 0 8px;color:var(--ac);font-size:14px}
@@ -86,7 +111,7 @@ footer{color:var(--mu);font-size:12.5px;margin:30px 0 10px}
 @media(max-width:900px){.analysis-grid{grid-template-columns:1fr}}
 @media(max-width:700px){main{padding-top:18px}.bar-ctl{align-items:stretch}.meter{flex-basis:100%}.bars label{width:110px;font-size:12px}.compare-row{grid-template-columns:1fr;gap:8px}}
 @media(max-width:480px){.compare-pair{grid-template-columns:1fr}}
-@media(prefers-reduced-motion:reduce){.f{animation:none;width:var(--w)}.compare-fill{animation:none;width:var(--value)}.cd,.meter .fl,.ph{transition:none}.cd.done .e{animation:none}}
+@media(prefers-reduced-motion:reduce){.f{animation:none;width:var(--w)}.compare-fill{animation:none;width:var(--value)}.cd,.meter .fl,.ph{transition:none}.cd.done .e{animation:none}.idea-visual svg .move,.idea-visual svg .pulse,.idea-visual svg .dash{animation:none}.idea-visual svg animateMotion,.idea-visual svg animate,.idea-visual svg animateTransform{display:none}}
 </style>
 </head>
 <body>
@@ -106,14 +131,13 @@ footer{color:var(--mu);font-size:12.5px;margin:30px 0 10px}
 <h2>Tổng quan dự án</h2>
 <p class="sub" style="margin-bottom:16px">Tập hợp các nhóm Kaizen nhỏ thành chương trình cải tiến theo phạm vi và thứ tự ưu tiên.</p>
 <div class="a3">
-<div class="c"><h3>Vấn đề</h3><p>Lãng phí phát sinh ở nguyên liệu, chờ, di chuyển, bố trí, tồn kho, an toàn và bàn giao.</p></div>
-<div class="c"><h3>Nguyên nhân gốc</h3><p>Các dạng lãng phí rời rạc, chưa được đo lường và nhóm thành hướng xử lý.</p></div>
-<div class="c"><h3>Giải pháp</h3><p>Dùng QC tools để chia nhỏ cơ hội Kaizen, triển khai theo 3 giai đoạn từ dòng chảy đến thao tác tại máy.</p></div>
-<div class="c"><h3>Duy trì</h3><p>Kiểm tra định kỳ, đánh giá sau cải tiến và cập nhật tiêu chuẩn vận hành.</p></div>
-<div class="c"><h3>Vai trò dự án</h3><p>Đề xuất ý tưởng, thiết kế biểu mẫu, phân tích nhóm Kaizen, thống kê, báo cáo và theo dõi PDCA.</p></div>
-<div class="c"><h3>Hiện trạng</h3><p>Nhiều dạng lãng phí xuất hiện rải rác ở nguyên liệu, thời gian chờ, di chuyển, bố trí, tồn kho, an toàn và bàn giao giữa các khu vực.</p></div>
-<div class="c"><h3>Nguyên nhân gốc</h3><p>Các lãng phí chưa được đo lường và phân nhóm, khiến cơ hội cải tiến chưa có cấu trúc chung để theo dõi.</p></div>
-<div class="c"><h3>Công cụ phân tích</h3><p>QC Story, 5 Why, Fishbone, Pareto, 5W1H và Check Sheet được dùng làm khung ghi nhận, phân tích và tổ chức các nhóm Kaizen.</p></div>
+<div class="c" data-step="01"><h3>Vấn đề</h3><p>Lãng phí xuất hiện ở nhiều khâu, ảnh hưởng đến dòng chảy và thao tác tại khu vực sản xuất.</p></div>
+<div class="c" data-step="02"><h3>Hiện trạng</h3><ul class="issue-list"><li><span>Nguyên liệu thừa</span></li><li><span>Chờ đợi</span></li><li><span>Di chuyển chưa cần thiết</span></li><li><span>Bố trí máy móc, hàng hóa</span></li><li><span>Tồn kho và bàn giao</span></li><li><span>Thao tác khó nhìn, khó làm</span></li><li><span>Bê vác nặng</span></li></ul></div>
+<div class="c" data-step="03"><h3>Nguyên nhân gốc</h3><p>[CẦN BỔ SUNG] Phân tích nguyên nhân sẽ được cập nhật sau khi có thông tin xác nhận.</p></div>
+<div class="c" data-step="04"><h3>Giải pháp</h3><p>Chia cơ hội Kaizen thành 11 nhóm, triển khai theo 3 giai đoạn từ dòng chảy đến thao tác tại máy.</p></div>
+<div class="c" data-step="05"><h3>Kết quả cải tiến</h3><p>Tổng lãng phí giảm 30%, cycle time giảm 35% và thời gian di chuyển giảm 25%.</p></div>
+<div class="c" data-step="06"><h3>Duy trì</h3><p>Kiểm tra định kỳ, đánh giá sau cải tiến và cập nhật tiêu chuẩn vận hành.</p></div>
+<div class="c" data-step="07"><h3>Vai trò dự án</h3><p>Đề xuất ý tưởng, thiết kế biểu mẫu, phân nhóm Kaizen, thống kê, báo cáo và theo dõi PDCA.</p></div>
 </div>
 
 <h2>Quy trình cải tiến theo giai đoạn</h2>
@@ -128,35 +152,29 @@ footer{color:var(--mu);font-size:12.5px;margin:30px 0 10px}
 </div>
 
 <h2>Một số ý tưởng Kaizen nhỏ</h2>
-<p class="sub" style="margin-bottom:12px">Ví dụ minh họa một cải tiến tại công đoạn. Các ý tưởng khác có thể bổ sung cùng cấu trúc khi được cung cấp.</p>
-<div class="grid2">
-<div class="box"><b>Ví dụ · Trước cải tiến</b>
-<svg viewBox="0 0 320 190" role="img" aria-label="Vải thừa bị bỏ vào thùng rác">
-<defs><pattern id="h1" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--bad)" stroke-width="2"/></pattern></defs>
-<rect x="10" y="10" width="300" height="110" rx="6" fill="none" stroke="var(--mu)"/>
-<g fill="var(--ac)" fill-opacity=".35" stroke="var(--ac)"><rect x="20" y="20" width="110" height="90" rx="4"/><rect x="140" y="20" width="80" height="55" rx="4"/></g>
-<rect x="140" y="82" width="80" height="28" fill="url(#h1)" stroke="var(--bad)"/>
-<rect x="230" y="20" width="70" height="90" fill="url(#h1)" stroke="var(--bad)">
-<animateTransform attributeName="transform" type="translate" values="0 0;0 0;-10 62;-10 62" keyTimes="0;.3;.7;1" dur="4s" repeatCount="indefinite"/>
-<animate attributeName="opacity" values="1;1;0;0" keyTimes="0;.3;.7;1" dur="4s" repeatCount="indefinite"/></rect>
-<rect x="238" y="150" width="56" height="34" rx="4" fill="var(--bd)" stroke="var(--mu)"/><text x="266" y="172" font-size="11" text-anchor="middle">Rác</text>
-<text x="20" y="150" font-size="12">Phần vải thừa bị bỏ đi</text>
+<p class="sub" style="margin-bottom:12px">Mô phỏng bằng hình ảnh.</p>
+<div class="idea-grid">
+<article class="idea-card"><h3><span class="idea-icon" aria-hidden="true">↔</span>01 · Bố trí máy và hàng hóa</h3><div class="idea-visuals"><div class="idea-visual"><b>Trước</b><svg viewBox="0 0 160 90" role="img" aria-label="Máy và hàng hóa đặt rời rạc"><rect x="5" y="5" width="150" height="80" rx="8" fill="white" stroke="#d9e0e5"/><rect x="15" y="16" width="34" height="25" rx="4" fill="#dcecf8" stroke="#075fa6"/><rect x="98" y="51" width="38" height="23" rx="4" fill="#fff0f0" stroke="#bd3e3e"/><rect x="62" y="25" width="22" height="18" rx="3" fill="#fff3e9" stroke="#e85d0f"/><path d="M30 45L70 56 116 46" fill="none" stroke="#bd3e3e" stroke-width="2" class="dash"/></svg></div><div class="idea-visual after"><b>Sau · bố trí theo dòng chảy</b><svg viewBox="0 0 160 90" role="img" aria-label="Máy và vật tư được đặt theo thứ tự công việc"><defs><marker id="ideaArrow" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0 0L6 3L0 6Z" fill="#187547"/></marker></defs><rect x="5" y="5" width="150" height="80" rx="8" fill="white" stroke="#c5dfce"/><rect x="17" y="28" width="34" height="30" rx="4" fill="#dcecf8" stroke="#075fa6"/><rect x="63" y="28" width="34" height="30" rx="4" fill="#dcecf8" stroke="#075fa6"/><rect x="111" y="29" width="25" height="28" rx="4" fill="#dff2e5" stroke="#187547"/><path d="M51 43H61M98 43H109" stroke="#187547" stroke-width="3" marker-end="url(#ideaArrow)"/><circle class="pulse" cx="123" cy="20" r="4" fill="#e85d0f"/></svg></div></div><p>Gợi ý: sắp xếp theo trình tự công việc, đặt vật tư gần điểm sử dụng.</p></article>
+<article class="idea-card"><h3><span class="idea-icon" aria-hidden="true">⌁</span>02 · Rút ngắn đường đi</h3><div class="idea-visuals"><div class="idea-visual"><b>Trước · đường đi vòng</b><svg viewBox="0 0 160 90" role="img" aria-label="Đường đi vòng dài giữa khu vực"><rect x="5" y="5" width="150" height="80" rx="8" fill="white" stroke="#d9e0e5"/><g fill="#dcecf8" stroke="#075fa6"><rect x="15" y="17" width="32" height="24" rx="4"/><rect x="112" y="17" width="32" height="24" rx="4"/><rect x="64" y="53" width="32" height="22" rx="4"/></g><path d="M31 41V66H128V42" fill="none" stroke="#bd3e3e" stroke-width="3" class="dash"/><circle r="4" fill="#bd3e3e"><animateMotion dur="3s" repeatCount="indefinite" path="M31 41V66H128V42"/></circle></svg></div><div class="idea-visual after"><b>Sau · điểm dùng gần nhau</b><svg viewBox="0 0 160 90" role="img" aria-label="Đường đi ngắn sau khi bố trí điểm dùng gần nhau"><rect x="5" y="5" width="150" height="80" rx="8" fill="white" stroke="#c5dfce"/><g fill="#dcecf8" stroke="#075fa6"><rect x="25" y="24" width="35" height="34" rx="5"/><rect x="100" y="24" width="35" height="34" rx="5"/></g><path d="M62 41H98" stroke="#187547" stroke-width="3" class="dash"/><circle r="4" fill="#187547"><animateMotion dur="2s" repeatCount="indefinite" path="M62 41H98"/></circle></svg></div></div><p>Gợi ý: dùng sơ đồ spaghetti để xác định và rút ngắn lộ trình.</p></article>
+<article class="idea-card"><h3><span class="idea-icon" aria-hidden="true">⚙</span>03 · Dụng cụ đa năng</h3><div class="idea-visuals"><div class="idea-visual"><b>Trước · nhiều thước, dưỡng</b><svg viewBox="0 0 160 90" role="img" aria-label="Nhiều thước và dưỡng riêng lẻ với hình dạng khác nhau"><rect x="5" y="5" width="150" height="80" rx="8" fill="white" stroke="#d9e0e5"/><g fill="#fff0f0" stroke="#bd3e3e" stroke-width="2"><rect x="15" y="18" width="62" height="13" rx="2"/><path d="M22 31V27M31 31V25M40 31V27M49 31V25M58 31V27M67 31V25"/><path d="M96 19H139V30H107V44H96Z"/><path d="M28 47L62 47 28 76Z"/><path d="M87 55H133M92 49V61M103 51V59M114 49V61M125 51V59"/></g><g fill="#bd3e3e" font-size="7" text-anchor="middle"><text x="46" y="42">thước thẳng</text><text x="117" y="42">thước góc</text><text x="45" y="84">dưỡng tam giác</text><text x="110" y="74">thước chia vạch</text></g></svg></div><div class="idea-visual after"><b>Sau · một dụng cụ nhiều đầu</b><svg viewBox="0 0 160 90" role="img" aria-label="Một dụng cụ đa năng có thước thẳng, đầu vuông góc và đầu đo góc"><rect x="5" y="5" width="150" height="80" rx="8" fill="white" stroke="#c5dfce"/><g stroke="#187547" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><path d="M38 46H123"/><path d="M48 40V52M59 42V50M70 40V52M81 42V50M92 40V52M103 42V50M114 40V52"/><path d="M72 46V24H91"/><path d="M38 46L24 31M38 46L22 61"/><path d="M119 46L132 34M119 46L135 58"/></g><rect x="67" y="38" width="30" height="16" rx="7" fill="#dff2e5" stroke="#187547" stroke-width="2" class="pulse"/><g fill="#187547" font-size="7" text-anchor="middle"><text x="79" y="19">đầu vuông góc</text><text x="25" y="75">đầu đo góc</text><text x="121" y="75">đầu đo biên</text></g></svg></div></div><p>Gợi ý: tích hợp nhiều đầu đo và định vị trên một dụng cụ để giảm đổi dụng cụ khi thao tác.</p></article>
+<article class="idea-card"><h3><span class="idea-icon" aria-hidden="true">⬆</span>04 · Giảm bê vác nặng</h3><div class="idea-visuals"><div class="idea-visual"><b>Trước · nâng bằng tay</b><svg viewBox="0 0 160 90" role="img" aria-label="Người cúi nâng thùng hàng bằng tay"><rect x="5" y="5" width="150" height="80" rx="8" fill="white" stroke="#d9e0e5"/><circle cx="50" cy="28" r="7" fill="#bd3e3e"/><path d="M49 36L62 49 79 56M58 45L44 57M62 49L58 67M62 49L74 65" fill="none" stroke="#bd3e3e" stroke-width="4" stroke-linecap="round"/><rect x="79" y="47" width="32" height="27" fill="#fff0f0" stroke="#bd3e3e"/><path d="M62 76H128" stroke="#7b8790" stroke-width="2"/><path d="M41 20L34 14M43 21L35 22" stroke="#e85d0f" stroke-width="2" class="pulse"/></svg></div><div class="idea-visual after"><b>Sau · chuyển bằng xe đẩy</b><svg viewBox="0 0 160 90" role="img" aria-label="Hàng hóa được chuyển bằng xe đẩy"><rect x="5" y="5" width="150" height="80" rx="8" fill="white" stroke="#c5dfce"/><path d="M40 34H100L111 66H47Z" fill="#dff2e5" stroke="#187547" stroke-width="3"/><circle cx="55" cy="71" r="6" fill="#687780"/><circle cx="101" cy="71" r="6" fill="#687780"/><rect x="57" y="18" width="31" height="19" rx="3" fill="#dcecf8" stroke="#075fa6"/><path d="M113 48H137" stroke="#187547" stroke-width="3" class="dash"/><circle class="move" cx="124" cy="37" r="4" fill="#e85d0f"/></svg></div></div><p>Gợi ý: cân nhắc xe đẩy, giá trượt hoặc điểm trung chuyển phù hợp.</p></article>
+<article class="idea-card"><h3><span class="idea-icon" aria-hidden="true">◎</span>05 · Dễ nhìn, dễ làm</h3><div class="idea-visuals"><div class="idea-visual"><b>Trước · khó nhận biết</b><svg viewBox="0 0 160 90" role="img" aria-label="Khu vực để dụng cụ lộn xộn, khó nhận biết"><rect x="5" y="5" width="150" height="80" rx="8" fill="white" stroke="#d9e0e5"/><path d="M25 65H135V76H25Z" fill="#e7ecef" stroke="#7b8790"/><g stroke="#bd3e3e" stroke-width="5" stroke-linecap="round"><path d="M40 34L64 52M69 29L56 53M87 51L109 29M116 51L132 40"/></g><text x="80" y="21" text-anchor="middle" font-size="9" fill="#bd3e3e">không có vị trí cố định</text></svg></div><div class="idea-visual after"><b>Sau · dấu chuẩn trực quan</b><svg viewBox="0 0 160 90" role="img" aria-label="Dụng cụ có dấu vị trí trực quan"><rect x="5" y="5" width="150" height="80" rx="8" fill="white" stroke="#c5dfce"/><rect x="20" y="19" width="120" height="55" rx="5" fill="#f0f8f3" stroke="#187547"/><g fill="#dcecf8" stroke="#075fa6" stroke-width="3"><path d="M37 35L55 52M55 35L37 52"/><path d="M78 32V55M68 43H88"/><path d="M107 35L125 52M125 35L107 52"/></g><circle class="pulse" cx="130" cy="20" r="5" fill="#187547"/></svg></div></div><p>Gợi ý: bổ sung nhãn, vạch màu và dấu chuẩn tại vị trí thao tác.</p></article>
+<article class="idea-card"><h3><span class="idea-icon" aria-hidden="true">✂</span>06 · Tận dụng vải thừa</h3><div class="idea-visuals">
+<div class="idea-visual"><b>Ví dụ · Trước cải tiến</b><svg viewBox="0 0 320 190" role="img" aria-label="Layout cũ: phần vải thừa bị bỏ vào thùng rác">
+<defs><pattern id="waste-hatch-old" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#bd3e3e" stroke-width="2"/></pattern><marker id="waste-arrow-old" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#bd3e3e"/></marker></defs>
+<rect x="8" y="8" width="304" height="118" rx="8" fill="#fff" stroke="#52616b" stroke-width="2"/>
+<rect x="20" y="18" width="112" height="92" rx="5" fill="#a9c8df" stroke="#075fa6" stroke-width="2"/><rect x="142" y="18" width="78" height="56" rx="5" fill="#a9c8df" stroke="#075fa6" stroke-width="2"/>
+<rect x="142" y="80" width="78" height="30" fill="url(#waste-hatch-old)" stroke="#bd3e3e" stroke-width="2"/><rect x="230" y="18" width="70" height="92" fill="url(#waste-hatch-old)" stroke="#bd3e3e" stroke-width="2"/>
+<path d="M266 112V143" fill="none" stroke="#bd3e3e" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#waste-arrow-old)"/><g class="move"><rect x="240" y="26" width="26" height="18" fill="url(#waste-hatch-old)" stroke="#bd3e3e"/><animateTransform attributeName="transform" type="translate" values="0 0;0 0;0 88;0 88" keyTimes="0;.35;.75;1" dur="4s" repeatCount="indefinite"/></g>
+<path d="M240 146H294L290 179H244Z" fill="#d9e0e5" stroke="#52616b" stroke-width="2"/><path d="M237 143H297" stroke="#52616b" stroke-width="3"/><circle cx="252" cy="182" r="3" fill="#52616b"/><circle cx="282" cy="182" r="3" fill="#52616b"/><text x="267" y="166" font-size="11" text-anchor="middle">Rác</text><text x="18" y="150" font-size="12">Phần vải thừa bị bỏ đi</text>
 </svg></div>
-<div class="box"><b>Ví dụ · Sau cải tiến</b>
-<svg viewBox="0 0 320 190" role="img" aria-label="Vải thừa được cắt thêm sản phẩm phụ">
-<rect x="10" y="10" width="300" height="110" rx="6" fill="none" stroke="var(--mu)"/>
-<g fill="var(--ac)" fill-opacity=".35" stroke="var(--ac)"><rect x="20" y="20" width="110" height="90" rx="4"/><rect x="140" y="20" width="80" height="55" rx="4"/></g>
-<g fill="var(--ok)" fill-opacity=".45" stroke="var(--ok)">
-<rect x="144" y="86" width="30" height="20" rx="3"><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.2;.8;1" dur="4s" repeatCount="indefinite"/></rect>
-<rect x="180" y="86" width="34" height="20" rx="3"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.2;.35;.8;1" dur="4s" repeatCount="indefinite"/></rect>
-<rect x="236" y="26" width="28" height="36" rx="3"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.35;.5;.8;1" dur="4s" repeatCount="indefinite"/></rect>
-<rect x="268" y="26" width="26" height="36" rx="3"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.5;.65;.8;1" dur="4s" repeatCount="indefinite"/></rect>
-<rect x="236" y="70" width="58" height="34" rx="3"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.65;.8;.9;1" dur="4s" repeatCount="indefinite"/></rect></g>
-<text x="20" y="150" font-size="12">Vẽ lại sơ đồ cắt, cắt hàng phụ trên vải thừa</text>
-<text x="20" y="170" font-size="12" fill="var(--ok)">Không còn vải bỏ vào thùng rác</text>
-</svg></div>
+<div class="idea-visual after"><b>Ví dụ · Sau cải tiến</b><svg viewBox="0 0 320 190" role="img" aria-label="Layout mới: sơ đồ cắt tận dụng vải thừa làm sản phẩm phụ">
+<rect x="8" y="8" width="304" height="118" rx="8" fill="#fff" stroke="#52616b" stroke-width="2"/><rect x="20" y="18" width="112" height="92" rx="5" fill="#a9c8df" stroke="#075fa6" stroke-width="2"/><rect x="142" y="18" width="78" height="56" rx="5" fill="#a9c8df" stroke="#075fa6" stroke-width="2"/>
+<rect x="146" y="82" width="28" height="23" rx="3" fill="#9dcbb2" stroke="#187547" stroke-width="2"><animate attributeName="opacity" values=".45;1;.45" dur="2s" repeatCount="indefinite"/></rect><rect x="180" y="82" width="34" height="23" rx="3" fill="#dff2e5" stroke="#187547" stroke-width="2"><animate attributeName="opacity" values="1;.45;1" dur="2s" repeatCount="indefinite"/></rect>
+<rect x="236" y="24" width="25" height="34" rx="3" fill="#9dcbb2" stroke="#187547" stroke-width="2"><animate attributeName="y" values="24;20;24" dur="2.5s" repeatCount="indefinite"/></rect><rect x="267" y="24" width="25" height="34" rx="3" fill="#dff2e5" stroke="#187547" stroke-width="2"/><rect x="236" y="66" width="56" height="35" rx="3" fill="#dff2e5" stroke="#187547" stroke-width="2"/>
+<path d="M176 75V62H235" fill="none" stroke="#187547" stroke-width="2" stroke-dasharray="5 4"/><text x="18" y="150" font-size="12">Vẽ lại sơ đồ cắt, tận dụng phần vải thừa</text><text x="18" y="170" font-size="12" fill="#187547">Sản phẩm phụ · minh họa</text>
+</svg></div></div><p>Khôi phục layout trước/sau ban đầu. Hình minh họa không đại diện cho kết quả triển khai hay số liệu thực tế.</p></article>
 </div>
-
 <h2>Kết quả cải tiến</h2>
 <p class="sub">Chỉ số được chuẩn hóa theo từng hạng mục, mốc trước cải tiến = 100. Mức giảm 30%, 35% và 25% là kết quả thực đã cung cấp.</p>
 <div class="box" style="margin-top:14px"><p class="cap" style="margin:0 0 10px">Cách tính tổng lãng phí: <code>% giảm = Σ(lãng phí trước − sau) ÷ Σ lãng phí trước × 100</code>. Các hạng mục được quy đổi về cùng mốc trước khi tổng hợp, thang đo chi tiết được giữ kín.</p><table>

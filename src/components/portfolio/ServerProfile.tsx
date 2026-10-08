@@ -38,19 +38,16 @@ const trainToRoleLink = {
   vi: {
     label: "DỰ ÁN KAIZEN · 2019–2020",
     title: "Train-to-Role — Chuẩn hóa đào tạo theo vị trí",
-    summary: "Giảm 53% thời lượng đào tạo tập trung và 80% thời lượng thực hành tại chuyền.",
     action: "Xem case study",
   },
   en: {
     label: "KAIZEN PROJECT · 2019–2020",
     title: "Train-to-Role — Role-based operator training",
-    summary: "Cut classroom training by 53% and on-line practice time by 80%.",
     action: "View case study",
   },
   zh: {
     label: "改善项目 · 2019–2020",
     title: "Train-to-Role — 按岗位标准化培训",
-    summary: "集中培训时间减少53%，生产线实操时间减少80%。",
     action: "查看案例",
   },
 } as const;
@@ -59,19 +56,34 @@ const leanSweepLink = {
   vi: {
     label: "DỰ ÁN KAIZEN · 2018–2020",
     title: "Lean Sweep — Giảm lãng phí toàn khu vực sản xuất",
-    summary: "11 nhóm cải tiến, giảm 30% lãng phí, 35% cycle time và 25% thời gian di chuyển.",
     action: "Xem case study",
   },
   en: {
     label: "KAIZEN PROJECT · 2018–2020",
     title: "Lean Sweep — Area-wide waste reduction",
-    summary: "11 improvement groups, reducing waste by 30%, cycle time by 35% and travel time by 25%.",
     action: "View case study",
   },
   zh: {
     label: "改善项目 · 2018–2020",
     title: "Lean Sweep — 区域精益改善",
-    summary: "11个改善小组，浪费减少30%，周期时间减少35%，移动时间减少25%。",
+    action: "查看案例",
+  },
+} as const;
+
+const tpmHandoverLink = {
+  vi: {
+    label: "CẢI TIẾN TPM · 2020–2021",
+    title: "Giảm sự cố máy móc và dụng cụ",
+    action: "Xem case study",
+  },
+  en: {
+    label: "TPM IMPROVEMENT · 2020–2021",
+    title: "Reducing Machine and Tool Failures",
+    action: "View case study",
+  },
+  zh: {
+    label: "TPM改善 · 2020–2021",
+    title: "降低机器与工具故障",
     action: "查看案例",
   },
 } as const;
@@ -143,22 +155,21 @@ export default function ServerProfile({ language }: { language: Language }) {
             </ul>
             {milestone.id === "toyota" && (
               <div className="timeline-projects">
-                <div className="timeline-project">
+                <a className="timeline-project" href="/cases/train-to-role.html">
                   <span>{trainToRoleLink[language].label}</span>
                   <h4>{trainToRoleLink[language].title}</h4>
-                  <p>{trainToRoleLink[language].summary}</p>
-                  <a href="/cases/train-to-role.html">
-                    {trainToRoleLink[language].action} <b aria-hidden="true">↗</b>
-                  </a>
-                </div>
-                <div className="timeline-project">
+                  <b aria-hidden="true">↗</b>
+                </a>
+                <a className="timeline-project" href="/cases/lean-sweep.html">
                   <span>{leanSweepLink[language].label}</span>
                   <h4>{leanSweepLink[language].title}</h4>
-                  <p>{leanSweepLink[language].summary}</p>
-                  <a href="/cases/lean-sweep.html">
-                    {leanSweepLink[language].action} <b aria-hidden="true">↗</b>
-                  </a>
-                </div>
+                  <b aria-hidden="true">↗</b>
+                </a>
+                <a className="timeline-project" href="/cases/tpm-handover.html">
+                  <span>{tpmHandoverLink[language].label}</span>
+                  <h4>{tpmHandoverLink[language].title}</h4>
+                  <b aria-hidden="true">↗</b>
+                </a>
               </div>
             )}
             {milestone.projectUrl && (
