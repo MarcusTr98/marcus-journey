@@ -3,23 +3,22 @@ import "./globals.css";
 import "./fonts.css";
 import "../styles/cv-center.css";
 import "../styles/memory-landmarks.css";
-import "../styles/case-study.css";
 import { profile } from "@/data/profile";
 export const metadata: Metadata = {
   metadataBase: new URL("https://marcus-journey.vercel.app"),
   title: {
-    default: "Marcus Journey — Production to Digital Innovation",
-    template: "%s | Marcus Tran",
+    default: "MarcusTran Portfolio",
+    template: "%s | MarcusTran Portfolio",
   },
   description:
-    "Marcus Tran — Production, Kaizen and Technology. An interactive journey from the factory floor to digital innovation.",
+    "Marcus Tran — process engineering, manufacturing, continuous improvement and quality.",
   openGraph: {
-    title: "Marcus Journey",
-    description: "Build. Improve. Automate.",
+    title: "MarcusTran Portfolio",
+    description: "Process engineering, manufacturing, continuous improvement and quality.",
     type: "website",
     locale: "en_US",
     url: "/",
-    siteName: "Marcus Journey",
+    siteName: "MarcusTran Portfolio",
   },
   alternates: { canonical: "/" },
   robots: { index: true, follow: true },
@@ -33,7 +32,7 @@ const personSchema = {
   telephone: profile.phoneDisplay,
   address: { "@type": "PostalAddress", addressLocality: "Hải Phòng", addressCountry: "VN" },
   sameAs: [profile.github],
-  jobTitle: "Software Developer and Technology Instructor",
+  jobTitle: "Process Engineer Candidate",
   knowsAbout: [
     "Production Management",
     "Kaizen",

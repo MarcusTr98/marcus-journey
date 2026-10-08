@@ -3,7 +3,7 @@
   padding: 0;
   border: 0;
   background: transparent;
-  color: var(--orange);
+  color: #963a07;
 }
 .cv-modal {
   position: fixed;
@@ -21,17 +21,18 @@
   height: min(780px, calc(100vh - 48px));
   padding: 28px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: #0b1b22;
-  color: #fff;
-  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.5);
+  border: 2px solid #c8d7cf;
+  border-radius: 12px;
+  background: #fff;
+  color: #102b35;
+  box-shadow: 0 28px 90px rgba(16, 43, 53, 0.24);
 }
 .cv-center > header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   padding-bottom: 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  border-bottom: 1px solid #d8e1dc;
 }
 .cv-center h2 {
   margin: 8px 0 3px;
@@ -39,18 +40,19 @@
 }
 .cv-center header p {
   margin: 0;
-  color: #9caeb4;
+  color: #52666d;
   font-size: 12px;
 }
 .cv-center header button {
   padding: 9px 11px;
-  border: 1px solid #52646a;
-  background: transparent;
-  color: #fff;
+  border: 1px solid #b9cbc3;
+  border-radius: 6px;
+  background: #fff;
+  color: #173c52;
 }
 .cv-language-list {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
   margin: 18px 0;
 }
@@ -60,15 +62,16 @@
   gap: 2px 12px;
   align-items: center;
   padding: 13px 15px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  background: #10262f;
-  color: #fff;
+  border: 1px solid #cbd8d2;
+  border-radius: 8px;
+  background: #fff;
+  color: #173c52;
   text-align: left;
   transition: 180ms ease;
 }
 .cv-language-list button.is-active {
-  border-color: var(--orange);
-  background: #172b32;
+  border-color: #c64c00;
+  background: #fff8f2;
   box-shadow: inset 3px 0 var(--orange);
 }
 .cv-language-list button > span {
@@ -76,7 +79,7 @@
   font-size: 25px;
 }
 .cv-language-list small {
-  color: #91a4aa;
+  color: #52666d;
 }
 .cv-preview {
   position: relative;
@@ -94,13 +97,14 @@
   right: 18px;
   bottom: 18px;
   padding: 13px 17px;
-  background: var(--orange);
-  color: #fff;
+  border-radius: 6px;
+  background: #f46300;
+  color: #10212a;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-decoration: none;
-  box-shadow: 0 10px 30px rgba(7, 20, 27, 0.35);
+  box-shadow: 0 10px 30px rgba(16, 43, 53, 0.22);
 }
 @keyframes cvFadeIn {
   from {

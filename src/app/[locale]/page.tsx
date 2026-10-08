@@ -21,7 +21,11 @@ export async function generateMetadata({ params }: LocalePageProps): Promise<Met
       canonical: `/${locale}`,
       languages: { vi: "/vi", en: "/en", "zh-CN": "/zh" },
     },
-    openGraph: { title: content.title, description: content.description, locale },
+    openGraph: {
+      title: `${content.title} | MarcusTran Portfolio`,
+      description: content.description,
+      locale,
+    },
   };
 }
 
@@ -30,8 +34,9 @@ export default async function LocalizedHome({ params }: LocalePageProps) {
   if (!isLanguage(locale)) notFound();
   return (
     <main>
-      <JourneyApp initialLanguage={locale} />
-      <ServerProfile language={locale} />
+      <JourneyApp initialLanguage={locale}>
+        <ServerProfile language={locale} />
+      </JourneyApp>
     </main>
   );
 }

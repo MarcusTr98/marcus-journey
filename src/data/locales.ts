@@ -8,15 +8,17 @@ export function isLanguage(value: string): value is Language {
 
 export const localeMetadata = {
   vi: {
-    title: "Marcus Journey — Từ sản xuất đến đổi mới số",
-    description: "Hành trình tương tác của Marcus Tran qua sản xuất, Kaizen và công nghệ.",
+    title: "Kỹ thuật quy trình & Kaizen",
+    description:
+      "Kinh nghiệm sản xuất, cải tiến liên tục và các dự án kỹ thuật quy trình của Marcus Tran.",
   },
   en: {
-    title: "Marcus Journey — Production to Digital Innovation",
-    description: "Marcus Tran's interactive journey through production, Kaizen and technology.",
+    title: "Process Engineering & Kaizen",
+    description:
+      "Marcus Tran's manufacturing experience, continuous-improvement work and process-engineering projects.",
   },
   zh: {
-    title: "Marcus Journey — 从生产走向数字创新",
-    description: "Marcus Tran 跨越生产、改善与科技的互动旅程。",
+    title: "工艺工程与持续改善",
+    description: "Marcus Tran的制造业经验、持续改善成果与工艺工程项目。",
   },
 } as const;

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { getMilestones } from "@/data/i18n";
 import { cvByLanguage, profile } from "@/data/profile";
 import type { Language } from "@/types";
@@ -122,9 +121,9 @@ export default function ServerProfile({ language }: { language: Language }) {
                 <span>{trainToRoleLink[language].label}</span>
                 <h4>{trainToRoleLink[language].title}</h4>
                 <p>{trainToRoleLink[language].summary}</p>
-                <Link href={`/${language}/case/train-to-role`}>
+                <a href="/cases/train-to-role.html">
                   {trainToRoleLink[language].action} <b aria-hidden="true">↗</b>
-                </Link>
+                </a>
               </div>
             )}
             {milestone.projectUrl && (

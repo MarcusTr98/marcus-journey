@@ -76,7 +76,7 @@ export default function JourneyAlbum({
           <section className="journey-album">
             <header>
               <div>
-                <span className="kicker">MARCUS JOURNEY · MEMORY ARCHIVE</span>
+                <span className="kicker">MARCUSTRAN PORTFOLIO · MEMORY ARCHIVE</span>
                 <h2 id="album-title">{t.album}</h2>
                 <p>
                   {visited.length}/{items.length} · {t.collected}

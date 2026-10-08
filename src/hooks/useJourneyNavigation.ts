@@ -5,6 +5,11 @@ import { milestones } from "@/data/milestones";
 import { clamp } from "@/lib/utils";
 import { useJourneyStore } from "@/stores/journeyStore";
 
+function getJourneyStartPosition() {
+  const marker = document.getElementById("journey-start");
+  return marker ? marker.getBoundingClientRect().top + scrollY : innerHeight * 0.86;
+}
+
 export function useJourneyNavigation() {
   const [reducedMotion, setReducedMotion] = useState(false);
   const started = useJourneyStore((state) => state.started);
@@ -28,7 +33,7 @@ export function useJourneyNavigation() {
       if (!started || navigationPinned) return;
       const track = document.getElementById("journey-track");
       if (!track) return;
-      const startAt = innerHeight * 0.86;
+      const startAt = getJourneyStartPosition();
       const finishAt = track.offsetTop + track.offsetHeight - innerHeight * 1.25;
       setProgress(clamp((scrollY - startAt) / Math.max(finishAt - startAt, 1)));
     };
@@ -42,7 +47,7 @@ export function useJourneyNavigation() {
     const track = document.getElementById("journey-track");
     const checkpointProgress = useJourneyStore.getState().vehicleProgress;
     if (track) {
-      const startAt = innerHeight * 0.86;
+      const startAt = getJourneyStartPosition();
       const finishAt = track.offsetTop + track.offsetHeight - innerHeight * 1.25;
       scrollTo({ top: startAt + checkpointProgress * Math.max(finishAt - startAt, 1) });
     }
@@ -63,7 +68,10 @@ export function useJourneyNavigation() {
     setNavigationPinned(false);
     start();
     requestAnimationFrame(() =>
-      scrollTo({ top: innerHeight * 0.86, behavior: reducedMotion ? "auto" : "smooth" }),
+      scrollTo({
+        top: getJourneyStartPosition(),
+        behavior: reducedMotion ? "auto" : "smooth",
+      }),
     );
   };
 
@@ -72,7 +80,7 @@ export function useJourneyNavigation() {
     const track = document.getElementById("journey-track");
     if (!track) return;
     const targetProgress = (index + 1) / (milestones.length + 1);
-    const startAt = innerHeight * 0.86;
+    const startAt = getJourneyStartPosition();
     const finishAt = track.offsetTop + track.offsetHeight - innerHeight * 1.25;
     setNavigationPinned(true);
     requestMilestone(index);

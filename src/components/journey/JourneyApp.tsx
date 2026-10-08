@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import dynamic from "next/dynamic";
 import { milestones } from "@/data/milestones";
 import { homepageMetrics } from "@/data/homepage";
@@ -154,7 +154,13 @@ const MARCUS_VIDEO_MILESTONE: Record<Language, Milestone> = {
     projectLinks: [{ label: "查看源代码", url: "https://github.com/MarcusTr98/Marcus-video" }],
   },
 };
-export default function JourneyApp({ initialLanguage }: { initialLanguage: Language }) {
+export default function JourneyApp({
+  initialLanguage,
+  children,
+}: {
+  initialLanguage: Language;
+  children: ReactNode;
+}) {
   const router = useRouter();
   const [quick, setQuick] = useState(false);
   const [cvOpen, setCvOpen] = useState(false);
@@ -257,18 +263,17 @@ export default function JourneyApp({ initialLanguage }: { initialLanguage: Langu
       <>
         <QuickProfile onClose={() => setQuick(false)} />
         <button className="floating-return" onClick={() => setQuick(false)}>
-          3D JOURNEY ↗
+          {t.returnToPortfolio} ↗
         </button>
       </>
     );
   return (
     <div className={`journey-shell ${started ? "is-started" : ""}`}>
-      {threeDEnabled && <Experience />}
       <header className="topbar">
         <a className="logo" href="#garage">
           <b>M</b>
           <span>
-            MARCUS <i>JOURNEY</i>
+            MARCUSTRAN <i>PORTFOLIO</i>
           </span>
         </a>
         <nav aria-label="Utility navigation">
@@ -327,20 +332,32 @@ export default function JourneyApp({ initialLanguage }: { initialLanguage: Langu
             </a>
           </div>
         </div>
-        <div className="hero-3d-control">
+      </section>
+      {children}
+      <section className="journey-invite" aria-labelledby="journey-invite-title">
+        <div className="journey-invite-copy">
+          <span className="kicker">{t.journeyInviteLabel}</span>
+          <h2 id="journey-invite-title">{t.journeyInviteTitle}</h2>
+          <p>{t.journeyInviteBody}</p>
+        </div>
+        <div className="journey-invite-actions">
           {canUseThreeD ? (
             threeDEnabled ? (
-              <button onClick={begin} disabled={!sceneReady}>
-                {sceneReady ? t.start : "LOADING 3D…"}
+              <button className="journey-start-button" onClick={begin} disabled={!sceneReady}>
+                {sceneReady ? t.journeyStart : "LOADING 3D…"} <b aria-hidden="true">→</b>
               </button>
             ) : (
-              <button onClick={() => setThreeDEnabled(true)}>{t.experience3d} ↗</button>
+              <button className="journey-start-button" onClick={() => setThreeDEnabled(true)}>
+                {t.experience3d} <b aria-hidden="true">↗</b>
+              </button>
             )
           ) : (
-            <span>{t.experience3dUnavailable}</span>
+            <p className="journey-unavailable">{t.experience3dUnavailable}</p>
           )}
         </div>
       </section>
+      <div id="journey-start" className="journey-start-anchor" aria-hidden="true" />
+      {threeDEnabled && <Experience />}
       {started && vehicleProgress < 0.985 && (
         <>
           <JourneyAlbum
