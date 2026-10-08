@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { cvByLanguage } from "@/data/profile";
+import { cvByLanguage, type CvLanguage } from "@/data/profile";
 import type { Language } from "@/types";
 
 const cvOptions = {
-  vi: { flag: "🇻🇳", name: "Tiếng Việt", code: "VI" },
   en: { flag: "🇬🇧", name: "English", code: "EN" },
   zh: { flag: "🇨🇳", name: "中文", code: "中文" },
 } as const;
@@ -41,7 +40,7 @@ export default function CvCenter({
   language: Language;
   onClose: () => void;
 }) {
-  const [selected, setSelected] = useState<Language>(language);
+  const [selected, setSelected] = useState<CvLanguage>(language === "zh" ? "zh" : "en");
   const t = labels[language];
 
   useEffect(() => {
@@ -74,7 +73,7 @@ export default function CvCenter({
           </button>
         </header>
         <div className="cv-language-list" role="tablist" aria-label="CV language">
-          {(Object.keys(cvOptions) as Language[]).map((key) => {
+          {(Object.keys(cvOptions) as CvLanguage[]).map((key) => {
             const option = cvOptions[key];
             return (
               <button

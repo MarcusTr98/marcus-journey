@@ -1,27 +1,61 @@
+import Link from "next/link";
 import { getMilestones } from "@/data/i18n";
 import { cvByLanguage, profile } from "@/data/profile";
 import type { Language } from "@/types";
 
 const archiveCopy = {
   vi: {
-    kicker: "HÀNH TRÌNH NGHỀ NGHIỆP & DỰ ÁN",
-    title: "Toàn bộ hành trình, không cần chế độ 3D.",
+    kicker: "KINH NGHIỆM & DỰ ÁN TIÊU BIỂU",
+    title: "Cải tiến tại hiện trường. Chuyển hóa thành kết quả.",
     intro:
-      "Kinh nghiệm sản xuất, kỹ nghệ phần mềm, triển khai thực tế và giáo dục công nghệ dưới dạng nội dung dễ tiếp cận.",
+      "Từ 7 năm làm việc trong sản xuất và chất lượng đến các dự án phần mềm, đào tạo và số hóa quy trình.",
+    role: "Ứng viên Process Engineer · Sản xuất · Kaizen · Chất lượng",
+    englishCv: "English CV",
+    chineseCv: "中文简历",
+    download: "Tải PDF",
     source: "Mã nguồn GitHub",
   },
   en: {
-    kicker: "CAREER & PROJECT ARCHIVE",
-    title: "The journey, available without 3D.",
+    kicker: "SELECTED EXPERIENCE & PROJECTS",
+    title: "Improve the process. Make the result visible.",
     intro:
-      "Production leadership, software engineering, practical deployments and technology education—presented as accessible case studies.",
+      "Seven years in manufacturing and quality, followed by hands-on work in software, training and process digitization.",
+    role: "Process Engineer candidate · Manufacturing · Kaizen · Quality",
+    englishCv: "English CV",
+    chineseCv: "Chinese CV",
+    download: "Download PDF",
     source: "GitHub source",
   },
   zh: {
-    kicker: "职业与项目档案",
-    title: "无需3D，也能完整了解这段旅程。",
-    intro: "以易于访问的案例形式呈现生产领导力、软件工程、实际部署与科技教育经历。",
+    kicker: "精选经历与项目",
+    title: "改善现场流程，让成果清晰可见。",
+    intro: "七年制造与质量经验，之后持续投入软件开发、培训和流程数字化项目。",
+    role: "工艺工程师候选人 · 制造 · 改善 · 质量",
+    englishCv: "English CV",
+    chineseCv: "中文简历",
+    download: "下载PDF",
     source: "GitHub源代码",
+  },
+} as const;
+
+const trainToRoleLink = {
+  vi: {
+    label: "DỰ ÁN KAIZEN · 2019–2020",
+    title: "Train-to-Role — Chuẩn hóa đào tạo theo vị trí",
+    summary: "Rút ngắn thời gian đến khi làm việc độc lập từ 30 xuống 10 ngày.",
+    action: "Xem case study",
+  },
+  en: {
+    label: "KAIZEN PROJECT · 2019–2020",
+    title: "Train-to-Role — Role-based operator training",
+    summary: "Reduced time to independent work from 30 to 10 days.",
+    action: "View case study",
+  },
+  zh: {
+    label: "改善项目 · 2019–2020",
+    title: "Train-to-Role — 按岗位标准化培训",
+    summary: "将独立上岗周期从30天缩短至10天。",
+    action: "查看案例",
   },
 } as const;
 
@@ -30,27 +64,43 @@ export default function ServerProfile({ language }: { language: Language }) {
   const t = archiveCopy[language];
   return (
     <section className="seo-profile" id="case-studies" aria-labelledby="case-studies-title">
-      <header>
-        <span className="kicker">{t.kicker}</span>
-        <h2 id="case-studies-title">{t.title}</h2>
-        <p>{t.intro}</p>
-        <address>
-          <strong>
-            {profile.legalName} ({profile.preferredName})
-          </strong>
-          <a href={`mailto:${profile.email}`}>{profile.email}</a>
-          <a href={profile.phoneHref}>{profile.phoneDisplay}</a>
-          <span>{profile.location}</span>
-          <a href={profile.github}>GitHub: MarcusTr98</a>
-          <a href={cvByLanguage.vi} download>
-            🇻🇳 CV tiếng Việt
-          </a>
-          <a href={cvByLanguage.en} download>
-            🇬🇧 English CV
-          </a>
-          <a href={cvByLanguage.zh} download>
-            🇨🇳 中文简历
-          </a>
+      <header className="profile-section-header">
+        <div className="profile-heading-copy">
+          <span className="kicker">{t.kicker}</span>
+          <h2 id="case-studies-title">{t.title}</h2>
+          <p>{t.intro}</p>
+        </div>
+        <address className="profile-contact-card">
+          <div className="profile-identity">
+            <strong>{profile.preferredName}</strong>
+            <span>{t.role}</span>
+          </div>
+          <div className="profile-contact-links">
+            <a href={`mailto:${profile.email}`}>{profile.email}</a>
+            <a href={profile.phoneHref}>{profile.phoneDisplay}</a>
+            <span>{profile.location}</span>
+            <a href={profile.github} target="_blank" rel="noreferrer">
+              GitHub · MarcusTr98 ↗
+            </a>
+          </div>
+          <div className="profile-cv-links" aria-label="Download CV">
+            <a href={cvByLanguage.en} download>
+              <b>EN</b>
+              <span>
+                {t.englishCv}
+                <small>{t.download}</small>
+              </span>
+              <i aria-hidden="true">↓</i>
+            </a>
+            <a href={cvByLanguage.zh} download>
+              <b>中文</b>
+              <span>
+                {t.chineseCv}
+                <small>{t.download}</small>
+              </span>
+              <i aria-hidden="true">↓</i>
+            </a>
+          </div>
         </address>
       </header>
       <div className="seo-profile-grid">
@@ -67,6 +117,16 @@ export default function ServerProfile({ language }: { language: Language }) {
                 <li key={highlight}>{highlight}</li>
               ))}
             </ul>
+            {milestone.id === "toyota" && (
+              <div className="timeline-project">
+                <span>{trainToRoleLink[language].label}</span>
+                <h4>{trainToRoleLink[language].title}</h4>
+                <p>{trainToRoleLink[language].summary}</p>
+                <Link href={`/${language}/case/train-to-role`}>
+                  {trainToRoleLink[language].action} <b aria-hidden="true">↗</b>
+                </Link>
+              </div>
+            )}
             {milestone.projectUrl && (
               <a href={milestone.projectUrl} target="_blank" rel="noreferrer">
                 {t.source} ↗

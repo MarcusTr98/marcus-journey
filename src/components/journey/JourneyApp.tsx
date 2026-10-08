@@ -2,17 +2,17 @@
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { milestones } from "@/data/milestones";
+import { homepageMetrics } from "@/data/homepage";
 import { copy, getMilestones } from "@/data/i18n";
 import { useJourneyStore } from "@/stores/journeyStore";
 import QuickProfile from "@/components/portfolio/QuickProfile";
 import CvCenter from "@/components/portfolio/CvCenter";
-import { profile } from "@/data/profile";
+import { cvByLanguage, profile } from "@/data/profile";
 import { getStageLabel, stageOrder } from "@/data/stages";
 import { useRouter } from "next/navigation";
 import type { Language } from "@/types";
 import { useJourneyNavigation } from "@/hooks/useJourneyNavigation";
 import JourneyAlbum from "@/components/journey/JourneyAlbum";
-import { minorLearningCurveProgress, videoLearningCurveProgress } from "@/components/world/Road";
 import type { Milestone } from "@/types";
 const Experience = dynamic(() => import("@/components/world/Experience"), {
   ssr: false,
@@ -159,6 +159,12 @@ export default function JourneyApp({ initialLanguage }: { initialLanguage: Langu
   const [quick, setQuick] = useState(false);
   const [cvOpen, setCvOpen] = useState(false);
   const [albumOpen, setAlbumOpen] = useState(false);
+  const [threeDEnabled, setThreeDEnabled] = useState(false);
+  const [canUseThreeD, setCanUseThreeD] = useState(false);
+  const [learningCurveProgress, setLearningCurveProgress] = useState<{
+    minor: number;
+    video: number;
+  } | null>(null);
   const { begin, goToMilestone } = useJourneyNavigation();
   const {
     vehicleProgress,
@@ -172,15 +178,62 @@ export default function JourneyApp({ initialLanguage }: { initialLanguage: Langu
     toggleSound,
   } = useJourneyStore();
   useEffect(() => {
+    const motionPreference = matchMedia("(prefers-reduced-motion: reduce)");
+    const syncCapability = () => {
+      const device = navigator as Navigator & {
+        deviceMemory?: number;
+        connection?: { saveData?: boolean };
+      };
+      const lowPower =
+        (device.deviceMemory !== undefined && device.deviceMemory <= 4) ||
+        (navigator.hardwareConcurrency > 0 && navigator.hardwareConcurrency <= 4) ||
+        device.connection?.saveData === true;
+      const smallScreen = matchMedia("(max-width: 767px)").matches;
+      setCanUseThreeD(!motionPreference.matches && !smallScreen && !lowPower);
+    };
+    syncCapability();
+    motionPreference.addEventListener("change", syncCapability);
+    addEventListener("resize", syncCapability);
+    return () => {
+      motionPreference.removeEventListener("change", syncCapability);
+      removeEventListener("resize", syncCapability);
+    };
+  }, []);
+  useEffect(() => {
+    if (!threeDEnabled) return;
+    let active = true;
+    void import("@/components/world/Road").then((road) => {
+      if (active) {
+        setLearningCurveProgress({
+          minor: road.minorLearningCurveProgress,
+          video: road.videoLearningCurveProgress,
+        });
+      }
+    });
+    return () => {
+      active = false;
+    };
+  }, [threeDEnabled]);
+  useEffect(() => {
+    if (!canUseThreeD) {
+      setThreeDEnabled(false);
+      setLearningCurveProgress(null);
+    }
+  }, [canUseThreeD]);
+  useEffect(() => {
     void Promise.resolve(useJourneyStore.persist.rehydrate()).then(() => {
       setLanguage(initialLanguage);
     });
     document.documentElement.lang = initialLanguage === "zh" ? "zh-CN" : initialLanguage;
   }, [initialLanguage, setLanguage]);
   const isItClubCheckpoint =
-    started && Math.abs(vehicleProgress - minorLearningCurveProgress) < 0.004;
+    started &&
+    learningCurveProgress !== null &&
+    Math.abs(vehicleProgress - learningCurveProgress.minor) < 0.004;
   const isMarcusVideoCheckpoint =
-    started && Math.abs(vehicleProgress - videoLearningCurveProgress) < 0.004;
+    started &&
+    learningCurveProgress !== null &&
+    Math.abs(vehicleProgress - learningCurveProgress.video) < 0.004;
   const isSupplementaryCheckpoint = isItClubCheckpoint || isMarcusVideoCheckpoint;
   const t = copy[language],
     items = getMilestones(language),
@@ -210,7 +263,7 @@ export default function JourneyApp({ initialLanguage }: { initialLanguage: Langu
     );
   return (
     <div className={`journey-shell ${started ? "is-started" : ""}`}>
-      <Experience />
+      {threeDEnabled && <Experience />}
       <header className="topbar">
         <a className="logo" href="#garage">
           <b>M</b>
@@ -249,28 +302,43 @@ export default function JourneyApp({ initialLanguage }: { initialLanguage: Langu
           <h1>
             MARCUS
             <br />
-            <i>JOURNEY</i>
+            <i>TRAN</i>
           </h1>
-          <p>
-            {t.subtitle.split("\n").map((x) => (
-              <span key={x}>
-                {x}
-                <br />
-              </span>
+          <p className="hero-role">{t.heroRole}</p>
+          <p className="hero-summary">{t.subtitle}</p>
+          <ul className="hero-metrics" aria-label={t.caseStudies}>
+            {homepageMetrics.map((metric) => (
+              <li key={metric.id}>
+                <strong>{metric.value}</strong>
+                <span>{metric.labels[language]}</span>
+              </li>
             ))}
-          </p>
+          </ul>
           <div className="hero-actions">
-            <button className="main-cta" onClick={begin} disabled={!sceneReady}>
-              {sceneReady ? t.start : "LOADING 3D…"} <b>{sceneReady ? "→" : "·"}</b>
-            </button>
-            <button onClick={() => setQuick(true)}>{t.quick}</button>
+            <a className="main-cta" href="#case-studies">
+              {t.caseStudies} <b>→</b>
+            </a>
+            <a
+              className="download-cta"
+              href={cvByLanguage[language === "zh" ? "zh" : "en"]}
+              download
+            >
+              {t.cv} ↓
+            </a>
           </div>
         </div>
-        <div className="build-line">
-          BUILD. <span>IMPROVE.</span> AUTOMATE.
-        </div>
-        <div className="scroll-cue">
-          {t.scroll} <b>↓</b>
+        <div className="hero-3d-control">
+          {canUseThreeD ? (
+            threeDEnabled ? (
+              <button onClick={begin} disabled={!sceneReady}>
+                {sceneReady ? t.start : "LOADING 3D…"}
+              </button>
+            ) : (
+              <button onClick={() => setThreeDEnabled(true)}>{t.experience3d} ↗</button>
+            )
+          ) : (
+            <span>{t.experience3dUnavailable}</span>
+          )}
         </div>
       </section>
       {started && vehicleProgress < 0.985 && (
@@ -380,34 +448,39 @@ export default function JourneyApp({ initialLanguage }: { initialLanguage: Langu
           )}
         </>
       )}
-      <div id="journey-track" className="scroll-space" aria-hidden="true" />
-      <section id="projects" className={`final-cta ${vehicleProgress < 0.985 ? "is-waiting" : ""}`}>
-        <span className="kicker">{t.destination}</span>
-        <h2>
-          {t.finalTitle.split("\n").map((x, i) => (
-            <span key={x}>
-              {i === 1 ? <i>{x}</i> : x}
-              {i === 0 && <br />}
-            </span>
-          ))}
-        </h2>
-        <p>
-          {t.promise.split("\n").map((x) => (
-            <span key={x}>
-              {x}
-              <br />
-            </span>
-          ))}
-        </p>
-        <div>
-          <button onClick={() => setCvOpen(true)}>{t.cv} ↗</button>
-          <button onClick={() => setQuick(true)}>{t.projects} ↗</button>
-          <a href={`mailto:${profile.email}`}>{t.contact} ↗</a>
-          <a href={profile.github} target="_blank" rel="noreferrer">
-            {t.github} ↗
-          </a>
-        </div>
-      </section>
+      {started && <div id="journey-track" className="scroll-space" aria-hidden="true" />}
+      {started && (
+        <section
+          id="projects"
+          className={`final-cta ${vehicleProgress < 0.985 ? "is-waiting" : ""}`}
+        >
+          <span className="kicker">{t.destination}</span>
+          <h2>
+            {t.finalTitle.split("\n").map((x, i) => (
+              <span key={x}>
+                {i === 1 ? <i>{x}</i> : x}
+                {i === 0 && <br />}
+              </span>
+            ))}
+          </h2>
+          <p>
+            {t.promise.split("\n").map((x) => (
+              <span key={x}>
+                {x}
+                <br />
+              </span>
+            ))}
+          </p>
+          <div>
+            <button onClick={() => setCvOpen(true)}>{t.cv} ↗</button>
+            <button onClick={() => setQuick(true)}>{t.projects} ↗</button>
+            <a href={`mailto:${profile.email}`}>{t.contact} ↗</a>
+            <a href={profile.github} target="_blank" rel="noreferrer">
+              {t.github} ↗
+            </a>
+          </div>
+        </section>
+      )}
       {cvOpen && <CvCenter language={language} onClose={() => setCvOpen(false)} />}
     </div>
   );

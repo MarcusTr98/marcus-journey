@@ -1,5 +1,7 @@
 import type { Language } from "@/types";
 
+export type CvLanguage = Exclude<Language, "vi">;
+
 export const profile = {
   legalName: "Trần Thu Huyền",
   preferredName: "Marcus Tran",
@@ -10,8 +12,7 @@ export const profile = {
   github: "https://github.com/MarcusTr98",
 } as const;
 
-export const cvByLanguage: Record<Language, string> = {
-  vi: "/cv/marcus-tran-cv-vi.pdf",
+export const cvByLanguage: Record<CvLanguage, string> = {
   en: "/cv/marcus-tran-cv-en.pdf",
   zh: "/cv/marcus-tran-cv-zh.pdf",
 };
