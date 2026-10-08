@@ -125,8 +125,8 @@ const vi: L[] = [
     [
       "Chuyển hướng từ sản xuất sang phát triển phần mềm",
       "Xây nền tảng có hệ thống với Java, cơ sở dữ liệu và công nghệ web",
-      "Đưa tư duy Kaizen vào quy trình số và sản phẩm phần mềm",
-      "Kết hợp học chính quy với dự án thực hành ngay từ năm đầu",
+      "Kết hợp Java, web và tư duy Kaizen trong các dự án thực hành",
+      "Tốt nghiệp GPA 3.9/4.0 · Ong vàng SP26 — Top 1 Hải Phòng · Chủ nhiệm CLB IT",
     ],
   ],
   [
@@ -237,8 +237,8 @@ const zh: L[] = [
     [
       "从制造业转向软件开发",
       "系统学习Java、数据库与Web工程基础",
-      "将改善思维应用于数字化流程和软件产品",
-      "从第一学年起结合课程学习与实践项目",
+      "将Java、Web与改善思维用于实践项目",
+      "GPA 3.9/4.0毕业 · SP26 Golden Bee海防校区第一名 · IT俱乐部主席",
     ],
   ],
   [

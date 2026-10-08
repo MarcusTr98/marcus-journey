@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import type { Language, Milestone } from "@/types";
 import { landmarkMeta } from "@/data/landmarks";
+import ArrowIcon from "@/components/ArrowIcon";
 
 const labels = {
   vi: {
@@ -109,7 +110,7 @@ export default function JourneyAlbum({
                           onClose();
                         }}
                       >
-                        {t.revisit} →
+                        {t.revisit} <ArrowIcon direction="right" />
                       </button>
                     </article>
                   );

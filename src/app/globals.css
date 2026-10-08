@@ -593,6 +593,24 @@ select:focus-visible {
   color: #00a859;
   font: 900 22px var(--font-display);
 }
+.circle-arrow {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+  vertical-align: -0.22em;
+  color: currentColor;
+}
+.circle-arrow circle,
+.circle-arrow path {
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.circle-arrow circle {
+  opacity: 0.55;
+}
 @keyframes upgradeToastIn {
   from {
     opacity: 0;
@@ -646,8 +664,15 @@ select:focus-visible {
 }
 .milestone-panel li:before {
   content: "↗";
+  display: inline-grid;
+  width: 16px;
+  height: 16px;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 50%;
   color: var(--accent);
   margin-right: 9px;
+  font-size: 9px;
 }
 .upgrade {
   border: 1px solid color-mix(in srgb, var(--accent), transparent 55%);
@@ -1643,10 +1668,73 @@ select:focus-visible {
   line-height: 1.3;
   overflow-wrap: anywhere;
 }
-.seo-profile-grid .timeline-project > b {
+.seo-profile-grid .timeline-project > .circle-arrow {
   align-self: flex-end;
   color: var(--orange);
-  font-size: 18px;
+}
+.education-projects {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 22px;
+}
+.seo-profile-grid a.education-project-card {
+  display: flex;
+  min-width: 0;
+  aspect-ratio: 1;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+  min-height: 0;
+  padding: clamp(16px, 2vw, 28px);
+  border: 1px solid var(--line);
+  border-top: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ink);
+  text-decoration: none;
+  transition: border-color 160ms ease, background-color 160ms ease, transform 160ms ease;
+}
+.seo-profile-grid a.education-project-card > .education-project-image {
+  display: block;
+  width: 100%;
+  height: 62%;
+  flex: 1 1 auto;
+  border-radius: 7px;
+  object-fit: cover;
+}
+.seo-profile-grid .education-project-card .education-project-title {
+  margin: 0;
+  color: var(--ink);
+  font: 700 clamp(17px, 1.7vw, 23px)/1.2 var(--font-display);
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+}
+.seo-profile-grid .education-project-arrow {
+  align-self: flex-end;
+  color: var(--orange);
+  width: 26px;
+  height: 26px;
+}
+.seo-profile-grid a.education-project-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--green);
+  background: #f8fcf9;
+}
+.seo-profile-grid a.education-project-card:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 2px;
+}
+@media (max-width: 600px) {
+  .education-projects {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 380px) {
+  .education-projects {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 /* The portfolio hero photo stays square-cornered and a little clearer. */
 .garage::after {
@@ -2655,3 +2743,41 @@ select:focus-visible {
     opacity: 0.28;
   }
 }
+
+/* Bring the experience section closer to the landing hero. */
+.garage {
+  min-height: 82svh;
+  padding-top: 110px;
+  padding-bottom: 56px;
+}
+.seo-profile {
+  padding-top: 64px;
+}
+.seo-profile > .profile-section-header {
+  margin-bottom: 36px;
+}
+@media (max-width: 850px) {
+  .garage {
+    min-height: 78svh;
+    padding-top: 100px;
+    padding-bottom: 48px;
+  }
+  .seo-profile {
+    padding-top: 48px;
+  }
+}
+@media (max-width: 540px) {
+  .garage {
+    min-height: 70svh;
+    padding-top: 84px;
+    padding-bottom: 38px;
+  }
+  .seo-profile {
+    padding-top: 34px;
+  }
+}
+
+/* Tighten the contact panel around the identity and links. */
+.seo-profile .profile-contact-card{gap:12px;padding:18px}
+.seo-profile .profile-identity{gap:5px;padding-bottom:10px}
+.seo-profile .profile-contact-links{padding:10px 0;gap:8px 14px}

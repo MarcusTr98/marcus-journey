@@ -6,6 +6,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import * as THREE from "three";
 import { useJourneyStore } from "@/stores/journeyStore";
 import { getMilestones } from "@/data/i18n";
+import ArrowIcon from "@/components/ArrowIcon";
 
 const RING_DELAYS = [0, 0.12, 0.24];
 const EFFECT_DURATION = 1.55;
@@ -138,7 +139,7 @@ export default function VehicleUpgradeEffect({ children }: { children: ReactNode
               <small>+ {UPGRADE_LABEL[language]}</small>
               <strong>{activeUpgrade}</strong>
             </span>
-            <span className="upgrade-arrow">↑</span>
+            <ArrowIcon direction="up" className="upgrade-arrow" />
           </div>
         </Html>
       )}

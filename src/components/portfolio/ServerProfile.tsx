@@ -1,6 +1,8 @@
+import Image from "next/image";
 import { getMilestones } from "@/data/i18n";
 import { cvByLanguage, profile } from "@/data/profile";
 import type { Language } from "@/types";
+import ArrowIcon from "@/components/ArrowIcon";
 
 const archiveCopy = {
   vi: {
@@ -73,23 +75,43 @@ const leanSweepLink = {
 const tpmHandoverLink = {
   vi: {
     label: "CẢI TIẾN TPM · 2020–2021",
-    title: "Giảm sự cố máy móc và dụng cụ",
+    title: "TPM Machine & Tools: Giảm sự cố máy móc và dụng cụ",
     action: "Xem case study",
   },
   en: {
     label: "TPM IMPROVEMENT · 2020–2021",
-    title: "Reducing Machine and Tool Failures",
+    title: "TPM Machine & Tools: Reducing Machine and Tool Failures",
     action: "View case study",
   },
   zh: {
     label: "TPM改善 · 2020–2021",
-    title: "降低机器与工具故障",
+    title: "TPM Machine & Tools: 降低机器与工具故障",
     action: "查看案例",
   },
 } as const;
 
+const fptProjects = {
+  vi: [
+    { slug: "marcus-electronics", title: "Marcus Electronics" },
+    { slug: "marcus-store", title: "Marcus Store" },
+    { slug: "marcus-video", title: "Marcus Video" },
+  ],
+  en: [
+    { slug: "marcus-electronics", title: "Marcus Electronics" },
+    { slug: "marcus-store", title: "Marcus Store" },
+    { slug: "marcus-video", title: "Marcus Video" },
+  ],
+  zh: [
+    { slug: "marcus-electronics", title: "Marcus Electronics" },
+    { slug: "marcus-store", title: "Marcus Store" },
+    { slug: "marcus-video", title: "Marcus Video" },
+  ],
+} as const;
+
 export default function ServerProfile({ language }: { language: Language }) {
-  const profileMilestones = getMilestones(language);
+  const profileMilestones = getMilestones(language).filter(
+    (milestone) => !["graduation", "video", "electronics", "store"].includes(milestone.id),
+  );
   const t = archiveCopy[language];
   return (
     <section className="seo-profile" id="case-studies" aria-labelledby="case-studies-title">
@@ -116,7 +138,7 @@ export default function ServerProfile({ language }: { language: Language }) {
             <a href={profile.phoneHref}>{profile.phoneDisplay}</a>
             <span>{profile.location}</span>
             <a href={profile.github} target="_blank" rel="noreferrer">
-              GitHub · MarcusTr98 ↗
+              GitHub · MarcusTr98 <ArrowIcon />
             </a>
           </div>
           <div className="profile-cv-links" aria-label="Download CV">
@@ -126,7 +148,7 @@ export default function ServerProfile({ language }: { language: Language }) {
                 {t.englishCv}
                 <small>{t.download}</small>
               </span>
-              <i aria-hidden="true">↓</i>
+              <ArrowIcon direction="down" />
             </a>
             <a href={cvByLanguage.zh} download>
               <b>中文</b>
@@ -134,7 +156,7 @@ export default function ServerProfile({ language }: { language: Language }) {
                 {t.chineseCv}
                 <small>{t.download}</small>
               </span>
-              <i aria-hidden="true">↓</i>
+              <ArrowIcon direction="down" />
             </a>
           </div>
         </aside>
@@ -153,33 +175,56 @@ export default function ServerProfile({ language }: { language: Language }) {
                 <li key={highlight}>{highlight}</li>
               ))}
             </ul>
+            {milestone.id === "fpt" && (
+              <div className="education-projects" aria-label={language === "en" ? "Selected software projects" : "Dự án phần mềm tiêu biểu"}>
+                {fptProjects[language].map((project) => (
+                  <a
+                    className="education-project-card"
+                    href={`/cases/${project.slug}${language === "en" ? ".en" : ""}.html`}
+                    key={project.slug}
+                    aria-label={`${project.title} · ${language === "en" ? "Project details" : "Chi tiết dự án"}`}
+                  >
+                    <Image
+                      className="education-project-image"
+                      src={`/images/projects/${project.slug}.svg`}
+                      alt=""
+                      width={640}
+                      height={420}
+                      aria-hidden="true"
+                    />
+                    <span className="education-project-title">{project.title}</span>
+                    <ArrowIcon className="education-project-arrow" />
+                  </a>
+                ))}
+              </div>
+            )}
             {milestone.id === "toyota" && (
               <div className="timeline-projects">
-                <a className="timeline-project" href="/cases/train-to-role.html">
+                <a className="timeline-project" href={language === "en" ? "/cases/train-to-role.en.html" : "/cases/train-to-role.html"}>
                   <span>{trainToRoleLink[language].label}</span>
                   <h4>{trainToRoleLink[language].title}</h4>
-                  <b aria-hidden="true">↗</b>
+                  <ArrowIcon />
                 </a>
-                <a className="timeline-project" href="/cases/lean-sweep.html">
+                <a className="timeline-project" href={language === "en" ? "/cases/lean-sweep.en.html" : "/cases/lean-sweep.html"}>
                   <span>{leanSweepLink[language].label}</span>
                   <h4>{leanSweepLink[language].title}</h4>
-                  <b aria-hidden="true">↗</b>
+                  <ArrowIcon />
                 </a>
-                <a className="timeline-project" href="/cases/tpm-handover.html">
+                <a className="timeline-project" href={language === "en" ? "/cases/tpm-machine-tools.en.html" : "/cases/tpm-handover.html"}>
                   <span>{tpmHandoverLink[language].label}</span>
                   <h4>{tpmHandoverLink[language].title}</h4>
-                  <b aria-hidden="true">↗</b>
+                  <ArrowIcon />
                 </a>
               </div>
             )}
             {milestone.projectUrl && (
               <a href={milestone.projectUrl} target="_blank" rel="noreferrer">
-                {t.source} ↗
+                {t.source} <ArrowIcon />
               </a>
             )}
             {milestone.projectLinks?.map((link) => (
               <a key={link.url} href={link.url} target="_blank" rel="noreferrer">
-                {link.label} ↗
+                {link.label} <ArrowIcon />
               </a>
             ))}
           </article>

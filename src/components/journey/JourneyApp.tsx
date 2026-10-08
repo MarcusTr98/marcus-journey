@@ -11,6 +11,7 @@ import { getStageLabel, stageOrder } from "@/data/stages";
 import { useRouter } from "next/navigation";
 import type { Language } from "@/types";
 import { useJourneyNavigation } from "@/hooks/useJourneyNavigation";
+import ArrowIcon from "@/components/ArrowIcon";
 import JourneyAlbum from "@/components/journey/JourneyAlbum";
 import type { Milestone } from "@/types";
 const Experience = dynamic(() => import("@/components/world/Experience"), {
@@ -275,7 +276,7 @@ export default function JourneyApp({
       <>
         <QuickProfile onClose={() => setQuick(false)} />
         <button className="floating-return" onClick={() => setQuick(false)}>
-          {t.returnToPortfolio} ↗
+          {t.returnToPortfolio} <ArrowIcon />
         </button>
       </>
     );
@@ -354,7 +355,7 @@ export default function JourneyApp({
                         });
                       }}
                     >
-                      {t.driveForward} ↓
+                      {t.driveForward} <ArrowIcon direction="down" />
                     </button>
                   ) : (
                     <span className="journey-unavailable">{t.experience3dUnavailable}</span>
@@ -373,7 +374,7 @@ export default function JourneyApp({
             <p>{t.journeyInviteBody}</p>
           </div>
           <a className="journey-start-button" href={`/${language}/journey`}>
-            {t.experience3d} <b aria-hidden="true">↗</b>
+            {t.experience3d} <ArrowIcon />
           </a>
         </section>
       )}
@@ -489,7 +490,7 @@ export default function JourneyApp({
                     target={link.url.startsWith("http") ? "_blank" : undefined}
                     rel={link.url.startsWith("http") ? "noreferrer" : undefined}
                   >
-                    {link.label} ↗
+                    {link.label} <ArrowIcon />
                   </a>
                 ))}
               </div>
@@ -538,11 +539,11 @@ export default function JourneyApp({
             ))}
           </p>
           <div>
-            <button onClick={() => setCvOpen(true)}>{t.cv} ↗</button>
-            <button onClick={() => setQuick(true)}>{t.projects} ↗</button>
-            <a href={`mailto:${profile.email}`}>{t.contact} ↗</a>
+            <button onClick={() => setCvOpen(true)}>{t.cv} <ArrowIcon /></button>
+            <button onClick={() => setQuick(true)}>{t.projects} <ArrowIcon /></button>
+            <a href={`mailto:${profile.email}`}>{t.contact} <ArrowIcon /></a>
             <a href={profile.github} target="_blank" rel="noreferrer">
-              {t.github} ↗
+              {t.github} <ArrowIcon />
             </a>
           </div>
           <button
@@ -552,7 +553,7 @@ export default function JourneyApp({
               scrollTo({ top: 0, behavior: "smooth" });
             }}
           >
-            ↑ {t.backToTop}
+            <ArrowIcon direction="up" /> {t.backToTop}
           </button>
         </section>
       )}
@@ -568,7 +569,7 @@ export default function JourneyApp({
               : "工艺工程 · 持续改善 · 质量"}
         </p>
         <a className="footer-contact" href={`mailto:${profile.email}`}>
-          {t.contact} ↗
+          {t.contact} <ArrowIcon />
         </a>
         <small>© {new Date().getFullYear()} Marcus Tran</small>
       </footer>

@@ -23,14 +23,14 @@ const milestoneCatalog: Omit<Milestone, "stage">[] = [
     shortTitle: "Education",
     title: "FPT Polytechnic Hai Phong",
     period: "09/2023 — 09/2026",
-    role: "Software Development · GPA 3.9/4.0",
+    role: "Software Development Graduate · GPA 3.9/4.0",
     summary:
       "A three-year transformation from factory operations to digital product development—combining formal study with school projects, independent R&D, real deployments, leadership and continuous learning.",
     highlights: [
       "Transitioned from manufacturing into software development",
       "Started a structured foundation in Java, databases and web engineering",
-      "Applied Kaizen thinking to digital workflows and software products",
-      "Combined formal study with practical projects from the first year",
+      "Applied Kaizen thinking to practical software projects",
+      "Graduated with GPA 3.9/4.0 · Golden Bee SP26 top student · IT Club Chairman",
     ],
     accent: "#005EB8",
     position: [4, 0, -17],
@@ -152,8 +152,7 @@ const milestoneCatalog: Omit<Milestone, "stage">[] = [
     accent: "#F46300",
     position: [-4, 0, -101],
     upgrade: "AI Commerce Architecture · Gemini · Transaction Integrity · Analytics",
-    projectUrl:
-      "https://github.com/MarcusTr98/DATN-MarcusStore/tree/feat/marcus/upgrade-full-website",
+    projectUrl: "https://github.com/MarcusTr98/DATN-MarcusStore",
   },
   {
     id: "graduation",

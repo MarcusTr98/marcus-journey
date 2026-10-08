@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { cvByLanguage, type CvLanguage } from "@/data/profile";
 import type { Language } from "@/types";
+import ArrowIcon from "@/components/ArrowIcon";
 
 const cvOptions = {
   en: { flag: "🇬🇧", name: "English", code: "EN" },
@@ -85,7 +86,7 @@ export default function CvCenter({
               >
                 <span aria-hidden="true">{option.flag}</span>
                 <strong>{option.name}</strong>
-                <small>{t.preview} →</small>
+                <small>{t.preview} <ArrowIcon direction="right" /></small>
               </button>
             );
           })}
@@ -100,7 +101,7 @@ export default function CvCenter({
             href={cvByLanguage[selected]}
             download={`Marcus-Tran-CV-${cvOptions[selected].code}.pdf`}
           >
-            {cvOptions[selected].flag} {t.download} · {cvOptions[selected].name} ↓
+            {cvOptions[selected].flag} {t.download} · {cvOptions[selected].name} <ArrowIcon direction="down" />
           </a>
         </div>
       </section>

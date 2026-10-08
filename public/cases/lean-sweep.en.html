@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lean Sweep | Process Engineer Case Study</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#fff;--card:#fff;--tx:#17212b;--mu:#4b5965;--ac:#075fa6;--ok:#187547;--bad:#bd3e3e;--bd:#d9e0e5;--okbg:#eaf6ef;--badbg:#fff0f0;--orange:#e85d0f}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:1180px;margin:0 auto;padding:28px clamp(16px,4vw,48px) 48px}
+.back-link{display:inline-flex;align-items:center;min-height:42px;margin:0 0 14px;padding:8px 14px;border:1px solid var(--ac);border-radius:8px;color:var(--ac);font-weight:700;text-decoration:none}
+.back-link:hover{background:#eaf3ff}.case-topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}.case-topbar .back-link{margin:0}.language-switch{display:flex;gap:6px}.language-switch a{display:inline-grid;min-width:44px;min-height:40px;place-items:center;padding:6px 10px;border:1px solid var(--bd);border-radius:8px;color:var(--ac);font-size:13px;font-weight:800;text-decoration:none}.language-switch a[aria-current=page]{border-color:var(--ac);background:#eaf3ff}
+.note{margin:0 0 20px;background:#fff7f0;color:#53301c;border:1px solid #efc6a8;border-radius:10px;padding:12px 16px;font-size:13px}
+h1{font-size:clamp(26px,5vw,38px);margin:18px 0 4px;line-height:1.15}
+h2{font-size:clamp(21px,3vw,28px);margin:38px 0 12px;letter-spacing:-.025em}
+.sub{color:var(--mu);margin:0}
+.tags span{display:inline-flex;background:#f4f7f6;border:1px solid var(--bd);border-radius:99px;padding:5px 12px;font-size:12px;font-weight:700;margin:8px 6px 0 0;color:var(--mu)}
+.tags span:nth-child(3n+1){background:#eaf3ff;border-color:#bbd7f4;color:#075fa6}
+.tags span:nth-child(3n+2){background:#eaf6ef;border-color:#b9dfc7;color:#187547}
+.tags span:nth-child(3n){background:#fff3e9;border-color:#f3d0b3;color:#a8490c}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:16px}
+.k{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px}
+.k b{font-size:30px;color:var(--orange);display:block;line-height:1.1}
+.k small{color:var(--mu)}
+.box{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;overflow-x:auto}
+.bar-ctl{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+button{font:inherit;font-size:14px;background:var(--ac);color:#fff;border:0;border-radius:8px;padding:6px 14px;cursor:pointer}
+button.g{background:var(--card);color:var(--tx);border:1px solid var(--bd)}
+.meter{flex:1;min-width:200px}
+.meter .tr{height:14px;background:var(--bd);border-radius:8px;overflow:hidden}
+.meter .fl{height:100%;width:100%;background:linear-gradient(90deg,var(--ok),var(--bad));background-size:300% 100%;transition:width .8s ease,background-position .8s}
+.meter small{color:var(--mu);font-size:12px}
+.meter b{font-size:20px}
+.phs{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.ph{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;transition:box-shadow .4s,border-color .4s}
+.ph.on{border-color:var(--ac);box-shadow:0 0 0 3px color-mix(in srgb,var(--ac) 22%,transparent)}
+.ph h3{margin:0;font-size:15px}.ph p{margin:0 0 8px;font-size:12.5px;color:var(--mu)}
+.cd{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--bad);background:var(--badbg);border-radius:10px;padding:8px 10px;margin:6px 0;transition:all .6s ease}
+.cd .e{font-size:22px;line-height:1.1}
+.cd b{font-size:14px;display:block}.cd span{font-size:12.5px;color:var(--mu)}
+.cd i{font-style:normal;font-size:11px;margin-left:auto;color:var(--bad);white-space:nowrap;font-weight:700}
+.cd.done{border-color:var(--ok);background:var(--okbg);transform:scale(1.02)}
+.cd.done i{color:var(--ok)}
+.cd.done .e{animation:pop .6s}
+@keyframes pop{50%{transform:scale(1.5) rotate(-10deg)}}
+.a3{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.c{position:relative;min-height:150px;background:linear-gradient(145deg,#fff,#f8faf9);border:1px solid var(--bd);border-radius:14px;padding:18px}
+.c[data-step]::before{content:attr(data-step);display:grid;place-items:center;width:30px;height:30px;margin-bottom:11px;border:1px solid #efc6a8;border-radius:8px;background:#fff3e9;color:#a8490c;font-size:12px;font-weight:800}
+.c h3{margin:0 0 8px;font-size:14px;color:var(--ac);letter-spacing:.03em}
+.c p{margin:0;color:#35424d;font-size:14px;line-height:1.6}
+.issue-list{display:grid;gap:7px;padding:0;margin:0;list-style:none}
+.issue-list li{display:grid;grid-template-columns:12px 1fr;gap:8px;align-items:baseline;color:#35424d;font-size:13.5px;line-height:1.45}
+.issue-list li::before{content:"";width:6px;height:6px;margin-left:2px;border-radius:50%;background:var(--orange)}
+.idea-grid{display:grid;grid-template-columns:1fr;gap:12px}
+.idea-card{background:#fff;border:1px solid var(--bd);border-radius:12px;padding:20px}
+.idea-card h3{display:flex;align-items:center;gap:10px;margin:0 0 16px;font-size:20px;line-height:1.3}
+.idea-card .idea-icon{display:grid;place-items:center;flex:none;width:40px;height:40px;border-radius:9px;background:#eaf6ef;color:var(--ok);font-size:18px}
+.idea-flow{display:grid;grid-template-columns:1fr auto 1fr;gap:7px;align-items:stretch;margin:10px 0}
+.idea-flow div{padding:9px;border:1px solid var(--bd);border-radius:8px;background:#f8faf9;font-size:12px;line-height:1.45}
+.idea-flow div:last-child{background:var(--okbg);border-color:#b9dfc7}
+.idea-flow small{display:block;margin-bottom:3px;color:var(--mu);font-weight:700}
+.idea-flow>span{align-self:center;color:var(--ac);font-weight:800}
+.idea-card>p{margin:0;color:var(--mu);font-size:12.5px}
+.idea-visuals{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+.idea-visual{min-width:0;padding:14px;border:1px solid var(--bd);border-radius:12px;background:#f8faf9}
+.idea-visual.after{background:#f0f8f3;border-color:#c5dfce}
+.idea-visual b{display:block;margin:0 0 12px;font-size:18px;line-height:1.3;color:var(--tx)}
+.idea-visual svg{width:100%;max-width:none;height:auto;aspect-ratio:auto;margin:0 auto}.idea-caption{margin:12px 0 0;color:var(--mu);font-size:13px;line-height:1.5}.idea-summary{margin:14px 0 0;padding-top:12px;border-top:1px solid var(--bd);color:var(--mu);font-size:13px;line-height:1.5}
+.idea-visual svg .move{animation:illustrationMove 3s ease-in-out infinite alternate}
+.idea-visual svg .pulse{transform-box:fill-box;transform-origin:center;animation:illustrationPulse 2s ease-in-out infinite}
+.idea-visual svg .dash{stroke-dasharray:5 4;animation:illustrationDash 2s linear infinite}
+@keyframes illustrationMove{to{transform:translate(12px,-7px)}}
+@keyframes illustrationPulse{50%{opacity:.45;transform:scale(.9)}}
+@keyframes illustrationDash{to{stroke-dashoffset:-18}}
+.analysis-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.analysis-grid .box{min-width:0}
+.analysis-grid h3{margin:0 0 8px;color:var(--ac);font-size:14px}
+.analysis-grid p{margin:0;color:#35424d;font-size:14px;line-height:1.6}
+.bars .bar{display:flex;align-items:center;gap:10px;margin:8px 0;font-size:14px}
+.bars label{width:130px;flex:none;color:var(--mu)}
+.tr2{flex:1;background:var(--bd);border-radius:6px;height:26px;overflow:hidden}
+.f{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:8px;color:#fff;font-size:13px;font-weight:600;width:0;animation:g 1.4s .3s ease-out forwards}
+@keyframes g{to{width:var(--w)}}
+.f.b{background:var(--bad)}.f.a{background:var(--ok)}
+.compare-chart{display:grid;gap:20px}
+.chart-legend{display:flex;flex-wrap:wrap;gap:10px 18px;color:var(--mu);font-size:13px}
+.chart-legend span{display:inline-flex;align-items:center;gap:7px}
+.legend-before,.legend-after{width:11px;height:11px;border-radius:50%;background:#697780}
+.legend-after{background:#187547}
+.compare-row{display:grid;grid-template-columns:minmax(140px,.8fr) 2fr;gap:16px;align-items:center}
+.compare-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.compare-pair small{display:block;margin-bottom:5px;color:var(--mu);font-size:12px}
+.compare-track{height:32px;overflow:hidden;border-radius:7px;background:#edf2ef}
+.compare-fill{display:flex;width:0;height:100%;align-items:center;padding-left:10px;border-radius:7px;color:#fff;font-size:12px;font-weight:750;animation:compareGrow 1.1s cubic-bezier(.2,.7,.2,1) forwards}
+.compare-fill.before{background:#697780}
+.compare-fill.after{background:linear-gradient(90deg,#187547,#43a86f)}
+@keyframes compareGrow{to{width:var(--value)}}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:10px}
+svg{max-width:100%;height:auto;display:block}
+svg text{fill:var(--tx);font-family:inherit}
+.cap{font-size:12.5px;color:var(--mu);margin:6px 0 0}
+code{background:var(--bd);padding:2px 6px;border-radius:6px;font-size:13px}
+table{border-collapse:collapse;width:100%;min-width:480px;font-size:14px}
+th,td{border-bottom:1px solid var(--bd);padding:8px;text-align:left}th{color:var(--mu)}
+td.d{color:var(--ok);font-weight:700}
+ul.cv{padding-left:18px;margin:0}ul.cv li{margin:8px 0}
+footer{color:var(--mu);font-size:12.5px;margin:30px 0 10px}
+@media(max-width:1000px){.a3{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:900px){.analysis-grid{grid-template-columns:1fr}}
+@media(max-width:700px){main{padding-top:18px}.bar-ctl{align-items:stretch}.meter{flex-basis:100%}.bars label{width:110px;font-size:12px}.compare-row{grid-template-columns:1fr;gap:8px}}
+@media(max-width:620px){.idea-visuals{grid-template-columns:1fr}.idea-card{padding:16px}.idea-card h3{font-size:18px}.idea-visual{padding:12px}}@media(max-width:480px){.compare-pair{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.f{animation:none;width:var(--w)}.compare-fill{animation:none;width:var(--value)}.cd,.meter .fl,.ph{transition:none}.cd.done .e{animation:none}.idea-visual svg .move,.idea-visual svg .pulse,.idea-visual svg .dash{animation:none}.idea-visual svg animateMotion,.idea-visual svg animate,.idea-visual svg animateTransform{display:none}}
+</style>
+</head>
+<body>
+<main>
+<div class="case-topbar"><a class="back-link" href="/en#case-studies">← Back to portfolio</a><nav class="language-switch" aria-label="Language"><a href="/cases/lean-sweep.html" lang="vi">VI</a><a href="/cases/lean-sweep.en.html" aria-current="page" lang="en">EN</a></nav></div>
+<div class="note"><b>Confidentiality:</b> Operating details are omitted. Metrics use a normalized baseline of 100. Diagrams and layouts are illustrative, with identifying details removed. <b>Confidentiality: operating details are hidden. All operational metrics and visuals on this page are simulated.</b></div>
+<h1>Lean Sweep: Improving Flow and Reducing Area-wide Waste</h1>
+<p class="sub">Manufacturing environment · 2018–2020 · 11 Kaizen workstreams across 3 phases</p>
+<div class="tags"><span>QC Story</span><span>PDCA</span><span>5 Why</span><span>Fishbone</span><span>Pareto</span><span>5W1H</span><span>Check Sheet</span><span>Kaizen</span></div>
+<div class="kpis">
+<div class="k"><b>−30%</b><small>Total area waste</small></div>
+<div class="k"><b>−35%</b><small>Production cycle time</small></div>
+<div class="k"><b>−25%</b><small>Travel time</small></div>
+<div class="k"><b>11</b><small>Waste categories · 3 phases</small></div>
+</div>
+
+<h2>Project overview</h2>
+<p class="sub" style="margin-bottom:16px">A phased improvement program that groups small Kaizen opportunities by scope and priority.</p>
+<div class="a3">
+<div class="c" data-step="01"><h3>Problem</h3><p>Waste across several steps disrupted flow and work at the production area.</p></div>
+<div class="c" data-step="02"><h3>Current state</h3><ul class="issue-list"><li><span>Excess material</span></li><li><span>Waiting</span></li><li><span>Unnecessary movement</span></li><li><span>Machine and material layout</span></li><li><span>Inventory and handover</span></li><li><span>Difficult-to-see, difficult-to-do tasks</span></li><li><span>Heavy lifting</span></li></ul></div>
+<div class="c" data-step="03"><h3>Root cause</h3><p>[TO BE ADDED] Root-cause analysis will be added when details are confirmed.</p></div>
+<div class="c" data-step="04"><h3>Countermeasures</h3><p>Group opportunities into 11 workstreams and implement in 3 phases, from flow to point-of-work tasks.</p></div>
+<div class="c" data-step="05"><h3>Improvement results</h3><p>The simulated scenario reduces total waste by 30%, cycle time by 35%, and travel time by 25%.</p></div>
+<div class="c" data-step="06"><h3>Sustain</h3><p>Schedule checks, review improvements, and update operating standards.</p></div>
+<div class="c" data-step="07"><h3>Project role</h3><p>Proposed ideas, designed forms, grouped Kaizen actions, analyzed data, reported progress, and tracked PDCA.</p></div>
+</div>
+
+<h2>Phased improvement process</h2>
+<p class="sub" style="margin-bottom:10px">Workstreams progress from area flow to standards and tools, then focus on tasks and materials at the point of work.</p>
+<div class="box">
+<div class="bar-ctl">
+<button id="play" type="button">Continue</button><button class="g" id="step" type="button">Next step</button><button class="g" id="reset" type="button">Restart</button>
+<div class="meter" aria-live="polite"><small>Waste index · baseline before improvement = 100</small> <b id="mv">100</b><div class="tr"><div class="fl" id="mf"></div></div></div>
+</div>
+<div class="phs" id="board"></div>
+<p class="cap">The animated index is interpolated for illustration. Baseline = 100 and the simulated endpoint ≈70, or about 30% lower. Phase grouping is illustrative.</p>
+</div>
+
+<h2>Selected Kaizen activities in the project</h2>
+<p class="sub" style="margin-bottom:12px">Illustrated as simulated before/after concepts.</p>
+<div class="idea-grid">
+<article class="idea-card"><h3><span class="idea-icon" aria-hidden="true">↔</span>01 · Machine and material layout</h3><div class="idea-visuals"><div class="idea-visual"><b>BEFORE · scattered layout</b><svg viewBox="0 0 160 90" role="img" aria-label="Machines and materials placed apart"><rect x="5" y="5" width="150" height="80" rx="8" fill="white" stroke="#d9e0e5"/><rect x="15" y="16" width="34" height="25" rx="4" fill="#dcecf8" stroke="#075fa6"/><rect x="98" y="51" width="38" height="23" rx="4" fill="#fff0f0" stroke="#bd3e3e"/><rect x="62" y="25" width="22" height="18" rx="3" fill="#fff3e9" stroke="#e85d0f"/><path d="M30 45L70 56 116 46" fill="none" stroke="#bd3e3e" stroke-width="2" class="dash"/></svg><p class="idea-caption">Equipment and materials are far apart, with crossing travel paths.</p></div><div class="idea-visual after"><b>AFTER · flow-based layout</b><svg viewBox="0 0 160 90" role="img" aria-label="Machines and materials arranged in work sequence"><defs><marker id="ideaArrow" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0 0L6 3L0 6Z" fill="#187547"/></marker></defs><rect x="5" y="5" width="150" height="80" rx="8" fill="white" stroke="#c5dfce"/><rect x="17" y="28" width="34" height="30" rx="4" fill="#dcecf8" stroke="#075fa6"/><rect x="63" y="28" width="34" height="30" rx="4" fill="#dcecf8" stroke="#075fa6"/><rect x="111" y="29" width="25" height="28" rx="4" fill="#dff2e5" stroke="#187547"/><path d="M51 43H61M98 43H109" stroke="#187547" stroke-width="3" marker-end="url(#ideaArrow)"/><circle class="pulse" cx="123" cy="20" r="4" fill="#e85d0f"/></svg><p class="idea-caption">Work points follow the process sequence, with materials near point of use.</p></div></div><p class="idea-summary">Note: illustrative layout concept to reduce travel and material searching.</p></article>
+<article class="idea-card"><h3><span class="idea-icon" aria-hidden="true">⌁</span>02 · Shorter travel path</h3><div class="idea-visuals"><div class="idea-visual"><b>BEFORE · indirect route</b><svg viewBox="0 0 160 90" role="img" aria-label="Long indirect route across the area"><rect x="5" y="5" width="150" height="80" rx="8" fill="white" stroke="#d9e0e5"/><g fill="#dcecf8" stroke="#075fa6"><rect x="15" y="17" width="32" height="24" rx="4"/><rect x="112" y="17" width="32" height="24" rx="4"/><rect x="64" y="53" width="32" height="22" rx="4"/></g><path d="M31 41V66H128V42" fill="none" stroke="#bd3e3e" stroke-width="3" class="dash"/><circle r="4" fill="#bd3e3e"><animateMotion dur="3s" repeatCount="indefinite" path="M31 41V66H128V42"/></circle></svg><p class="idea-caption">Operators travel between areas to collect materials and tools.</p></div><div class="idea-visual after"><b>AFTER · points of use closer together</b><svg viewBox="0 0 160 90" role="img" aria-label="Shorter route after bringing points of use closer"><rect x="5" y="5" width="150" height="80" rx="8" fill="white" stroke="#c5dfce"/><g fill="#dcecf8" stroke="#075fa6"><rect x="25" y="24" width="35" height="34" rx="5"/><rect x="100" y="24" width="35" height="34" rx="5"/></g><path d="M62 41H98" stroke="#187547" stroke-width="3" class="dash"/><circle r="4" fill="#187547"><animateMotion dur="2s" repeatCount="indefinite" path="M62 41H98"/></circle></svg><p class="idea-caption">Reposition pickup and return points to shorten the route.</p></div></div><p class="idea-summary">Note: the route diagram illustrates a Kaizen concept.</p></article>
+<article class="idea-card"><h3><span class="idea-icon" aria-hidden="true">⚙</span>03 · Multi-purpose tool</h3><div class="idea-visuals"><div class="idea-visual"><b>BEFORE · separate tools</b><svg viewBox="0 0 160 90" role="img" aria-label="Separate rulers and gauges in different shapes"><rect x="5" y="5" width="150" height="80" rx="8" fill="white" stroke="#d9e0e5"/><g fill="#fff0f0" stroke="#bd3e3e" stroke-width="2"><rect x="15" y="18" width="62" height="13" rx="2"/><path d="M22 31V27M31 31V25M40 31V27M49 31V25M58 31V27M67 31V25"/><path d="M96 19H139V30H107V44H96Z"/><path d="M28 47L62 47 28 76Z"/><path d="M87 55H133M92 49V61M103 51V59M114 49V61M125 51V59"/></g><g fill="#bd3e3e" font-size="7" text-anchor="middle"><text x="46" y="42">straight ruler</text><text x="117" y="42">angle ruler</text><text x="45" y="84">triangle gauge</text><text x="110" y="74">graduated ruler</text></g></svg><p class="idea-caption">Different rulers and gauges must be picked up and exchanged during the task.</p></div><div class="idea-visual after"><b>AFTER · one multi-head tool</b><svg viewBox="0 0 160 90" role="img" aria-label="One multi-purpose tool with a straight ruler, square head, and angle gauge"><rect x="5" y="5" width="150" height="80" rx="8" fill="white" stroke="#c5dfce"/><g stroke="#187547" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><path d="M38 46H123"/><path d="M48 40V52M59 42V50M70 40V52M81 42V50M92 40V52M103 42V50M114 40V52"/><path d="M72 46V24H91"/><path d="M38 46L24 31M38 46L22 61"/><path d="M119 46L132 34M119 46L135 58"/></g><rect x="67" y="38" width="30" height="16" rx="7" fill="#dff2e5" stroke="#187547" stroke-width="2" class="pulse"/><g fill="#187547" font-size="7" text-anchor="middle"><text x="79" y="19">square head</text><text x="25" y="75">angle head</text><text x="121" y="75">edge gauge</text></g></svg><p class="idea-caption">Combine measuring and locating features in one multi-purpose tool.</p></div></div><p class="idea-summary">Note: tool drawing is conceptual and requires process-specific validation.</p></article>
+<article class="idea-card"><h3><span class="idea-icon" aria-hidden="true">⬆</span>04 · Reduce heavy lifting</h3><div class="idea-visuals"><div class="idea-visual"><b>BEFORE · manual handling</b><svg viewBox="0 0 160 90" role="img" aria-label="Worker bending to lift a box by hand"><rect x="5" y="5" width="150" height="80" rx="8" fill="white" stroke="#d9e0e5"/><circle cx="50" cy="28" r="7" fill="#bd3e3e"/><path d="M49 36L62 49 79 56M58 45L44 57M62 49L58 67M62 49L74 65" fill="none" stroke="#bd3e3e" stroke-width="4" stroke-linecap="round"/><rect x="79" y="47" width="32" height="27" fill="#fff0f0" stroke="#bd3e3e"/><path d="M62 76H128" stroke="#7b8790" stroke-width="2"/><path d="M41 20L34 14M43 21L35 22" stroke="#e85d0f" stroke-width="2" class="pulse"/></svg><p class="idea-caption">Boxes are lifted and moved by hand.</p></div><div class="idea-visual after"><b>AFTER · cart-assisted movement</b><svg viewBox="0 0 160 90" role="img" aria-label="Materials moved by cart"><rect x="5" y="5" width="150" height="80" rx="8" fill="white" stroke="#c5dfce"/><path d="M40 34H100L111 66H47Z" fill="#dff2e5" stroke="#187547" stroke-width="3"/><circle cx="55" cy="71" r="6" fill="#687780"/><circle cx="101" cy="71" r="6" fill="#687780"/><rect x="57" y="18" width="31" height="19" rx="3" fill="#dcecf8" stroke="#075fa6"/><path d="M113 48H137" stroke="#187547" stroke-width="3" class="dash"/><circle class="move" cx="124" cy="37" r="4" fill="#e85d0f"/></svg><p class="idea-caption">Use a suitable cart or transfer point to reduce manual lifting.</p></div></div><p class="idea-summary">Note: select handling aids for the load and aisle conditions.</p></article>
+<article class="idea-card"><h3><span class="idea-icon" aria-hidden="true">◎</span>05 · Make work visible and simple</h3><div class="idea-visuals"><div class="idea-visual"><b>BEFORE · hard-to-find tools</b><svg viewBox="0 0 160 90" role="img" aria-label="Disorganized tool area with poor visibility"><rect x="5" y="5" width="150" height="80" rx="8" fill="white" stroke="#d9e0e5"/><path d="M25 65H135V76H25Z" fill="#e7ecef" stroke="#7b8790"/><g stroke="#bd3e3e" stroke-width="5" stroke-linecap="round"><path d="M40 34L64 52M69 29L56 53M87 51L109 29M116 51L132 40"/></g><text x="80" y="21" text-anchor="middle" font-size="9" fill="#bd3e3e">No fixed position</text></svg><p class="idea-caption">Without fixed locations, tools take time to find and put away.</p></div><div class="idea-visual after"><b>AFTER · visual position markers</b><svg viewBox="0 0 160 90" role="img" aria-label="Tools with visual position markers"><rect x="5" y="5" width="150" height="80" rx="8" fill="white" stroke="#c5dfce"/><rect x="20" y="19" width="120" height="55" rx="5" fill="#f0f8f3" stroke="#187547"/><g fill="#dcecf8" stroke="#075fa6" stroke-width="3"><path d="M37 35L55 52M55 35L37 52"/><path d="M78 32V55M68 43H88"/><path d="M107 35L125 52M125 35L107 52"/></g><circle class="pulse" cx="130" cy="20" r="5" fill="#187547"/></svg><p class="idea-caption">Add labels and position marks to make tools easy to identify and return.</p></div></div><p class="idea-summary">Note: visual standards are illustrative for the work area.</p></article>
+<article class="idea-card"><h3><span class="idea-icon" aria-hidden="true">✂</span>06 · Reuse fabric offcuts</h3><div class="idea-visuals">
+<div class="idea-visual"><b>BEFORE · discarded offcuts</b><svg viewBox="0 0 320 190" role="img" aria-label="Before layout: fabric offcuts are discarded">
+<defs><pattern id="waste-hatch-old" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#bd3e3e" stroke-width="2"/></pattern><marker id="waste-arrow-old" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#bd3e3e"/></marker></defs>
+<rect x="8" y="8" width="304" height="118" rx="8" fill="#fff" stroke="#52616b" stroke-width="2"/>
+<rect x="20" y="18" width="112" height="92" rx="5" fill="#a9c8df" stroke="#075fa6" stroke-width="2"/><rect x="142" y="18" width="78" height="56" rx="5" fill="#a9c8df" stroke="#075fa6" stroke-width="2"/>
+<rect x="142" y="80" width="78" height="30" fill="url(#waste-hatch-old)" stroke="#bd3e3e" stroke-width="2"/><rect x="230" y="18" width="70" height="92" fill="url(#waste-hatch-old)" stroke="#bd3e3e" stroke-width="2"/>
+<path d="M266 112V143" fill="none" stroke="#bd3e3e" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#waste-arrow-old)"/><g class="move"><rect x="240" y="26" width="26" height="18" fill="url(#waste-hatch-old)" stroke="#bd3e3e"/><animateTransform attributeName="transform" type="translate" values="0 0;0 0;0 88;0 88" keyTimes="0;.35;.75;1" dur="4s" repeatCount="indefinite"/></g>
+<path d="M240 146H294L290 179H244Z" fill="#d9e0e5" stroke="#52616b" stroke-width="2"/><path d="M237 143H297" stroke="#52616b" stroke-width="3"/><circle cx="252" cy="182" r="3" fill="#52616b"/><circle cx="282" cy="182" r="3" fill="#52616b"/><text x="267" y="166" font-size="11" text-anchor="middle">Waste</text><text x="18" y="150" font-size="12">Offcuts discarded</text>
+</svg><p class="idea-caption">Fabric left over from the cutting layout is not reused.</p></div>
+<div class="idea-visual after"><b>AFTER · reuse remaining fabric</b><svg viewBox="0 0 320 190" role="img" aria-label="After layout: revised cutting plan uses fabric offcuts as a by-product">
+<rect x="8" y="8" width="304" height="118" rx="8" fill="#fff" stroke="#52616b" stroke-width="2"/><rect x="20" y="18" width="112" height="92" rx="5" fill="#a9c8df" stroke="#075fa6" stroke-width="2"/><rect x="142" y="18" width="78" height="56" rx="5" fill="#a9c8df" stroke="#075fa6" stroke-width="2"/>
+<rect x="146" y="82" width="28" height="23" rx="3" fill="#9dcbb2" stroke="#187547" stroke-width="2"><animate attributeName="opacity" values=".45;1;.45" dur="2s" repeatCount="indefinite"/></rect><rect x="180" y="82" width="34" height="23" rx="3" fill="#dff2e5" stroke="#187547" stroke-width="2"><animate attributeName="opacity" values="1;.45;1" dur="2s" repeatCount="indefinite"/></rect>
+<rect x="236" y="24" width="25" height="34" rx="3" fill="#9dcbb2" stroke="#187547" stroke-width="2"><animate attributeName="y" values="24;20;24" dur="2.5s" repeatCount="indefinite"/></rect><rect x="267" y="24" width="25" height="34" rx="3" fill="#dff2e5" stroke="#187547" stroke-width="2"/><rect x="236" y="66" width="56" height="35" rx="3" fill="#dff2e5" stroke="#187547" stroke-width="2"/>
+<path d="M176 75V62H235" fill="none" stroke="#187547" stroke-width="2" stroke-dasharray="5 4"/><text x="18" y="150" font-size="12">Revise the cutting layout to use offcuts</text><text x="18" y="170" font-size="12" fill="#187547">By-product · illustration</text>
+</svg><p class="idea-caption">Revise the cutting layout to make secondary products from offcuts.</p></div></div><p class="idea-summary">Note: cutting layout is a simulated concept and does not show actual output.</p></article>
+</div>
+<h2>Improvement results</h2>
+<p class="sub">Each measure uses its own normalized baseline of 100. The 30%, 35%, and 25% reductions shown are simulated.</p>
+<div class="box" style="margin-top:14px"><p class="cap" style="margin:0 0 10px">Total waste calculation: <code>% reduction = Σ(waste before − after) ÷ Σ(waste before) × 100</code>. Measures are normalized to a common baseline before aggregation.</p><table>
+<tr><th>Measure</th><th>Before</th><th>After</th><th>Change</th></tr>
+<tr><td>Total area waste</td><td>100</td><td>~70</td><td class="d">−30%</td></tr>
+<tr><td>Production cycle time (all product codes)</td><td>100</td><td>65</td><td class="d">−35%</td></tr>
+<tr><td>Travel time</td><td>100</td><td>75</td><td class="d">−25%</td></tr>
+</table></div>
+
+<div class="box compare-chart" role="img" aria-label="Simulated comparison: total waste down 30%, production cycle time down 35%, and travel time down 25%">
+<div class="chart-legend"><span><i class="legend-before"></i>BEFORE · 100</span><span><i class="legend-after"></i>AFTER</span></div>
+<div class="compare-row"><strong>Total waste</strong><div class="compare-pair"><div><small>BEFORE · 100</small><div class="compare-track"><span class="compare-fill before" style="--value:100%">100</span></div></div><div><small>AFTER · approx. 70 · down 30%</small><div class="compare-track"><span class="compare-fill after" style="--value:70%">~70</span></div></div></div></div>
+<div class="compare-row"><strong>Production cycle time</strong><div class="compare-pair"><div><small>BEFORE · 100</small><div class="compare-track"><span class="compare-fill before" style="--value:100%">100</span></div></div><div><small>AFTER · 65 · down 35%</small><div class="compare-track"><span class="compare-fill after" style="--value:65%">65</span></div></div></div></div>
+<div class="compare-row"><strong>Travel time</strong><div class="compare-pair"><div><small>BEFORE · 100</small><div class="compare-track"><span class="compare-fill before" style="--value:100%">100</span></div></div><div><small>AFTER · 75 · down 25%</small><div class="compare-track"><span class="compare-fill after" style="--value:75%">75</span></div></div></div></div>
+<p class="cap">Bars share a normalized 0–100 scale. Absolute operational figures are not shown.</p>
+</div>
+
+<footer><a class="back-link" href="/vi#case-studies">← Back to portfolio</a><p>Information is summarized to protect internal data. All metrics and visuals on this page are simulated.</p><p><b>Next development direction:</b> digitize the tracking dashboard and support classification of improvement opportunities.</p></footer>
+</main>
+<script>
+const P=[
+["GĐ1 · Ngoài: dòng chảy","Layout, vận chuyển, giao nhận",[["🚶","Quãng đường di chuyển","Rút ngắn lộ trình"],["🗺️","Layout","Bố trí lại khu vực"],["🔄","Giao nhận giữa bộ phận","Chuẩn hoá điểm giao nhận"],["📦","Tồn kho","Giảm hàng chờ, tồn thừa"]]],
+["GĐ2 · Giữa: tiêu chuẩn & công cụ","Thời gian chờ, dụng cụ, tiêu chuẩn",[["⏳","Thời gian chờ","Cân bằng nhân lực và cycle time"],["🔧","Dụng cụ & đổi mã hàng","Cải tiến dụng cụ thô sơ"],["📋","Tiêu chuẩn thao tác","Cập nhật cho phù hợp"]]],
+["GĐ3 · Trong: thao tác & vật liệu","Tại từng máy, từng vị trí",[["✋","Thao tác thừa","Rút gọn số bước"],["🔍","Lỗi thao tác","Thiết bị xem lỗi cải tiến"],["🧵","Excess material","Cắt hàng phụ trên vải thừa"],["🦺","An toàn & nặng nhọc","Giảm tư thế, thao tác nặng"]]]];
+const b=document.getElementById('board'),cards=[],phs=[];
+P.forEach(p=>{const d=document.createElement('div');d.className='ph';d.innerHTML='<h3>'+p[0]+'</h3><p>'+p[1]+'</p>';
+p[2].forEach(g=>{const c=document.createElement('div');c.className='cd';c.innerHTML='<div class="e">'+g[0]+'</div><div><b>'+g[1]+'</b><span>'+g[2]+'</span></div><i>Waste</i>';d.appendChild(c);cards.push(c);phs.push(d)});b.appendChild(d)});
+const N=cards.length,mv=document.getElementById('mv'),mf=document.getElementById('mf'),pb=document.getElementById('play');
+let i=0,t=null;
+function show(){const v=100-30*i/N;mv.textContent=Math.round(v);mf.style.width=v+'%';mf.style.backgroundPosition=(100*(1-i/N))+'% 0';
+phs.forEach(p=>p.classList.remove('on'));if(i>0&&i<=N)phs[i-1].classList.add('on')}
+function step(){if(i>=N){stop();return}const c=cards[i];c.classList.add('done');c.querySelector('i').textContent='Đã loại bỏ';i++;show();if(i>=N)stop()}
+function run(){stop();t=setInterval(step,900);pb.textContent='Tạm dừng'}
+function stop(){clearInterval(t);t=null;pb.textContent=i>=N?'Xong':'Continue'}
+pb.onclick=()=>{if(i>=N)return;t?stop():run()};
+document.getElementById('step').onclick=()=>{stop();step()};
+document.getElementById('reset').onclick=()=>{cards.forEach(c=>{c.classList.remove('done');c.querySelector('i').textContent='Waste'});i=0;show();phs.forEach(p=>p.classList.remove('on'));run()};
+show();if(!matchMedia('(prefers-reduced-motion: reduce)').matches)setTimeout(run,700);
+</script>
+</body>
+</html>

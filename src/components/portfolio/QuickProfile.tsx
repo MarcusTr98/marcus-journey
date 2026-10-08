@@ -3,6 +3,7 @@ import { copy } from "@/data/i18n";
 import { useJourneyStore } from "@/stores/journeyStore";
 import { profile } from "@/data/profile";
 import CvCenter from "@/components/portfolio/CvCenter";
+import ArrowIcon from "@/components/ArrowIcon";
 import { useState } from "react";
 export default function QuickProfile({ onClose }: { onClose: () => void }) {
   const [cvOpen, setCvOpen] = useState(false);
@@ -40,14 +41,14 @@ export default function QuickProfile({ onClose }: { onClose: () => void }) {
             {profile.legalName.toUpperCase()} · {profile.preferredName}
           </strong>
           <span>{t.tagline}</span>
-          <a href={`mailto:${profile.email}`}>{profile.email} ↗</a>
+          <a href={`mailto:${profile.email}`}>{profile.email} <ArrowIcon /></a>
           <a href={profile.phoneHref}>{profile.phoneDisplay}</a>
           <span>{profile.location}</span>
           <a href={profile.github} target="_blank" rel="noreferrer">
-            GitHub ↗
+            GitHub <ArrowIcon />
           </a>
           <button className="profile-cv-button" onClick={() => setCvOpen(true)}>
-            {t.cv} ↗
+            {t.cv} <ArrowIcon />
           </button>
         </div>
       </div>
