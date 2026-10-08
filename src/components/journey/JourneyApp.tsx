@@ -2,12 +2,11 @@
 import { useEffect, useState, type ReactNode } from "react";
 import dynamic from "next/dynamic";
 import { milestones } from "@/data/milestones";
-import { homepageMetrics } from "@/data/homepage";
 import { copy, getMilestones } from "@/data/i18n";
 import { useJourneyStore } from "@/stores/journeyStore";
 import QuickProfile from "@/components/portfolio/QuickProfile";
 import CvCenter from "@/components/portfolio/CvCenter";
-import { cvByLanguage, profile } from "@/data/profile";
+import { profile } from "@/data/profile";
 import { getStageLabel, stageOrder } from "@/data/stages";
 import { useRouter } from "next/navigation";
 import type { Language } from "@/types";
@@ -16,7 +15,7 @@ import JourneyAlbum from "@/components/journey/JourneyAlbum";
 import type { Milestone } from "@/types";
 const Experience = dynamic(() => import("@/components/world/Experience"), {
   ssr: false,
-  loading: () => <div className="scene-loading">LOADING 3D WORLD…</div>,
+  loading: () => null,
 });
 const ACTION_LABEL = {
   vi: "XEM CASE STUDY",
@@ -43,7 +42,7 @@ const IT_CLUB_MILESTONE: Record<Language, Milestone> = {
       "Hỗ trợ cộng đồng tiếp cận, sử dụng AI an toàn và hiệu quả",
       "Training giáo viên ứng dụng AI vào giảng dạy và thiết kế học liệu",
     ],
-    accent: "#8b5cf6",
+    accent: "#005eb8",
     position: [0, 0, 0],
     upgrade: "Lãnh đạo cộng đồng · Tổ chức sự kiện · AI Enablement · Teacher Training",
     stage: "transformation",
@@ -63,7 +62,7 @@ const IT_CLUB_MILESTONE: Record<Language, Milestone> = {
       "Helped the community adopt AI safely and effectively",
       "Trained teachers to apply AI in instruction and learning-content design",
     ],
-    accent: "#8b5cf6",
+    accent: "#005eb8",
     position: [0, 0, 0],
     upgrade: "Community Leadership · Event Operations · AI Enablement · Teacher Training",
     stage: "transformation",
@@ -83,7 +82,7 @@ const IT_CLUB_MILESTONE: Record<Language, Milestone> = {
       "帮助社区安全、有效地使用AI工具",
       "培训教师将AI应用于教学与学习材料设计",
     ],
-    accent: "#8b5cf6",
+    accent: "#005eb8",
     position: [0, 0, 0],
     upgrade: "社区领导力 · 活动运营 · AI赋能 · 教师培训",
     stage: "transformation",
@@ -105,7 +104,7 @@ const MARCUS_VIDEO_MILESTONE: Record<Language, Milestone> = {
       "BCrypt, bộ lọc xác thực và khôi phục mật khẩu qua email",
       "Dashboard quản trị JSP/JSTL, biểu đồ và quản lý nội dung",
     ],
-    accent: "#ff4f9a",
+    accent: "#f46300",
     position: [0, 0, 0],
     upgrade: "Java Web · Hibernate · WebSocket · Bảo mật ứng dụng",
     stage: "transformation",
@@ -125,7 +124,7 @@ const MARCUS_VIDEO_MILESTONE: Record<Language, Milestone> = {
       "BCrypt authentication filters and email password recovery",
       "JSP/JSTL administration dashboard, charts and content management",
     ],
-    accent: "#ff4f9a",
+    accent: "#f46300",
     position: [0, 0, 0],
     upgrade: "Java Web · Hibernate · WebSocket · Application Security",
     stage: "transformation",
@@ -147,7 +146,7 @@ const MARCUS_VIDEO_MILESTONE: Record<Language, Milestone> = {
       "BCrypt身份验证过滤器与邮件密码恢复",
       "JSP/JSTL管理仪表板、图表与内容管理",
     ],
-    accent: "#ff4f9a",
+    accent: "#f46300",
     position: [0, 0, 0],
     upgrade: "Java Web · Hibernate · WebSocket · 应用安全",
     stage: "transformation",
@@ -157,52 +156,36 @@ const MARCUS_VIDEO_MILESTONE: Record<Language, Milestone> = {
 export default function JourneyApp({
   initialLanguage,
   children,
+  journeyMode = false,
 }: {
   initialLanguage: Language;
-  children: ReactNode;
+  children?: ReactNode;
+  journeyMode?: boolean;
 }) {
   const router = useRouter();
   const [quick, setQuick] = useState(false);
   const [cvOpen, setCvOpen] = useState(false);
   const [albumOpen, setAlbumOpen] = useState(false);
-  const [threeDEnabled, setThreeDEnabled] = useState(false);
-  const [canUseThreeD, setCanUseThreeD] = useState(false);
+  // Keep the scene ready behind the page so the 3D invitation can start immediately.
+  const [threeDEnabled, setThreeDEnabled] = useState(journeyMode);
+  const [panelCollapsed, setPanelCollapsed] = useState(true);
+  const [dismissedPanelId, setDismissedPanelId] = useState<string | null>(null);
+  const [showJourneyGuide, setShowJourneyGuide] = useState(journeyMode);
+  const [canUseThreeD, setCanUseThreeD] = useState(true);
   const [learningCurveProgress, setLearningCurveProgress] = useState<{
     minor: number;
     video: number;
   } | null>(null);
-  const { begin, goToMilestone } = useJourneyNavigation();
-  const {
-    vehicleProgress,
-    currentMilestone,
-    started,
-    language,
-    soundEnabled,
-    sceneReady,
-    visitedMilestones,
-    setLanguage,
-    toggleSound,
-  } = useJourneyStore();
+  const { goToMilestone } = useJourneyNavigation();
+  const { vehicleProgress, currentMilestone, started, language, visitedMilestones, setLanguage } =
+    useJourneyStore();
   useEffect(() => {
     const motionPreference = matchMedia("(prefers-reduced-motion: reduce)");
-    const syncCapability = () => {
-      const device = navigator as Navigator & {
-        deviceMemory?: number;
-        connection?: { saveData?: boolean };
-      };
-      const lowPower =
-        (device.deviceMemory !== undefined && device.deviceMemory <= 4) ||
-        (navigator.hardwareConcurrency > 0 && navigator.hardwareConcurrency <= 4) ||
-        device.connection?.saveData === true;
-      const smallScreen = matchMedia("(max-width: 767px)").matches;
-      setCanUseThreeD(!motionPreference.matches && !smallScreen && !lowPower);
-    };
+    const syncCapability = () => setCanUseThreeD(!motionPreference.matches);
     syncCapability();
     motionPreference.addEventListener("change", syncCapability);
-    addEventListener("resize", syncCapability);
     return () => {
       motionPreference.removeEventListener("change", syncCapability);
-      removeEventListener("resize", syncCapability);
     };
   }, []);
   useEffect(() => {
@@ -227,6 +210,30 @@ export default function JourneyApp({
     }
   }, [canUseThreeD]);
   useEffect(() => {
+    const journey = useJourneyStore.getState();
+    journey.resetJourney();
+    if (journeyMode) journey.start();
+  }, [journeyMode]);
+  useEffect(() => {
+    if (!journeyMode) return;
+    setShowJourneyGuide(true);
+    const hideGuide = () => setShowJourneyGuide(false);
+    const hideOnWheel = (event: WheelEvent) => {
+      if (event.deltaY !== 0) hideGuide();
+    };
+    const hideOnScroll = () => {
+      if (scrollY > 0) hideGuide();
+    };
+    addEventListener("wheel", hideOnWheel, { passive: true });
+    addEventListener("touchmove", hideGuide, { passive: true });
+    addEventListener("scroll", hideOnScroll, { passive: true });
+    return () => {
+      removeEventListener("wheel", hideOnWheel);
+      removeEventListener("touchmove", hideGuide);
+      removeEventListener("scroll", hideOnScroll);
+    };
+  }, [journeyMode]);
+  useEffect(() => {
     void Promise.resolve(useJourneyStore.persist.rehydrate()).then(() => {
       setLanguage(initialLanguage);
     });
@@ -241,6 +248,7 @@ export default function JourneyApp({
     learningCurveProgress !== null &&
     Math.abs(vehicleProgress - learningCurveProgress.video) < 0.004;
   const isSupplementaryCheckpoint = isItClubCheckpoint || isMarcusVideoCheckpoint;
+  const journeyActive = journeyMode && started;
   const t = copy[language],
     items = getMilestones(language),
     active = isSupplementaryCheckpoint
@@ -258,6 +266,10 @@ export default function JourneyApp({
       : active
         ? activeStageItems.findIndex(({ id }) => id === active.id) + 1
         : 0;
+  useEffect(() => {
+    setPanelCollapsed(true);
+    setDismissedPanelId(null);
+  }, [active?.id]);
   if (quick)
     return (
       <>
@@ -268,29 +280,29 @@ export default function JourneyApp({
       </>
     );
   return (
-    <div className={`journey-shell ${started ? "is-started" : ""}`}>
+    <div className={`journey-shell ${journeyActive ? "is-started" : ""}`}>
       <header className="topbar">
-        <a className="logo" href="#garage">
+        <a className="logo" href={`/${language}`}>
           <b>M</b>
           <span>
             MARCUSTRAN <i>PORTFOLIO</i>
           </span>
         </a>
-        <nav aria-label="Utility navigation">
-          <button onClick={() => setQuick(true)}>{t.quick}</button>
-          <a href="#case-studies">{t.projects}</a>
-          <button onClick={() => setCvOpen(true)}>{t.cv}</button>
+        <nav aria-label="Portfolio navigation">
+          <a href={journeyMode ? `/${language}#case-studies` : "#case-studies"}>{t.projects}</a>
+          <a href={journeyMode ? "#journey-track" : `/${language}/journey`}>{t.journeyNav}</a>
+          <button onClick={() => setCvOpen(true)}>{t.viewCv}</button>
+          <a className="topbar-contact" href={`mailto:${profile.email}`}>
+            {t.contact}
+          </a>
         </nav>
         <div className="controls">
-          <button onClick={toggleSound} aria-label="Toggle sound">
-            {t.sound} {soundEnabled ? "ON" : "OFF"}
-          </button>
           <select
             value={language}
             onChange={(e) => {
               const nextLanguage = e.target.value as Language;
               setLanguage(nextLanguage);
-              router.push(`/${nextLanguage}${location.hash}`);
+              router.push(`/${nextLanguage}${journeyMode ? "/journey" : ""}${location.hash}`);
             }}
             aria-label="Language"
           >
@@ -300,65 +312,72 @@ export default function JourneyApp({
           </select>
         </div>
       </header>
-      <section id="garage" className="garage">
-        <div className="garage-lines" />
-        <div className="hero-copy">
-          <span className="kicker">{t.tagline}</span>
-          <h1>
-            MARCUS
-            <br />
-            <i>TRAN</i>
-          </h1>
-          <p className="hero-role">{t.heroRole}</p>
-          <p className="hero-summary">{t.subtitle}</p>
-          <ul className="hero-metrics" aria-label={t.caseStudies}>
-            {homepageMetrics.map((metric) => (
-              <li key={metric.id}>
-                <strong>{metric.value}</strong>
-                <span>{metric.labels[language]}</span>
-              </li>
-            ))}
-          </ul>
-          <div className="hero-actions">
-            <a className="main-cta" href="#case-studies">
-              {t.caseStudies} <b>→</b>
-            </a>
-            <a
-              className="download-cta"
-              href={cvByLanguage[language === "zh" ? "zh" : "en"]}
-              download
-            >
-              {t.cv} ↓
-            </a>
+      {!journeyMode && (
+        <>
+          <section id="garage" className="garage">
+            <div className="garage-lines" />
+            <div className="hero-copy">
+              <span className="kicker">{t.tagline}</span>
+              <h1>
+                MARCUS
+                <br className="hero-name-break" />
+                <i>TRAN</i>
+              </h1>
+            </div>
+          </section>
+          {children}
+        </>
+      )}
+      {journeyMode ? (
+        <>
+          <div id="journey-start" className="journey-start-anchor" aria-hidden="true" />
+          <section className="journey-screen-intro" aria-label={t.journeyInviteTitle}>
+            {showJourneyGuide && (
+              <>
+                <div className="journey-screen-copy">
+                  <span className="kicker">{t.journeyInviteLabel}</span>
+                  <h1 id="journey-screen-title">{t.journeyInviteTitle}</h1>
+                  <p>{t.journeyControlHint}</p>
+                </div>
+                <div className="journey-motion-hint">
+                  <span>{t.scroll}</span>
+                  {canUseThreeD ? (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowJourneyGuide(false);
+                        scrollBy({
+                          top: Math.round(innerHeight * 0.55),
+                          behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+                            ? "auto"
+                            : "smooth",
+                        });
+                      }}
+                    >
+                      {t.driveForward} ↓
+                    </button>
+                  ) : (
+                    <span className="journey-unavailable">{t.experience3dUnavailable}</span>
+                  )}
+                </div>
+              </>
+            )}
+          </section>
+          {threeDEnabled && <Experience />}
+        </>
+      ) : (
+        <section className="journey-invite journey-home-teaser">
+          <div className="journey-invite-copy">
+            <span className="kicker">{t.journeyInviteLabel}</span>
+            <h2>{t.journeyInviteTitle}</h2>
+            <p>{t.journeyInviteBody}</p>
           </div>
-        </div>
-      </section>
-      {children}
-      <section className="journey-invite" aria-labelledby="journey-invite-title">
-        <div className="journey-invite-copy">
-          <span className="kicker">{t.journeyInviteLabel}</span>
-          <h2 id="journey-invite-title">{t.journeyInviteTitle}</h2>
-          <p>{t.journeyInviteBody}</p>
-        </div>
-        <div className="journey-invite-actions">
-          {canUseThreeD ? (
-            threeDEnabled ? (
-              <button className="journey-start-button" onClick={begin} disabled={!sceneReady}>
-                {sceneReady ? t.journeyStart : "LOADING 3D…"} <b aria-hidden="true">→</b>
-              </button>
-            ) : (
-              <button className="journey-start-button" onClick={() => setThreeDEnabled(true)}>
-                {t.experience3d} <b aria-hidden="true">↗</b>
-              </button>
-            )
-          ) : (
-            <p className="journey-unavailable">{t.experience3dUnavailable}</p>
-          )}
-        </div>
-      </section>
-      <div id="journey-start" className="journey-start-anchor" aria-hidden="true" />
-      {threeDEnabled && <Experience />}
-      {started && vehicleProgress < 0.985 && (
+          <a className="journey-start-button" href={`/${language}/journey`}>
+            {t.experience3d} <b aria-hidden="true">↗</b>
+          </a>
+        </section>
+      )}
+      {journeyActive && vehicleProgress < 0.985 && (
         <>
           <JourneyAlbum
             language={language}
@@ -410,12 +429,23 @@ export default function JourneyApp({
               </div>
             ))}
           </nav>
-          {active && (
+          {active && !dismissedPanelId && (
             <aside
               key={active.id}
               className={`milestone-panel ${active.id !== "graduation" && currentMilestone % 2 === 1 ? "is-left" : "is-right"}`}
               style={{ "--accent": active.accent } as React.CSSProperties}
             >
+              <div className="milestone-panel-actions">
+                <button
+                  type="button"
+                  className="milestone-panel-close"
+                  onClick={() => setDismissedPanelId(active.id)}
+                  aria-label={t.closePopup}
+                  title={t.closePopup}
+                >
+                  ×
+                </button>
+              </div>
               <div className="stage-context">
                 {String(stageOrder.indexOf(active.stage) + 1).padStart(2, "0")}/
                 {String(stageOrder.length).padStart(2, "0")} ·{" "}
@@ -436,37 +466,56 @@ export default function JourneyApp({
               <span className="kicker">{active.period}</span>
               <h2>{active.title}</h2>
               <h3>{active.role}</h3>
-              <p>{active.summary}</p>
-              <ul>
-                {active.highlights.slice(0, 4).map((h) => (
-                  <li key={h}>{h}</li>
+              <p className="milestone-summary">{active.summary}</p>
+              <div className="milestone-panel-details" hidden={panelCollapsed}>
+                <ul>
+                  {active.highlights.slice(0, 4).map((h) => (
+                    <li key={h}>{h}</li>
+                  ))}
+                </ul>
+                <div className="upgrade">
+                  {t.unlocked} <b>{active.upgrade}</b>
+                </div>
+                {(
+                  active.projectLinks ??
+                  (active.projectUrl
+                    ? [{ label: SOURCE_LABEL[language], url: active.projectUrl }]
+                    : [{ label: ACTION_LABEL[language], url: "#case-studies" }])
+                ).map((link) => (
+                  <a
+                    key={link.url}
+                    className="milestone-cta"
+                    href={link.url}
+                    target={link.url.startsWith("http") ? "_blank" : undefined}
+                    rel={link.url.startsWith("http") ? "noreferrer" : undefined}
+                  >
+                    {link.label} ↗
+                  </a>
                 ))}
-              </ul>
-              <div className="upgrade">
-                {t.unlocked} <b>{active.upgrade}</b>
               </div>
-              {(
-                active.projectLinks ??
-                (active.projectUrl
-                  ? [{ label: SOURCE_LABEL[language], url: active.projectUrl }]
-                  : [{ label: ACTION_LABEL[language], url: "#case-studies" }])
-              ).map((link) => (
-                <a
-                  key={link.url}
-                  className="milestone-cta"
-                  href={link.url}
-                  target={link.url.startsWith("http") ? "_blank" : undefined}
-                  rel={link.url.startsWith("http") ? "noreferrer" : undefined}
-                >
-                  {link.label} ↗
-                </a>
-              ))}
+              <button
+                type="button"
+                className="milestone-panel-more"
+                onClick={() => setPanelCollapsed((collapsed) => !collapsed)}
+                aria-expanded={!panelCollapsed}
+              >
+                {panelCollapsed ? t.viewDetails : t.collapseDetails}
+              </button>
             </aside>
+          )}
+          {active && dismissedPanelId === active.id && (
+            <button
+              type="button"
+              className="milestone-reopen"
+              onClick={() => setDismissedPanelId(null)}
+            >
+              {t.showPopup}
+            </button>
           )}
         </>
       )}
-      {started && <div id="journey-track" className="scroll-space" aria-hidden="true" />}
-      {started && (
+      {journeyActive && <div id="journey-track" className="scroll-space" aria-hidden="true" />}
+      {journeyActive && (
         <section
           id="projects"
           className={`final-cta ${vehicleProgress < 0.985 ? "is-waiting" : ""}`}
@@ -496,8 +545,33 @@ export default function JourneyApp({
               {t.github} ↗
             </a>
           </div>
+          <button
+            className="journey-back-top"
+            onClick={() => {
+              useJourneyStore.getState().resetJourney();
+              scrollTo({ top: 0, behavior: "smooth" });
+            }}
+          >
+            ↑ {t.backToTop}
+          </button>
         </section>
       )}
+      <footer className="site-footer">
+        <a className="footer-brand" href={`/${language}`}>
+          MARCUS TRAN <span>PORTFOLIO</span>
+        </a>
+        <p className="footer-tagline">
+          {language === "vi"
+            ? "Kỹ thuật quy trình · Kaizen · Chất lượng"
+            : language === "en"
+              ? "Process Engineering · Kaizen · Quality"
+              : "工艺工程 · 持续改善 · 质量"}
+        </p>
+        <a className="footer-contact" href={`mailto:${profile.email}`}>
+          {t.contact} ↗
+        </a>
+        <small>© {new Date().getFullYear()} Marcus Tran</small>
+      </footer>
       {cvOpen && <CvCenter language={language} onClose={() => setCvOpen(false)} />}
     </div>
   );

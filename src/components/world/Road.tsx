@@ -80,7 +80,7 @@ export default function Road() {
         return {
           point,
           rotation: Math.atan2(tangent.x, tangent.z),
-          color: milestones[index].id === "graduation" ? "#FFC629" : milestones[index].accent,
+          color: milestones[index].id === "graduation" ? "#00A859" : milestones[index].accent,
         };
       }),
     [],
@@ -93,7 +93,7 @@ export default function Road() {
       {markings.map((m, i) => (
         <mesh key={i} position={[m.p.x, 0.055, m.p.z]} rotation={[0, m.rotation, 0]}>
           <boxGeometry args={[0.07, 0.025, 0.75]} />
-          <meshStandardMaterial color="#fff3c4" emissive="#d8b957" emissiveIntensity={0.18} />
+          <meshStandardMaterial color="#fff3c4" emissive="#F46300" emissiveIntensity={0.18} />
         </mesh>
       ))}
       {checkpointMarkers.map((marker, index) => (

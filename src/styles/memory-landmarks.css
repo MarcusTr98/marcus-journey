@@ -176,7 +176,6 @@
 .album-grid article {
   padding: 12px;
   border: 1px solid #d7e1dc;
-  border-top: 3px solid var(--memory-accent);
   background: #fff;
 }
 .album-grid .memory-placeholder {

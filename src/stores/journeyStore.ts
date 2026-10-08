@@ -64,9 +64,11 @@ export const useJourneyStore = create<JourneyState>()(
         set((state) => ({ minorUpgradePulse: state.minorUpgradePulse + 1 })),
       resetJourney: () =>
         set({
+          started: false,
           progress: 0,
           vehicleProgress: 0,
           currentMilestone: -1,
+          unlockedUpgrades: [],
           requestedMilestone: null,
           navigationPinned: false,
           visitedMilestones: [],

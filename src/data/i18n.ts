@@ -3,60 +3,70 @@ import { milestones } from "./milestones";
 export const copy = {
   en: {
     tagline: "PROCESS ENGINEERING • KAIZEN • QUALITY",
-    subtitle: "I turn shop-floor insight into safer, more stable and more efficient processes.",
+    subtitle:
+      "Shop-floor insight, translated into safer, more stable and more efficient processes.",
     start: "EXPLORE THE 3D JOURNEY",
     caseStudies: "VIEW KAIZEN CASE STUDIES",
     experience3d: "EXPERIENCE 3D",
-    experience3dUnavailable: "3D is off on this device. The portfolio remains fully available.",
+    journeyNav: "3D JOURNEY",
+    viewCv: "VIEW CV",
+    experience3dUnavailable: "The 3D tour is paused while reduced-motion is enabled.",
+    viewDetails: "View details",
+    collapseDetails: "Collapse",
+    closePopup: "Close experience card",
+    showPopup: "Show experience card",
+    backToTop: "Back to top",
     journeyInviteLabel: "OPTIONAL · INTERACTIVE EXPERIENCE",
-    journeyInviteTitle: "Take the optional 3D career journey",
-    journeyInviteBody:
-      "Prefer an interactive tour? Scroll through the factory-to-digital journey in Marcus's car.",
-    journeyStart: "START THE 3D JOURNEY",
+    journeyInviteTitle: "Explore the career journey.",
+    journeyInviteBody: "Scroll through key milestones, from manufacturing to software.",
+    journeyControlHint:
+      "Scroll down with your mouse or trackpad to drive, or use the button below.",
+    driveForward: "Start driving",
     returnToPortfolio: "BACK TO PORTFOLIO",
-    heroRole: "Process Engineer candidate · 7 years in manufacturing and quality",
     quick: "QUICK PROFILE",
     projects: "Projects",
     cv: "Download CV",
-    sound: "Sound",
     journey: "Journey progress",
     scroll: "Scroll to drive",
     unlocked: "Skills unlocked",
     destination: "DESTINATION · SMART FACTORY",
     finalTitle: "Build systems that\nmove people forward.",
-    promise:
-      "I understand the factory floor. I improve the process.\nI build the system. I teach others to use it.",
-    contact: "Contact me",
+    promise: "Factory insight. Better processes.\nPractical digital systems. Shared knowledge.",
+    contact: "Contact",
     github: "GitHub",
     close: "Close",
     profileTitle: "Production mind.\nDigital builder.",
   },
   vi: {
     tagline: "KỸ THUẬT QUY TRÌNH • KAIZEN • CHẤT LƯỢNG",
-    subtitle:
-      "Tôi chuyển hóa vấn đề tại hiện trường thành quy trình an toàn, ổn định và hiệu quả hơn.",
+    subtitle: "Từ vấn đề tại hiện trường đến quy trình an toàn, ổn định và hiệu quả hơn.",
     start: "KHÁM PHÁ HÀNH TRÌNH 3D",
     caseStudies: "XEM CASE STUDY KAIZEN",
     experience3d: "TRẢI NGHIỆM 3D",
-    experience3dUnavailable: "Thiết bị này đang tắt 3D. Bạn vẫn có thể xem đầy đủ hồ sơ.",
+    journeyNav: "HÀNH TRÌNH 3D",
+    viewCv: "XEM CV",
+    experience3dUnavailable: "Tạm dừng trải nghiệm 3D khi chế độ Giảm chuyển động đang bật.",
+    viewDetails: "Xem tiếp",
+    collapseDetails: "Thu gọn",
+    closePopup: "Đóng thẻ kinh nghiệm",
+    showPopup: "Mở lại thẻ kinh nghiệm",
+    backToTop: "Về đầu trang",
     journeyInviteLabel: "TÙY CHỌN · TRẢI NGHIỆM TƯƠNG TÁC",
-    journeyInviteTitle: "Trải nghiệm hành trình nghề nghiệp bằng chiếc xe 3D",
-    journeyInviteBody:
-      "Nếu muốn khám phá sâu hơn, hãy cuộn theo hành trình từ nhà máy đến công nghệ cùng chiếc xe của Marcus.",
-    journeyStart: "BẮT ĐẦU HÀNH TRÌNH 3D",
+    journeyInviteTitle: "Khám phá hành trình nghề nghiệp.",
+    journeyInviteBody: "Cuộn trang để xem các cột mốc từ sản xuất đến phát triển phần mềm.",
+    journeyControlHint:
+      "Cuộn xuống bằng chuột hoặc trackpad để lái xe, hoặc dùng nút bên dưới.",
+    driveForward: "Bắt đầu di chuyển",
     returnToPortfolio: "QUAY LẠI PORTFOLIO",
-    heroRole: "Ứng viên Process Engineer · 7 năm kinh nghiệm sản xuất và chất lượng",
     quick: "HỒ SƠ NHANH",
     projects: "Dự án",
     cv: "Tải CV",
-    sound: "Âm thanh",
     journey: "Tiến độ hành trình",
     scroll: "Cuộn để lái xe",
     unlocked: "Kỹ năng đã mở khóa",
     destination: "ĐÍCH ĐẾN · NHÀ MÁY THÔNG MINH",
     finalTitle: "Xây hệ thống\nđưa con người tiến lên.",
-    promise:
-      "Tôi hiểu nhà máy. Tôi cải tiến quy trình.\nTôi xây dựng hệ thống. Tôi hướng dẫn mọi người sử dụng.",
+    promise: "Am hiểu hiện trường. Cải tiến quy trình.\nSố hóa hệ thống. Chia sẻ tri thức.",
     contact: "Liên hệ",
     github: "GitHub",
     close: "Đóng",
@@ -68,24 +78,30 @@ export const copy = {
     start: "体验3D职业历程",
     caseStudies: "查看改善案例",
     experience3d: "体验3D",
-    experience3dUnavailable: "此设备已关闭3D体验，仍可正常浏览完整作品集。",
+    journeyNav: "3D职业历程",
+    viewCv: "查看简历",
+    experience3dUnavailable: "启用“减少动态效果”时，3D体验将暂停。",
+    viewDetails: "查看详情",
+    collapseDetails: "收起",
+    closePopup: "关闭经历卡片",
+    showPopup: "重新打开经历卡片",
+    backToTop: "回到顶部",
     journeyInviteLabel: "可选 · 互动体验",
-    journeyInviteTitle: "可选的3D职业历程体验",
-    journeyInviteBody: "想深入了解？驾驶Marcus的汽车，滚动浏览从工厂到数字技术的职业历程。",
-    journeyStart: "开始3D旅程",
+    journeyInviteTitle: "探索职业历程。",
+    journeyInviteBody: "向下滚动，了解从制造业到软件开发的关键节点。",
+    journeyControlHint: "向下滚动鼠标或触控板即可驾驶，也可点击下方按钮。",
+    driveForward: "开始驾驶",
     returnToPortfolio: "返回作品集",
-    heroRole: "工艺工程师候选人 · 7年制造与质量经验",
     quick: "快速履历",
     projects: "项目",
     cv: "下载简历",
-    sound: "声音",
     journey: "旅程进度",
     scroll: "滚动以驾驶",
     unlocked: "已解锁技能",
     destination: "终点 · 智慧工厂",
     finalTitle: "构建系统，\n推动人们前进。",
-    promise: "我了解生产现场。我改善流程。\n我构建系统。我教会他人使用。",
-    contact: "联系我",
+    promise: "理解生产现场，持续改善流程。\n推动系统数字化，沉淀并分享经验。",
+    contact: "联系",
     github: "GitHub",
     close: "关闭",
     profileTitle: "生产思维。\n数字创造者。",
@@ -95,17 +111,17 @@ type L = [string, string, string[]];
 const vi: L[] = [
   [
     "Quản lý & Điều phối Sản xuất – Chất lượng",
-    "Phụ trách quản lý và điều phối sản xuất và chất lượng nhà xưởng (~40 máy Laser Cutting CNC và ~200 nhân sự).",
+    "Điều phối sản xuất và chất lượng tại nhà máy, bao gồm hoạt động Laser Cutting CNC và đội ngũ sản xuất.",
     [
       "Chuẩn hóa thao tác, Check Sheet, Pareto và Q-Point → kiểm soát lỗi nghiêm trọng dưới 1%",
       "Điều hành QCC/Kaizen, phân tích 5W1H–5 Why → giảm khoảng 30% lãng phí vận hành",
       "Triển khai TPM, 5S và Safety Dojo → giảm 50% sự cố thiết bị, rút ngắn 35% thời gian đào tạo hội nhập",
-      "Điều độ sản xuất theo Plan/Kanban; cân đối nhân lực–vật tư và quản trị báo cáo hiệu suất",
+      "Điều độ sản xuất theo Plan/Kanban, cân đối nhân lực–vật tư và quản trị báo cáo hiệu suất",
     ],
   ],
   [
     "Phát triển Phần mềm · GPA 3.9/4.0",
-    "Hành trình chuyển đổi nghề nghiệp có chủ đích từ vận hành nhà máy sang kỹ nghệ phần mềm—kết hợp đào tạo chính quy, nghiên cứu độc lập, sản phẩm thực tế, năng lực lãnh đạo và kỷ luật tự học liên tục.",
+    "Chuyển từ vận hành nhà máy sang phát triển phần mềm qua đào tạo chính quy, dự án thực tế và tự học liên tục.",
     [
       "Chuyển hướng từ sản xuất sang phát triển phần mềm",
       "Xây nền tảng có hệ thống với Java, cơ sở dữ liệu và công nghệ web",
@@ -115,7 +131,7 @@ const vi: L[] = [
   ],
   [
     "Chuyên viên Tổ chức & Quản lý Sự kiện",
-    "Mở rộng năng lực thương mại và điều hành thông qua việc thắng thầu, lập kế hoạch và triển khai trọn vẹn hội nghị–gala quy mô 2.000 khách, từ đàm phán nhà cung cấp đến vận hành hiện trường.",
+    "Thắng thầu, lập kế hoạch và điều phối trọn vẹn hội nghị–gala từ đàm phán nhà cung cấp đến vận hành hiện trường.",
     [
       "Ngân sách khoảng 800 triệu VNĐ",
       "98% khách tham dự hài lòng",
@@ -135,7 +151,7 @@ const vi: L[] = [
   ],
   [
     "Kiến trúc sư Giải pháp · Lập trình viên Full-stack & Bảo mật",
-    "Bàn giao hai sản phẩm nội bộ cho Ban Chỉ huy Quân sự phường Hồng Bàng: quản lý công việc trên mạng LAN và USB Sentry bảo vệ máy tính Windows. Cả hai được nghiệm thu với mức độ hài lòng 100%.",
+    "Bàn giao hai sản phẩm nội bộ: quản lý công việc trên mạng LAN và USB Sentry bảo vệ máy tính Windows. Cả hai được nghiệm thu với mức độ hài lòng 100%.",
     [
       "Vòng đời công việc: giao việc, xác nhận, báo cáo hoàn thành và theo dõi trực quan",
       "Phát hiện USB/thiết bị di động bằng drive polling và WMI/WPD",
@@ -155,7 +171,7 @@ const vi: L[] = [
   ],
   [
     "Chủ nhiệm CLB IT · Mentor · Người xây dựng",
-    "Chuyển hóa kiến thức cá nhân thành năng lực cộng đồng thông qua điều hành CLB, tổ chức workshop kỹ thuật, cố vấn dự án thực hành và xây dựng công cụ học tập tương tác như SQL Quiz.",
+    "Điều hành CLB, tổ chức workshop kỹ thuật, cố vấn dự án thực hành và xây dựng công cụ học tập như SQL Quiz.",
     [
       "Điều phối hoạt động CLB IT",
       "Xây dựng SQL Quiz bằng Vue 3",
@@ -165,7 +181,7 @@ const vi: L[] = [
   ],
   [
     "Trưởng nhóm · Kiến trúc sư Giải pháp",
-    "Khởi xướng định hướng sản phẩm và dẫn dắt nhóm 5 thành viên, đồng thời trực tiếp đảm nhiệm khoảng 60% khối lượng—từ kiến trúc giải pháp, kỹ thuật lõi đến trải nghiệm thương mại điện tử ứng dụng AI liên tục phát triển.",
+    "Định hướng sản phẩm và dẫn dắt nhóm 5 thành viên, trực tiếp đảm nhiệm khoảng 60% khối lượng từ kiến trúc đến kỹ thuật lõi.",
     [
       "Tầm nhìn sản phẩm, lãnh đạo kỹ thuật và kiến trúc end-to-end",
       "Gemini tư vấn bám catalog, phản hồi streaming và AI phân tích kinh doanh",
@@ -175,7 +191,7 @@ const vi: L[] = [
   ],
   [
     "Giảng viên · Nhà giáo dục ứng dụng AI · Lập trình viên",
-    "Kết hợp giảng dạy Robocon, lập trình và năng lực số với phát triển phần mềm/website cho khách hàng. AI tạo sinh được vận dụng như một copilot có kiểm soát trong nghiên cứu học liệu, thiết kế giáo án, tạo bài tập, phân hóa và phản hồi cá nhân hóa.",
+    "Giảng dạy Robocon, lập trình và kỹ năng số, đồng thời phát triển phần mềm, website và ứng dụng AI có kiểm soát trong thiết kế học liệu.",
     [
       "Robocon, lập trình và năng lực số",
       "Microsoft Office & Google Workspace",
@@ -185,7 +201,7 @@ const vi: L[] = [
   ],
   [
     "Sản xuất × Chất lượng × Phần mềm × AI",
-    "Định hướng dài hạn là kết hợp hiểu biết hiện trường, Kaizen, dữ liệu chất lượng, tự động hóa phần mềm và AI có trách nhiệm thành các hệ thống nâng cao hiệu suất—đồng thời giúp con người tự tin làm chủ công nghệ.",
+    "Kết hợp kinh nghiệm hiện trường, Kaizen, dữ liệu chất lượng và tự động hóa để nâng cao hiệu suất. Ứng dụng AI có trách nhiệm, lấy con người làm trung tâm.",
     [
       "Số hóa sản xuất và chất lượng",
       "Kaizen dựa trên dữ liệu & tự động hóa",
@@ -195,7 +211,7 @@ const vi: L[] = [
   ],
   [
     "Tốt nghiệp Phát triển Phần mềm · GPA 3.9/4.0",
-    "Hoàn thành hành trình ba năm chuyển đổi từ vận hành sản xuất sang kỹ nghệ phần mềm, kết hợp thành tích học thuật, năng lực lãnh đạo, sản phẩm triển khai thực tế và phương pháp học tập có AI hỗ trợ một cách có kiểm soát.",
+    "Hoàn thành chương trình Phát triển Phần mềm sau ba năm chuyển hướng từ sản xuất, với thành tích học tập, vai trò lãnh đạo và các sản phẩm thực tế.",
     [
       "GPA 3.9/4.0",
       "Ong vàng SP26 — Top 1 FPT Polytechnic Hải Phòng",
@@ -207,7 +223,7 @@ const vi: L[] = [
 const zh: L[] = [
   [
     "生产与质量管理协调",
-    "负责工厂生产与质量的管理及协调，覆盖约40台Laser Cutting CNC设备和约200名员工。",
+    "协调工厂生产与质量工作，涵盖Laser Cutting CNC工序及生产团队。",
     [
       "标准作业 · 检查表 · 帕累托 · Q-Point → 严重缺陷率低于1%",
       "QCC · 改善 · 5W1H/5Why → 运营浪费降低约30%",
@@ -242,7 +258,7 @@ const zh: L[] = [
   ],
   [
     "解决方案架构师 · 全栈与安全开发者",
-    "为红庞坊军事指挥部交付两套内部产品：局域网任务管理系统和Windows终端防护工具USB Sentry。两项产品均以100%满意度正式验收。",
+    "交付两套内部产品：局域网任务管理系统和Windows终端防护工具USB Sentry。两项产品均以100%满意度正式验收。",
     [
       "任务全流程：派发、确认、完成报告与实时可视化",
       "通过磁盘轮询与WMI/WPD检测USB及移动设备",
@@ -374,12 +390,42 @@ const localizedTitles: Record<Exclude<Language, "en">, Record<string, string>> =
   },
 };
 
+const localizedShortTitles: Record<Exclude<Language, "en">, Record<string, string>> = {
+  vi: {
+    toyota: "Sản xuất",
+    fpt: "Học tập",
+    vhunter: "Trải nghiệm thực tế",
+    video: "Dự án cá nhân",
+    solutions: "Triển khai số",
+    electronics: "Dự án số",
+    workshop: "Cộng đồng",
+    store: "Đồ án tốt nghiệp",
+    graduation: "Tốt nghiệp",
+    teaching: "Giảng dạy",
+    future: "Định hướng",
+  },
+  zh: {
+    toyota: "制造业",
+    fpt: "学习经历",
+    vhunter: "实践经历",
+    video: "个人项目",
+    solutions: "数字化部署",
+    electronics: "数字项目",
+    workshop: "社区活动",
+    store: "毕业项目",
+    graduation: "毕业",
+    teaching: "教学经历",
+    future: "职业方向",
+  },
+};
+
 export function getMilestones(language: Language) {
   if (language === "en") return milestones;
   return milestones.map((m) => {
     const content = localizedContent[language][m.id];
     return {
       ...m,
+      shortTitle: localizedShortTitles[language][m.id] ?? m.shortTitle,
       title: localizedTitles[language][m.id] ?? m.title,
       role: content[0],
       summary: content[1],

@@ -34,7 +34,7 @@ export default async function LocalizedHome({ params }: LocalePageProps) {
   if (!isLanguage(locale)) notFound();
   return (
     <main>
-      <JourneyApp initialLanguage={locale}>
+      <JourneyApp initialLanguage={locale} journeyMode={false}>
         <ServerProfile language={locale} />
       </JourneyApp>
     </main>

@@ -19,9 +19,9 @@ const STABLE_FOCUS_OFFSET = new THREE.Vector3(0, 0.9, -0.6);
 const MAX_PROGRESS_PER_SECOND = 0.052;
 const STAGE_SKY = {
   foundation: new THREE.Color("#527fa3"),
-  transformation: new THREE.Color("#638db1"),
-  present: new THREE.Color("#568d8b"),
-  destination: new THREE.Color("#777eae"),
+  transformation: new THREE.Color("#426e91"),
+  present: new THREE.Color("#3d8066"),
+  destination: new THREE.Color("#075fa6"),
 };
 
 export default function MarcusJourneyScene() {
@@ -30,7 +30,7 @@ export default function MarcusJourneyScene() {
   const actualProgress = useRef(0);
   const minorLearningTriggered = useRef(false);
   const videoLearningTriggered = useRef(false);
-  const { camera, scene } = useThree();
+  const { camera, scene, invalidate } = useThree();
   const progress = useJourneyStore((s) => s.progress);
   useFrame((_, delta) => {
     if (!car.current) return;
@@ -132,59 +132,30 @@ export default function MarcusJourneyScene() {
     camera.position.lerp(target, 1 - Math.exp(-delta * 2.1));
     focus.current.lerp(stableFocus, 1 - Math.exp(-delta * 2.8));
     camera.lookAt(focus.current);
+    if (
+      camera.position.distanceToSquared(target) > 0.001 ||
+      focus.current.distanceToSquared(stableFocus) > 0.001 ||
+      (journeyState.started && Math.abs(actualProgress.current - progress) > 0.00003)
+    ) {
+      invalidate();
+    }
   });
   return (
     <>
       <color attach="background" args={["#527fa3"]} />
       <ambientLight intensity={0.72} />
-      <directionalLight
-        position={[8, 14, 6]}
-        color="#fff1c9"
-        intensity={3.15}
-        castShadow
-        shadow-mapSize-width={2048}
-        shadow-mapSize-height={2048}
-      />
+      <directionalLight position={[8, 14, 6]} color="#fff1c9" intensity={3.15} />
       <hemisphereLight args={["#d9efff", "#667c54", 0.68]} />
-      <Stars radius={70} depth={38} count={2200} factor={2.55} fade speed={0.35} />
+      <Stars radius={70} depth={38} count={600} factor={2.1} fade speed={0} />
       <Sparkles
         position={[0, 8, -108]}
         scale={[34, 12, 230]}
-        count={145}
+        count={60}
         size={2.25}
-        speed={0.2}
+        speed={0}
         color="#ffffff"
         opacity={0.58}
       />
-      <>
-        <Sparkles
-          position={[0, 10, -108]}
-          scale={[38, 15, 230]}
-          count={190}
-          size={2.7}
-          speed={0.22}
-          color="#8ee8ff"
-          opacity={0.72}
-        />
-        <Sparkles
-          position={[0, 7, -108]}
-          scale={[34, 10, 230]}
-          count={140}
-          size={2.05}
-          speed={0.3}
-          color="#ffd86a"
-          opacity={0.6}
-        />
-        <Sparkles
-          position={[0, 6, -108]}
-          scale={[36, 9, 230]}
-          count={115}
-          size={2.1}
-          speed={0.26}
-          color="#d59cff"
-          opacity={0.62}
-        />
-      </>
       <Road />
       <WorldEnvironment />
       <Car groupRef={car} />

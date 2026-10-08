@@ -2,12 +2,12 @@ import type { JourneyStage, Milestone } from "@/types";
 const milestoneCatalog: Omit<Milestone, "stage">[] = [
   {
     id: "toyota",
-    shortTitle: "01 · Foundation",
+    shortTitle: "Manufacturing",
     title: "Toyota Boshoku Hai Phong",
     period: "12/2016 — 09/2023",
     role: "Production & Quality Operations Management",
     summary:
-      "Managed and coordinated factory production and quality operations covering approximately 40 Laser Cutting CNC machines and a workforce of around 200 people.",
+      "Coordinated factory production and quality across Laser Cutting CNC operations and the production team.",
     highlights: [
       "Standardized Work, Check Sheets, Pareto and Q-Point → serious defects below 1%",
       "Led QCC/Kaizen and 5W1H–5 Whys analysis → approximately 30% less operational waste",
@@ -20,7 +20,7 @@ const milestoneCatalog: Omit<Milestone, "stage">[] = [
   },
   {
     id: "fpt",
-    shortTitle: "02 · Transformation",
+    shortTitle: "Education",
     title: "FPT Polytechnic Hai Phong",
     period: "09/2023 — 09/2026",
     role: "Software Development · GPA 3.9/4.0",
@@ -75,12 +75,12 @@ const milestoneCatalog: Omit<Milestone, "stage">[] = [
   },
   {
     id: "solutions",
-    shortTitle: "Deployed Client Products",
+    shortTitle: "Digital Delivery",
     title: "Military Command Digital Solutions",
     period: "02/2026 — 04/2026",
     role: "Solution Architect · Full-stack & Security Developer",
     summary:
-      "Delivered two internal products for the Hong Bang Ward Military Command: LAN task management and USB Sentry endpoint protection. Both were formally accepted with 100% client satisfaction.",
+      "Delivered two internal products: LAN task management and USB Sentry endpoint protection. Both were formally accepted with 100% user satisfaction.",
     highlights: [
       "Task lifecycle: assignment, acknowledgement, completion reporting and live visibility",
       "USB/mobile detection through drive polling and WMI/WPD monitoring",
@@ -100,7 +100,7 @@ const milestoneCatalog: Omit<Milestone, "stage">[] = [
   },
   {
     id: "electronics",
-    shortTitle: "Personal Project",
+    shortTitle: "Digital Project",
     title: "Marcus Electronics E-commerce Website",
     period: "01/2026 — 04/2026",
     role: "Full-stack Product Developer",
@@ -157,7 +157,7 @@ const milestoneCatalog: Omit<Milestone, "stage">[] = [
   },
   {
     id: "graduation",
-    shortTitle: "Graduation Milestone",
+    shortTitle: "Graduation",
     title: "FPT Polytechnic Graduation",
     period: "09/2026",
     role: "Software Development Graduate · GPA 3.9/4.0",
@@ -169,13 +169,13 @@ const milestoneCatalog: Omit<Milestone, "stage">[] = [
       "Excellent Student across semesters",
       "IT Club Chairman · Gemini Certified Educator",
     ],
-    accent: "#FFC629",
+    accent: "#00A859",
     position: [2.6, 0, -112],
     upgrade: "Academic Excellence · Leadership · Lifelong Learning",
   },
   {
     id: "teaching",
-    shortTitle: "03 · Present",
+    shortTitle: "Teaching",
     title: "Technology Instructor & Freelance Developer",
     period: "During FPT — Present",
     role: "Instructor · AI-enabled Educator · Developer",
@@ -193,7 +193,7 @@ const milestoneCatalog: Omit<Milestone, "stage">[] = [
   },
   {
     id: "future",
-    shortTitle: "04 · Destination",
+    shortTitle: "Career Direction",
     title: "Smart Factory",
     period: "2026 — The road ahead",
     role: "Production × Quality × Software × AI",

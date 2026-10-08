@@ -16,7 +16,7 @@ const fptPosition = routeCurve.getPointAt(
   milestoneCurveProgress[milestones.findIndex(({ id }) => id === "fpt")],
 );
 const graduationPosition = routeCurve.getPointAt(graduationCurveProgress);
-const celebrationColors = ["#ff4fa3", "#ffd43b", "#64e7ff", "#8b5cf6", "#ff6b35"];
+const celebrationColors = ["#f46300", "#005eb8", "#00a859", "#bd3e3e", "#ffffff"];
 
 const labels = {
   vi: {
@@ -76,7 +76,7 @@ function StartLine() {
           <mesh rotation={[0, 0, index ? -0.48 : 0.48]}>
             <coneGeometry args={[0.55, 4.2, 18, 1, true]} />
             <meshBasicMaterial
-              color={index ? "#64e7ff" : "#ffd43b"}
+              color={index ? "#005eb8" : "#f46300"}
               transparent
               opacity={0.22}
               depthWrite={false}
@@ -84,7 +84,7 @@ function StartLine() {
           </mesh>
           <pointLight
             position={[0, 1.8, 0]}
-            color={index ? "#64e7ff" : "#ffd43b"}
+            color={index ? "#005eb8" : "#f46300"}
             intensity={2.8}
             distance={7}
           />
@@ -162,7 +162,7 @@ function MinorLearningCheckpoint() {
     <group position={MINOR_LEARNING_POSITION}>
       <mesh position={[0, 0.09, 0]} rotation={[Math.PI / 2, 0, 0]}>
         <torusGeometry args={[1.15, 0.055, 8, 40]} />
-        <meshStandardMaterial color="#8b5cf6" emissive="#8b5cf6" emissiveIntensity={1.6} />
+        <meshStandardMaterial color="#005eb8" emissive="#005eb8" emissiveIntensity={1.6} />
       </mesh>
       {[-0.7, 0, 0.7].map((x, index) => (
         <mesh key={x} position={[x, 0.42, 0]} rotation={[0, 0, Math.PI / 4]}>
@@ -192,7 +192,7 @@ function VideoLearningCheckpoint() {
     <group position={VIDEO_LEARNING_POSITION}>
       <mesh position={[0, 0.09, 0]} rotation={[Math.PI / 2, 0, 0]}>
         <torusGeometry args={[1.15, 0.055, 8, 40]} />
-        <meshStandardMaterial color="#ff4f9a" emissive="#ff4f9a" emissiveIntensity={1.6} />
+        <meshStandardMaterial color="#f46300" emissive="#f46300" emissiveIntensity={1.6} />
       </mesh>
       {[-0.7, 0, 0.7].map((x, index) => (
         <mesh key={x} position={[x, 0.42, 0]} rotation={[0, 0, Math.PI / 4]}>
@@ -212,7 +212,7 @@ function VideoLearningCheckpoint() {
 }
 
 function BuntingGate({ position }: { position: { x: number; z: number } }) {
-  const colors = ["#ff4fa3", "#ffd43b", "#00c98d", "#4ea5ff", "#8b5cf6", "#ff6b35"];
+  const colors = ["#f46300", "#005eb8", "#00a859", "#bd3e3e", "#ffffff"];
   return (
     <group position={[position.x, 0.04, position.z]}>
       {[-1.72, 1.72].map((x) => (
@@ -267,7 +267,7 @@ function GraduationMonument() {
       </mesh>
       <mesh position={[0, 1.02, 0]} castShadow>
         <boxGeometry args={[2.95, 0.09, 1.72]} />
-        <meshStandardMaterial color="#ffd447" emissive="#ff9d2e" emissiveIntensity={0.3} />
+        <meshStandardMaterial color="#f46300" emissive="#e85d0f" emissiveIntensity={0.3} />
       </mesh>
       <group ref={diploma} position={[-0.9, 2.43, 0.1]} rotation={[-0.12, 0, -0.08]} scale={1.3}>
         <mesh castShadow>
@@ -306,21 +306,21 @@ function GraduationMonument() {
         </mesh>
         <mesh position={[0.48, -0.25, 0.15]} rotation={[0, 0, -0.45]}>
           <cylinderGeometry args={[0.025, 0.025, 0.72, 8]} />
-          <meshStandardMaterial color="#ffc629" />
+          <meshStandardMaterial color="#f46300" />
         </mesh>
         <mesh position={[0.62, -0.55, 0.15]}>
           <sphereGeometry args={[0.08, 10, 8]} />
-          <meshStandardMaterial color="#ffc629" emissive="#F46300" emissiveIntensity={0.5} />
+          <meshStandardMaterial color="#f46300" emissive="#F46300" emissiveIntensity={0.5} />
         </mesh>
       </group>
       {[-1.45, 1.45].map((x) => (
         <mesh key={x} position={[x, 3.35, 0]} rotation={[0, 0, x < 0 ? -0.34 : 0.34]}>
           <coneGeometry args={[0.7, 4.6, 20, 1, true]} />
-          <meshBasicMaterial color="#fff3bd" transparent opacity={0.075} depthWrite={false} />
+          <meshBasicMaterial color="#fff4ed" transparent opacity={0.075} depthWrite={false} />
         </mesh>
       ))}
-      <pointLight position={[-1.2, 3.4, 0.5]} color="#fff1b8" intensity={2.6} distance={7} />
-      <pointLight position={[1.2, 3.4, 0.5]} color="#ffd66b" intensity={2.3} distance={7} />
+      <pointLight position={[-1.2, 3.4, 0.5]} color="#fff4ed" intensity={2.6} distance={7} />
+      <pointLight position={[1.2, 3.4, 0.5]} color="#f46300" intensity={2.3} distance={7} />
     </group>
   );
 }
@@ -337,7 +337,7 @@ function GraduationCelebration() {
         x: ((i * 37) % 100) / 12 - 4.1,
         y: 1 + ((i * 53) % 100) / 18,
         z: ((i * 29) % 100) / 20 - 2.5,
-        color: ["#F46300", "#005EB8", "#00A859", "#ffd43b", "#f7f2df"][i % 5],
+        color: ["#F46300", "#005EB8", "#00A859", "#bd3e3e", "#ffffff"][i % 5],
         speed: 0.7 + (i % 7) * 0.1,
       })),
     [],

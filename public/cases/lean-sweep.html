@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lean Sweep | Case study Process Engineer</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#fff;--card:#fff;--tx:#17212b;--mu:#4b5965;--ac:#075fa6;--ok:#187547;--bad:#bd3e3e;--bd:#d9e0e5;--okbg:#eaf6ef;--badbg:#fff0f0;--orange:#e85d0f}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:1180px;margin:0 auto;padding:28px clamp(16px,4vw,48px) 48px}
+.back-link{display:inline-flex;align-items:center;min-height:42px;margin:0 0 14px;padding:8px 14px;border:1px solid var(--ac);border-radius:8px;color:var(--ac);font-weight:700;text-decoration:none}
+.back-link:hover{background:#eaf3ff}
+.note{margin:0 0 20px;background:#fff7f0;color:#53301c;border:1px solid #efc6a8;border-radius:10px;padding:12px 16px;font-size:13px}
+h1{font-size:clamp(26px,5vw,38px);margin:18px 0 4px;line-height:1.15}
+h2{font-size:clamp(21px,3vw,28px);margin:38px 0 12px;letter-spacing:-.025em}
+.sub{color:var(--mu);margin:0}
+.tags span{display:inline-flex;background:#f4f7f6;border:1px solid var(--bd);border-radius:99px;padding:5px 12px;font-size:12px;font-weight:700;margin:8px 6px 0 0;color:var(--mu)}
+.tags span:nth-child(3n+1){background:#eaf3ff;border-color:#bbd7f4;color:#075fa6}
+.tags span:nth-child(3n+2){background:#eaf6ef;border-color:#b9dfc7;color:#187547}
+.tags span:nth-child(3n){background:#fff3e9;border-color:#f3d0b3;color:#a8490c}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:16px}
+.k{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px}
+.k b{font-size:30px;color:var(--orange);display:block;line-height:1.1}
+.k small{color:var(--mu)}
+.box{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;overflow-x:auto}
+.bar-ctl{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+button{font:inherit;font-size:14px;background:var(--ac);color:#fff;border:0;border-radius:8px;padding:6px 14px;cursor:pointer}
+button.g{background:var(--card);color:var(--tx);border:1px solid var(--bd)}
+.meter{flex:1;min-width:200px}
+.meter .tr{height:14px;background:var(--bd);border-radius:8px;overflow:hidden}
+.meter .fl{height:100%;width:100%;background:linear-gradient(90deg,var(--ok),var(--bad));background-size:300% 100%;transition:width .8s ease,background-position .8s}
+.meter small{color:var(--mu);font-size:12px}
+.meter b{font-size:20px}
+.phs{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.ph{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;transition:box-shadow .4s,border-color .4s}
+.ph.on{border-color:var(--ac);box-shadow:0 0 0 3px color-mix(in srgb,var(--ac) 22%,transparent)}
+.ph h3{margin:0;font-size:15px}.ph p{margin:0 0 8px;font-size:12.5px;color:var(--mu)}
+.cd{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--bad);background:var(--badbg);border-radius:10px;padding:8px 10px;margin:6px 0;transition:all .6s ease}
+.cd .e{font-size:22px;line-height:1.1}
+.cd b{font-size:14px;display:block}.cd span{font-size:12.5px;color:var(--mu)}
+.cd i{font-style:normal;font-size:11px;margin-left:auto;color:var(--bad);white-space:nowrap;font-weight:700}
+.cd.done{border-color:var(--ok);background:var(--okbg);transform:scale(1.02)}
+.cd.done i{color:var(--ok)}
+.cd.done .e{animation:pop .6s}
+@keyframes pop{50%{transform:scale(1.5) rotate(-10deg)}}
+.a3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.c{position:relative;min-height:150px;background:linear-gradient(145deg,#fff,#f8faf9);border:1px solid var(--bd);border-radius:14px;padding:18px}
+.c h3{margin:0 0 8px;font-size:14px;color:var(--ac);letter-spacing:.03em}
+.c p{margin:0;color:#35424d;font-size:14px;line-height:1.6}
+.analysis-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.analysis-grid .box{min-width:0}
+.analysis-grid h3{margin:0 0 8px;color:var(--ac);font-size:14px}
+.analysis-grid p{margin:0;color:#35424d;font-size:14px;line-height:1.6}
+.bars .bar{display:flex;align-items:center;gap:10px;margin:8px 0;font-size:14px}
+.bars label{width:130px;flex:none;color:var(--mu)}
+.tr2{flex:1;background:var(--bd);border-radius:6px;height:26px;overflow:hidden}
+.f{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:8px;color:#fff;font-size:13px;font-weight:600;width:0;animation:g 1.4s .3s ease-out forwards}
+@keyframes g{to{width:var(--w)}}
+.f.b{background:var(--bad)}.f.a{background:var(--ok)}
+.compare-chart{display:grid;gap:20px}
+.chart-legend{display:flex;flex-wrap:wrap;gap:10px 18px;color:var(--mu);font-size:13px}
+.chart-legend span{display:inline-flex;align-items:center;gap:7px}
+.legend-before,.legend-after{width:11px;height:11px;border-radius:50%;background:#697780}
+.legend-after{background:#187547}
+.compare-row{display:grid;grid-template-columns:minmax(140px,.8fr) 2fr;gap:16px;align-items:center}
+.compare-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.compare-pair small{display:block;margin-bottom:5px;color:var(--mu);font-size:12px}
+.compare-track{height:32px;overflow:hidden;border-radius:7px;background:#edf2ef}
+.compare-fill{display:flex;width:0;height:100%;align-items:center;padding-left:10px;border-radius:7px;color:#fff;font-size:12px;font-weight:750;animation:compareGrow 1.1s cubic-bezier(.2,.7,.2,1) forwards}
+.compare-fill.before{background:#697780}
+.compare-fill.after{background:linear-gradient(90deg,#187547,#43a86f)}
+@keyframes compareGrow{to{width:var(--value)}}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:10px}
+svg{max-width:100%;height:auto;display:block}
+svg text{fill:var(--tx);font-family:inherit}
+.cap{font-size:12.5px;color:var(--mu);margin:6px 0 0}
+code{background:var(--bd);padding:2px 6px;border-radius:6px;font-size:13px}
+table{border-collapse:collapse;width:100%;min-width:480px;font-size:14px}
+th,td{border-bottom:1px solid var(--bd);padding:8px;text-align:left}th{color:var(--mu)}
+td.d{color:var(--ok);font-weight:700}
+ul.cv{padding-left:18px;margin:0}ul.cv li{margin:8px 0}
+footer{color:var(--mu);font-size:12.5px;margin:30px 0 10px}
+@media(max-width:900px){.analysis-grid{grid-template-columns:1fr}}
+@media(max-width:700px){main{padding-top:18px}.bar-ctl{align-items:stretch}.meter{flex-basis:100%}.bars label{width:110px;font-size:12px}.compare-row{grid-template-columns:1fr;gap:8px}}
+@media(max-width:480px){.compare-pair{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.f{animation:none;width:var(--w)}.compare-fill{animation:none;width:var(--value)}.cd,.meter .fl,.ph{transition:none}.cd.done .e{animation:none}}
+</style>
+</head>
+<body>
+<main>
+<a class="back-link" href="/vi#case-studies">← Quay lại portfolio</a>
+<div class="note"><b>Bảo mật doanh nghiệp:</b> thời lượng tuyệt đối và dữ liệu vận hành chi tiết không được công khai. Kết quả dưới đây dùng phần trăm thay đổi hoặc chỉ số chuẩn hóa (mốc ban đầu = 100). Sơ đồ, biểu đồ và layout chỉ mang tính minh họa, đã lược bỏ thông tin nhận diện. <b>Các tỷ lệ kết quả 30%, 35% và 25% là dữ liệu thực đã cung cấp.</b></div>
+<h1>Lean Sweep: cải tiến dòng chảy, giảm lãng phí toàn khu vực</h1>
+<p class="sub">Môi trường sản xuất · 2018–2020 · 11 nhóm Kaizen được triển khai qua 3 giai đoạn</p>
+<div class="tags"><span>QC Story</span><span>PDCA</span><span>5 Why</span><span>Fishbone</span><span>Pareto</span><span>5W1H</span><span>Check Sheet</span><span>Kaizen</span></div>
+<div class="kpis">
+<div class="k"><b>−30%</b><small>Tổng lãng phí toàn bộ phận</small></div>
+<div class="k"><b>−35%</b><small>Cycle time sản xuất</small></div>
+<div class="k"><b>−25%</b><small>Thời gian di chuyển</small></div>
+<div class="k"><b>11</b><small>Nhóm lãng phí, 3 giai đoạn</small></div>
+</div>
+
+<h2>Tổng quan dự án</h2>
+<p class="sub" style="margin-bottom:16px">Tập hợp các nhóm Kaizen nhỏ thành chương trình cải tiến theo phạm vi và thứ tự ưu tiên.</p>
+<div class="a3">
+<div class="c"><h3>Vấn đề</h3><p>Lãng phí phát sinh ở nguyên liệu, chờ, di chuyển, bố trí, tồn kho, an toàn và bàn giao.</p></div>
+<div class="c"><h3>Nguyên nhân gốc</h3><p>Các dạng lãng phí rời rạc, chưa được đo lường và nhóm thành hướng xử lý.</p></div>
+<div class="c"><h3>Giải pháp</h3><p>Dùng QC tools để chia nhỏ cơ hội Kaizen, triển khai theo 3 giai đoạn từ dòng chảy đến thao tác tại máy.</p></div>
+<div class="c"><h3>Duy trì</h3><p>Kiểm tra định kỳ, đánh giá sau cải tiến và cập nhật tiêu chuẩn vận hành.</p></div>
+<div class="c"><h3>Vai trò dự án</h3><p>Đề xuất ý tưởng, thiết kế biểu mẫu, phân tích nhóm Kaizen, thống kê, báo cáo và theo dõi PDCA.</p></div>
+<div class="c"><h3>Hiện trạng</h3><p>Nhiều dạng lãng phí xuất hiện rải rác ở nguyên liệu, thời gian chờ, di chuyển, bố trí, tồn kho, an toàn và bàn giao giữa các khu vực.</p></div>
+<div class="c"><h3>Nguyên nhân gốc</h3><p>Các lãng phí chưa được đo lường và phân nhóm, khiến cơ hội cải tiến chưa có cấu trúc chung để theo dõi.</p></div>
+<div class="c"><h3>Công cụ phân tích</h3><p>QC Story, 5 Why, Fishbone, Pareto, 5W1H và Check Sheet được dùng làm khung ghi nhận, phân tích và tổ chức các nhóm Kaizen.</p></div>
+</div>
+
+<h2>Quy trình cải tiến theo giai đoạn</h2>
+<p class="sub" style="margin-bottom:10px">Các nhóm cải tiến được sắp theo hướng từ dòng chảy bên ngoài, đến tiêu chuẩn và công cụ, rồi tập trung vào thao tác và vật liệu tại vị trí làm việc.</p>
+<div class="box">
+<div class="bar-ctl">
+<button id="play" type="button">Tiếp tục</button><button class="g" id="step" type="button">Bước kế</button><button class="g" id="reset" type="button">Chạy lại</button>
+<div class="meter" aria-live="polite"><small>Chỉ số lãng phí · trước cải tiến = 100</small> <b id="mv">100</b><div class="tr"><div class="fl" id="mf"></div></div></div>
+</div>
+<div class="phs" id="board"></div>
+<p class="cap">Chỉ số chuyển động ở giữa là nội suy minh họa để mô tả tiến độ. Mốc trước = 100 và kết quả cuối ≈70, tương ứng giảm khoảng 30%. Cách phân nhóm vào từng giai đoạn cũng là minh họa.</p>
+</div>
+
+<h2>Một số ý tưởng Kaizen nhỏ</h2>
+<p class="sub" style="margin-bottom:12px">Ví dụ minh họa một cải tiến tại công đoạn. Các ý tưởng khác có thể bổ sung cùng cấu trúc khi được cung cấp.</p>
+<div class="grid2">
+<div class="box"><b>Ví dụ · Trước cải tiến</b>
+<svg viewBox="0 0 320 190" role="img" aria-label="Vải thừa bị bỏ vào thùng rác">
+<defs><pattern id="h1" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--bad)" stroke-width="2"/></pattern></defs>
+<rect x="10" y="10" width="300" height="110" rx="6" fill="none" stroke="var(--mu)"/>
+<g fill="var(--ac)" fill-opacity=".35" stroke="var(--ac)"><rect x="20" y="20" width="110" height="90" rx="4"/><rect x="140" y="20" width="80" height="55" rx="4"/></g>
+<rect x="140" y="82" width="80" height="28" fill="url(#h1)" stroke="var(--bad)"/>
+<rect x="230" y="20" width="70" height="90" fill="url(#h1)" stroke="var(--bad)">
+<animateTransform attributeName="transform" type="translate" values="0 0;0 0;-10 62;-10 62" keyTimes="0;.3;.7;1" dur="4s" repeatCount="indefinite"/>
+<animate attributeName="opacity" values="1;1;0;0" keyTimes="0;.3;.7;1" dur="4s" repeatCount="indefinite"/></rect>
+<rect x="238" y="150" width="56" height="34" rx="4" fill="var(--bd)" stroke="var(--mu)"/><text x="266" y="172" font-size="11" text-anchor="middle">Rác</text>
+<text x="20" y="150" font-size="12">Phần vải thừa bị bỏ đi</text>
+</svg></div>
+<div class="box"><b>Ví dụ · Sau cải tiến</b>
+<svg viewBox="0 0 320 190" role="img" aria-label="Vải thừa được cắt thêm sản phẩm phụ">
+<rect x="10" y="10" width="300" height="110" rx="6" fill="none" stroke="var(--mu)"/>
+<g fill="var(--ac)" fill-opacity=".35" stroke="var(--ac)"><rect x="20" y="20" width="110" height="90" rx="4"/><rect x="140" y="20" width="80" height="55" rx="4"/></g>
+<g fill="var(--ok)" fill-opacity=".45" stroke="var(--ok)">
+<rect x="144" y="86" width="30" height="20" rx="3"><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.2;.8;1" dur="4s" repeatCount="indefinite"/></rect>
+<rect x="180" y="86" width="34" height="20" rx="3"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.2;.35;.8;1" dur="4s" repeatCount="indefinite"/></rect>
+<rect x="236" y="26" width="28" height="36" rx="3"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.35;.5;.8;1" dur="4s" repeatCount="indefinite"/></rect>
+<rect x="268" y="26" width="26" height="36" rx="3"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.5;.65;.8;1" dur="4s" repeatCount="indefinite"/></rect>
+<rect x="236" y="70" width="58" height="34" rx="3"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.65;.8;.9;1" dur="4s" repeatCount="indefinite"/></rect></g>
+<text x="20" y="150" font-size="12">Vẽ lại sơ đồ cắt, cắt hàng phụ trên vải thừa</text>
+<text x="20" y="170" font-size="12" fill="var(--ok)">Không còn vải bỏ vào thùng rác</text>
+</svg></div>
+</div>
+
+<h2>Kết quả cải tiến</h2>
+<p class="sub">Chỉ số được chuẩn hóa theo từng hạng mục, mốc trước cải tiến = 100. Mức giảm 30%, 35% và 25% là kết quả thực đã cung cấp.</p>
+<div class="box" style="margin-top:14px"><p class="cap" style="margin:0 0 10px">Cách tính tổng lãng phí: <code>% giảm = Σ(lãng phí trước − sau) ÷ Σ lãng phí trước × 100</code>. Các hạng mục được quy đổi về cùng mốc trước khi tổng hợp, thang đo chi tiết được giữ kín.</p><table>
+<tr><th>Chỉ số</th><th>Trước</th><th>Sau</th><th>% thay đổi</th></tr>
+<tr><td>Tổng lãng phí toàn bộ phận</td><td>100</td><td>~70</td><td class="d">−30%</td></tr>
+<tr><td>Cycle time hàng hoá (toàn bộ mã)</td><td>100</td><td>65</td><td class="d">−35%</td></tr>
+<tr><td>Thời gian di chuyển</td><td>100</td><td>75</td><td class="d">−25%</td></tr>
+</table></div>
+
+<div class="box compare-chart" role="img" aria-label="Biểu đồ so sánh trước và sau: tổng lãng phí giảm 30%, cycle time giảm 35%, thời gian di chuyển giảm 25%">
+<div class="chart-legend"><span><i class="legend-before"></i>Trước cải tiến · 100</span><span><i class="legend-after"></i>Sau cải tiến</span></div>
+<div class="compare-row"><strong>Tổng lãng phí</strong><div class="compare-pair"><div><small>Trước · 100</small><div class="compare-track"><span class="compare-fill before" style="--value:100%">100</span></div></div><div><small>Sau · khoảng 70 · giảm 30%</small><div class="compare-track"><span class="compare-fill after" style="--value:70%">~70</span></div></div></div></div>
+<div class="compare-row"><strong>Cycle time sản xuất</strong><div class="compare-pair"><div><small>Trước · 100</small><div class="compare-track"><span class="compare-fill before" style="--value:100%">100</span></div></div><div><small>Sau · 65 · giảm 35%</small><div class="compare-track"><span class="compare-fill after" style="--value:65%">65</span></div></div></div></div>
+<div class="compare-row"><strong>Thời gian di chuyển</strong><div class="compare-pair"><div><small>Trước · 100</small><div class="compare-track"><span class="compare-fill before" style="--value:100%">100</span></div></div><div><small>Sau · 75 · giảm 25%</small><div class="compare-track"><span class="compare-fill after" style="--value:75%">75</span></div></div></div></div>
+<p class="cap">Các thanh dùng chung thang chuẩn hóa 0–100. Số liệu tuyệt đối không hiển thị.</p>
+</div>
+
+<footer><a class="back-link" href="/vi#case-studies">← Quay lại portfolio</a><p>Thông tin được trình bày ở mức khái quát nhằm bảo vệ dữ liệu nội bộ. Các kết quả phần trăm được giữ theo dữ liệu đã cung cấp, còn sơ đồ giai đoạn và hình ảnh là minh họa.</p><p><b>Hướng phát triển tiếp theo:</b> số hóa dashboard theo dõi và hỗ trợ phân loại cơ hội cải tiến.</p></footer>
+</main>
+<script>
+const P=[
+["GĐ1 · Ngoài: dòng chảy","Layout, vận chuyển, giao nhận",[["🚶","Quãng đường di chuyển","Rút ngắn lộ trình"],["🗺️","Layout","Bố trí lại khu vực"],["🔄","Giao nhận giữa bộ phận","Chuẩn hoá điểm giao nhận"],["📦","Tồn kho","Giảm hàng chờ, tồn thừa"]]],
+["GĐ2 · Giữa: tiêu chuẩn & công cụ","Thời gian chờ, dụng cụ, tiêu chuẩn",[["⏳","Thời gian chờ","Cân bằng nhân lực và cycle time"],["🔧","Dụng cụ & đổi mã hàng","Cải tiến dụng cụ thô sơ"],["📋","Tiêu chuẩn thao tác","Cập nhật cho phù hợp"]]],
+["GĐ3 · Trong: thao tác & vật liệu","Tại từng máy, từng vị trí",[["✋","Thao tác thừa","Rút gọn số bước"],["🔍","Lỗi thao tác","Thiết bị xem lỗi cải tiến"],["🧵","Nguyên liệu thừa","Cắt hàng phụ trên vải thừa"],["🦺","An toàn & nặng nhọc","Giảm tư thế, thao tác nặng"]]]];
+const b=document.getElementById('board'),cards=[],phs=[];
+P.forEach(p=>{const d=document.createElement('div');d.className='ph';d.innerHTML='<h3>'+p[0]+'</h3><p>'+p[1]+'</p>';
+p[2].forEach(g=>{const c=document.createElement('div');c.className='cd';c.innerHTML='<div class="e">'+g[0]+'</div><div><b>'+g[1]+'</b><span>'+g[2]+'</span></div><i>Lãng phí</i>';d.appendChild(c);cards.push(c);phs.push(d)});b.appendChild(d)});
+const N=cards.length,mv=document.getElementById('mv'),mf=document.getElementById('mf'),pb=document.getElementById('play');
+let i=0,t=null;
+function show(){const v=100-30*i/N;mv.textContent=Math.round(v);mf.style.width=v+'%';mf.style.backgroundPosition=(100*(1-i/N))+'% 0';
+phs.forEach(p=>p.classList.remove('on'));if(i>0&&i<=N)phs[i-1].classList.add('on')}
+function step(){if(i>=N){stop();return}const c=cards[i];c.classList.add('done');c.querySelector('i').textContent='Đã loại bỏ';i++;show();if(i>=N)stop()}
+function run(){stop();t=setInterval(step,900);pb.textContent='Tạm dừng'}
+function stop(){clearInterval(t);t=null;pb.textContent=i>=N?'Xong':'Tiếp tục'}
+pb.onclick=()=>{if(i>=N)return;t?stop():run()};
+document.getElementById('step').onclick=()=>{stop();step()};
+document.getElementById('reset').onclick=()=>{cards.forEach(c=>{c.classList.remove('done');c.querySelector('i').textContent='Lãng phí'});i=0;show();phs.forEach(p=>p.classList.remove('on'));run()};
+show();if(!matchMedia('(prefers-reduced-motion: reduce)').matches)setTimeout(run,700);
+</script>
+</body>
+</html>

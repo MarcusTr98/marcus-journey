@@ -7,9 +7,9 @@ import { routeCurve } from "./Road";
 import { milestones } from "@/data/milestones";
 
 const FOLIAGE = ["#2f8f68", "#49a978", "#70bd79", "#26785d"];
-const FIREFLY_COLORS = ["#fff4a8", "#7de8ff", "#ff78ba", "#a78bfa", "#8affcb"];
+const FIREFLY_COLORS = ["#ffffff", "#005eb8", "#f46300", "#00a859", "#bd3e3e"];
 type Instance = { position: THREE.Vector3; scale: number; tone: number };
-const FLOWER_COLORS = ["#ff4f9a", "#ffd447", "#ffffff", "#8b5cf6", "#ff6b35", "#54d6ff"];
+const FLOWER_COLORS = ["#f46300", "#00a859", "#ffffff", "#005eb8", "#bd3e3e"];
 
 const LANDMARK_CENTERS = milestones.map((milestone, index) => {
   const previous = milestones[Math.max(0, index - 1)].position;

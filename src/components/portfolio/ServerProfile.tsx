@@ -5,10 +5,9 @@ import type { Language } from "@/types";
 const archiveCopy = {
   vi: {
     kicker: "KINH NGHIỆM & DỰ ÁN TIÊU BIỂU",
-    title: "Cải tiến tại hiện trường. Chuyển hóa thành kết quả.",
+    title: "Cải tiến tại hiện trường.\nChuyển hóa thành kết quả.",
     intro:
-      "Từ 7 năm làm việc trong sản xuất và chất lượng đến các dự án phần mềm, đào tạo và số hóa quy trình.",
-    role: "Ứng viên Process Engineer · Sản xuất · Kaizen · Chất lượng",
+      "Bảy năm kinh nghiệm sản xuất và chất lượng, tiếp nối bằng phát triển phần mềm, đào tạo và số hóa quy trình.",
     englishCv: "English CV",
     chineseCv: "中文简历",
     download: "Tải PDF",
@@ -16,10 +15,9 @@ const archiveCopy = {
   },
   en: {
     kicker: "SELECTED EXPERIENCE & PROJECTS",
-    title: "Improve the process. Make the result visible.",
+    title: "Improve the process.\nMake the result last.",
     intro:
-      "Seven years in manufacturing and quality, followed by hands-on work in software, training and process digitization.",
-    role: "Process Engineer candidate · Manufacturing · Kaizen · Quality",
+      "Seven years in manufacturing and quality, followed by work in software, training and process digitization.",
     englishCv: "English CV",
     chineseCv: "Chinese CV",
     download: "Download PDF",
@@ -27,9 +25,8 @@ const archiveCopy = {
   },
   zh: {
     kicker: "精选经历与项目",
-    title: "改善现场流程，让成果清晰可见。",
-    intro: "七年制造与质量经验，之后持续投入软件开发、培训和流程数字化项目。",
-    role: "工艺工程师候选人 · 制造 · 改善 · 质量",
+    title: "改善现场流程。\n让成果持续可见。",
+    intro: "七年制造与质量经验，随后投入软件开发、培训和流程数字化。",
     englishCv: "English CV",
     chineseCv: "中文简历",
     download: "下载PDF",
@@ -41,19 +38,40 @@ const trainToRoleLink = {
   vi: {
     label: "DỰ ÁN KAIZEN · 2019–2020",
     title: "Train-to-Role — Chuẩn hóa đào tạo theo vị trí",
-    summary: "Rút ngắn thời gian đến khi làm việc độc lập từ 30 xuống 10 ngày.",
+    summary: "Giảm 53% thời lượng đào tạo tập trung và 80% thời lượng thực hành tại chuyền.",
     action: "Xem case study",
   },
   en: {
     label: "KAIZEN PROJECT · 2019–2020",
     title: "Train-to-Role — Role-based operator training",
-    summary: "Reduced time to independent work from 30 to 10 days.",
+    summary: "Cut classroom training by 53% and on-line practice time by 80%.",
     action: "View case study",
   },
   zh: {
     label: "改善项目 · 2019–2020",
     title: "Train-to-Role — 按岗位标准化培训",
-    summary: "将独立上岗周期从30天缩短至10天。",
+    summary: "集中培训时间减少53%，生产线实操时间减少80%。",
+    action: "查看案例",
+  },
+} as const;
+
+const leanSweepLink = {
+  vi: {
+    label: "DỰ ÁN KAIZEN · 2018–2020",
+    title: "Lean Sweep — Giảm lãng phí toàn khu vực sản xuất",
+    summary: "11 nhóm cải tiến, giảm 30% lãng phí, 35% cycle time và 25% thời gian di chuyển.",
+    action: "Xem case study",
+  },
+  en: {
+    label: "KAIZEN PROJECT · 2018–2020",
+    title: "Lean Sweep — Area-wide waste reduction",
+    summary: "11 improvement groups, reducing waste by 30%, cycle time by 35% and travel time by 25%.",
+    action: "View case study",
+  },
+  zh: {
+    label: "改善项目 · 2018–2020",
+    title: "Lean Sweep — 区域精益改善",
+    summary: "11个改善小组，浪费减少30%，周期时间减少35%，移动时间减少25%。",
     action: "查看案例",
   },
 } as const;
@@ -66,13 +84,20 @@ export default function ServerProfile({ language }: { language: Language }) {
       <header className="profile-section-header">
         <div className="profile-heading-copy">
           <span className="kicker">{t.kicker}</span>
-          <h2 id="case-studies-title">{t.title}</h2>
+          <h2 id="case-studies-title">
+            {t.title.split("\n").map((line, index) => (
+              <span key={line}>
+                {line}
+                {index === 0 && <br />}
+              </span>
+            ))}
+          </h2>
           <p>{t.intro}</p>
         </div>
-        <address className="profile-contact-card">
+        <aside className="profile-contact-card" aria-label="Marcus Tran contact card">
           <div className="profile-identity">
             <strong>{profile.preferredName}</strong>
-            <span>{t.role}</span>
+            <span>PROCESS ENGINEER / CONTINUOUS IMPROVEMENT</span>
           </div>
           <div className="profile-contact-links">
             <a href={`mailto:${profile.email}`}>{profile.email}</a>
@@ -100,7 +125,7 @@ export default function ServerProfile({ language }: { language: Language }) {
               <i aria-hidden="true">↓</i>
             </a>
           </div>
-        </address>
+        </aside>
       </header>
       <div className="seo-profile-grid">
         {profileMilestones.map((milestone, index) => (
@@ -117,13 +142,23 @@ export default function ServerProfile({ language }: { language: Language }) {
               ))}
             </ul>
             {milestone.id === "toyota" && (
-              <div className="timeline-project">
-                <span>{trainToRoleLink[language].label}</span>
-                <h4>{trainToRoleLink[language].title}</h4>
-                <p>{trainToRoleLink[language].summary}</p>
-                <a href="/cases/train-to-role.html">
-                  {trainToRoleLink[language].action} <b aria-hidden="true">↗</b>
-                </a>
+              <div className="timeline-projects">
+                <div className="timeline-project">
+                  <span>{trainToRoleLink[language].label}</span>
+                  <h4>{trainToRoleLink[language].title}</h4>
+                  <p>{trainToRoleLink[language].summary}</p>
+                  <a href="/cases/train-to-role.html">
+                    {trainToRoleLink[language].action} <b aria-hidden="true">↗</b>
+                  </a>
+                </div>
+                <div className="timeline-project">
+                  <span>{leanSweepLink[language].label}</span>
+                  <h4>{leanSweepLink[language].title}</h4>
+                  <p>{leanSweepLink[language].summary}</p>
+                  <a href="/cases/lean-sweep.html">
+                    {leanSweepLink[language].action} <b aria-hidden="true">↗</b>
+                  </a>
+                </div>
               </div>
             )}
             {milestone.projectUrl && (
