@@ -370,7 +370,11 @@ export default function JourneyApp({
         <section className="journey-invite journey-home-teaser">
           <div className="journey-invite-copy">
             <span className="kicker">{t.journeyInviteLabel}</span>
-            <h2>{t.journeyInviteTitle}</h2>
+            <h2>
+              {t.journeyInviteTitle.split("\n").map((line) => (
+                <span key={line}>{line}</span>
+              ))}
+            </h2>
             <p>{t.journeyInviteBody}</p>
           </div>
           <a className="journey-start-button" href={`/${language}/journey`}>

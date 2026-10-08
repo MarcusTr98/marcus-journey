@@ -1678,15 +1678,17 @@ select:focus-visible {
   gap: 10px;
   margin-top: 22px;
 }
-.seo-profile-grid a.education-project-card {
-  display: flex;
+.seo-profile-grid .education-project-card {
+  position: relative;
+  display: grid;
   min-width: 0;
   aspect-ratio: 1;
-  flex-direction: column;
-  justify-content: center;
-  gap: 18px;
+  grid-template-rows: minmax(0, 1fr) auto;
+  align-items: stretch;
+  gap: 10px;
   min-height: 0;
-  padding: clamp(16px, 2vw, 28px);
+  overflow: hidden;
+  padding: 12px 12px 42px;
   border: 1px solid var(--line);
   border-top: 1px solid var(--line);
   border-radius: 10px;
@@ -1695,27 +1697,54 @@ select:focus-visible {
   text-decoration: none;
   transition: border-color 160ms ease, background-color 160ms ease, transform 160ms ease;
 }
-.seo-profile-grid a.education-project-card > .education-project-image {
+.seo-profile-grid .education-project-card > .education-project-image {
   display: block;
   width: 100%;
-  height: 62%;
-  flex: 1 1 auto;
+  height: 100%;
+  min-height: 0;
   border-radius: 7px;
-  object-fit: cover;
+  background: #f3f8f5;
+  object-fit: contain;
 }
 .seo-profile-grid .education-project-card .education-project-title {
   margin: 0;
   color: var(--ink);
-  font: 700 clamp(17px, 1.7vw, 23px)/1.2 var(--font-display);
+  font: 700 clamp(13px, 1.2vw, 16px)/1.25 var(--font-display);
   overflow-wrap: normal;
   word-break: normal;
   hyphens: none;
 }
 .seo-profile-grid .education-project-arrow {
-  align-self: flex-end;
+  position: absolute;
+  right: 9px;
+  bottom: 9px;
   color: var(--orange);
-  width: 26px;
-  height: 26px;
+  width: 21px;
+  height: 21px;
+}
+.teaching-study-card {
+  cursor: default;
+}
+.seo-profile-grid .teaching-study-card .teaching-study-label {
+  color: var(--green);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+}
+.seo-profile-grid .teaching-study-card {
+  grid-template-rows: minmax(0, 1fr) auto auto auto;
+  gap: 7px;
+  padding: 12px;
+}
+.seo-profile-grid .teaching-study-card > .education-project-image {
+  width: 100%;
+  height: 100%;
+}
+.seo-profile-grid .teaching-study-card small {
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: 0.06em;
 }
 .seo-profile-grid a.education-project-card:hover {
   transform: translateY(-2px);
@@ -1934,15 +1963,55 @@ select:focus-visible {
   font-weight: 750;
 }
 .journey-home-teaser {
+  isolation: isolate;
+  overflow: hidden;
   background: #f6f8fa;
 }
+.journey-home-teaser::before {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background: url("/images/journey-preview.svg") right 17% center / min(48vw, 560px) auto no-repeat;
+  content: "";
+  opacity: 0.44;
+  pointer-events: none;
+  mask-image: linear-gradient(90deg, transparent 0%, #000 28%, #000 88%, transparent 100%);
+}
+.journey-home-teaser .journey-invite-copy {
+  position: relative;
+  z-index: 1;
+}
 .journey-home-teaser .journey-start-button {
+  position: relative;
+  z-index: 1;
   display: inline-flex;
   flex: none;
   align-items: center;
-  gap: 10px;
-  min-height: 50px;
+  justify-content: center;
+  gap: 14px;
+  min-height: 68px;
+  padding: 0 26px;
+  border-radius: 999px;
+  box-shadow: 0 10px 24px rgba(232, 93, 15, 0.2);
+  font-size: 16px;
+  letter-spacing: 0.03em;
   text-decoration: none;
+  animation: journeyInviteWiggle 4s ease-in-out infinite;
+}
+.journey-home-teaser .journey-start-button .circle-arrow {
+  width: 24px;
+  height: 24px;
+}
+.journey-home-teaser .journey-start-button:hover {
+  animation-play-state: paused;
+  transform: translateY(-2px) scale(1.03);
+}
+@keyframes journeyInviteWiggle {
+  0%, 82%, 100% { transform: rotate(0) scale(1); }
+  85% { transform: rotate(-1.5deg) scale(1.015); }
+  88% { transform: rotate(1.5deg) scale(1.015); }
+  91% { transform: rotate(-1deg) scale(1.01); }
+  94% { transform: rotate(0.6deg) scale(1.005); }
 }
 @media (max-width: 850px) {
   .journey-screen-intro {
@@ -1984,6 +2053,16 @@ select:focus-visible {
   }
   .journey-home-teaser {
     align-items: flex-start;
+  }
+  .journey-home-teaser::before {
+    background-position: right -50px bottom -10px;
+    background-size: 88vw auto;
+    opacity: 0.25;
+  }
+  .journey-home-teaser .journey-start-button {
+    min-height: 60px;
+    padding: 0 20px;
+    font-size: 14px;
   }
 }
 .topbar nav a:hover,
@@ -2194,6 +2273,10 @@ select:focus-visible {
 }
 .seo-profile-grid h3 {
   color: var(--ink);
+  white-space: pre-line;
+}
+.milestone-panel h2 {
+  white-space: pre-line;
 }
 .seo-profile-grid strong {
   color: var(--blue);
@@ -2415,20 +2498,20 @@ select:focus-visible {
 }
 .seo-profile > .profile-section-header {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(380px, 0.9fr);
+  grid-template-columns: minmax(0, 1.2fr) minmax(380px, 0.8fr);
   align-items: center;
-  gap: clamp(28px, 5vw, 72px);
+  gap: clamp(22px, 3vw, 48px);
   max-width: none;
   margin-bottom: 54px;
 }
 .seo-profile > .profile-section-header .profile-heading-copy {
-  max-width: 780px;
+  max-width: none;
 }
 .seo-profile > .profile-section-header h2 {
   max-width: none;
   margin-block: 16px 20px;
   color: var(--ink);
-  font-size: clamp(34px, 3.5vw, 48px);
+  font-size: clamp(38px, 3.6vw, 56px);
   line-height: 1.04;
   letter-spacing: -0.055em;
 }
@@ -2748,32 +2831,32 @@ select:focus-visible {
 .garage {
   min-height: 82svh;
   padding-top: 110px;
-  padding-bottom: 56px;
+  padding-bottom: 28px;
 }
 .seo-profile {
-  padding-top: 64px;
+  padding-top: 28px;
 }
 .seo-profile > .profile-section-header {
-  margin-bottom: 36px;
+  margin-bottom: 24px;
 }
 @media (max-width: 850px) {
   .garage {
     min-height: 78svh;
     padding-top: 100px;
-    padding-bottom: 48px;
+    padding-bottom: 24px;
   }
   .seo-profile {
-    padding-top: 48px;
+    padding-top: 24px;
   }
 }
 @media (max-width: 540px) {
   .garage {
     min-height: 70svh;
     padding-top: 84px;
-    padding-bottom: 38px;
+    padding-bottom: 20px;
   }
   .seo-profile {
-    padding-top: 34px;
+    padding-top: 18px;
   }
 }
 
@@ -2781,3 +2864,52 @@ select:focus-visible {
 .seo-profile .profile-contact-card{gap:12px;padding:18px}
 .seo-profile .profile-identity{gap:5px;padding-bottom:10px}
 .seo-profile .profile-contact-links{padding:10px 0;gap:8px 14px}
+
+/* Tighten the transition into the journey and make the portfolio headings scan clearly. */
+.seo-profile {
+  padding-bottom: 18px;
+}
+.seo-profile > .profile-section-header h2 {
+  font-size: clamp(38px, 3.6vw, 56px);
+}
+.seo-profile > .profile-section-header h2 > span {
+  display: block;
+  white-space: nowrap;
+}
+.seo-profile-grid .profile-metric {
+  color: var(--ink);
+  font-weight: 850;
+  white-space: nowrap;
+}
+.journey-home-teaser {
+  padding-block: clamp(24px, 3.5vw, 42px);
+}
+.journey-home-teaser h2 {
+  white-space: normal;
+}
+.journey-home-teaser h2 > span {
+  display: block;
+  white-space: nowrap;
+}
+@media (max-width: 850px) {
+  .seo-profile {
+    padding-bottom: 14px;
+  }
+  .seo-profile > .profile-section-header h2 {
+    font-size: clamp(30px, 5.8vw, 48px);
+  }
+}
+@media (max-width: 540px) {
+  .seo-profile {
+    padding-bottom: 10px;
+  }
+  .seo-profile > .profile-section-header h2 {
+    font-size: clamp(20px, 5.6vw, 30px);
+  }
+  .journey-home-teaser {
+    padding-block: 24px;
+  }
+  .journey-home-teaser h2 {
+    font-size: clamp(26px, 7.2vw, 38px);
+  }
+}

@@ -75,21 +75,22 @@ const milestoneCatalog: Omit<Milestone, "stage">[] = [
   },
   {
     id: "solutions",
-    shortTitle: "Digital Delivery",
-    title: "Military Command Digital Solutions",
+    shortTitle: "Real-world Products",
+    title: "Real-world Products",
     period: "02/2026 — 04/2026",
-    role: "Solution Architect · Full-stack & Security Developer",
+    role: "Digitalization solutions · Internal and personal computer security",
     summary:
-      "Delivered two internal products: LAN task management and USB Sentry endpoint protection. Both were formally accepted with 100% user satisfaction.",
+      "Delivered two practical products: a LAN-based task management system and a Windows endpoint protection application for monitoring removable devices and responding to security events.",
     highlights: [
-      "Task lifecycle: assignment, acknowledgement, completion reporting and live visibility",
-      "USB/mobile detection through drive polling and WMI/WPD monitoring",
-      "Portable LAN-first deployment with SQLite and a standalone Windows JAR",
-      "Military-command requirements validated, users trained and both solutions formally accepted",
+      "Task system: issue and recall assignments, track progress, acknowledge receipt and report completion",
+      "USB Guardian: detect USB storage and mobile devices, alert users and apply endpoint response actions",
+      "Java Spring Boot · Thymeleaf · SQLite for the LAN task system",
+      "Java Swing · Windows API · PowerShell · WMI for the Windows security application",
+      "Both products were accepted and deployed for internal use",
     ],
     accent: "#00A859",
     position: [-4, 0, -53],
-    upgrade: "Client Discovery · Solution Architecture · LAN Delivery · Endpoint Security",
+    upgrade: "Workflow Digitization · LAN Deployment · Windows Endpoint Security",
     projectLinks: [
       {
         label: "Task Management",

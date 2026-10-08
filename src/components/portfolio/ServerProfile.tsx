@@ -92,21 +92,75 @@ const tpmHandoverLink = {
 
 const fptProjects = {
   vi: [
-    { slug: "marcus-electronics", title: "Marcus Electronics" },
-    { slug: "marcus-store", title: "Marcus Store" },
-    { slug: "marcus-video", title: "Marcus Video" },
+    { slug: "marcus-electronics", title: "Marcus Electronics", image: "marcus-electronics" },
+    { slug: "marcus-store", title: "Marcus Store", image: "marcus-store" },
+    { slug: "marcus-video", title: "Marcus Video", image: "marcus-video" },
   ],
   en: [
-    { slug: "marcus-electronics", title: "Marcus Electronics" },
-    { slug: "marcus-store", title: "Marcus Store" },
-    { slug: "marcus-video", title: "Marcus Video" },
+    { slug: "marcus-electronics", title: "Marcus Electronics", image: "marcus-electronics" },
+    { slug: "marcus-store", title: "Marcus Store", image: "marcus-store" },
+    { slug: "marcus-video", title: "Marcus Video", image: "marcus-video" },
   ],
   zh: [
-    { slug: "marcus-electronics", title: "Marcus Electronics" },
-    { slug: "marcus-store", title: "Marcus Store" },
-    { slug: "marcus-video", title: "Marcus Video" },
+    { slug: "marcus-electronics", title: "Marcus Electronics", image: "marcus-electronics" },
+    { slug: "marcus-store", title: "Marcus Store", image: "marcus-store" },
+    { slug: "marcus-video", title: "Marcus Video", image: "marcus-video" },
   ],
 } as const;
+
+const solutionsProjects = {
+  vi: [
+    { slug: "lan-task-system", title: "Hệ thống quản lý công việc", image: "lan-task-system" },
+    { slug: "usb-guardian", title: "USB Guardian · Bảo mật Windows", image: "usb-guardian" },
+  ],
+  en: [
+    { slug: "lan-task-system", title: "LAN Task Management", image: "lan-task-system" },
+    { slug: "usb-guardian", title: "USB Guardian · Windows Security", image: "usb-guardian" },
+  ],
+  zh: [
+    { slug: "lan-task-system", title: "局域网任务管理系统", image: "lan-task-system" },
+    { slug: "usb-guardian", title: "USB Guardian · Windows安全", image: "usb-guardian" },
+  ],
+} as const;
+
+const teachingStudies = {
+  vi: [
+    { title: "Lập trình thực hành", label: "BÀI GIẢNG", image: "lesson-programming" },
+    { title: "Robocon & điều khiển", label: "HƯỚNG DẪN", image: "lesson-robocon" },
+    { title: "Công nghệ số", label: "TÀI LIỆU HỌC TẬP", image: "lesson-digital" },
+  ],
+  en: [
+    { title: "Practical programming", label: "LESSON", image: "lesson-programming" },
+    { title: "Robocon & control", label: "GUIDE", image: "lesson-robocon" },
+    { title: "Digital technology", label: "LEARNING RESOURCE", image: "lesson-digital" },
+  ],
+  zh: [
+    { title: "编程实践", label: "课程", image: "lesson-programming" },
+    { title: "Robocon与控制", label: "指南", image: "lesson-robocon" },
+    { title: "数字技术", label: "学习资料", image: "lesson-digital" },
+  ],
+} as const;
+
+const teachingStudyStatus = {
+  vi: "NỘI DUNG SẼ BỔ SUNG",
+  en: "CONTENT COMING SOON",
+  zh: "内容即将补充",
+} as const;
+
+const keyMetricPattern =
+  /(<\s?\d+(?:[.,]\d+)?%|Toyota Boshoku Hai Phong|FPT Polytechnic(?: Hai Phong)?|VHunter Event Company|Laser Cutting CNC|Standard Work|Check Sheets?|Q-Point|Safety Dojo|Plan\/Kanban|Spring Boot(?:\s+\d+(?:\.\d+){1,2})?|SQL Server|Google Workspace|Microsoft Office|WebSocket|JSP\/JSTL|WMI\/WPD|SQLite|Robocon|Java(?:\s+\d+)?|Vue(?:\.\d+)?|Marcus (?:Store|Video|Electronics)|Kaizen|Pareto|QCC|TPM|5S|5W1H|5 Whys|5 Why|~?\d+(?:[.,]\d+)?%|\d\.\d+\/\d\.\d+|\bTop\s*1\b|\b\d{1,3}(?:,\d{3})+\b|\bVND\s?[\d,.]+(?:\s?(?:million|billion))?)/gi;
+
+function highlightMetrics(text: string) {
+  return text.split(keyMetricPattern).map((part, index) =>
+    index % 2 === 1 ? (
+      <b className="profile-metric" key={`${part}-${index}`}>
+        {part}
+      </b>
+    ) : (
+      part
+    ),
+  );
+}
 
 export default function ServerProfile({ language }: { language: Language }) {
   const profileMilestones = getMilestones(language).filter(
@@ -120,10 +174,7 @@ export default function ServerProfile({ language }: { language: Language }) {
           <span className="kicker">{t.kicker}</span>
           <h2 id="case-studies-title">
             {t.title.split("\n").map((line, index) => (
-              <span key={line}>
-                {line}
-                {index === 0 && <br />}
-              </span>
+              <span key={`${index}-${line}`}>{line}</span>
             ))}
           </h2>
           <p>{t.intro}</p>
@@ -169,15 +220,22 @@ export default function ServerProfile({ language }: { language: Language }) {
             </span>
             <h3>{milestone.title}</h3>
             <strong>{milestone.role}</strong>
-            <p>{milestone.summary}</p>
+            <p>{highlightMetrics(milestone.summary)}</p>
             <ul>
               {milestone.highlights.map((highlight) => (
-                <li key={highlight}>{highlight}</li>
+                <li key={highlight}>{highlightMetrics(highlight)}</li>
               ))}
             </ul>
-            {milestone.id === "fpt" && (
-              <div className="education-projects" aria-label={language === "en" ? "Selected software projects" : "Dự án phần mềm tiêu biểu"}>
-                {fptProjects[language].map((project) => (
+            {(milestone.id === "fpt" || milestone.id === "solutions") && (
+              <div
+                className="education-projects"
+                aria-label={
+                  language === "en"
+                    ? milestone.id === "fpt" ? "Selected software projects" : "Real-world digital products"
+                    : milestone.id === "fpt" ? "Dự án phần mềm tiêu biểu" : "Sản phẩm số thực tế"
+                }
+              >
+                {(milestone.id === "fpt" ? fptProjects[language] : solutionsProjects[language]).map((project) => (
                   <a
                     className="education-project-card"
                     href={`/cases/${project.slug}${language === "en" ? ".en" : ""}.html`}
@@ -186,7 +244,7 @@ export default function ServerProfile({ language }: { language: Language }) {
                   >
                     <Image
                       className="education-project-image"
-                      src={`/images/projects/${project.slug}.svg`}
+                      src={`/images/projects/${project.image}.svg`}
                       alt=""
                       width={640}
                       height={420}
@@ -195,6 +253,28 @@ export default function ServerProfile({ language }: { language: Language }) {
                     <span className="education-project-title">{project.title}</span>
                     <ArrowIcon className="education-project-arrow" />
                   </a>
+                ))}
+              </div>
+            )}
+            {milestone.id === "teaching" && (
+              <div
+                className="education-projects teaching-studies"
+                aria-label={language === "en" ? "Teaching case studies" : "Chuyên đề giảng dạy"}
+              >
+                {teachingStudies[language].map((study) => (
+                  <div className="education-project-card teaching-study-card" key={study.image}>
+                    <Image
+                      className="education-project-image"
+                      src={`/images/projects/${study.image}.svg`}
+                      alt=""
+                      width={640}
+                      height={420}
+                      aria-hidden="true"
+                    />
+                    <span className="teaching-study-label">{study.label}</span>
+                    <span className="education-project-title">{study.title}</span>
+                    <small>{teachingStudyStatus[language]}</small>
+                  </div>
                 ))}
               </div>
             )}
@@ -222,11 +302,11 @@ export default function ServerProfile({ language }: { language: Language }) {
                 {t.source} <ArrowIcon />
               </a>
             )}
-            {milestone.projectLinks?.map((link) => (
-              <a key={link.url} href={link.url} target="_blank" rel="noreferrer">
-                {link.label} <ArrowIcon />
-              </a>
-            ))}
+            {milestone.id !== "solutions" && milestone.projectLinks?.map((link) => (
+                <a key={link.url} href={link.url} target="_blank" rel="noreferrer">
+                  {link.label} <ArrowIcon />
+                </a>
+              ))}
           </article>
         ))}
       </div>
