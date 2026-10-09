@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Train-to-Role | Case study Process Engineer</title>
+<title>Reduce Training Time | Case study Process Engineer</title>
 <style>
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
 --bg:#fff;--card:#fff;--tx:#17212b;--mu:#4b5965;--ac:#075fa6;--ok:#187547;--bad:#bd3e3e;--orange:#e85d0f;--bd:#d9e0e5}
@@ -61,7 +61,7 @@ svg{max-width:100%;height:auto;display:block}
 svg text{fill:var(--tx);font-family:inherit}
 .why-sequence{display:grid;gap:30px;max-width:100%;margin:18px auto 0;padding:0;list-style:none;counter-reset:why}
 .why-sequence li{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 38px minmax(0,1fr);align-items:stretch;gap:10px;counter-increment:why}
-.why-sequence li:not(:last-child)::after{content:"↙";position:absolute;bottom:-25px;left:calc(75% - 7px);z-index:1;color:#187547;font-size:18px;font-weight:800}
+
 .why-question,.why-answer{position:relative;display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:center;padding:14px 16px;border:1px solid var(--bd);border-radius:12px;background:#fff}
 .why-question::before{content:"Q" counter(why);display:grid;width:36px;height:36px;place-items:center;border-radius:10px;background:#eaf3ff;color:var(--ac);font-size:12px;font-weight:800}
 .why-answer::before{content:"A" counter(why);display:grid;width:36px;height:36px;place-items:center;border-radius:10px;background:#eaf6ef;color:#187547;font-size:12px;font-weight:800}
@@ -79,22 +79,23 @@ ul.cv{padding-left:18px;margin:0}ul.cv li{margin:8px 0}
 .pb{transform-origin:bottom;transform-box:fill-box}
 footer{color:var(--mu);font-size:12.5px;margin:30px 0 10px}
 @media(max-width:1000px){.a3{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:700px){.analysis-grid,.result-chart-pair{grid-template-columns:1fr}.a3{grid-template-columns:1fr}.c{min-height:0}.why-sequence li{grid-template-columns:1fr;gap:5px}.why-connector{font-size:0}.why-connector::before{content:"↓";font-size:18px}.why-sequence li:not(:last-child)::after{left:50%;bottom:-25px}}
+@media(max-width:700px){.analysis-grid,.result-chart-pair{grid-template-columns:1fr}.a3{grid-template-columns:1fr}.c{min-height:0}.why-sequence li{grid-template-columns:1fr;gap:5px}.why-connector{font-size:0}.why-connector::before{content:"↓";font-size:18px}}
 @media(max-width:560px){.process-diagram text{font-size:12px}.k b{font-size:25px}.bar label{width:90px;font-size:12px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.f,.pb,.result-chart-fill{animation:none;width:var(--value,var(--w))}svg animate,svg animateMotion{display:none!important}}
-</style>
+.mermaid{width:100%;max-width:100%;overflow-x:auto;display:flex;justify-content:center}.mermaid svg{width:100%;height:auto;max-width:100%}.mermaid .edgeLabel{background:#fff}.mermaid foreignObject{overflow:visible}@media(max-width:680px){.mermaid{justify-content:flex-start}.mermaid svg{min-width:520px}}@media(prefers-reduced-motion:reduce){.mermaid *{animation:none!important;transition:none!important}}</style>
 </head>
 <body>
 <main>
 <div class="case-topbar"><a class="back-link" href="/vi#case-studies">← Quay lại portfolio</a><nav class="language-switch" aria-label="Ngôn ngữ"><a href="/cases/train-to-role.html" aria-current="page" lang="vi">VI</a><a href="/cases/train-to-role.en.html" lang="en">EN</a></nav></div>
 <div class="note"><b>Bảo mật:</b> dữ liệu vận hành được ẩn. Các chỉ số, biểu đồ và hình ảnh trên trang đều là mô phỏng.</div>
-<h1>Train-to-Role: Chuẩn hóa đào tạo theo vị trí công việc</h1>
-<p class="sub">Kaizen tại môi trường sản xuất · 2019–2020 · Cải tiến thiết kế và triển khai chương trình đào tạo hội nhập</p>
+<h1>Reduce Training Time</h1>
+<p class="sub">Kaizen tại môi trường sản xuất · 2019–2020 · Chuẩn hóa đào tạo hội nhập theo vị trí</p>
 <div class="tags"><span>PDCA</span><span>Chuẩn hóa thao tác</span><span>Training design</span><span>QC tools</span><span>Lean</span></div>
 
 <div class="kpis">
-<div class="k"><b>−53%</b><small>Thời lượng đào tạo tập trung</small></div>
-<div class="k"><b>−80%</b><small>Thời lượng thực hành tại chuyền</small></div>
+<div class="k"><b>15 → 7 ngày</b><small>Thời lượng đào tạo mô phỏng</small></div>
+<div class="k"><b>−53.3%</b><small>Mức giảm tương đương</small></div>
+<div class="k"><b>~400 người/ca</b><small>Quy mô nhân sự</small></div>
 </div>
 
 <h2>Tổng quan dự án</h2>
@@ -104,7 +105,7 @@ footer{color:var(--mu);font-size:12.5px;margin:30px 0 10px}
 <div class="c" data-step="02"><h3>Hiện trạng</h3><p>Thao tác khó chưa được luyện đủ trong giai đoạn học tập trung.</p></div>
 <div class="c" data-step="03"><h3>Nguyên nhân gốc</h3><p>Chưa phân luồng đào tạo theo vị trí và tiêu chuẩn thao tác cần thiết.</p></div>
 <div class="c" data-step="04"><h3>Giải pháp</h3><p>Định hướng vị trí, nhóm nội dung, chuẩn hóa hướng dẫn và đánh giá theo năng lực.</p></div>
-<div class="c" data-step="05"><h3>Kết quả</h3><p>Thời lượng đào tạo tập trung giảm 53%, thực hành tại chuyền giảm 80%.</p></div>
+<div class="c" data-step="05"><h3>Kết quả</h3><p>Thời gian đào tạo hội nhập giảm từ 15 xuống 7 ngày, tương đương 53.3%, trong kịch bản khoảng 400 người mỗi ca.</p></div>
 <div class="c" data-step="06"><h3>Duy trì</h3><p>Rà soát định kỳ, cập nhật tiêu chuẩn và đánh giá sau đào tạo.</p></div>
 <div class="c" data-step="07"><h3>Vai trò dự án</h3><p>Đề xuất cải tiến, thiết kế biểu mẫu, phân tích bằng QC tools và theo dõi PDCA.</p></div>
 </div>
@@ -112,31 +113,57 @@ footer{color:var(--mu);font-size:12.5px;margin:30px 0 10px}
 <h2>Quy trình trước và sau</h2>
 <div class="grid2">
 <div class="box process-card"><b>BEFORE · Đào tạo đồng loạt</b>
-<svg class="process-diagram" viewBox="0 0 420 620" role="img" aria-label="Quy trình trước cải tiến, mỗi bước được nối bằng mũi tên">
-<defs><marker id="arrow-old" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#887e6a"/></marker></defs>
-<path class="flow-line" d="M210 68V98" marker-end="url(#arrow-old)"/><path class="flow-line" d="M210 156V188" marker-end="url(#arrow-old)"/><path class="flow-line" d="M210 246V278" marker-end="url(#arrow-old)"/><path class="flow-line" d="M210 336V368" marker-end="url(#arrow-old)"/><path class="flow-line" d="M210 426V458" marker-end="url(#arrow-old)"/><path class="flow-line" d="M210 516V548" marker-end="url(#arrow-old)"/>
-<rect class="flow-start" x="115" y="20" width="190" height="48" rx="24"/><text x="210" y="49">Nhân sự mới</text>
-<rect class="flow-old" x="50" y="100" width="320" height="56"/><text x="210" y="133">Đào tạo nội dung chung</text>
-<rect class="flow-old" x="80" y="190" width="260" height="56"/><text x="210" y="223">Học nhiều vị trí</text>
-<rect class="flow-risk" x="60" y="280" width="300" height="56"/><text x="210" y="313">Đánh giá tổng hợp</text>
-<rect class="flow-old" x="50" y="370" width="320" height="56"/><text x="210" y="403">Bố trí vào vị trí công việc</text>
-<rect class="flow-risk" x="60" y="460" width="300" height="56"/><text x="210" y="493">Bổ sung thực hành tại chuyền</text>
-<rect class="flow-end" x="90" y="550" width="240" height="56" rx="28"/><text x="210" y="583">Làm việc độc lập</text></svg>
+<pre class="mermaid" role="img">flowchart TB
+  accTitle: Quy trình đào tạo chung trước cải tiến
+  accDescr: Đào tạo chung, học nhiều vị trí, đánh giá tổng hợp và thực hành bổ sung tại chuyền.
+start["Nhân sự mới"]
+  general["Đào tạo nội dung chung"]
+  roles["Học nhiều vị trí"]
+  assessment["Đánh giá tổng hợp"]
+  placement["Bố trí vào vị trí công việc"]
+  practice["Bổ sung thực hành tại chuyền"]
+  independent["Làm việc độc lập"]
+  start --> general
+  general --> roles
+  roles --> assessment
+  assessment --> placement
+  placement --> practice
+  practice --> independent
+  classDef start fill:#f5f0e6,stroke:#887e6a,color:#302d27,stroke-width:2px
+  classDef old fill:#fde8e7,stroke:#c8403b,color:#702b28,stroke-width:2px
+  classDef risk fill:#fff0e8,stroke:#e85d0f,color:#78380d,stroke-width:2px
+  class start,independent start
+  class general,roles,placement old
+  class assessment,practice risk
+</pre>
 <p class="cap">Kết luận: đào tạo đồng loạt làm loãng thời lượng dành cho năng lực cần tại từng vị trí.</p></div>
 <div class="box process-card"><b>AFTER · Đào tạo theo vị trí</b>
-<svg class="process-diagram" viewBox="0 0 420 750" role="img" aria-label="Quy trình Train-to-Role với nhánh đạt và vòng lặp đào tạo lại khi chưa đạt">
-<defs><marker id="arrow-new" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#637e8a"/></marker></defs>
-<path class="flow-line" d="M210 68V98" marker-end="url(#arrow-new)"/><path class="flow-line" d="M210 156V188" marker-end="url(#arrow-new)"/><path class="flow-line" d="M210 246V278" marker-end="url(#arrow-new)"/><path class="flow-line" d="M210 336V358" marker-end="url(#arrow-new)"/><path class="flow-line" d="M210 442V488" marker-end="url(#arrow-new)"/><path class="flow-line" d="M210 554V588" marker-end="url(#arrow-new)"/><path class="flow-line" d="M210 646V678" marker-end="url(#arrow-new)"/>
-<path class="flow-line flow-loop" d="M300 400H386V218H370" marker-end="url(#arrow-new)"/>
-<rect class="flow-start" x="115" y="20" width="190" height="48" rx="24"/><text x="210" y="49">Nhân sự mới</text>
-<rect class="flow-new" x="70" y="100" width="280" height="56"/><text x="210" y="133">Định hướng vị trí</text>
-<rect class="flow-new" x="50" y="190" width="320" height="56"/><text x="210" y="223">Đào tạo theo nhóm công việc</text>
-<rect class="flow-new" x="40" y="280" width="340" height="56"/><text x="210" y="313">Thực hành chuẩn, gồm thao tác khó</text>
-<polygon class="flow-decision" points="210,358 300,400 210,442 120,400"/><text x="210" y="405">Đạt đánh giá?</text>
-<text class="flow-label" x="235" y="470">Đạt</text><text class="flow-label" x="340" y="388">Chưa đạt</text>
-<rect class="flow-new" x="60" y="490" width="300" height="64"/><text x="210" y="518">Thực hành tại chuyền</text><text x="210" y="538">và xác nhận năng lực</text>
-<rect class="flow-end" x="90" y="590" width="240" height="56" rx="28"/><text x="210" y="623">Làm việc độc lập</text>
-<rect class="flow-new" x="75" y="680" width="270" height="56"/><text x="210" y="713">Đánh giá định kỳ · PDCA</text></svg>
+<pre class="mermaid" role="img">flowchart TB
+  accTitle: Quy trình đào tạo theo vị trí sau cải tiến
+  accDescr: Đào tạo theo vị trí, đánh giá năng lực và đào tạo bù khi chưa đạt.
+start["Nhân sự mới"]
+  orient["Định hướng vị trí"]
+  group["Đào tạo theo nhóm công việc"]
+  practice["Thực hành chuẩn, gồm thao tác khó"]
+  decision["Đạt đánh giá?"]
+  line["Thực hành tại chuyền và xác nhận năng lực"]
+  independent["Làm việc độc lập"]
+  pdca["Đánh giá định kỳ · PDCA"]
+  start --> orient
+  orient --> group
+  group --> practice
+  practice --> decision
+  decision -->|Đạt| line
+  decision -->|Chưa đạt| group
+  line --> independent
+  independent --> pdca
+  classDef start fill:#f5f0e6,stroke:#887e6a,color:#302d27,stroke-width:2px
+  classDef new fill:#e5f5eb,stroke:#187547,color:#155c3a,stroke-width:2px
+  classDef decision fill:#eaf3ff,stroke:#075fa6,color:#064576,stroke-width:2px
+  class start,independent start
+  class orient,group,practice,line,pdca new
+  class decision decision
+</pre>
 <p class="cap">Kết luận: định hướng theo vị trí, đánh giá năng lực và đào tạo bù tạo nên lộ trình rõ ràng.</p></div>
 </div>
 
@@ -214,20 +241,36 @@ footer{color:var(--mu);font-size:12.5px;margin:30px 0 10px}
 <li><b>4M cần rà soát:</b> Man · Method · Machine · Material. Chi tiết cần xác minh bằng dữ liệu nội bộ.</li></ul></div>
 </div>
 
-<h2>Kết quả cải tiến</h2><p class="sub">Số liệu được chuẩn hóa theo từng hạng mục, mốc trước cải tiến = 100. Phần trăm thể hiện mức giảm thời lượng.</p>
+<h2>Kết quả cải tiến</h2><p class="sub">Mô phỏng cho quy mô khoảng 400 người mỗi ca. Thời gian đào tạo giảm từ 15 xuống 7 ngày, tương đương 53.3%.</p>
 <div class="box"><table>
 <tr><th>Chỉ số</th><th>Trước</th><th>Sau</th><th>% thay đổi</th></tr>
-<tr><td>Đào tạo tập trung</td><td>100 (mốc)</td><td>47</td><td class="d">Giảm 53%</td></tr>
-<tr><td>Thực hành tại chuyền</td><td>100 (mốc)</td><td>20</td><td class="d">Giảm 80%</td></tr>
+<tr><td>Thời gian đào tạo hội nhập</td><td>15 ngày</td><td>7 ngày</td><td class="d">Giảm tương đương 53.3%</td></tr>
+<tr><td>Quy mô nhân sự mỗi ca</td><td>Khoảng 400 người</td><td>Khoảng 400 người</td><td class="d">Quy mô mô phỏng</td></tr>
 <tr><td>Phạm vi nội dung và bài kiểm tra</td><td>Đồng loạt</td><td>Theo vị trí</td><td class="d">Tập trung đúng công việc</td></tr>
 </table>
-<div class="result-chart" role="img" aria-label="Biểu đồ động so sánh chỉ số trước và sau cải tiến. Đào tạo tập trung từ 100 xuống 47. Thực hành tại chuyền từ 100 xuống 20.">
-<div class="result-chart-legend"><span><i class="legend-dot"></i>BEFORE · mốc chuẩn hóa 100</span><span><i class="legend-dot after"></i>AFTER · chỉ số còn lại</span></div>
-<div class="result-chart-row"><span class="result-chart-label">Đào tạo tập trung · giảm 53%</span><div class="result-chart-pair"><div><small>BEFORE · 100</small><div class="result-chart-track"><div class="result-chart-fill before" style="--value:100%">100</div></div></div><div><small>AFTER · 47</small><div class="result-chart-track"><div class="result-chart-fill after" style="--value:47%">47</div></div></div></div></div>
-<div class="result-chart-row"><span class="result-chart-label">Thực hành tại chuyền · giảm 80%</span><div class="result-chart-pair"><div><small>BEFORE · 100</small><div class="result-chart-track"><div class="result-chart-fill before" style="--value:100%">100</div></div></div><div><small>AFTER · 20</small><div class="result-chart-track"><div class="result-chart-fill after" style="--value:20%">20</div></div></div></div></div>
-</div><p class="cap">Biểu đồ dùng cùng mốc 100 cho từng hạng mục để so sánh phần thời lượng còn lại sau cải tiến.</p></div>
+<div class="result-chart" role="img" aria-label="Biểu đồ mô phỏng thời gian đào tạo, từ 15 ngày xuống 7 ngày.">
+<div class="result-chart-legend"><span><i class="legend-dot"></i>BEFORE · 15 ngày</span><span><i class="legend-dot after"></i>AFTER · 7 ngày</span></div>
+<div class="result-chart-row"><span class="result-chart-label">Thời lượng đào tạo · giảm tương đương 53.3%</span><div class="result-chart-pair"><div><small>BEFORE · 15 ngày</small><div class="result-chart-track"><div class="result-chart-fill before" style="--value:100%">15</div></div></div><div><small>AFTER · 7 ngày</small><div class="result-chart-track"><div class="result-chart-fill after" style="--value:46.7%">7</div></div></div></div></div>
+</div><p class="cap">Biểu đồ lấy 15 ngày làm mốc 100%, thời lượng sau cải tiến còn 7 ngày.</p></div>
 
 <footer><a class="back-link" href="/vi#case-studies">← Quay lại portfolio</a><p>Thông tin được trình bày ở mức khái quát nhằm bảo vệ dữ liệu nội bộ. Hình ảnh, sơ đồ và biểu đồ là minh họa đã lược bỏ thông tin nhận diện.</p></footer>
 </main>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"
+mermaid.initialize({
+  startOnLoad: false,
+  theme: "base",
+  flowchart: { curve: "basis", htmlLabels: true, useMaxWidth: true },
+  themeVariables: {
+    fontFamily: "system-ui, -apple-system, Segoe UI, sans-serif",
+    fontSize: "16px",
+    lineColor: "#887e6a",
+    edgeLabelBackground: "#ffffff",
+    clusterBkg: "#ffffff",
+    clusterBorder: "#d9e0e5"
+  }
+})
+await mermaid.run({ querySelector: ".mermaid" })
+</script>
 </body>
 </html>

@@ -8,7 +8,7 @@ export const homepageMetrics: {
 }[] = [
   {
     id: "critical-defects",
-    value: "<1%",
+    value: "<0.01%",
     labels: {
       vi: "Lỗi nghiêm trọng",
       en: "Serious defects",
@@ -16,21 +16,21 @@ export const homepageMetrics: {
     },
   },
   {
-    id: "operational-waste",
-    value: "~30%",
+    id: "training-time",
+    value: "−53.3%",
     labels: {
-      vi: "Lãng phí vận hành giảm",
-      en: "Less operational waste",
-      zh: "运营浪费减少",
+      vi: "Thời lượng đào tạo giảm · 15→7 ngày",
+      en: "Training time reduction · 15→7 days",
+      zh: "培训时间缩短 · 15→7天",
     },
   },
   {
-    id: "equipment-incidents",
-    value: "50%",
+    id: "shift-workforce",
+    value: "~400",
     labels: {
-      vi: "Sự cố thiết bị giảm",
-      en: "Fewer equipment incidents",
-      zh: "设备故障减少",
+      vi: "Người/ca",
+      en: "People per shift",
+      zh: "人/班",
     },
   },
 ];

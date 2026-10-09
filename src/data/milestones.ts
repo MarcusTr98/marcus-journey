@@ -4,14 +4,14 @@ const milestoneCatalog: Omit<Milestone, "stage">[] = [
     id: "toyota",
     shortTitle: "Manufacturing",
     title: "Toyota Boshoku Hai Phong",
-    period: "12/2016 — 09/2023",
+    period: "11/2016 — 09/2023",
     role: "Production & Quality Operations Management",
     summary:
-      "Coordinated factory production and quality across Laser Cutting CNC operations and the production team.",
+      "Coordinated production and quality across Laser Cutting CNC operations in a shift of approximately 400 people.",
     highlights: [
-      "Standardized Work, Check Sheets, Pareto and Q-Point → serious defects below 1%",
+      "Standardized Work, Check Sheets, Pareto and Q-Point → serious defects below 0.01%",
       "Led QCC/Kaizen and 5W1H–5 Whys analysis → approximately 30% less operational waste",
-      "TPM, 5S and Safety Dojo → 50% fewer equipment incidents and 35% faster onboarding",
+      "TPM, 5S and Safety Dojo → 50% fewer equipment incidents and training time reduced from 15 to 7 days (about 53.3%)",
       "Production scheduling through Plan/Kanban, manpower–material balancing and KPI reporting",
     ],
     accent: "#F46300",

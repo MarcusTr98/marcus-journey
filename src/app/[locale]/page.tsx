@@ -15,14 +15,14 @@ export async function generateMetadata({ params }: LocalePageProps): Promise<Met
   if (!isLanguage(locale)) return {};
   const content = localeMetadata[locale];
   return {
-    title: content.title,
+    title: "Marcus Tran - Portfolio",
     description: content.description,
     alternates: {
       canonical: `/${locale}`,
       languages: { vi: "/vi", en: "/en", "zh-CN": "/zh" },
     },
     openGraph: {
-      title: `${content.title} | MarcusTran Portfolio`,
+      title: "Marcus Tran - Portfolio",
       description: content.description,
       locale,
     },

@@ -111,11 +111,11 @@ type L = [string, string, string[]];
 const vi: L[] = [
   [
     "Quản lý & Điều phối Sản xuất – Chất lượng",
-    "Điều phối sản xuất và chất lượng tại nhà máy, bao gồm hoạt động Laser Cutting CNC và đội ngũ sản xuất.",
+    "Điều phối sản xuất và chất lượng tại nhà máy, trong ca có quy mô khoảng 400 nhân sự, bao gồm hoạt động Laser Cutting CNC và đội ngũ sản xuất.",
     [
-      "Chuẩn hóa thao tác, Check Sheet, Pareto và Q-Point → kiểm soát lỗi nghiêm trọng dưới 1%",
+      "Chuẩn hóa thao tác, Check Sheet, Pareto và Q-Point → kiểm soát lỗi nghiêm trọng dưới 0.01%",
       "Điều hành QCC/Kaizen, phân tích 5W1H–5 Why → giảm khoảng 30% lãng phí vận hành",
-      "Triển khai TPM, 5S và Safety Dojo → giảm 50% sự cố thiết bị, rút ngắn 35% thời gian đào tạo hội nhập",
+      "Triển khai TPM, 5S và Safety Dojo → giảm 50% sự cố thiết bị, thời gian đào tạo hội nhập giảm tương đương 53.3%, từ 15 xuống 7 ngày",
       "Điều độ sản xuất theo Plan/Kanban, cân đối nhân lực–vật tư và quản trị báo cáo hiệu suất",
     ],
   ],
@@ -224,11 +224,11 @@ const vi: L[] = [
 const zh: L[] = [
   [
     "生产与质量管理协调",
-    "协调工厂生产与质量工作，涵盖Laser Cutting CNC工序及生产团队。",
+    "协调工厂生产与质量工作，每班约400人，涵盖Laser Cutting CNC工序及生产团队。",
     [
-      "标准作业 · 检查表 · 帕累托 · Q-Point → 严重缺陷率低于1%",
+      "标准作业 · 检查表 · 帕累托 · Q-Point → 严重缺陷率低于0.01%",
       "QCC · 改善 · 5W1H/5Why → 运营浪费降低约30%",
-      "TPM → 设备故障减少50% · Safety Dojo/5S → 入职培训提速35%",
+      "TPM → 设备故障减少50% · Safety Dojo/5S → 入职培训时间从15天缩短至7天，约减少53.3%",
       "使用生产计划/Kanban调度，并建立绩效看板、报告与数据归档体系",
     ],
   ],

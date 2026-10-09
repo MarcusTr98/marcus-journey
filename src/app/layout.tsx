@@ -7,18 +7,18 @@ import { profile } from "@/data/profile";
 export const metadata: Metadata = {
   metadataBase: new URL("https://marcus-journey.vercel.app"),
   title: {
-    default: "MarcusTran Portfolio",
-    template: "%s | MarcusTran Portfolio",
+    default: "Marcus Tran - Portfolio",
+    template: "%s | Marcus Tran - Portfolio",
   },
   description:
     "Marcus Tran — process engineering, manufacturing, continuous improvement and quality.",
   openGraph: {
-    title: "MarcusTran Portfolio",
+    title: "Marcus Tran - Portfolio",
     description: "Process engineering, manufacturing, continuous improvement and quality.",
     type: "website",
     locale: "en_US",
     url: "/",
-    siteName: "MarcusTran Portfolio",
+    siteName: "Marcus Tran - Portfolio",
   },
   alternates: { canonical: "/" },
   robots: { index: true, follow: true },

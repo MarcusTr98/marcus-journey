@@ -39,17 +39,17 @@ const archiveCopy = {
 const trainToRoleLink = {
   vi: {
     label: "DỰ ÁN KAIZEN · 2019–2020",
-    title: "Train-to-Role — Chuẩn hóa đào tạo theo vị trí",
+    title: "Reduce Training Time",
     action: "Xem case study",
   },
   en: {
     label: "KAIZEN PROJECT · 2019–2020",
-    title: "Train-to-Role — Role-based operator training",
+    title: "Reduce Training Time",
     action: "View case study",
   },
   zh: {
     label: "改善项目 · 2019–2020",
-    title: "Train-to-Role — 按岗位标准化培训",
+    title: "缩短培训时间",
     action: "查看案例",
   },
 } as const;
@@ -57,17 +57,17 @@ const trainToRoleLink = {
 const leanSweepLink = {
   vi: {
     label: "DỰ ÁN KAIZEN · 2018–2020",
-    title: "Lean Sweep — Giảm lãng phí toàn khu vực sản xuất",
+    title: "Reduce Waste: Toàn bộ phận",
     action: "Xem case study",
   },
   en: {
     label: "KAIZEN PROJECT · 2018–2020",
-    title: "Lean Sweep — Area-wide waste reduction",
+    title: "Reduce Waste: Department-wide",
     action: "View case study",
   },
   zh: {
     label: "改善项目 · 2018–2020",
-    title: "Lean Sweep — 区域精益改善",
+    title: "Reduce Waste：全部门",
     action: "查看案例",
   },
 } as const;
