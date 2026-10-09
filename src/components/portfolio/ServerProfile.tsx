@@ -147,6 +147,77 @@ const teachingStudyStatus = {
   zh: "内容即将补充",
 } as const;
 
+// Homepage-only Toyota copy keeps the 3D journey data unchanged.
+const toyotaProfileCopy = {
+  vi: {
+    role: "Nhân viên sản xuất → Trợ lý Quản lý Sản xuất → Phụ trách dữ liệu & Kaizen",
+    summary:
+      "Lộ trình tại bộ phận Cutting–Inspection: bắt đầu từ sản xuất năm 2016, chuyển sang hỗ trợ quản lý sản xuất năm 2017, rồi phụ trách dữ liệu và Kaizen giai đoạn 2018–2023.",
+    highlights: [
+      "Quy mô vận hành: khoảng 40 máy cắt laser và khoảng 400 nhân sự mỗi ca",
+      "Chuẩn hóa thao tác, Check Sheet, Pareto và Q-Point, kiểm soát lỗi nghiêm trọng dưới 0.01%",
+      "QCC, Kaizen, 5W1H và 5 Why, giảm khoảng 30% lãng phí vận hành",
+      "TPM, 5S, Safety Dojo, Plan/Kanban và báo cáo KPI; giảm 50% sự cố thiết bị, rút ngắn thời gian đào tạo từ 15 xuống 7 ngày",
+    ],
+  },
+  en: {
+    role: "Production Staff → Production Management Assistant → Data & Kaizen",
+    summary:
+      "Career progression in the Cutting–Inspection Department: joined production in 2016, supported production management from 2017, then led data and Kaizen work from 2018 to 2023.",
+    highlights: [
+      "Operating scale: about 40 laser-cutting machines and around 400 employees per shift",
+      "Standard Work, Check Sheets, Pareto and Q-Point, maintaining serious defects below 0.01%",
+      "QCC, Kaizen, 5W1H and 5 Whys, reducing operational waste by about 30%",
+      "TPM, 5S, Safety Dojo, Plan/Kanban and KPI reporting; 50% fewer equipment incidents and training reduced from 15 to 7 days",
+    ],
+  },
+  zh: {
+    role: "生产员工 → 生产管理助理 → 数据与改善负责人",
+    summary:
+      "在Cutting–Inspection部门逐步承担更多职责：2016年从生产岗位起步，2017年开始协助生产管理，2018至2023年负责数据与改善工作。",
+    highlights: [
+      "运营规模：约40台激光切割设备，每班约400名员工",
+      "运用标准作业、检查表、帕累托和Q-Point，将严重缺陷率控制在0.01%以下",
+      "运用QCC、改善、5W1H和5Why，运营浪费降低约30%",
+      "运用TPM、5S、Safety Dojo、Plan/Kanban及KPI报告；设备故障减少50%，培训时间从15天缩短至7天",
+    ],
+  },
+} as const;
+
+// Group the manufacturing and quality methods used at Toyota for quick scanning.
+const toyotaToolGroups = {
+  vi: [
+    {
+      title: "Chất lượng & cải tiến",
+      tools: ["Lean Six Sigma", "DMAIC", "7 QC Tools", "QCC", "PDCA", "5 Whys", "Fishbone", "Pareto", "5W1H", "Q-Point", "Check Sheet", "Standard Work"],
+    },
+    {
+      title: "Sản xuất & an toàn",
+      tools: ["TPM", "Plan/Kanban", "Takt/Cycle Time", "Line Balancing", "ERP/SAP/MES", "Andon", "5S", "KYT", "Safety Dojo", "ISO 9001", "IATF 16949"],
+    },
+  ],
+  en: [
+    {
+      title: "Quality & improvement",
+      tools: ["Lean Six Sigma", "DMAIC", "7 QC Tools", "QCC", "PDCA", "5 Whys", "Fishbone", "Pareto", "5W1H", "Q-Point", "Check Sheets", "Standard Work"],
+    },
+    {
+      title: "Production & safety",
+      tools: ["TPM", "Plan/Kanban", "Takt/Cycle Time", "Line Balancing", "ERP/SAP/MES", "Andon", "5S", "KYT", "Safety Dojo", "ISO 9001", "IATF 16949"],
+    },
+  ],
+  zh: [
+    {
+      title: "质量与改善",
+      tools: ["Lean Six Sigma", "DMAIC", "7 QC Tools", "QCC", "PDCA", "5 Whys", "Fishbone", "Pareto", "5W1H", "Q-Point", "检查表", "标准作业"],
+    },
+    {
+      title: "生产与安全",
+      tools: ["TPM", "Plan/Kanban", "Takt/Cycle Time", "Line Balancing", "ERP/SAP/MES", "Andon", "5S", "KYT", "Safety Dojo", "ISO 9001", "IATF 16949"],
+    },
+  ],
+} as const;
+
 const keyMetricPattern =
   /(<\s?\d+(?:[.,]\d+)?%|Toyota Boshoku Hai Phong|FPT Polytechnic(?: Hai Phong)?|VHunter Event Company|Laser Cutting CNC|Standard Work|Check Sheets?|Q-Point|Safety Dojo|Plan\/Kanban|Spring Boot(?:\s+\d+(?:\.\d+){1,2})?|SQL Server|Google Workspace|Microsoft Office|WebSocket|JSP\/JSTL|WMI\/WPD|SQLite|Robocon|Java(?:\s+\d+)?|Vue(?:\.\d+)?|Marcus (?:Store|Video|Electronics)|Kaizen|Pareto|QCC|TPM|5S|5W1H|5 Whys|5 Why|~?\d+(?:[.,]\d+)?%|\d\.\d+\/\d\.\d+|\bTop\s*1\b|\b\d{1,3}(?:,\d{3})+\b|\bVND\s?[\d,.]+(?:\s?(?:million|billion))?)/gi;
 
@@ -163,9 +234,13 @@ function highlightMetrics(text: string) {
 }
 
 export default function ServerProfile({ language }: { language: Language }) {
-  const profileMilestones = getMilestones(language).filter(
-    (milestone) => !["graduation", "video", "electronics", "store"].includes(milestone.id),
-  );
+  const profileMilestones = getMilestones(language)
+    .filter((milestone) => !["graduation", "video", "electronics", "store"].includes(milestone.id))
+    .map((milestone) =>
+      milestone.id === "toyota"
+        ? { ...milestone, ...toyotaProfileCopy[language] }
+        : milestone,
+    );
   const t = archiveCopy[language];
   return (
     <section className="seo-profile" id="case-studies" aria-labelledby="case-studies-title">
@@ -226,6 +301,18 @@ export default function ServerProfile({ language }: { language: Language }) {
                 <li key={highlight}>{highlightMetrics(highlight)}</li>
               ))}
             </ul>
+            {milestone.id === "toyota" && (
+              <section className="profile-tool-groups" aria-label={language === "en" ? "Manufacturing and quality tools" : language === "zh" ? "生产与质量工具" : "Công cụ sản xuất và chất lượng"}>
+                {toyotaToolGroups[language].map((group) => (
+                  <div className="profile-tool-group" key={group.title}>
+                    <h4>{group.title}</h4>
+                    <ul>
+                      {group.tools.map((tool) => <li key={tool}>{tool}</li>)}
+                    </ul>
+                  </div>
+                ))}
+              </section>
+            )}
             {(milestone.id === "fpt" || milestone.id === "solutions") && (
               <div
                 className="education-projects"
